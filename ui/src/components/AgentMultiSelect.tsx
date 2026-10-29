@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar, type AvatarAgent } from "@/components/AgentAvatar";
 import { useEffect, useMemo, useState, type ComponentProps, type ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
@@ -89,7 +90,7 @@ export function AgentSelect({
                 key={agent.id}
                 type="button"
                 className="flex w-full items-start gap-2 px-3 py-2 text-left hover:bg-accent/30"
-                aria-label={`Select ${agent.name}`}
+                aria-label={uiT("ui:messages.m_58661820dfdc4c9f", { v0: (agent.name) })}
                 onClick={() => {
                   onChange(agent.id);
                   setOpen(false);
@@ -103,7 +104,7 @@ export function AgentSelect({
               </button>
             ))}
             {filteredAgents.length === 0 ? (
-              <div className="px-3 py-4 text-sm text-muted-foreground">No matches.</div>
+              <div className="px-3 py-4 text-sm text-muted-foreground">{uiT("ui:messages.m_d6572bd2e77380ce")}</div>
             ) : null}
           </div>
         )}
@@ -274,19 +275,17 @@ export function AgentMultiSelect({
               );
             })}
             {filteredAgents.length === 0 ? (
-              <div className="px-3 py-4 text-sm text-muted-foreground">No matches.</div>
+              <div className="px-3 py-4 text-sm text-muted-foreground">{uiT("ui:messages.m_d6572bd2e77380ce")}</div>
             ) : null}
           </div>
         )}
           <div className="flex items-center justify-between border-t border-border px-3 py-2">
             <span className="text-xs text-muted-foreground">
-              {workingAgentIds.size === 0 ? "No agents selected" : `${workingAgentIds.size} selected`}
+              {workingAgentIds.size === 0 ? "No agents selected" : uiT("ui:messages.m_b3edc3b37ecffe19", { v0: (workingAgentIds.size) })}
             </span>
             <div className="flex items-center gap-2">
               {staged ? (
-                <Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={pending}>
-                  Cancel
-                </Button>
+                <Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               ) : null}
               <Button
                 type="button"
@@ -297,7 +296,7 @@ export function AgentMultiSelect({
                 }}
                 disabled={pending}
               >
-                {staged ? (pending ? "Saving…" : "Save") : "Done"}
+                {staged ? (pending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_1509f561f2416598")) : uiT("ui:messages.m_11a6767d5674c7e4")}
               </Button>
             </div>
           </div>
@@ -312,7 +311,7 @@ export function AgentMultiSelect({
             </div>
           ))}
           {selectedAgents.length > 3 ? (
-            <p className="px-1.5 pt-0.5 text-xs text-muted-foreground">and {selectedAgents.length - 3} more</p>
+            <p className="px-1.5 pt-0.5 text-xs text-muted-foreground">{uiT("ui:messages.m_427a379ae3e6b749")}{selectedAgents.length - 3}{uiT("ui:messages.m_226ba18bbcdb7518")}</p>
           ) : null}
         </div>
       ) : null}

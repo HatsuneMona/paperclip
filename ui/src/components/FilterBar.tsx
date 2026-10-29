@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,9 +32,7 @@ export function FilterBar({ filters, onRemove, onClear }: FilterBarProps) {
           </button>
         </Badge>
       ))}
-      <Button variant="ghost" size="sm" className="text-xs h-6" onClick={onClear}>
-        Clear all
-      </Button>
+      <Button variant="ghost" size="sm" className="text-xs h-6" onClick={onClear}>{uiT("ui:messages.m_29a390f9237e3c84")}</Button>
     </div>
   );
 }

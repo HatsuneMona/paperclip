@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState } from "react";
 import {
@@ -81,7 +82,7 @@ const activityGatePolicyOptions = [
 const activityGateScopeOptions = [
   {
     value: "company",
-    title: "Organization-wide",
+    title: uiT("ui:messages.m_4b115f61b9918e76"),
     description: "Any activity across the organization counts as a reason to run.",
   },
   {
@@ -138,16 +139,16 @@ export function OverviewSection({
       {/* Assignment row */}
       <div className="overflow-x-auto overscroll-x-contain">
         <div className="inline-flex min-w-full flex-wrap items-center gap-2 text-sm text-muted-foreground sm:min-w-max sm:flex-nowrap">
-          <span>For</span>
+          <span>{uiT("ui:messages.m_ca15ebc05a3c5c13")}</span>
           <InlineEntitySelector
             ref={assigneeSelectorRef}
             value={editDraft.assigneeAgentId}
             options={assigneeOptions}
             recentOptionIds={recentAssigneeIds}
-            placeholder="Responsible"
+            placeholder={uiT("ui:messages.m_bc110a6d0722098a")}
             noneLabel="No responsible"
-            searchPlaceholder="Search responsible..."
-            emptyMessage="No responsible found."
+            searchPlaceholder={uiT("ui:messages.m_9cb8d79fc8b40d38")}
+            emptyMessage={uiT("ui:messages.m_045a8ffe4067d6d2")}
             onChange={(assigneeAgentId) =>
               setEditDraft((current) => ({ ...current, assigneeAgentId }))
             }
@@ -169,7 +170,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 )
               ) : (
-                <span className="text-muted-foreground">Responsible</span>
+                <span className="text-muted-foreground">{uiT("ui:messages.m_bc110a6d0722098a")}</span>
               )
             }
             renderOption={(option) => {
@@ -185,16 +186,16 @@ export function OverviewSection({
               );
             }}
           />
-          <span>in</span>
+          <span>{uiT("ui:messages.m_582967534d0f909d")}</span>
           <InlineEntitySelector
             ref={projectSelectorRef}
             value={editDraft.projectId}
             options={projectOptions}
             recentOptionIds={recentProjectIds}
-            placeholder="Project"
+            placeholder={uiT("ui:messages.m_9859597853197476")}
             noneLabel="No project"
-            searchPlaceholder="Search projects..."
-            emptyMessage="No projects found."
+            searchPlaceholder={uiT("ui:messages.m_c59dd5a3c5a25588")}
+            emptyMessage={uiT("ui:messages.m_26e92309ba5b0ca9")}
             onChange={(projectId) => setEditDraft((current) => ({ ...current, projectId }))}
             onConfirm={() => descriptionEditorRef.current?.focus()}
             renderTriggerValue={(option) =>
@@ -207,7 +208,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 </>
               ) : (
-                <span className="text-muted-foreground">Project</span>
+                <span className="text-muted-foreground">{uiT("ui:messages.m_9859597853197476")}</span>
               )
             }
             renderOption={(option) => {
@@ -264,7 +265,7 @@ export function OverviewSection({
               ref={descriptionEditorRef}
               value={editDraft.description}
               onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-              placeholder="Add instructions..."
+              placeholder={uiT("ui:messages.m_d49e19c5685d2f96")}
               bordered={false}
               contentClassName="min-h-(--sz-120px) text-sm leading-7"
               mentions={mentionOptions}
@@ -280,7 +281,7 @@ export function OverviewSection({
             ref={descriptionEditorRef}
             value={editDraft.description}
             onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-            placeholder="Add instructions..."
+            placeholder={uiT("ui:messages.m_d49e19c5685d2f96")}
             bordered={false}
             contentClassName="min-h-(--sz-120px) text-sm leading-7"
             mentions={mentionOptions}
@@ -308,17 +309,17 @@ export function OverviewSection({
       <div className="grid gap-3 sm:grid-cols-2">
         <SummaryCard
           icon={Clock3}
-          label="Triggers"
+          label={uiT("ui:messages.m_e62f2148a64d96bb")}
           value={activeTriggers === 0 ? "None" : `${activeTriggers} active`}
-          hint={nextFire ? `Next fire ${nextFire}` : "No schedule"}
+          hint={nextFire ? uiT("ui:messages.m_3fd50bc56cac49e6", { v0: (nextFire) }) : uiT("ui:messages.m_449040774024e73d")}
           to={() => navigateToSection("triggers")}
           ariaLabel={`${activeTriggers} triggers. Open triggers.`}
         />
         <SummaryCard
           icon={Play}
-          label="Last run"
+          label={uiT("ui:messages.m_512a48218ba21791")}
           value={lastRun ? lastRun.status.replaceAll("_", " ") : "No runs"}
-          hint={lastRun ? timeAgo(lastRun.triggeredAt) : "Trigger a run"}
+          hint={lastRun ? timeAgo(lastRun.triggeredAt) : uiT("ui:messages.m_177f8dfa8e3d5c92")}
           to={() => navigateToSection("runs")}
           ariaLabel={lastRun ? `Last run ${lastRun.status}. Open runs.` : "No runs. Open runs."}
         />
@@ -326,11 +327,9 @@ export function OverviewSection({
 
       {/* Recent activity */}
       <div className="space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Recent activity
-        </p>
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_6cb44b56336af70b")}</p>
         {recentActivity.length === 0 ? (
-          <p className="text-xs text-muted-foreground">No activity yet.</p>
+          <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_a288d2d0a21eed3c")}</p>
         ) : (
           <div className="divide-y divide-border/60">
             {recentActivity.map((event) => (
@@ -484,9 +483,7 @@ export function DeliverySection() {
   return (
     <div className="space-y-6">
       <div className="space-y-3">
-        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Concurrency
-        </p>
+        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_8708492f3ef5c138")}</p>
         <RadioCardGroup
           ariaLabel="Concurrency policy"
           value={editDraft.concurrencyPolicy}
@@ -497,9 +494,7 @@ export function DeliverySection() {
         />
       </div>
       <div className="space-y-3">
-        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Catch-up
-        </p>
+        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_1c2d0f8e6b923cd0")}</p>
         <RadioCardGroup
           ariaLabel="Catch-up policy"
           value={editDraft.catchUpPolicy}
@@ -529,7 +524,7 @@ export function DeliverySection() {
           </p>
         ) : gateEnabled ? (
           <div className="space-y-2 rounded-lg border border-border p-3">
-            <Label className="text-xs font-medium">Activity scope</Label>
+            <Label className="text-xs font-medium">{uiT("ui:messages.m_98a37b44fa795fa6")}</Label>
             <RadioCardGroup
               ariaLabel="Activity gate scope"
               value={editDraft.activityGateScope}

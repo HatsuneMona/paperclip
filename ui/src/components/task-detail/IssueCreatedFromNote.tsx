@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { IssueCreationSource } from "@paperclipai/shared";
 import { GitBranch } from "lucide-react";
 import {
@@ -39,7 +40,7 @@ export function IssueCreatedFromNote({ createdFrom, issueLinkState, className }:
       >
         {issue.identifier ? `${issue.identifier} ${issue.title}` : issue.title}
       </Link>
-      {agent && <span className="shrink-0">by {agent.name}</span>}
+      {agent && <span className="shrink-0">{uiT("ui:messages.m_9155f2107df0c885")}{agent.name}</span>}
     </p>
   );
 }

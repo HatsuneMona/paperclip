@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Download, ExternalLink, Maximize2, PanelRight, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
@@ -36,7 +37,7 @@ function RowAction({ action, title, primary }: { action: ArtifactAction; title: 
         cn("px-1.5 after:absolute after:inset-0 after:cursor-pointer after:rounded-xl focus-visible:after:ring-offset-background", RING_AFTER)
       : cn("relative z-10 w-7 justify-center text-(--tac-meta) transition-colors hover:bg-(--tac-tray-press) hover:text-foreground", RING, RING_ON.ground),
   );
-  const label = `${action.label}: ${title}`;
+  const label = uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action.label), v1: (title) });
   const content = (
     <>
       {primary ? <span className="hidden @sm:inline">{action.label}</span> : null}

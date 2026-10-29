@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
@@ -56,17 +57,17 @@ export function ComposioAppSetup({ name, toolkit, connections, onClose, onBack, 
     {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
     {result ? <p role="status" className="text-sm text-muted-foreground">Finish connecting {name} in Composio, then return here.</p> : null}
     {result?.authorizationUrl ? <Button asChild variant="outline" className="w-full">
-      <a href={result.authorizationUrl} target="_blank" rel="noopener noreferrer">Connect {name} in Composio<ExternalLink className="size-4" /></a>
+      <a href={result.authorizationUrl} target="_blank" rel="noopener noreferrer">{uiT("ui:messages.m_3b887c9884f2c97a")}{name} in Composio<ExternalLink className="size-4" /></a>
     </Button> : null}
     <div className="flex items-center justify-between gap-2">
-      <Button variant="ghost" disabled={busy} onClick={onBack ?? onClose}>{onBack ? "Back" : "Cancel"}</Button>
+      <Button variant="ghost" disabled={busy} onClick={onBack ?? onClose}>{onBack ? uiT("ui:messages.m_76900f1bfd16c8d4") : uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
       <div className="flex items-center gap-2">
       {result && result.status !== "connected" ? <Button variant="ghost" disabled={busy} onClick={() => void submit({ action: "start" })}>Get a new link</Button> : null}
       <Button disabled={!settled || busy || (!connection && connectionId !== "__new__")} onClick={() => {
         if (connectionId === "__new__") onConnectNew();
         else void submit(result ? { action: "complete" } : { action: "start" });
       }}>
-        {busy ? "Checking…" : connectionId === "__new__" ? "Connect new account" : result ? "I’ve connected it" : "Continue"}
+        {busy ? uiT("ui:messages.m_ec963ffc911b8401") : connectionId === "__new__" ? "Connect new account" : result ? "I’ve connected it" : uiT("ui:messages.m_31fbef162594de01")}
       </Button>
       </div>
     </div>

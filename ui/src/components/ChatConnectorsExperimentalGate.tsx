@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { chatEndpointsApi } from "@/api/chatEndpoints";
@@ -27,9 +28,7 @@ function ProviderEndpointGate({
         <p role="alert" className="text-sm text-destructive">
           {endpoint.error.message}
         </p>
-        <Button variant="outline" onClick={() => void endpoint.refetch()}>
-          Retry
-        </Button>
+        <Button variant="outline" onClick={() => void endpoint.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
       </div>
     );
   if (!endpoint.data) return null;

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Clock, X } from "lucide-react";
 import type { Issue, IssueWorkProduct } from "@paperclipai/shared";
@@ -209,7 +210,7 @@ function CheckNowButton({
       onClick={onCheckNow}
       disabled={checkingNow}
     >
-      {checkingNow ? "Checking…" : reviewRequested ? "Check status" : "Check now"}
+      {checkingNow ? uiT("ui:messages.m_ec963ffc911b8401") : reviewRequested ? "Check status" : uiT("ui:messages.m_2937cffb37abce97")}
     </Button>
   );
 }
@@ -245,7 +246,7 @@ function CancelMonitorButton({ onCancel }: { onCancel: () => Promise<unknown> })
         {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
         <AlertDialogFooter>
           <AlertDialogCancel disabled={pending}>Keep monitor</AlertDialogCancel>
-          <Button type="button" variant="destructive" disabled={pending} onClick={() => void cancel()}>{pending ? "Cancelling…" : "Cancel monitor"}</Button>
+          <Button type="button" variant="destructive" disabled={pending} onClick={() => void cancel()}>{pending ? uiT("ui:messages.m_91b104db05da1b2d") : "Cancel monitor"}</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -337,8 +338,8 @@ export function IssueMonitorComposerStrip({
           {copy.pullRequestReview
             ? "Review on GitHub, then check status to have the agent verify the result."
             : copy.workspaceWait
-            ? "You can keep sending instructions while the agent waits."
-            : "Sending a reply wakes the agent now — before the scheduled check."}
+            ? uiT("ui:messages.m_863825ba30571f1b")
+            : uiT("ui:messages.m_c39c874e08165ab8")}
         </p>
       ) : null}
       {checkError ? <p role="alert" className="text-sm text-destructive">{checkError}</p> : null}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { FastResponseHistory } from "../components/fast-responses/FastResponseHistory";
 import { DecisionHistory } from "../components/decision-models/DecisionHistory";
 import { SubscriptionCostCard, SubscriptionTokenUsage } from "../components/SubscriptionCostCard";
@@ -135,34 +136,32 @@ function FinanceSummaryCard({
   return (
     <Card>
       <CardHeader className="px-5 pt-5 pb-2">
-        <CardTitle className="text-base">Finance ledger</CardTitle>
-        <CardDescription>
-          Account-level charges that do not map to a single inference request.
-        </CardDescription>
+        <CardTitle className="text-base">{uiT("ui:messages.m_46bfab69ff187f2f")}</CardTitle>
+        <CardDescription>{uiT("ui:messages.m_8ccd77355b45a380")}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-3 px-5 pb-5 pt-2 sm:grid-cols-2 xl:grid-cols-4">
         <MetricTile
-          label="Debits"
+          label={uiT("ui:messages.m_a32f3e1601067040")}
           value={formatCents(debitCents)}
-          subtitle={`${eventCount} total event${eventCount === 1 ? "" : "s"} in range`}
+          subtitle={uiT("ui:messages.m_4adfbd984fef6e04", { v0: (eventCount), v1: (eventCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
           icon={ArrowUpRight}
         />
         <MetricTile
-          label="Credits"
+          label={uiT("ui:messages.m_2a6b24ad28722034")}
           value={formatCents(creditCents)}
-          subtitle="Refunds, offsets, and credit returns"
+          subtitle={uiT("ui:messages.m_1183445aa4b21261")}
           icon={ArrowDownLeft}
         />
         <MetricTile
-          label="Net"
+          label={uiT("ui:messages.m_660fb2c41d028988")}
           value={formatCents(netCents)}
-          subtitle="Debit minus credit for the selected period"
+          subtitle={uiT("ui:messages.m_b2a026eef03d744c")}
           icon={ReceiptText}
         />
         <MetricTile
-          label="Estimated"
+          label={uiT("ui:messages.m_b774599a9cd1f9a7")}
           value={formatCents(estimatedDebitCents)}
-          subtitle="Estimated debits that are not yet invoice-authoritative"
+          subtitle={uiT("ui:messages.m_c26f21d9764a916e")}
           icon={Coins}
         />
       </CardContent>
@@ -206,7 +205,7 @@ export function Costs({
   } = useDateRange();
 
   useEffect(() => {
-    if (!embedded) setBreadcrumbs([{ label: "Costs" }]);
+    if (!embedded) setBreadcrumbs([{ label: uiT("ui:messages.m_b88fc5fc4765148e") }]);
   }, [embedded, setBreadcrumbs]);
 
   useEffect(() => {
@@ -539,7 +538,7 @@ export function Costs({
         value: "all",
         label: (
           <span className="flex items-center gap-1.5">
-            <span>All providers</span>
+            <span>{uiT("ui:messages.m_20e56db7dfc7e08d")}</span>
             {providerKeys.length > 0 ? (
               <>
                 <span className="font-mono text-xs text-muted-foreground">{formatTokens(allTokens)}</span>
@@ -571,7 +570,7 @@ export function Costs({
         value: "all",
         label: (
           <span className="flex items-center gap-1.5">
-            <span>All billers</span>
+            <span>{uiT("ui:messages.m_b11f799538a14d78")}</span>
             {billerKeys.length > 0 ? (
               <>
                 <span className="font-mono text-xs text-muted-foreground">{formatTokens(allTokens)}</span>
@@ -619,9 +618,9 @@ export function Costs({
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               {embedded ? (
-                <h2 className="text-lg font-semibold text-foreground">Costs</h2>
+                <h2 className="text-lg font-semibold text-foreground">{uiT("ui:messages.m_b88fc5fc4765148e")}</h2>
               ) : (
-                <h1 className="text-3xl font-semibold tracking-tight">Costs</h1>
+                <h1 className="text-3xl font-semibold tracking-tight">{uiT("ui:messages.m_b88fc5fc4765148e")}</h1>
               )}
             </div>
 
@@ -648,7 +647,7 @@ export function Costs({
                 onChange={(event) => setCustomFrom(event.target.value)}
                 className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground"
               />
-              <span className="text-sm text-muted-foreground">to</span>
+              <span className="text-sm text-muted-foreground">{uiT("ui:messages.m_663ea1bfffe5038f")}</span>
               <input
                 type="date"
                 value={customTo}
@@ -675,7 +674,7 @@ export function Costs({
             />
             <SubscriptionCostCard key={companyId} companyId={companyId} report={subscriptions} error={subscriptionError} onChanged={invalidateSubscriptions} />
             <MetricTile
-              label="Budget"
+              label={uiT("ui:messages.m_1c6225ec7092ad2f")}
               value={activeBudgetIncidents.length > 0 ? String(activeBudgetIncidents.length) : (
                 spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
                   ? preset === "mtd" ? `${spendData.summary.utilizationPercent}%` : formatCents(spendData.summary.budgetCents)
@@ -683,10 +682,10 @@ export function Costs({
               )}
               subtitle={
                 activeBudgetIncidents.length > 0
-                  ? `${budgetData?.pausedAgentCount ?? 0} agents paused · ${budgetData?.pausedProjectCount ?? 0} projects paused`
+                  ? uiT("ui:messages.m_0fd30417f57a1b04", { v0: (budgetData?.pausedAgentCount ?? 0), v1: (budgetData?.pausedProjectCount ?? 0) })
                   : spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
                     ? preset === "mtd" ? `${formatCents(spendData.summary.spendCents)} of ${formatCents(spendData.summary.budgetCents)} this month` : "Monthly limit"
-                    : "No monthly cap configured"
+                    : uiT("ui:messages.m_0f009e797a3a7027")
               }
               icon={Coins}
             />
@@ -702,14 +701,14 @@ export function Costs({
               icon={ReceiptText}
             />
             <MetricTile
-              label="Finance events"
+              label={uiT("ui:messages.m_6fbed76e2c32ee0e")}
               value={financeData ? String(financeData.summary.eventCount) : "—"}
-              subtitle={financeData ? `${formatCents(financeData.summary.estimatedDebitCents)} estimated in range` : "Financial data unavailable"}
+              subtitle={financeData ? uiT("ui:messages.m_f269129b979b8d40", { v0: (formatCents(financeData.summary.estimatedDebitCents)) }) : "Financial data unavailable"}
               icon={ArrowUpRight}
             />
           </div>
           {subscriptions && Number(subscriptions.subscription.costCents) > 0 && <p className="text-sm text-muted-foreground">Subscription accounts also have {formatCents(Number(subscriptions.subscription.costCents))} in recorded usage charges for this period, separate from monthly fees.</p>}
-          {subscriptions && subscriptions.unknown.eventCount > 0 && <p className="text-sm text-muted-foreground">Other billing usage: {formatTokens(subscriptions.unknown.inputTokens + subscriptions.unknown.cachedInputTokens + subscriptions.unknown.outputTokens)} tokens{Number(subscriptions.unknown.costCents) > 0 ? ` · ${formatCents(Number(subscriptions.unknown.costCents))} in recorded charges` : ""}, included in the inference ledger.</p>}
+          {subscriptions && subscriptions.unknown.eventCount > 0 && <p className="text-sm text-muted-foreground">Other billing usage: {formatTokens(subscriptions.unknown.inputTokens + subscriptions.unknown.cachedInputTokens + subscriptions.unknown.outputTokens)}{uiT("ui:messages.m_da61a22badf88871")}{Number(subscriptions.unknown.costCents) > 0 ? ` · ${formatCents(Number(subscriptions.unknown.costCents))} in recorded charges` : ""}, included in the inference ledger.</p>}
           {subscriptionError && subscriptions && <p role="status" className="text-sm text-muted-foreground">Showing the last loaded API and subscription usage. Updates will resume automatically.</p>}
           {discoverSubscriptions.error && <div role="status" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <p>Connected accounts could not be checked. Existing subscription estimates are still shown.</p>
@@ -741,22 +740,22 @@ export function Costs({
         {!lockTab ? (
           <div className="max-w-full overflow-x-auto pb-2">
             <TabsList variant="line" className="justify-start">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              {!hideBudgetsTab ? <TabsTrigger value="budgets">Budgets</TabsTrigger> : null}
-              <TabsTrigger value="providers">Providers</TabsTrigger>
-              <TabsTrigger value="billers">Billers</TabsTrigger>
-              <TabsTrigger value="finance">Finance</TabsTrigger>
-              <TabsTrigger value="decisions">Decisions</TabsTrigger>
+              <TabsTrigger value="overview">{uiT("ui:messages.m_d4b1ea5708dd5329")}</TabsTrigger>
+              {!hideBudgetsTab ? <TabsTrigger value="budgets">{uiT("ui:messages.m_a1a06e046b0b9ad3")}</TabsTrigger> : null}
+              <TabsTrigger value="providers">{uiT("ui:messages.m_996c32b35f2182a9")}</TabsTrigger>
+              <TabsTrigger value="billers">{uiT("ui:messages.m_2ae0e2cd6bd11bb6")}</TabsTrigger>
+              <TabsTrigger value="finance">{uiT("ui:messages.m_b696d75511dc16f2")}</TabsTrigger>
+              <TabsTrigger value="decisions">{uiT("ui:messages.m_cfa6a08af3ed5871")}</TabsTrigger>
               <TabsTrigger value="fast-responses">Fast responses</TabsTrigger>
             </TabsList>
           </div>
         ) : null}
 
-        <TabsContent value="fast-responses" className="mt-4">{showCustomPrompt ? <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p> : <FastResponseHistory companyId={companyId} from={from} to={to} />}</TabsContent>
-        <TabsContent value="decisions" className="mt-4">{showCustomPrompt ? <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p> : <DecisionHistory companyId={companyId} from={from} to={to} />}</TabsContent>
+        <TabsContent value="fast-responses" className="mt-4">{showCustomPrompt ? <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p> : <FastResponseHistory companyId={companyId} from={from} to={to} />}</TabsContent>
+        <TabsContent value="decisions" className="mt-4">{showCustomPrompt ? <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p> : <DecisionHistory companyId={companyId} from={from} to={to} />}</TabsContent>
         <TabsContent value="overview" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p>
           ) : showOverviewLoading ? (
             <PageSkeleton variant="costs" />
           ) : overviewError ? (
@@ -767,11 +766,11 @@ export function Costs({
                 <div className="min-w-0 space-y-4">
                   <Card className="gap-3 py-4">
                     <CardHeader className="gap-0 px-5">
-                      <CardTitle className="text-base">By agent</CardTitle>
+                      <CardTitle className="text-base">{uiT("ui:messages.m_0cb8a702286dadaf")}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2 px-5">
                       {(spendData?.byAgent.length ?? 0) === 0 ? (
-                        <p className="text-sm text-muted-foreground">No cost events yet.</p>
+                        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_219b9c37feb3fa52")}</p>
                       ) : (
                         spendData?.byAgent.map((row) => {
                           const modelRows = agentModelRows.get(row.agentId) ?? [];
@@ -796,13 +795,12 @@ export function Costs({
                                 </div>
                                 <div className="text-right text-sm tabular-nums">
                                   <CostAmount costCents={row.costCents} eventCount={row.eventCount} estimatedEventCount={row.estimatedEventCount} />
-                                  <div className="text-xs text-muted-foreground">
-                                    in {formatTokens(row.inputTokens + row.cachedInputTokens)} ({formatTokens(row.cachedInputTokens)} cached) · out {formatTokens(row.outputTokens)}
+                                  <div className="text-xs text-muted-foreground">{uiT("ui:messages.m_74241f65e5ac9f84")}{formatTokens(row.inputTokens + row.cachedInputTokens)} ({formatTokens(row.cachedInputTokens)} cached) · out {formatTokens(row.outputTokens)}
                                   </div>
                                   {(row.apiRunCount > 0 || row.subscriptionRunCount > 0) ? (
                                     <div className="text-xs text-muted-foreground">
                                       {"runs: "}
-                                      {row.apiRunCount > 0 ? `${row.apiRunCount} api` : "0 api"}
+                                      {row.apiRunCount > 0 ? uiT("ui:messages.m_6d4102bf2fc79b1e", { v0: (row.apiRunCount) }) : uiT("ui:messages.m_db4f52e4be355e2e")}
                                       {" · "}
                                       {row.subscriptionRunCount > 0
                                         ? `${row.subscriptionRunCount} sub`
@@ -839,8 +837,7 @@ export function Costs({
                                             suffix={<span className="ml-1 font-normal text-muted-foreground">({sharePct}%)</span>}
                                           />
                                           <div className="text-muted-foreground">
-                                            {formatTokens(modelRow.inputTokens + modelRow.cachedInputTokens + modelRow.outputTokens)} tok
-                                          </div>
+                                            {formatTokens(modelRow.inputTokens + modelRow.cachedInputTokens + modelRow.outputTokens)}{uiT("ui:messages.m_2298879d8c60a6bb")}</div>
                                         </div>
                                       </div>
                                     );
@@ -864,18 +861,18 @@ export function Costs({
                 <div className="space-y-4">
                   <Card className="gap-3 py-4">
                     <CardHeader className="gap-0 px-5">
-                      <CardTitle className="text-base">By project</CardTitle>
+                      <CardTitle className="text-base">{uiT("ui:messages.m_9335958ece132c08")}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2 px-5">
                       {(spendData?.byProject.length ?? 0) === 0 ? (
-                        <p className="text-sm text-muted-foreground">No project-attributed run costs yet.</p>
+                        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_856de837b71098ed")}</p>
                       ) : (
                         spendData?.byProject.map((row, index) => (
                           <div
                             key={row.projectId ?? `unattributed-${index}`}
                             className="flex items-center justify-between gap-3 border border-border px-3 py-2 text-sm"
                           >
-                            <span className="truncate">{row.projectName ?? row.projectId ?? "Unattributed"}</span>
+                            <span className="truncate">{row.projectName ?? row.projectId ?? uiT("ui:messages.m_a5c4e03c56e08f72")}</span>
                             <CostAmount costCents={row.costCents} eventCount={row.eventCount} estimatedEventCount={row.estimatedEventCount} />
                           </div>
                         ))
@@ -930,34 +927,32 @@ export function Costs({
             <>
               <Card className="border-border/70 bg-(image:--gradient-extract-2)">
                 <CardHeader className="px-5 pt-5 pb-3">
-                  <CardTitle className="text-base">Budget control plane</CardTitle>
-                  <CardDescription>
-                    Hard-stop spend limits for agents and projects. Provider subscription quota stays separate and appears under Providers.
-                  </CardDescription>
+                  <CardTitle className="text-base">{uiT("ui:messages.m_24583d5b98662237")}</CardTitle>
+                  <CardDescription>{uiT("ui:messages.m_666a3a619c81b105")}</CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-3 px-5 pb-5 pt-0 md:grid-cols-4">
                   <MetricTile
-                    label="Active incidents"
+                    label={uiT("ui:messages.m_0d5b14c485598692")}
                     value={String(activeBudgetIncidents.length)}
-                    subtitle="Open soft or hard threshold crossings"
+                    subtitle={uiT("ui:messages.m_41ab14a5dbfff798")}
                     icon={ReceiptText}
                   />
                   <MetricTile
-                    label="Pending approvals"
+                    label={uiT("ui:messages.m_0405f4b67edd2784")}
                     value={String(budgetData?.pendingApprovalCount ?? 0)}
-                    subtitle="Budget override approvals awaiting board action"
+                    subtitle={uiT("ui:messages.m_1792320c21fd985f")}
                     icon={ArrowUpRight}
                   />
                   <MetricTile
-                    label="Paused agents"
+                    label={uiT("ui:messages.m_751e5a2323f2a240")}
                     value={String(budgetData?.pausedAgentCount ?? 0)}
-                    subtitle="Agent heartbeats blocked by budget"
+                    subtitle={uiT("ui:messages.m_49bd0807f5255fdb")}
                     icon={Coins}
                   />
                   <MetricTile
-                    label="Paused projects"
+                    label={uiT("ui:messages.m_5be643e6acfebdf9")}
                     value={String(budgetData?.pausedProjectCount ?? 0)}
-                    subtitle="Project execution blocked by budget"
+                    subtitle={uiT("ui:messages.m_0628458bd0e5f2fe")}
                     icon={DollarSign}
                   />
                 </CardContent>
@@ -966,7 +961,7 @@ export function Costs({
               {activeBudgetIncidents.length > 0 ? (
                 <div className="space-y-3">
                   <div>
-                    <h2 className="text-lg font-semibold">Active incidents</h2>
+                    <h2 className="text-lg font-semibold">{uiT("ui:messages.m_0d5b14c485598692")}</h2>
                     <p className="text-sm text-muted-foreground">
                       Raise the budget or keep a hard stop paused. Dismiss a warning when no action is needed.
                     </p>
@@ -997,13 +992,13 @@ export function Costs({
                   return (
                     <section key={scopeType} className="space-y-3">
                       <div>
-                        <h2 className="text-lg font-semibold capitalize">{scopeType === "company" ? "organization" : scopeType} budgets</h2>
+                        <h2 className="text-lg font-semibold capitalize">{scopeType === "company" ? uiT("ui:messages.m_af3a1bb312bf8430") : scopeType}{uiT("ui:messages.m_ed90f6d3af8d7523")}</h2>
                         <p className="text-sm text-muted-foreground">
                           {scopeType === "company"
-                            ? "Organization-wide monthly policy."
+                            ? uiT("ui:messages.m_17c42f187c6b4f1a")
                             : scopeType === "agent"
-                              ? "Recurring monthly spend policies for individual agents."
-                              : "Lifetime spend policies for execution-bound projects."}
+                              ? uiT("ui:messages.m_8b1aa6026f8ef9d1")
+                              : uiT("ui:messages.m_c340e83ee33326b0")}
                         </p>
                       </div>
                       <div className="grid gap-4 xl:grid-cols-2">
@@ -1025,9 +1020,7 @@ export function Costs({
 
                 {budgetPolicies.length === 0 ? (
                   <Card>
-                    <CardContent className="px-5 py-8 text-sm text-muted-foreground">
-                      No budget policies yet. Set agent and project budgets from their detail pages, or use the existing organization monthly budget control.
-                    </CardContent>
+                    <CardContent className="px-5 py-8 text-sm text-muted-foreground">{uiT("ui:messages.m_64167086cbffc6ca")}</CardContent>
                   </Card>
                 ) : null}
               </div>
@@ -1037,7 +1030,7 @@ export function Costs({
 
         <TabsContent value="providers" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p>
           ) : (
             <>
               <Tabs value={effectiveProvider} onValueChange={setActiveProvider}>
@@ -1045,7 +1038,7 @@ export function Costs({
 
                 <TabsContent value="all" className="mt-4">
                   {providers.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No cost events in this period.</p>
+                    <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_5eeb31929690cbcf")}</p>
                   ) : (
                     <div className="grid gap-4 md:grid-cols-2">
                       {providers.map((provider) => (
@@ -1098,7 +1091,7 @@ export function Costs({
 
         <TabsContent value="billers" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p>
           ) : (
             <>
               <Tabs value={effectiveBiller} onValueChange={setActiveBiller}>
@@ -1106,7 +1099,7 @@ export function Costs({
 
                 <TabsContent value="all" className="mt-4">
                   {billers.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No billable events in this period.</p>
+                    <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_408a4cc5b3653299")}</p>
                   ) : (
                     <div className="grid gap-4 md:grid-cols-2">
                       {billers.map((biller) => {
@@ -1155,7 +1148,7 @@ export function Costs({
           {financeData?.summary.providerReportedCentsExact !== undefined && <p className="text-sm text-muted-foreground">Provider API cost reports: {formatCents(financeData.summary.providerReportedCents ?? 0)}. Report totals overlap invoices and run estimates and are shown separately from recorded charges.</p>}
 
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_1288f512731a783c")}</p>
           ) : financeLoading ? (
             <PageSkeleton variant="costs" />
           ) : financeError && !financeData ? (
@@ -1174,12 +1167,12 @@ export function Costs({
                 <div className="space-y-4">
                   <Card>
                     <CardHeader className="px-5 pt-5 pb-2">
-                      <CardTitle className="text-base">By biller</CardTitle>
-                      <CardDescription>Account-level financial events grouped by who charged or credited them.</CardDescription>
+                      <CardTitle className="text-base">{uiT("ui:messages.m_27b8241be4a85eda")}</CardTitle>
+                      <CardDescription>{uiT("ui:messages.m_cf37bd4e0396fe2a")}</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4 px-5 pb-5 pt-2 md:grid-cols-2">
                       {(financeData?.byBiller.length ?? 0) === 0 ? (
-                        <p className="text-sm text-muted-foreground">No finance events yet.</p>
+                        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_40a93ddf87ee1732")}</p>
                       ) : (
                         financeData?.byBiller.map((row) => <FinanceBillerCard key={`${row.biller}:${row.currency}`} row={row} />)
                       )}

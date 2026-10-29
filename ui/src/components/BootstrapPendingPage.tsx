@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { Loader2, ShieldCheck, Terminal, TriangleAlert } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -127,7 +128,7 @@ export function BootstrapPendingPage({
         </p>
         <div className="mt-5">
           <Button asChild>
-            <Link to="/auth?next=/">Sign in / Create account</Link>
+            <Link to="/auth?next=/">{uiT("ui:messages.m_5d4f5eb117173ca0")}</Link>
           </Button>
         </div>
         <CliFallback hasActiveInvite={hasActiveInvite} />
@@ -148,15 +149,12 @@ export function BootstrapPendingPage({
           {isClaiming && <Loader2 className="mr-2 size-4 animate-spin" aria-hidden />}
           {isClaiming ? "Claiming..." : "Claim this instance"}
         </Button>
-        <span className="text-sm text-muted-foreground">
-          Signed in as <span className="font-medium text-foreground">{displayIdentity(session)}</span>
+        <span className="text-sm text-muted-foreground">{uiT("ui:messages.m_d293f00044ede70f")}<span className="font-medium text-foreground">{displayIdentity(session)}</span>
         </span>
       </div>
       <p className="mt-3 text-xs text-muted-foreground">
         Wrong account?{" "}
-        <Link to="/auth?next=/" className="underline underline-offset-2">
-          Switch account
-        </Link>
+        <Link to="/auth?next=/" className="underline underline-offset-2">{uiT("ui:messages.m_fedce010cffcb86e")}</Link>
         .
       </p>
       {claimError && (

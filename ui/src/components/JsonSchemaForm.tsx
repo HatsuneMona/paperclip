@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronDown,
@@ -553,12 +554,12 @@ const EnumField = React.memo(({
         disabled={disabled}
       >
         <SelectTrigger className="w-full" aria-label={label} aria-required={isRequired}>
-          <SelectValue placeholder="Select an option" />
+          <SelectValue placeholder={uiT("ui:messages.m_fb1cbc38fb4060f4")} />
         </SelectTrigger>
         <SelectContent>
           {showUnsetOption && (
             <SelectItem value={ENUM_UNSET_VALUE} textValue="None">
-              <span className="text-muted-foreground">None</span>
+              <span className="text-muted-foreground">{uiT("ui:messages.m_dc937b59892604f5")}</span>
             </SelectItem>
           )}
           {options.map((option) => (
@@ -975,7 +976,7 @@ const ArrayField = React.memo(({
           }}
         >
           <Plus className="mr-2 h-4 w-4" />
-          {isComplex ? "Add item" : "Add"}
+          {isComplex ? uiT("ui:messages.m_d1a0b329a72b8f16") : uiT("ui:messages.m_9fd728c66c9a256b")}
         </Button>
       </div>
 
@@ -1020,7 +1021,7 @@ const ArrayField = React.memo(({
               }}
             >
               <Trash2 className="h-4 w-4" />
-              <span className="sr-only">Remove item</span>
+              <span className="sr-only">{uiT("ui:messages.m_5a89edf2867d98dd")}</span>
             </Button>
           </div>
         ))}

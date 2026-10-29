@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, RefreshCw } from "lucide-react";
@@ -59,7 +60,7 @@ export function ConnectedAggregatorApps({ connection }: { connection: ToolConnec
         disabled={!settled || query.isLoading || syncing || Boolean(unavailable)}
         onClick={() => refresh.mutate(userId)}>
         <RefreshCw className={syncing ? "size-4 animate-spin" : "size-4"} aria-hidden="true" />
-        {syncing ? "Refreshing…" : `Refresh ${providerName}`}
+        {syncing ? uiT("ui:messages.m_1c0def7be0607b96") : `Refresh ${providerName}`}
       </Button>
     </div>
     {loadFailed || syncFailed ? <p role="alert" className="text-sm text-destructive">

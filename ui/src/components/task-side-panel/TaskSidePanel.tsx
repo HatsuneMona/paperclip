@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { CoordinatorConversationTasksPanel } from "@/components/coordinator/CoordinatorConversationTasksPanel";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
@@ -476,7 +477,7 @@ function TaskSidePanelForScope({
       planDocument === null && !target?.revisionId && !documentIssueId
     ) return;
     const document = documentIssueId ? undefined : documents.find((candidate) => candidate.key === documentDeepLink.documentKey);
-    const label = document ? documentDisplayTitle(document) : documentDeepLink.documentKey === "plan" ? "Plan" : documentDeepLink.documentKey;
+    const label = document ? documentDisplayTitle(document) : documentDeepLink.documentKey === "plan" ? uiT("ui:messages.m_fa8ed0bdabdd6bcb") : documentDeepLink.documentKey;
     // A refresh must not replay a link after the user selects another tab.
     handledDocumentRequestRef.current = documentDeepLink.requestId;
     if (coordinatorWorkspaceEnabled) userInteractedRef.current = true;
@@ -640,25 +641,25 @@ function TaskSidePanelForScope({
   const launcherSections = useMemo<SidePanelLauncherSection[]>(() => {
     const primary: SidePanelLauncherItem[] = conversationAgentId ? [
       { id: "agent-tasks", label: "Tasks", description: "Tasks this agent worked on", icon: <ListChecks />, alreadyOpen: controller.tabs.some((tab) => tab.id === "agent-tasks") },
-      { id: "artifacts", label: "Artifacts", description: "Files this agent produced", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
-      { id: "properties", label: "Properties", icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
+      { id: "artifacts", label: uiT("ui:messages.m_314ae71b8c8dc9c9"), description: "Files this agent produced", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
+      { id: "properties", label: uiT("ui:messages.m_ae43692b2a310b8e"), icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
     ] : [
-      { id: "properties", label: "Properties", icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
-      ...(subtasksAvailable ? [{ id: "subtasks", label: taskLabel, description: tasksTab?.hasError ? "Could not load all tasks" : `${taskCount} total`, icon: <ListTree />, alreadyOpen: controller.tabs.some((tab) => tab.id === "subtasks") }] : []),
-      { id: "artifacts", label: "Artifacts", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
+      { id: "properties", label: uiT("ui:messages.m_ae43692b2a310b8e"), icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
+      ...(subtasksAvailable ? [{ id: "subtasks", label: taskLabel, description: tasksTab?.hasError ? "Could not load all tasks" : uiT("ui:messages.m_5db3480feb77cac6", { v0: (taskCount) }), icon: <ListTree />, alreadyOpen: controller.tabs.some((tab) => tab.id === "subtasks") }] : []),
+      { id: "artifacts", label: uiT("ui:messages.m_314ae71b8c8dc9c9"), icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
     ];
     for (const [index, browser] of (browsersQuery.data ?? []).entries()) {
-      primary.push({ id: `browser:${browser.id}`, label: (browsersQuery.data?.length ?? 0) > 1 ? `Browser ${index + 1}` : "Browser", description: browser.status, icon: <Globe />, alreadyOpen: controller.tabs.some(tab => tab.id === `browser:${browser.id}`) });
+      primary.push({ id: `browser:${browser.id}`, label: (browsersQuery.data?.length ?? 0) > 1 ? uiT("ui:messages.m_7cc7a7a8fe283d43", { v0: (index + 1) }) : uiT("ui:messages.m_d31de1a5c5c8ba2a"), description: browser.status, icon: <Globe />, alreadyOpen: controller.tabs.some(tab => tab.id === `browser:${browser.id}`) });
     }
     for (const panel of pluginPanels) primary.push({ id: taskPluginPanelId(panel), label: panel.slot.displayName, icon: <AppWindow />, alreadyOpen: controller.tabs.some(tab => tab.id === taskPluginPanelId(panel)) });
     if (fileTabsEnabled) {
-      primary.push({ id: "files", label: "Files", icon: <FolderOpen />, shortcut: "G F", alreadyOpen: controller.tabs.some((tab) => tab.id === "files") });
+      primary.push({ id: "files", label: uiT("ui:messages.m_abc7e9892806b047"), icon: <FolderOpen />, shortcut: "G F", alreadyOpen: controller.tabs.some((tab) => tab.id === "files") });
     }
     const documentItems: SidePanelLauncherItem[] = [
       ...(planDocument ? [{
         id: "document:plan",
         label: documentDisplayTitle(planDocument),
-        description: `Revision ${planDocument.latestRevisionNumber ?? 1}`,
+        description: uiT("ui:messages.m_ab8ccd29bfdbcd62", { v0: (planDocument.latestRevisionNumber ?? 1) }),
         icon: <Lightbulb />,
         alreadyOpen: controller.tabs.some((tab) => tab.id === "document:plan"),
       }] : []),
@@ -668,13 +669,13 @@ function TaskSidePanelForScope({
         .map((document) => ({
           id: `document:${document.key}`,
           label: documentDisplayTitle(document),
-          description: `Revision ${document.latestRevisionNumber ?? 1}`,
+          description: uiT("ui:messages.m_ab8ccd29bfdbcd62", { v0: (document.latestRevisionNumber ?? 1) }),
           icon: <FileText />,
           alreadyOpen: controller.tabs.some((tab) => tab.id === `document:${document.key}`),
         })),
     ];
     const sections: SidePanelLauncherSection[] = [
-      { id: "open", label: "Open", items: primary },
+      { id: "open", label: uiT("ui:messages.m_ed077f3d8125d60d"), items: primary },
     ];
     if (documentItems.length > 0) {
       sections.push({ id: "documents", label: "Task documents", items: documentItems });
@@ -761,7 +762,7 @@ function TaskSidePanelForScope({
               ? "h-(--side-panel-tab-height) w-(--side-panel-tab-height) rounded-md"
               : "h-(--side-panel-tab-height) w-(--side-panel-tab-height) rounded-(--side-panel-control-radius)",
           )}
-          aria-label="Open a new tab"
+          aria-label={uiT("ui:messages.m_2b75279f7878c031")}
         >
           <Plus aria-hidden />
         </Button>

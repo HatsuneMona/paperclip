@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Play } from "lucide-react";
 import type { IssueWorkProduct } from "@paperclipai/shared";
 import {
@@ -80,7 +81,7 @@ function OutputMediaPreview({
       <button
         type="button"
         className={className}
-        aria-label={`Browse ${filename} in gallery`}
+        aria-label={uiT("ui:messages.m_a38b45b309ee3b99", { v0: (filename) })}
         onClick={() => onMediaClick(item)}
       >
         {preview}
@@ -94,7 +95,7 @@ function OutputMediaPreview({
       target="_blank"
       rel="noreferrer"
       className={className}
-      aria-label={`Open ${filename}`}
+      aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (filename) })}
     >
       {preview}
     </a>
@@ -120,10 +121,10 @@ export function IssueOutputSection({ workProducts, resolveCreatorName, onMediaCl
   const fileRest = rest.filter((item) => !isMediaOutput(item));
 
   return (
-    <section className="space-y-3" aria-label="Task outputs">
+    <section className="space-y-3" aria-label={uiT("ui:messages.m_9e5b285b313baa9f")}>
       <div className="flex items-center gap-2">
         <Play className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
-        <h3 className="text-sm font-medium text-muted-foreground">Output</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">{uiT("ui:messages.m_b2439bcb8dee14b6")}</h3>
         <span className="text-xs text-muted-foreground">{count}</span>
       </div>
 

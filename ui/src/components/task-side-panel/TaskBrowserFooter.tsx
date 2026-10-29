@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   Clock3,
   LoaderCircle,
@@ -78,7 +79,7 @@ export function TaskBrowserFooter({
 
   return (
     <footer
-      aria-label="Browser session"
+      aria-label={uiT("ui:messages.m_ccf3756dcb8c0349")}
       className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-t px-3 py-2 text-xs text-muted-foreground"
     >
       {closingSoon && (

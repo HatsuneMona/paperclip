@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -102,18 +103,18 @@ export function BuiltInAgentGate({ agentKey, companyId, featureLabel, children }
       <div className="space-y-4">
         <InlineBanner
           tone="warning"
-          title={`${label} is paused.`}
+          title={uiT("ui:messages.m_df654f103dec22d8", { v0: (label) })}
           actions={
             <>
               <Button variant="ghost" size="sm" asChild>
-                <Link to={agentUrl(state.agent)}>View agent</Link>
+                <Link to={agentUrl(state.agent)}>{uiT("ui:messages.m_7ce7832e35e85d35")}</Link>
               </Button>
               <Button
                 size="sm"
                 onClick={() => state.agent && resume.mutate(state.agent.id)}
                 disabled={resume.isPending}
               >
-                {resume.isPending ? "Resuming…" : "Resume agent"}
+                {resume.isPending ? uiT("ui:messages.m_c494e3ca3e3b04a3") : uiT("ui:messages.m_0bb60c4501919e6a")}
               </Button>
             </>
           }

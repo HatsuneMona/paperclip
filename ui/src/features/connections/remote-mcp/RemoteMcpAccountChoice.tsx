@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { InlineBanner } from "@/components/InlineBanner";
 import { ConnectionChoiceList } from "../ConnectionChoiceList";
@@ -28,7 +29,7 @@ export function RemoteMcpAccountChoice({
         <h1 className="text-xl font-bold">
           {upstreamServiceName
             ? `Connect ${upstreamServiceName} through ${providerName}`
-            : `Connect ${providerName}`}
+            : uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (providerName) })}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Use an existing connection or connect a new account. Existing access
@@ -61,9 +62,7 @@ export function RemoteMcpAccountChoice({
           variant="ghost"
           disabled={Boolean(pendingId)}
           onClick={onCancel}
-        >
-          Cancel
-        </Button>
+        >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
         <Button disabled={Boolean(pendingId)} onClick={onConnectNew}>
           Connect new
         </Button>

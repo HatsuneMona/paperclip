@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   useEffect,
   useId,
@@ -211,8 +212,8 @@ function WorkspaceFileRow({ item, treeItemId, selected, highlighted, depth, onOp
         <a
           href={downloadUrl}
           download={name}
-          aria-label={`Download ${name}`}
-          title={`Download ${name}`}
+          aria-label={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (name) })}
+          title={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (name) })}
           onClick={(event) => event.stopPropagation()}
           className="ml-auto inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground opacity-70 hover:bg-background/70 hover:text-foreground hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
@@ -1001,7 +1002,7 @@ export function WorkspaceFileBrowser({
     body = (
       <StateMessage
         icon={<FolderOpen aria-hidden="true" className="h-5 w-5 text-muted-foreground" />}
-        title="No organization selected"
+        title={uiT("ui:messages.m_278cd1778d29b11d")}
         body="Choose an organization before browsing another project workspace."
       />
     );
@@ -1052,8 +1053,7 @@ export function WorkspaceFileBrowser({
             disabled={!queriesEnabled}
             onClick={() => void listQuery.refetch()}
           >
-            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
-          </Button>
+            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
         ) : null}
       />
     );

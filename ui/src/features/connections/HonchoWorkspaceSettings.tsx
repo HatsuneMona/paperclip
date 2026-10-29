@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { connectionInstructionsConfig, type ToolConnection } from "@paperclipai/shared";
@@ -20,12 +21,12 @@ export function HonchoWorkspaceSettings({ connection, canConfigure }: { connecti
   });
   return <section className="space-y-3" aria-label="Honcho workspace">
     <label htmlFor={id} className="text-sm font-medium">Honcho workspace</label>
-    <Input id={id} value={value} maxLength={512} disabled={!canConfigure || mutation.isPending} placeholder="Workspace ID" onChange={(event) => setDraft(event.target.value)} />
+    <Input id={id} value={value} maxLength={512} disabled={!canConfigure || mutation.isPending} placeholder={uiT("ui:messages.m_889d892993c3e5f0")} onChange={(event) => setDraft(event.target.value)} />
     {!value.trim() && <InlineBanner tone="warning">Enter a workspace to include Honcho instructions. Existing tools remain available.</InlineBanner>}
     {mutation.isError && <div role="alert"><InlineBanner tone="danger">{mutation.error.message}</InlineBanner></div>}
     {draft !== null && draft !== saved && <div className="flex items-center justify-between">
-      <Button variant="ghost" disabled={mutation.isPending} onClick={() => { setDraft(null); mutation.reset(); }}>Cancel</Button>
-      <Button disabled={!canConfigure || mutation.isPending || !value.trim()} onClick={() => mutation.mutate()}>{mutation.isPending ? "Saving…" : "Save workspace"}</Button>
+      <Button variant="ghost" disabled={mutation.isPending} onClick={() => { setDraft(null); mutation.reset(); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+      <Button disabled={!canConfigure || mutation.isPending || !value.trim()} onClick={() => mutation.mutate()}>{mutation.isPending ? uiT("ui:messages.m_23e39291d6135814") : "Save workspace"}</Button>
     </div>}
   </section>;
 }

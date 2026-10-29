@@ -1,3 +1,5 @@
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Camera, LoaderCircle, Save, Trash2, UserRoundPen } from "lucide-react";
@@ -37,8 +39,8 @@ export function ProfileSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
-      { label: "Profile" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_d696a35bdd1883da") },
     ]);
   }, [setBreadcrumbs]);
 
@@ -80,7 +82,7 @@ export function ProfileSettings() {
       setImage(profile.image ?? "");
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to update profile.");
+      setActionError(error instanceof Error ? error.message : uiT("ui:messages.m_6c0c2acb56277f07"));
     },
   });
 
@@ -103,7 +105,7 @@ export function ProfileSettings() {
       setImage(profile.image ?? "");
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to upload avatar.");
+      setActionError(error instanceof Error ? error.message : uiT("ui:messages.m_cc7c19d57d95481d"));
     },
   });
 
@@ -115,18 +117,18 @@ export function ProfileSettings() {
       setImage(profile.image ?? "");
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to remove avatar.");
+      setActionError(error instanceof Error ? error.message : uiT("ui:messages.m_f90661198c6813e4"));
     },
   });
 
   if (sessionQuery.isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading profile...</div>;
+    return <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_4a47f12d23c4a6bf")}</div>;
   }
 
   if (sessionQuery.error || !sessionQuery.data) {
     return (
       <div className="text-sm text-destructive">
-        {sessionQuery.error instanceof Error ? sessionQuery.error.message : "Failed to load profile."}
+        {sessionQuery.error instanceof Error ? sessionQuery.error.message : uiT("ui:messages.m_530aef9d0b9be28d")}
       </div>
     );
   }
@@ -144,11 +146,9 @@ export function ProfileSettings() {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <UserRoundPen className="h-5 w-5 text-muted-foreground" />
-          <h1 className="text-lg font-semibold">Profile</h1>
+          <h1 className="text-lg font-semibold">{uiT("ui:messages.m_d696a35bdd1883da")}</h1>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Control how your account appears in the sidebar and other board surfaces.
-        </p>
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_d05fd497afc64cea")}</p>
       </div>
 
       {actionError ? (
@@ -199,7 +199,7 @@ export function ProfileSettings() {
                     disabled={!selectedCompanyId || isSavingProfile}
                   >
                     {uploadAvatarMutation.isPending ? <LoaderCircle className="size-4 animate-spin" /> : <Camera className="size-4" />}
-                    {currentImage ? "Change photo" : "Upload photo"}
+                    {currentImage ? uiT("ui:messages.m_c5fbcb8b00ea0d6e") : uiT("ui:messages.m_32258ba63e8086c4")}
                   </Button>
                   {currentImage ? (
                     <Button
@@ -208,9 +208,7 @@ export function ProfileSettings() {
                       onClick={() => removeAvatarMutation.mutate()}
                       disabled={isSavingProfile}
                     >
-                      {removeAvatarMutation.isPending ? <LoaderCircle className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
-                      Remove
-                    </Button>
+                      {removeAvatarMutation.isPending ? <LoaderCircle className="size-4 animate-spin" /> : <Trash2 className="size-4" />}{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
                   ) : null}
                 </div>
               </div>
@@ -218,10 +216,9 @@ export function ProfileSettings() {
               <div className="min-w-0 flex-1 space-y-2 pb-1">
                 <div>
                   <h2 className="truncate text-2xl font-semibold text-foreground">{currentName}</h2>
-                  <p className="truncate text-sm text-muted-foreground">{sessionQuery.data.user.email ?? "No email"}</p>
+                  <p className="truncate text-sm text-muted-foreground">{sessionQuery.data.user.email ?? uiT("ui:messages.m_2f44d9d0a44fa838")}</p>
                 </div>
-                <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
-                  Click the avatar to upload a new image. {uploadHint}
+                <p className="max-w-2xl text-sm leading-6 text-muted-foreground">{uiT("ui:messages.m_9cd9bff6f325db31")}{uploadHint}
                 </p>
               </div>
             </div>
@@ -236,40 +233,37 @@ export function ProfileSettings() {
           }}
         >
           <div className="space-y-2">
-            <Label htmlFor="profile-name">Display name</Label>
+            <Label htmlFor="profile-name">{uiT("ui:messages.m_2b7f6a84de917e38")}</Label>
             <Input
               id="profile-name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               maxLength={120}
-              placeholder="Board"
+              placeholder={uiT("ui:messages.m_4816cbfd74aa8297")}
             />
-            <p className="text-xs text-muted-foreground">
-              Shown in the sidebar account footer and comment author surfaces.
-            </p>
+            <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_8d1d6d3451f026df")}</p>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="profile-email">Email</Label>
+            <Label htmlFor="profile-email">{uiT("ui:messages.m_969ccbd3cf6300ec")}</Label>
             <Input
               id="profile-email"
               value={sessionQuery.data.user.email ?? ""}
               readOnly
               disabled
             />
-            <p className="text-xs text-muted-foreground">
-              Email is managed by your auth session and is read-only here.
-            </p>
+            <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_c7439573e7fcf11c")}</p>
           </div>
 
           <div className="md:col-span-2 flex justify-end">
             <Button type="submit" disabled={isSavingProfile || !name.trim()}>
               {updateMutation.isPending ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
-              {updateMutation.isPending ? "Saving..." : "Save profile"}
+              {updateMutation.isPending ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_0c8209e72ec87d9d")}
             </Button>
           </div>
         </form>
 
+        <div className="max-w-xs space-y-2"><h2 className="text-sm font-medium">语言 / Language</h2><LanguageSwitcher /></div>
         <InboxAgentPolicyControl companyId={selectedCompanyId} />
       </section>
     </div>

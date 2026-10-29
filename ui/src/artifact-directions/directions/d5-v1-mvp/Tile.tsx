@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import type { LabArtifact, LabGroup } from "../../kit";
 import { Front } from "./Front";
@@ -73,7 +74,7 @@ export function StackTile({ group }: { group: LabGroup }) {
 export function SingleTile({ artifact }: { artifact: LabArtifact }) {
   const name = artifact.filename ?? artifact.title;
   return (
-    <Tile label={`Open ${name}`} caption={<Caption title={name} identifier={artifact.taskIdentifier} facts={[`Updated ${updatedLabel(artifact.updatedAt)}`]} />}>
+    <Tile label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (name) })} caption={<Caption title={name} identifier={artifact.taskIdentifier} facts={[`Updated ${updatedLabel(artifact.updatedAt)}`]} />}>
       <Front artifact={artifact} />
     </Tile>
   );

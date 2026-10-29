@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { IssueDocument } from "@paperclipai/shared";
@@ -78,7 +79,7 @@ export function TaskDocumentPanel({
       <header className="space-y-1">
         <h2 className="text-lg font-semibold">{documentDisplayTitle(document)}</h2>
         <div className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
-          <span>{`Revision ${document.latestRevisionNumber ?? 1}`}</span>
+          <span>{uiT("ui:messages.m_ab8ccd29bfdbcd62", { v0: (document.latestRevisionNumber ?? 1) })}</span>
           <span aria-hidden>·</span>
           <span>{`Updated ${new Date(document.updatedAt).toLocaleString()}`}</span>
           {!revisionId ? <DocumentAnnotationsCountChip
@@ -105,7 +106,7 @@ export function TaskDocumentPanel({
           <MarkdownBody>{document.body}</MarkdownBody>
         </IssueDocumentAnnotations>
       ) : (
-        <p className="text-sm text-muted-foreground">Document is empty.</p>
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_149458228eeb7e85")}</p>
       )}
     </article>
   );

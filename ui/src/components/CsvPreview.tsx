@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { parseCsv } from "@/lib/csv-preview";
 
@@ -20,7 +21,7 @@ export function CsvPreview({ text, title }: { text: string; title: string }) {
         <span className="font-medium text-foreground">CSV preview</span>
         <span>{rows.length.toLocaleString()} {rows.length === 1 ? "row" : "rows"}</span>
         <span>{columnCount.toLocaleString()} {columnCount === 1 ? "column" : "columns"}</span>
-        {(rows.length > MAX_VISIBLE_ROWS || columnCount > MAX_VISIBLE_COLUMNS) && <span>Showing the first {Math.min(rows.length, MAX_VISIBLE_ROWS)} rows and {columns.length} columns. Download for the complete file.</span>}
+        {(rows.length > MAX_VISIBLE_ROWS || columnCount > MAX_VISIBLE_COLUMNS) && <span>{uiT("ui:messages.m_92eb9ae1f1793f94")}{Math.min(rows.length, MAX_VISIBLE_ROWS)} rows and {columns.length} columns. Download for the complete file.</span>}
       </div>
       <div className="min-h-0 flex-1 overflow-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset" role="region" aria-label={`${title} CSV table`} tabIndex={0}>
         <table className="w-full border-collapse text-sm">

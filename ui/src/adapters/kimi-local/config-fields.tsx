@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import type { AdapterConfigFieldsProps } from "../types";
 import {
@@ -24,7 +25,7 @@ export function KimiLocalConfigFields({
   if (hideInstructionsFile) return null;
   return configFieldsForSection(section, (
     <>
-      <Field label="Agent instructions file" hint={instructionsFileHint}>
+      <Field label={uiT("ui:messages.m_ce46e7f310ea3f64")} hint={instructionsFileHint}>
         <div className="flex items-center gap-2">
           <DraftInput
             value={

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { auditSectionHref, type AuditSection } from "./audit/audit-navigation";
 
 export type AgentDetailView =
@@ -21,29 +22,29 @@ export const AGENT_DETAIL_NAVIGATION: ReadonlyArray<{
   items: ReadonlyArray<{ value: AgentLocalDetailView; label: string }>;
 }> = [
   {
-    label: "Agent",
+    label: uiT("ui:messages.m_11b39c93777e8f1f"),
     items: [
-      { value: "overview", label: "Overview" },
-      { value: "instructions", label: "Instructions" },
-      { value: "skills", label: "Skills" },
+      { value: "overview", label: uiT("ui:messages.m_d4b1ea5708dd5329") },
+      { value: "instructions", label: uiT("ui:messages.m_934652dce41d62d3") },
+      { value: "skills", label: uiT("ui:messages.m_66d0f523a379b2de") },
     ],
   },
   {
-    label: "Runtime",
+    label: uiT("ui:messages.m_1093115897879aa3"),
     items: [
-      { value: "runtime", label: "Harness / Runtime" },
-      { value: "secrets", label: "Secrets" },
-      { value: "tools", label: "Tools" },
-      { value: "channels", label: "Channels" },
+      { value: "runtime", label: uiT("ui:messages.m_6711e546a022dbe7") },
+      { value: "secrets", label: uiT("ui:messages.m_d8707d411d997657") },
+      { value: "tools", label: uiT("ui:messages.m_ea93d6a262ecb87a") },
+      { value: "channels", label: uiT("ui:messages.m_4c8906cf76f5740a") },
     ],
   },
   {
     label: "Governance",
     items: [
       { value: "permissions", label: "Permissions / Trust" },
-      { value: "api-keys", label: "API Keys" },
-      { value: "revisions", label: "Revisions" },
-      { value: "advanced", label: "Advanced" },
+      { value: "api-keys", label: uiT("ui:messages.m_c08f17eb9e11a353") },
+      { value: "revisions", label: uiT("ui:messages.m_da80b1d5740caaef") },
+      { value: "advanced", label: uiT("ui:messages.m_9f088dbebd6c3c70") },
     ],
   },
 ] as const;

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 /**
  * Single source of truth for adapter display metadata.
  *
@@ -83,7 +84,7 @@ const adapterDisplayMap: Record<string, AdapterDisplayInfo> = {
     recommended: true,
   },
   paperclip_runner: {
-    label: "Paperclip Runner",
+    label: uiT("ui:messages.m_aacfc564be2ab279"),
     description: "Experimental Rust runner with a Codex provider",
     icon: Cpu,
     experimental: true,
@@ -94,7 +95,7 @@ const adapterDisplayMap: Record<string, AdapterDisplayInfo> = {
     icon: Gem,
   },
   grok_local: {
-    label: "Grok Build",
+    label: uiT("ui:messages.m_fd3bf01ac1dbce93"),
     description: "Grok Build harness",
     icon: Bot,
   },
@@ -115,7 +116,7 @@ const adapterDisplayMap: Record<string, AdapterDisplayInfo> = {
     icon: Bot,
   },
   opencode_local: {
-    label: "OpenCode",
+    label: uiT("ui:messages.m_3af0e55ccc96d87c"),
     description: "OpenCode multi-provider harness",
     icon: OpenCodeLogoIcon,
   },

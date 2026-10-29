@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from 'react';
 import type { SkillSourceCandidate } from '@paperclipai/shared';
 import { FileTree, buildFileTree, collectAllPaths, type FileTreeNode } from '@/components/FileTree';
@@ -98,7 +99,7 @@ export function SkillSourceTree({ candidates, selected, excludedFolders, onChang
   return <div className="flex min-h-0 flex-col overflow-hidden rounded-md border border-border">
     <div className="flex items-center gap-2 px-3">
       <Search className="size-4 shrink-0 text-muted-foreground" />
-      <Input className="border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 dark:bg-transparent" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search skills or files…" aria-label="Search discovered skills" />
+      <Input className="border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 dark:bg-transparent" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search skills or files…" aria-label={uiT("ui:messages.m_5777aeadd74cac19")} />
     </div>
     <div className="flex items-center justify-between gap-2 border-y border-border bg-muted/30 px-3 py-1.5">
       <label className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -106,9 +107,9 @@ export function SkillSourceTree({ candidates, selected, excludedFolders, onChang
           checked={candidates.length > 0 && selectedCount === candidates.length}
           ref={element => { if (element) element.indeterminate = selectedCount > 0 && selectedCount < candidates.length; }}
           disabled={disabled || candidates.length === 0} onChange={() => toggleCheck('')} />
-        <span>{selectedCount} of {candidates.length} selected</span>
+        <span>{selectedCount}{uiT("ui:messages.m_a4282e4b2298b90b")}{candidates.length}{uiT("ui:messages.m_97a2e8815acd21f3")}</span>
       </label>
-      <Button type="button" variant="ghost" size="xs" className="font-normal text-muted-foreground" disabled={disabled || Boolean(search) || allDirs.size === 0} onClick={() => setExpansion(new Map([...allDirs].map(path => [path, allCollapsed])))}>{allCollapsed ? 'Expand all' : 'Collapse all'}</Button>
+      <Button type="button" variant="ghost" size="xs" className="font-normal text-muted-foreground" disabled={disabled || Boolean(search) || allDirs.size === 0} onClick={() => setExpansion(new Map([...allDirs].map(path => [path, allCollapsed])))}>{allCollapsed ? uiT("ui:messages.m_a3e586be3eff5fb9") : uiT("ui:messages.m_25f7b3721119f1ec")}</Button>
     </div>
     <div className="min-h-0 max-h-(--sz-480px) overflow-auto py-1">
       <FileTree layout="explorer" wrapLabels={false}
@@ -138,11 +139,11 @@ export function SkillSourceTree({ candidates, selected, excludedFolders, onChang
         renderNodeExtra={node => {
           const skill = skillsByPath.get(node.path);
           if (!skill) return node.kind === 'file' ? <span className="text-xs text-muted-foreground">Included</span> : null;
-          const label = skill.error ? 'Needs setup' : skill.note === 'New skill' ? 'New' : skill.note === 'Already imported' ? 'Installed' : skill.note?.startsWith('Removed from source') ? 'Removed' : skill.note;
+          const label = skill.error ? 'Needs setup' : skill.note === 'New skill' ? uiT("ui:messages.m_18fdd549b2ed367a") : skill.note === 'Already imported' ? uiT("ui:messages.m_f8b32f4e92bd84ce") : skill.note?.startsWith('Removed from source') ? 'Removed' : skill.note;
           const count = skill.inspection?.files.length ?? skill.fileCount;
           return <>
             {label && <Badge variant="outline" className="hidden font-normal text-muted-foreground sm:inline-flex" title={skill.error ?? skill.note}>{label}</Badge>}
-            {count !== undefined && <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{count} {count === 1 ? 'file' : 'files'}</span>}
+            {count !== undefined && <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{count} {count === 1 ? uiT("ui:messages.m_3b9c358f36f0a31b") : uiT("ui:messages.m_3d7db37d08f9140f")}</span>}
             {onPreview && <Button type="button" size="icon-xs" variant="ghost" disabled={disabled} aria-label={`Inspect ${skill.name}`} onKeyDown={event => event.stopPropagation()} onClick={event => { event.stopPropagation(); onPreview(skill); }}>{skill.inspection?.references.length ? <AlertTriangle className="size-3.5" /> : <Info className="size-3.5" />}</Button>}
           </>;
         }}

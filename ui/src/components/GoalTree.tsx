@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { Goal } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
 import { StatusBadge } from "./StatusBadge";
@@ -35,7 +36,7 @@ function GoalNode({ goal, children, allGoals, depth, goalLink, onSelect }: GoalN
             e.stopPropagation();
             setExpanded(!expanded);
           }}
-          aria-label={`${goal.title} subtree`}
+          aria-label={uiT("ui:messages.m_62a65de1fd16a867", { v0: (goal.title) })}
           aria-expanded={expanded}
         >
           <ChevronRight
@@ -98,7 +99,7 @@ export function GoalTree({ goals, goalLink, onSelect }: GoalTreeProps) {
   const roots = goals.filter((g) => !g.parentId || !goalIds.has(g.parentId));
 
   if (goals.length === 0) {
-    return <p className="text-sm text-muted-foreground">No goals.</p>;
+    return <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_e7745c051242ecae")}</p>;
   }
 
   return (

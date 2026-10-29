@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   Issue,
   IssuePriority,
@@ -162,32 +163,32 @@ export function RoutineOverview() {
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <OverviewFact
           icon={Repeat}
-          label="State"
+          label={uiT("ui:messages.m_a3b50c476732c740")}
           value={<StatusBadge status={automationState} />}
           detail={hasLiveRun ? "A run is active now" : "No active run"}
         />
         <OverviewFact
           icon={CalendarClock}
-          label="Triggers"
+          label={uiT("ui:messages.m_e62f2148a64d96bb")}
           value={schedule.label}
           detail={<span className="font-mono">{schedule.detail}</span>}
         />
         <OverviewFact
           icon={Clock3}
-          label="Next run"
+          label={uiT("ui:messages.m_b3c0ab96930c9e21")}
           value={schedule.nextRunAt ? formatRoutineTimestamp(schedule.nextRunAt) : hasWebhook ? "On webhook delivery" : "Not scheduled"}
           detail={schedule.nextRunAt ? "Scheduled" : hasWebhook ? "Waiting for an incoming request" : "Add or enable a schedule"}
         />
         <OverviewFact
           icon={Play}
-          label="Last run"
+          label={uiT("ui:messages.m_512a48218ba21791")}
           value={lastRun ? <StatusBadge status={lastRun.status} /> : "No runs yet"}
           detail={lastRun ? formatRoutineTimestamp(lastRun.triggeredAt) : "Run manually or wait for a trigger"}
         />
       </div>
 
       <section className="flex flex-col gap-2" aria-labelledby="routine-agent-heading">
-        <h2 id="routine-agent-heading" className="text-sm font-semibold">Default agent</h2>
+        <h2 id="routine-agent-heading" className="text-sm font-semibold">{uiT("ui:messages.m_94da52ecd6c5c3b7")}</h2>
         {currentAssignee ? (
           <Link
             to={`/agents/${currentAssignee.urlKey ?? currentAssignee.id}`}
@@ -202,21 +203,21 @@ export function RoutineOverview() {
       </section>
 
       <section className="flex flex-col gap-2" aria-labelledby="routine-description-heading">
-        <h2 id="routine-description-heading" className="text-sm font-semibold">Description</h2>
+        <h2 id="routine-description-heading" className="text-sm font-semibold">{uiT("ui:messages.m_526e0087cc3f254d")}</h2>
         {routine.description?.trim() ? (
           <MarkdownBody className="text-sm text-foreground" linkIssueReferences>
             {routine.description}
           </MarkdownBody>
         ) : (
-          <p className="text-sm text-muted-foreground">No description yet.</p>
+          <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_6d962a3d4e519cf7")}</p>
         )}
       </section>
 
       <section className="flex flex-col gap-2" aria-labelledby="routine-recent-runs-heading">
         <div className="flex items-center justify-between gap-3">
-          <h2 id="routine-recent-runs-heading" className="text-sm font-semibold">Recent runs</h2>
+          <h2 id="routine-recent-runs-heading" className="text-sm font-semibold">{uiT("ui:messages.m_237112b89b77be8e")}</h2>
           <Button variant="ghost" size="sm" asChild>
-            <Link to={routineDetailHref(routine.id, "runs")}>View all runs</Link>
+            <Link to={routineDetailHref(routine.id, "runs")}>{uiT("ui:messages.m_346de5a03a7af536")}</Link>
           </Button>
         </div>
         {recentRuns.length === 0 ? (

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   IssueBlockerAttentionIssueSummary,
   IssueRelationIssueSummary,
@@ -199,7 +200,7 @@ export function TaskChatBlockerLinks({
     : "Ultimately blocked by";
   return (
     <div
-      aria-label="Task blockers"
+      aria-label={uiT("ui:messages.m_036bb651824cf377")}
       data-placement={placement}
       data-testid="task-chat-blocker-links"
       className="flex min-w-0 flex-col gap-1 overflow-hidden text-(length:--text-micro) leading-4 text-amber-700 dark:text-amber-300"
@@ -220,10 +221,10 @@ export function TaskChatLiveWorkLinks({
   placement: "top" | "bottom";
 }) {
   const streamlined = useStreamlinedTaskChatPresentation();
-  const heading = streamlined && placement === "bottom" ? "Still waiting on live work" : "Waiting on live work";
+  const heading = streamlined && placement === "bottom" ? "Still waiting on live work" : uiT("ui:messages.m_54a2de10c50a1e92");
   return (
     <div
-      aria-label="Tasks waiting on live work"
+      aria-label={uiT("ui:messages.m_1d80e4a70e36d932")}
       data-placement={placement}
       data-testid="task-chat-live-work-links"
       className="flex min-w-0 flex-col gap-1.5 overflow-hidden text-(length:--text-micro) leading-4 text-blue-700 dark:text-blue-300"
@@ -257,7 +258,7 @@ export function TaskChatLiveWorkLinks({
         <LiveWorkLink key={blocker.id} blocker={blocker} status="running" label="Now running" />
       ) : (
         <div key={blocker.id} className="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
-          <span className="shrink-0 font-medium">Now running</span>
+          <span className="shrink-0 font-medium">{uiT("ui:messages.m_44cdf35701cdac02")}</span>
           <LiveWorkLink blocker={blocker} status="running" />
         </div>
       ))}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -74,7 +75,7 @@ function ProposalRow({
               {proposal.target ? (
                 <AgentRefChip agent={proposal.target} className="font-medium" />
               ) : (
-                <span className="text-muted-foreground">agent</span>
+                <span className="text-muted-foreground">{uiT("ui:messages.m_d4f0bc5a29de06b5")}</span>
               )}
               <DeliveryBadge configPath={proposal.configPath} />
               <code className="font-mono text-xs">{envKey || proposal.configPath}</code>
@@ -90,8 +91,7 @@ function ProposalRow({
 
         {/* Provenance meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1">
-            by <AgentRefChip agent={proposal.proposedBy} className="font-medium text-foreground" />
+          <span className="inline-flex items-center gap-1">{uiT("ui:messages.m_9155f2107df0c885")}<AgentRefChip agent={proposal.proposedBy} className="font-medium text-foreground" />
           </span>
           {proposal.originIssue ? (
             <>

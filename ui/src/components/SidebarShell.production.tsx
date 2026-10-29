@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   useCallback,
   useEffect,
@@ -218,7 +219,7 @@ export function SidebarShell({
         {canResize ? (
           <div
             role="separator"
-            aria-label="Resize sidebar"
+            aria-label={uiT("ui:messages.m_243854b4d0c709a0")}
             aria-orientation="vertical"
             aria-valuemin={MIN_SIDEBAR_WIDTH}
             aria-valuemax={MAX_SIDEBAR_WIDTH}

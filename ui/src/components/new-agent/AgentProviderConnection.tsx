@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { healthApi } from "@/api/health";
 import { aiConnectionsApi } from "@/api/ai-connections";
 import { useLocalAiLogin } from "../ai-connections/useLocalAiLogin";
@@ -214,7 +215,7 @@ export function AgentProviderConnection({
       if (connected) onConnected(connection);
       else
         setError(
-          "The provider did not respond. Check the connection and try again.",
+          uiT("ui:messages.m_524f25a65ff30355"),
         );
     } catch (cause) {
       if (run !== epoch.current) return;
@@ -222,7 +223,7 @@ export function AgentProviderConnection({
       setError(
         cause instanceof Error
           ? cause.message
-          : "Could not connect to the provider.",
+          : uiT("ui:messages.m_5fd5eb22dff03dbf"),
       );
     } finally {
       if (run === epoch.current) setBusy(false);
@@ -251,11 +252,11 @@ export function AgentProviderConnection({
   return (
     <div className="min-w-0 max-w-full">
       <ModelSourceTiles
-        label={advancedConnection ? "Connection type" : "Connect your model provider"}
+        label={advancedConnection ? "Connection type" : uiT("ui:messages.m_763f7fb688ff5e4f")}
         sources={advancedConnection ? [
           { id: "subscription", label: provider, icon: <AdapterMark type={adapterType} />, credentialMode: "subscription" },
           { id: "api", label: provider, icon: <AdapterMark type={adapterType} />, credentialMode: "api" },
-          { id: "advanced", label: "Advanced", icon: <Cable className="size-6 text-muted-foreground" />, credentialMode: "advanced" },
+          { id: "advanced", label: uiT("ui:messages.m_9f088dbebd6c3c70"), icon: <Cable className="size-6 text-muted-foreground" />, credentialMode: "advanced" },
         ] : [
           {
             id: adapterType,
@@ -290,8 +291,8 @@ export function AgentProviderConnection({
       </> : <>
       {!opened && savedKeys.options.length > 0 && (
         <p className="mt-2 text-sm text-muted-foreground">
-          {savedKeys.options.length} saved API{" "}
-          {savedKeys.options.length === 1 ? "key available" : "keys available"}.
+          {savedKeys.options.length}{uiT("ui:messages.m_05c66d5547fe016f")}{" "}
+          {savedKeys.options.length === 1 ? uiT("ui:messages.m_39a65ba3f1ca1da6") : uiT("ui:messages.m_2f1061052827f739")}.
         </p>
       )}
       {method === "subscription" &&
@@ -338,14 +339,14 @@ export function AgentProviderConnection({
                 />
                 {!selectedKey && (
                   <OnboardingCardField
-                    label="API key"
+                    label={uiT("ui:messages.m_16f0ee47f993d627")}
                     masked
                     autoFocus
                     value={apiKey}
                     placeholder={
                       storedConnection
-                        ? "Key entered. Retry the connection."
-                        : "Enter API key here"
+                        ? uiT("ui:messages.m_43912a0d7bab5cc2")
+                        : uiT("ui:messages.m_c80c3ac9799dc19b")
                     }
                     onChange={(value) => {
                       onDraftChanged?.();
@@ -380,7 +381,7 @@ export function AgentProviderConnection({
                 }}
                 onConnected={(sessionId) => {
                   if (managedAccount) {
-                    if (!sessionId) { setError("The login did not return a saved connection. Try again."); return; }
+                    if (!sessionId) { setError(uiT("ui:messages.m_35407fca6141c3d5")); return; }
                     const run = epoch.current;
                     setLoginPhase("connecting");
                     void aiConnectionsApi.loginResult(companyId, sessionId).then((result) => {
@@ -388,7 +389,7 @@ export function AgentProviderConnection({
                     }).catch(() => {
                       if (run !== epoch.current) return;
                       setLoginPhase("ready");
-                      setError("Could not retrieve the saved connection. Go back and retry.");
+                      setError(uiT("ui:messages.m_f016b92c55ebdcab"));
                     });
                     return;
                   }
@@ -402,19 +403,17 @@ export function AgentProviderConnection({
             ) : (
               <p className="text-sm text-muted-foreground">
                 {storedLogin.data
-                  ? "Use your saved Claude subscription for this agent."
+                  ? uiT("ui:messages.m_bb2c110688d831e7")
                   : canLogin
-                    ? "Use the existing provider connection for this environment."
-                    : "This environment does not support browser sign-in. Choose a sign-in environment or connect with an API key."}
+                    ? uiT("ui:messages.m_c910c4a898f08c6a")
+                    : uiT("ui:messages.m_b62e1e2f4b59769e")}
               </p>
             )}
           </div>
         )}
       </motion.div>
       {method === "subscription" && storedLogin.isError && (
-        <p role="alert" className="mt-4 text-sm text-destructive">
-          Could not check your saved Claude subscription. Try again.
-        </p>
+        <p role="alert" className="mt-4 text-sm text-destructive">{uiT("ui:messages.m_c8c6c2beb441b198")}</p>
       )}
       {error && (
         <p role="alert" className="mt-4 text-sm text-destructive">
@@ -422,7 +421,7 @@ export function AgentProviderConnection({
         </p>
       )}
       {localEnvironment && health.isError && (
-        <p role="alert" className="mt-4 text-sm text-destructive">Could not prepare sign-in. Reload this page to try again.</p>
+        <p role="alert" className="mt-4 text-sm text-destructive">{uiT("ui:messages.m_f89460cd30450471")}</p>
       )}
       <FooterNav
         onBack={() => {

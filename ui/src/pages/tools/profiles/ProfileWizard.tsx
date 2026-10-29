@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
@@ -38,9 +39,9 @@ function slugifyProfileKey(name: string): string {
 }
 
 const STEP_LABELS: Array<{ step: WizardStep; label: string }> = [
-  { step: 1, label: "Name" },
+  { step: 1, label: uiT("ui:messages.m_dcd1d5223f73b3a9") },
   { step: 2, label: "Choose tools" },
-  { step: 3, label: "Assign" },
+  { step: 3, label: uiT("ui:messages.m_8ece895c9b32c643") },
 ];
 
 export function ProfileWizard({
@@ -179,7 +180,7 @@ export function ProfileWizard({
       invalidate();
     },
     onError: (error: unknown) =>
-      pushToast({ title: "Could not save", body: String((error as Error)?.message ?? error), tone: "error" }),
+      pushToast({ title: uiT("ui:messages.m_16efcd21d74fc1d2"), body: String((error as Error)?.message ?? error), tone: "error" }),
   });
 
   const finish = useMutation({
@@ -200,7 +201,7 @@ export function ProfileWizard({
       return toolsApi.updateProfile(draftId, { status: "active" });
     },
     onSuccess: (profile) => {
-      pushToast({ title: "Profile saved", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_ea278dbc0644d8bd"), tone: "success" });
       invalidate();
       navigate(`/apps/advanced/profiles/${profile.id}${selectedAgentIds.size === 0 && !companyDefault ? "?created=1" : ""}`);
     },
@@ -214,7 +215,7 @@ export function ProfileWizard({
       { goToStep: step, completedStep: completed },
       {
         onSuccess: () => {
-          pushToast({ title: "Draft saved", body: "Pick it back up from the profiles list.", tone: "success" });
+          pushToast({ title: uiT("ui:messages.m_5ccb8caacdc53835"), body: "Pick it back up from the profiles list.", tone: "success" });
           navigate("/apps/advanced/profiles");
         },
       },
@@ -224,7 +225,7 @@ export function ProfileWizard({
   const busy = saveDraft.isPending || finish.isPending;
   const step1Valid = name.trim().length > 0 && (template !== "copy" || Boolean(copyFromId));
 
-  if (profileId && profiles.isLoading) return <LoadingState label="Loading draft…" />;
+  if (profileId && profiles.isLoading) return <LoadingState label={uiT("ui:messages.m_5bb36e7e863a3403")} />;
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
@@ -287,9 +288,7 @@ export function ProfileWizard({
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             {step >= 2 ? (
               <span>
-                Allows <span className="font-medium text-foreground">{live.allowed}</span> of {live.total}{" "}
-                tools
-              </span>
+                Allows <span className="font-medium text-foreground">{live.allowed}</span>{uiT("ui:messages.m_a4282e4b2298b90b")}{live.total}{" "}{uiT("ui:messages.m_f9d35d43770d3909")}</span>
             ) : null}
             {draftId ? (
               <button
@@ -305,13 +304,9 @@ export function ProfileWizard({
 
           <div className="flex items-center gap-2">
             {step > 1 ? (
-              <Button variant="outline" disabled={busy} onClick={() => setStep((s) => (s - 1) as WizardStep)}>
-                Back
-              </Button>
+              <Button variant="outline" disabled={busy} onClick={() => setStep((s) => (s - 1) as WizardStep)}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             ) : (
-              <Button variant="ghost" disabled={busy} onClick={() => navigate("/apps/advanced/profiles")}>
-                Cancel
-              </Button>
+              <Button variant="ghost" disabled={busy} onClick={() => navigate("/apps/advanced/profiles")}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             )}
 
             {step === 1 ? (
@@ -321,9 +316,7 @@ export function ProfileWizard({
                   saveDraft.mutate({ goToStep: 2, completedStep: 1, seed: seedSelections() })
                 }
               >
-                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Continue
-              </Button>
+                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_31fbef162594de01")}</Button>
             ) : null}
 
             {step === 2 ? (
@@ -331,16 +324,12 @@ export function ProfileWizard({
                 disabled={busy}
                 onClick={() => saveDraft.mutate({ goToStep: 3, completedStep: 2 })}
               >
-                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Continue
-              </Button>
+                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_31fbef162594de01")}</Button>
             ) : null}
 
             {step === 3 ? (
               <Button disabled={busy} onClick={() => finish.mutate()}>
-                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Save profile
-              </Button>
+                {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_0c8209e72ec87d9d")}</Button>
             ) : null}
           </div>
         </div>
@@ -506,21 +495,21 @@ export function StepName({
 
       <div className="space-y-3">
         <div className="space-y-1.5">
-          <Label htmlFor="profile-name">Name</Label>
+          <Label htmlFor="profile-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
           <Input
             id="profile-name"
             value={name}
             onChange={(e) => onName(e.target.value)}
-            placeholder="e.g. Everyday work"
+            placeholder={uiT("ui:messages.m_4bb3354f0e5be37e")}
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="profile-description">Description (optional)</Label>
+          <Label htmlFor="profile-description">{uiT("ui:messages.m_f6cbe2f0c1f8a38b")}</Label>
           <Textarea
             id="profile-description"
             value={description}
             onChange={(e) => onDescription(e.target.value)}
-            placeholder="What is this profile for?"
+            placeholder={uiT("ui:messages.m_73f94102b8720636")}
             rows={2}
           />
         </div>
@@ -528,9 +517,7 @@ export function StepName({
 
       <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
         <CollapsibleTrigger className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
-          <ChevronDown className={cn("h-4 w-4 transition-transform", advancedOpen && "rotate-180")} />
-          Advanced
-        </CollapsibleTrigger>
+          <ChevronDown className={cn("h-4 w-4 transition-transform", advancedOpen && "rotate-180")} />{uiT("ui:messages.m_9f088dbebd6c3c70")}</CollapsibleTrigger>
         <CollapsibleContent className="pt-2">
           <div className="space-y-1.5">
             <Label htmlFor="profile-key">Identifier</Label>
@@ -652,13 +639,13 @@ export function StepAssign({
               individual agents.
             </p>
             <TargetChecklist
-              label="Projects"
+              label={uiT("ui:messages.m_04e2a9728af75840")}
               options={projects}
               selected={selectedProjectIds ?? new Set()}
               onToggle={onToggleProject}
             />
             <TargetChecklist
-              label="Routines"
+              label={uiT("ui:messages.m_61b7bb44e2b47b7c")}
               options={routines}
               selected={selectedRoutineIds ?? new Set()}
               onToggle={onToggleRoutine}

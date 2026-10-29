@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCoordinatorWorkspaceEnabled } from "./hooks/useCoordinatorWorkspaceEnabled";
 import { AgentChats } from "./pages/AgentChats";
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
@@ -592,7 +593,7 @@ export function OnboardingRoutePage() {
     ? `Add another agent to ${matchedCompany.name}`
     : companies.length > 0
       ? "Create another organization"
-      : "Create your first organization";
+      : uiT("ui:messages.m_b85c051e18f9b99f");
   const description = matchedCompany
     ? "Run onboarding again to add an agent and a starter task for this organization."
     : companies.length > 0

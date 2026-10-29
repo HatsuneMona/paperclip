@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { Check, Layers } from "lucide-react";
 import type { ArtifactGroupBy, ArtifactKindFilter } from "@/api/artifacts";
@@ -8,18 +9,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { cn } from "@/lib/utils";
 
 export const ARTIFACT_KIND_FILTERS: { value: ArtifactKindFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "image", label: "Images" },
-  { value: "video", label: "Videos" },
-  { value: "document", label: "Documents" },
-  { value: "text", label: "Text" },
-  { value: "file", label: "Files" },
+  { value: "all", label: uiT("ui:messages.m_a52ace420f2175d0") },
+  { value: "image", label: uiT("ui:messages.m_be7e2f20129365c2") },
+  { value: "video", label: uiT("ui:messages.m_c9a9639463c21952") },
+  { value: "document", label: uiT("ui:messages.m_b4e929d8bcfe0418") },
+  { value: "text", label: uiT("ui:messages.m_71988c4d8e0803ba") },
+  { value: "file", label: uiT("ui:messages.m_abc7e9892806b047") },
 ];
 
 export const ARTIFACT_GROUP_OPTIONS: { value: ArtifactGroupBy; label: string }[] = [
-  { value: "none", label: "None" },
-  { value: "task", label: "Task" },
-  { value: "parent_task", label: "Parent task" },
+  { value: "none", label: uiT("ui:messages.m_dc937b59892604f5") },
+  { value: "task", label: uiT("ui:messages.m_4bc74b21357c6cf5") },
+  { value: "parent_task", label: uiT("ui:messages.m_fb8d859156cd03a0") },
 ];
 
 export function artifactGroupByLabel(value: ArtifactGroupBy): string {
@@ -28,7 +29,7 @@ export function artifactGroupByLabel(value: ArtifactGroupBy): string {
 
 /** Canonical collection filters; compact standalone, standard in the toolbar. */
 export function ArtifactKindFilters({ kind, onKindChange, size = "compact" }: { kind: ArtifactKindFilter; onKindChange: (value: ArtifactKindFilter) => void; size?: TabSize }) {
-  return <TabFilters items={ARTIFACT_KIND_FILTERS} value={kind} onValueChange={onKindChange} size={size} label="Filter artifacts by type" />;
+  return <TabFilters items={ARTIFACT_KIND_FILTERS} value={kind} onValueChange={onKindChange} size={size} label={uiT("ui:messages.m_ff8bce095215ebd7")} />;
 }
 
 export interface ArtifactsToolbarProps {
@@ -48,7 +49,7 @@ export function ArtifactsToolbar({ query: draftQuery, onQueryChange: setDraftQue
   return (
     <div data-canonical-toolbar="artifacts" role="toolbar" aria-label="Artifacts controls" className="flex flex-col items-start gap-4">
       <div className="design-toolbar-controls flex w-full flex-wrap items-center gap-4">
-        <ToolbarSearch query={draftQuery} onQueryChange={setDraftQuery} label="Search artifacts" placeholder="Search artifacts…" clearLabel="Clear artifact search" />
+        <ToolbarSearch query={draftQuery} onQueryChange={setDraftQuery} label={uiT("ui:messages.m_c71436cce0eb861d")} placeholder="Search artifacts…" clearLabel="Clear artifact search" />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -56,8 +57,8 @@ export function ArtifactsToolbar({ query: draftQuery, onQueryChange: setDraftQue
               type="button"
               variant="outline"
               size="icon"
-              aria-label={`Group artifacts (currently ${artifactGroupByLabel(groupBy)})`}
-              title="Group artifacts"
+              aria-label={uiT("ui:messages.m_a8179bab12e3f49c", { v0: (artifactGroupByLabel(groupBy)) })}
+              title={uiT("ui:messages.m_49a9799e9ea9f87c")}
               data-testid="artifact-group-control"
               data-group-by={groupBy}
               data-active={grouping}
@@ -67,7 +68,7 @@ export function ArtifactsToolbar({ query: draftQuery, onQueryChange: setDraftQue
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuLabel>Group by</DropdownMenuLabel>
+            <DropdownMenuLabel>{uiT("ui:messages.m_956a51f6b098a41b")}</DropdownMenuLabel>
             {ARTIFACT_GROUP_OPTIONS.map((option) => (
               <DropdownMenuItem
                 key={option.value}

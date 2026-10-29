@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from 'react';
 import type { CompanySkillFileDetail } from '@paperclipai/shared';
 import { Button } from './ui/button';
@@ -10,6 +11,6 @@ export function SkillBinaryFile({ file }: { file: CompanySkillFileDetail }) {
   }, [file.content]);
   return <div className="flex flex-col items-start gap-3 py-6">
     <p className="text-sm text-muted-foreground">This asset is stored in its original binary format.</p>
-    <Button asChild variant="outline" className="max-w-full"><a href={url} download={file.path.split('/').at(-1)} title={`Download ${file.path.split('/').at(-1)}`}><span className="truncate">Download {file.path.split('/').at(-1)}</span></a></Button>
+    <Button asChild variant="outline" className="max-w-full"><a href={url} download={file.path.split('/').at(-1)} title={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (file.path.split('/').at(-1)) })}><span className="truncate">{uiT("ui:messages.m_37722639018a839e")}{file.path.split('/').at(-1)}</span></a></Button>
   </div>;
 }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AgentObservabilitySettingsSection } from "../components/observability/AgentObservabilitySettings";
 import { useNavigate } from "react-router-dom";
@@ -166,7 +167,7 @@ export function CompanySettings() {
       }
       if (departure.kind === "company") {
         toastActions?.pushToast({
-          title: `${archivedName} is archived`,
+          title: uiT("ui:messages.m_7fed88830a66d575", { v0: (archivedName) }),
           body: `Switched to ${departure.company.name}.`,
           tone: "info",
           dedupeKey: `company-archive-departure:${companyId}`,
@@ -175,7 +176,7 @@ export function CompanySettings() {
         navigate(`/${departure.company.issuePrefix}/dashboard`, { replace: true });
       } else {
         toastActions?.pushToast({
-          title: `${archivedName} is archived`,
+          title: uiT("ui:messages.m_7fed88830a66d575", { v0: (archivedName) }),
           body: "You can unarchive it from this list.",
           tone: "info",
           dedupeKey: `company-archive-departure:${companyId}`,
@@ -193,16 +194,14 @@ export function CompanySettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Settings" }
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f") }
     ]);
   }, [setBreadcrumbs, selectedCompany?.name]);
 
   if (!selectedCompany) {
     return (
-      <div className="text-sm text-muted-foreground">
-        No organization selected. Select an organization from the switcher above.
-      </div>
+      <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_9133af154f20a9d0")}</div>
     );
   }
 
@@ -217,16 +216,14 @@ export function CompanySettings() {
     <div className="max-w-6xl space-y-8">
       <div className="flex items-center gap-2">
         <SlidersHorizontal className="h-5 w-5 text-muted-foreground" />
-        <h1 className="text-lg font-semibold">General</h1>
+        <h1 className="text-lg font-semibold">{uiT("ui:messages.m_c910d474dcd724bf")}</h1>
       </div>
 
       {/* General */}
       <div className="max-w-2xl space-y-4">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          General
-        </div>
+        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{uiT("ui:messages.m_c910d474dcd724bf")}</div>
         <div className="space-y-3">
-          <Field label="Organization name" hint="The display name for your organization.">
+          <Field label={uiT("ui:messages.m_9a807d52ba21603e")} hint={uiT("ui:messages.m_51280e67f5c36c51")}>
             <input
               className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
               type="text"
@@ -234,21 +231,18 @@ export function CompanySettings() {
               onChange={(e) => setCompanyName(e.target.value)}
             />
             {isCloudManaged && (
-              <p className="mt-1 text-xs text-muted-foreground">
-                Renaming can change this company's task ID prefix. Existing task IDs are
-                renumbered and old task links stop resolving.
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{uiT("ui:messages.m_2766ca5b87767cb4")}</p>
             )}
           </Field>
           <Field
-            label="Description"
-            hint="Optional description shown in the organization profile."
+            label={uiT("ui:messages.m_526e0087cc3f254d")}
+            hint={uiT("ui:messages.m_1053d046fa506843")}
           >
             <input
               className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
               type="text"
               value={description}
-              placeholder="Optional organization description"
+              placeholder={uiT("ui:messages.m_4322c2356e421094")}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Field>
@@ -257,9 +251,7 @@ export function CompanySettings() {
 
       {/* Appearance */}
       <div className="max-w-2xl space-y-4">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Appearance
-        </div>
+        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{uiT("ui:messages.m_3907fa7f80722a6f")}</div>
         <div className="space-y-3">
           <div className="flex items-start gap-4">
             <div className="shrink-0">
@@ -271,8 +263,8 @@ export function CompanySettings() {
             </div>
             <div className="flex-1 space-y-3">
               <Field
-                label="Logo"
-                hint="Upload a PNG, JPEG, WEBP, GIF, or SVG logo image."
+                label={uiT("ui:messages.m_d707dc2f1936efd8")}
+                hint={uiT("ui:messages.m_fd8a49c56c55e970")}
               >
                 <div className="space-y-2">
                   <input
@@ -289,7 +281,7 @@ export function CompanySettings() {
                         onClick={handleClearLogo}
                         disabled={clearLogoMutation.isPending}
                       >
-                        {clearLogoMutation.isPending ? "Removing..." : "Remove logo"}
+                        {clearLogoMutation.isPending ? uiT("ui:messages.m_60d18e42fd5a5b25") : uiT("ui:messages.m_f1c1afa450870ba9")}
                       </Button>
                     </div>
                   )}
@@ -298,7 +290,7 @@ export function CompanySettings() {
                       {logoUploadError ??
                         (logoUploadMutation.error instanceof Error
                           ? logoUploadMutation.error.message
-                          : "Logo upload failed")}
+                          : uiT("ui:messages.m_9faf7b9427524425"))}
                     </span>
                   )}
                   {clearLogoMutation.isError && (
@@ -307,7 +299,7 @@ export function CompanySettings() {
                     </span>
                   )}
                   {logoUploadMutation.isPending && (
-                    <span className="text-xs text-muted-foreground">Uploading logo...</span>
+                    <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_def73c874daa508e")}</span>
                   )}
                 </div>
               </Field>
@@ -324,16 +316,16 @@ export function CompanySettings() {
             onClick={handleSaveGeneral}
             disabled={generalMutation.isPending || !companyName.trim()}
           >
-            {generalMutation.isPending ? "Saving..." : "Save changes"}
+            {generalMutation.isPending ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}
           </Button>
           {generalMutation.isSuccess && (
-            <span className="text-xs text-muted-foreground">Saved</span>
+            <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_b5c120b316c237a0")}</span>
           )}
           {generalMutation.isError && (
             <span className="text-xs text-destructive">
               {generalMutation.error instanceof Error
                   ? generalMutation.error.message
-                  : "Failed to save"}
+                  : uiT("ui:messages.m_2c07997249abaa76")}
             </span>
           )}
         </div>
@@ -341,13 +333,11 @@ export function CompanySettings() {
 
       {/* Hiring */}
       <div className="max-w-2xl space-y-4" data-testid="company-settings-team-section">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Hiring
-        </div>
+        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{uiT("ui:messages.m_4e414af41b7d4876")}</div>
         <div>
           <ToggleField
-            label="Require board approval for new hires"
-            hint="New agent hires stay pending until approved by board."
+            label={uiT("ui:messages.m_411a6ac4e074946c")}
+            hint={uiT("ui:messages.m_67728aa69055ee83")}
             checked={!!selectedCompany.requireBoardApprovalForNewAgents}
             onChange={(v) => settingsMutation.mutate(v)}
             toggleTestId="company-settings-team-approval-toggle"
@@ -364,7 +354,7 @@ export function CompanySettings() {
           governanceMutation.isError
             ? governanceMutation.error instanceof Error
               ? governanceMutation.error.message
-              : "Failed to save interaction governance"
+              : uiT("ui:messages.m_d33b037f371764a0")
             : null
         }
       />
@@ -375,14 +365,9 @@ export function CompanySettings() {
 
       {/* Danger Zone */}
       <div className="space-y-4">
-        <div className="text-xs font-medium text-destructive uppercase tracking-wide">
-          Danger Zone
-        </div>
+        <div className="text-xs font-medium text-destructive uppercase tracking-wide">{uiT("ui:messages.m_3c1c01b405853556")}</div>
         <div className="space-y-3 bg-destructive/5 px-4 py-4">
-          <p className="text-sm text-muted-foreground">
-            Archive this organization to hide it from the sidebar. This persists in
-            the database.
-          </p>
+          <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_490473488c7a476a")}</p>
           <div className="flex items-center gap-2">
             <Button
               size="sm"
@@ -394,23 +379,23 @@ export function CompanySettings() {
               onClick={() => {
                 if (!selectedCompanyId) return;
                 const confirmed = window.confirm(
-                  `Archive organization "${selectedCompany.name}"? It will be hidden from the sidebar.`
+                  uiT("ui:messages.m_fabbdab1d4d30d2b", { v0: (selectedCompany.name) })
                 );
                 if (!confirmed) return;
                 archiveMutation.mutate({ companyId: selectedCompanyId });
               }}
             >
               {archiveMutation.isPending
-                ? "Archiving..."
+                ? uiT("ui:messages.m_6f3407113f077430")
                 : selectedCompany.status === "archived"
-                ? "Already archived"
-                : "Archive organization"}
+                ? uiT("ui:messages.m_ca88c0193c1079de")
+                : uiT("ui:messages.m_00e7fa80dc2b6303")}
             </Button>
             {archiveMutation.isError && (
               <span className="text-xs text-destructive">
                 {archiveMutation.error instanceof Error
                   ? archiveMutation.error.message
-                  : "Failed to archive organization"}
+                  : uiT("ui:messages.m_45dfcd8f4d71ad0c")}
               </span>
             )}
           </div>

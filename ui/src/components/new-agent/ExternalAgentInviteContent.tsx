@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId } from "react";
 import { AGENT_ROLES, AGENT_ROLE_LABELS } from "@paperclipai/shared";
 import type { MuseInvitationDraft } from "@/lib/muse-invitation-draft";
@@ -175,11 +176,11 @@ export function ExternalAgentInviteContent({
   return <>
     <div className="min-h-0 space-y-6 overflow-y-auto px-6 pb-6 pt-8 sm:px-8">
       <div className="space-y-3 pr-5">
-        {muse && <Button variant="ghost" size="sm" onClick={onBack}><ArrowLeft className="size-4" />Back</Button>}
+        {muse && <Button variant="ghost" size="sm" onClick={onBack}><ArrowLeft className="size-4" />{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>}
         {provider && <AdapterMark type={provider.adapter} className="size-10" />}
         <div className="space-y-2">
           <DialogTitle className="text-xl font-semibold tracking-tight">
-            {!provider ? "Invite an external agent" : muse ? ready ? "Muse is connected" : museDetails || museAwaitingInvitation ? "Invite your Muse" : "Connect your Muse" : dot ? ready ? "Your Dot is connected" : "Connect your Dot" : preset === "hermes" ? "Invite your Hermes agent" : "Invite your agent"}
+            {!provider ? uiT("ui:messages.m_0c21d4548b1504b5") : muse ? ready ? "Muse is connected" : museDetails || museAwaitingInvitation ? "Invite your Muse" : "Connect your Muse" : dot ? ready ? "Your Dot is connected" : "Connect your Dot" : preset === "hermes" ? "Invite your Hermes agent" : "Invite your agent"}
           </DialogTitle>
           <DialogDescription className="text-sm leading-relaxed">
             {!provider ? `Bring an agent you already use into ${companyName}.`
@@ -197,7 +198,7 @@ export function ExternalAgentInviteContent({
           </DialogDescription>
         </div>
       </div>
-      {error && <div role="alert" className="space-y-3 text-sm text-destructive"><p>{error}</p>{!museAwaitingInvitation && <Button variant="outline" disabled={busy} onClick={onRetry}>Try again</Button>}</div>}
+      {error && <div role="alert" className="space-y-3 text-sm text-destructive"><p>{error}</p>{!museAwaitingInvitation && <Button variant="outline" disabled={busy} onClick={onRetry}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>}</div>}
       {!provider ? <><ExternalAgentPresetPicker onSelect={onSelect} dotDisabledReason={dotDisabledReason} grokDisabledReason={grokDisabledReason} museEnabled={museEnabled} />
         {dotDisabledReason && <p className="text-sm text-muted-foreground">{dotDisabledReason}</p>}{grokDisabledReason && grokDisabledReason !== dotDisabledReason && <p className="text-sm text-muted-foreground">{grokDisabledReason}</p>}</>
         : approvalHref ? <p className="text-sm text-muted-foreground">An organization admin needs to approve this agent before {muse ? "Muse" : "Dot"} can connect. This page will update after approval.</p>
@@ -205,11 +206,11 @@ export function ExternalAgentInviteContent({
         : muse && busy && !museDetails && !prompt && !museConnection?.paired ? <p role="status" className="text-sm text-muted-foreground">Loading Muse setup…</p>
         : museDetails ? <form id={detailsId} className="space-y-4" onSubmit={event => { event.preventDefault(); if (museDraft.name.trim() && !busy) onMuseContinue?.(); }}>
           <div className="space-y-2">
-            <label htmlFor={`${detailsId}-name`} className="text-sm font-medium">Agent name</label>
+            <label htmlFor={`${detailsId}-name`} className="text-sm font-medium">{uiT("ui:messages.m_1cfb21871a035769")}</label>
             <Input id={`${detailsId}-name`} disabled={busy} autoFocus maxLength={100} value={museDraft.name} placeholder="Muse" onChange={event => onMuseDraftChange?.({ ...museDraft, name: event.target.value })} />
           </div>
           <div className="space-y-2">
-            <label htmlFor={`${detailsId}-role`} className="text-sm font-medium">Role</label>
+            <label htmlFor={`${detailsId}-role`} className="text-sm font-medium">{uiT("ui:messages.m_14736a2eb9f4159f")}</label>
             <select id={`${detailsId}-role`} disabled={busy} className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={museDraft.role} onChange={event => {
               const role = AGENT_ROLES.find(value => value === event.target.value);
               if (role) onMuseDraftChange?.({ ...museDraft, role });
@@ -234,12 +235,12 @@ export function ExternalAgentInviteContent({
     <div className="flex items-center justify-between gap-3 border-t px-6 py-4 sm:px-8">
       <div className="flex items-center gap-2">
         <Button variant="ghost" onClick={muse ? onClose : provider ? onBack : onClose}>
-          {provider && !muse && <ArrowLeft className="size-4" />}{muse ? ready ? "Close" : "Save & exit" : provider ? "Back" : "Cancel"}
+          {provider && !muse && <ArrowLeft className="size-4" />}{muse ? ready ? uiT("ui:messages.m_7d9eb7acb13e2462") : uiT("ui:messages.m_0bd63bf3d32e9119") : provider ? uiT("ui:messages.m_76900f1bfd16c8d4") : uiT("ui:messages.m_19766ed6ccb2f4a3")}
         </Button>
       </div>
       {provider && (approvalHref ? <Button asChild><Link to={approvalHref} onClick={onClose}>Review approval</Link></Button>
-        : museDetails ? <Button type="submit" form={detailsId} disabled={busy || !museDraft.name.trim()}>{busy ? "Preparing…" : "Continue"}</Button>
-        : ready ? <Button onClick={onClose}>Done</Button>
+        : museDetails ? <Button type="submit" form={detailsId} disabled={busy || !museDraft.name.trim()}>{busy ? "Preparing…" : uiT("ui:messages.m_31fbef162594de01")}</Button>
+        : ready ? <Button onClick={onClose}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
         : museAwaitingInvitation ? <Button disabled={busy} onClick={onRetry}>{busy ? "Loading setup…" : "Refresh setup"}</Button>
         : muse ? museConnection?.problem === "disconnected" || museConnection?.problem === "connection_expired" ? <Button disabled={busy} onClick={onNewPrompt}>Reconnect Muse</Button>
           : museConnection?.problem === "prompt_unavailable" ? <Button disabled={busy} onClick={onNewPrompt}>Create a new prompt</Button>

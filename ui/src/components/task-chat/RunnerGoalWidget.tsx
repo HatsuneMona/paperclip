@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Flag, Loader2, Pause, Play, Pencil, Trash2 } from "lucide-react";
@@ -236,8 +237,7 @@ export function RunnerGoalWidget({ control }: { control: RunnerGoalControl }) {
               <span>{formatDuration(goal.elapsedSeconds)}</span>
               {capability?.usageReporting ? (
                 <span>
-                  {formatTokens(goal.tokensUsed)} tokens
-                  {goal.tokenBudget ? ` / ${formatTokens(goal.tokenBudget)}` : ""}
+                  {formatTokens(goal.tokensUsed)}{uiT("ui:messages.m_da61a22badf88871")}{goal.tokenBudget ? ` / ${formatTokens(goal.tokenBudget)}` : ""}
                 </span>
               ) : null}
               {goal.iterations > 0 ? <span>{goal.iterations} iterations</span> : null}
@@ -247,7 +247,7 @@ export function RunnerGoalWidget({ control }: { control: RunnerGoalControl }) {
         </div>
         <div className="flex shrink-0 items-center gap-1">
           {goal && can("set") ? (
-            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => void control.edit().catch(() => {})} aria-label="Edit goal">
+            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => void control.edit().catch(() => {})} aria-label={uiT("ui:messages.m_8828def9d7005363")}>
               <Pencil className="h-3.5 w-3.5" aria-hidden />
             </Button>
           ) : null}
@@ -308,9 +308,9 @@ export function RunnerGoalWidget({ control }: { control: RunnerGoalControl }) {
             </label>
             {mutationError ? <p className="text-sm text-destructive" role="alert">{mutationError}</p> : null}
             <DialogFooter>
-              <Button type="button" variant="outline" disabled={control.mutation?.isPending} onClick={() => control.setDialog(null)}>Cancel</Button>
+              <Button type="button" variant="outline" disabled={control.mutation?.isPending} onClick={() => control.setDialog(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button type="submit" disabled={!control.dialog?.objective.trim() || control.mutation?.isPending}>
-                {control.mutation?.isPending ? "Saving…" : control.dialog?.action === "replace" ? "Replace goal" : "Save goal"}
+                {control.mutation?.isPending ? uiT("ui:messages.m_23e39291d6135814") : control.dialog?.action === "replace" ? "Replace goal" : "Save goal"}
               </Button>
             </DialogFooter>
           </form>

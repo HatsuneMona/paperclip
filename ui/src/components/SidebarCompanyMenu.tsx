@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -128,7 +129,7 @@ function SortableCompanyItem({
         <button
           type="button"
           ref={setActivatorNodeRef}
-          aria-label={`Reorder ${company.name}`}
+          aria-label={uiT("ui:messages.m_61d87a677cc300b4", { v0: (company.name) })}
           className="inline-flex size-8 shrink-0 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-(length:--rad-2) focus-visible:ring-ring"
           onClick={(event) => {
             event.preventDefault();
@@ -272,8 +273,8 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
           className="h-9 min-w-0 flex-1 justify-start gap-2 px-4 text-left hover:bg-sidebar-accent hover:text-sidebar-accent-foreground has-[>svg]:px-4 dark:hover:bg-sidebar-accent dark:hover:text-sidebar-accent-foreground"
           aria-label={
             currentName
-              ? `Open ${currentName} ${switcherNoun} switcher`
-              : `Open ${switcherNoun} switcher`
+              ? uiT("ui:messages.m_fee3b008b3b9889b", { v0: (currentName), v1: (switcherNoun) })
+              : uiT("ui:messages.m_ad49809682dd400f", { v0: (switcherNoun) })
           }
         >
           <span className="flex min-w-0 flex-1 items-center gap-2">
@@ -290,7 +291,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
               )}
               title={currentName ?? undefined}
             >
-              {currentName ?? `Select ${switcherNoun}`}
+              {currentName ?? uiT("ui:messages.m_58661820dfdc4c9f", { v0: (switcherNoun) })}
             </TruncatedText>
           </span>
           {!rail && showChevron && <ChevronsUpDown className="size-3.5 shrink-0 text-muted-foreground" />}
@@ -302,9 +303,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
         className="ml-2 w-(--organization-popover-width) max-w-(--sz-calc-24) overflow-hidden rounded-xl border-border bg-popover p-0 shadow-(--shadow-profile-popover)"
       >
         <FlyoutHeader className="flex h-(--organization-popover-header-height) items-center justify-between gap-2 px-3.5">
-          <DropdownMenuLabel className="p-0 text-(length:--text-compact) font-semibold text-foreground">
-            Organizations
-          </DropdownMenuLabel>
+          <DropdownMenuLabel className="p-0 text-(length:--text-compact) font-semibold text-foreground">{uiT("ui:messages.m_2730183d6b776b40")}</DropdownMenuLabel>
           <button
             type="button"
             onClick={(event) => {
@@ -314,7 +313,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
             }}
             className="rounded px-1.5 py-0.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            {isEditingOrder ? "Done" : "Edit"}
+            {isEditingOrder ? uiT("ui:messages.m_11a6767d5674c7e4") : uiT("ui:messages.m_464c4ffd019e1e96")}
           </button>
         </FlyoutHeader>
         <FlyoutOptions className="flex max-h-96 flex-col gap-0.5 overflow-y-auto px-2.5 pb-2 pt-1">
@@ -345,7 +344,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
             // offer the way back.
             companyListUnavailable ? (
               <>
-                <DropdownMenuItem disabled>Couldn&apos;t load organizations</DropdownMenuItem>
+                <DropdownMenuItem disabled>{uiT("ui:messages.m_85d97564a8cdcf01")}</DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={(event) => {
                     // Keep the menu open so the result of the retry is visible.
@@ -353,12 +352,10 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
                     void retryCompanies();
                   }}
                 >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Try again
-                </DropdownMenuItem>
+                  <RefreshCw className="h-4 w-4 mr-2" />{uiT("ui:messages.m_d8b8392e2c542950")}</DropdownMenuItem>
               </>
             ) : (
-              <DropdownMenuItem disabled>No organizations</DropdownMenuItem>
+              <DropdownMenuItem disabled>{uiT("ui:messages.m_c256efdc5810ef6b")}</DropdownMenuItem>
             )
           ) : null}
         </FlyoutOptions>
@@ -372,7 +369,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
               <span className="flex size-5 shrink-0 items-center justify-center text-muted-foreground">
                 <Plus className="size-4" />
               </span>
-              <TruncatedText className="min-w-0 flex-1 truncate">Create organization</TruncatedText>
+              <TruncatedText className="min-w-0 flex-1 truncate">{uiT("ui:messages.m_f14e1b22393c0dc5")}</TruncatedText>
             </DropdownMenuItem>
           )}
           {showInvitePeople ? (
@@ -391,7 +388,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
                   <UserPlus className="size-4" />
                 </span>
                 <TruncatedText className="min-w-0 flex-1 truncate">
-                  {currentName ? `Invite people to ${currentName}` : "Invite people"}
+                  {currentName ? uiT("ui:messages.m_6459c89989c336b3", { v0: (currentName) }) : uiT("ui:messages.m_27bf0f2d3f3f5490")}
                 </TruncatedText>
               </Link>
             </DropdownMenuItem>
@@ -406,7 +403,7 @@ function BuiltinCompanyMenu({ open: controlledOpen, onOpenChange, showChevron = 
                 <LogOut className="size-4" />
               </span>
               <TruncatedText className="min-w-0 flex-1 truncate">
-                {signOutMutation.isPending ? "Signing out..." : "Sign out"}
+                {signOutMutation.isPending ? uiT("ui:messages.m_0436231679a0cb2b") : uiT("ui:messages.m_48f0d3d397d49f13")}
               </TruncatedText>
             </DropdownMenuItem>
           ) : null}

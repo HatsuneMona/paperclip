@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { usePrimaryAgentPresentation } from "./primary-agent/PrimaryAgentPresentation";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { useState, useEffect, useRef, useCallback, useMemo, type CSSProperties, type DragEvent } from "react";
@@ -655,11 +656,11 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
       const prefix = (companies.find((company) => company.id === companyId)?.issuePrefix ?? "").trim();
       const issueRef = issue.identifier ?? issue.id;
       const openIssueAction = prefix
-        ? { label: `Open ${issueRef}`, href: `/${prefix}/issues/${issueRef}` }
+        ? { label: uiT("ui:messages.m_afaef5c34f443c02", { v0: (issueRef) }), href: `/${prefix}/issues/${issueRef}` }
         : undefined;
       if (failures.length > 0) {
         pushToast({
-          title: `Created ${issueRef} with upload warnings`,
+          title: uiT("ui:messages.m_0ea4aa99c41f74da", { v0: (issueRef) }),
           body: `${failures.length} staged ${failures.length === 1 ? "file" : "files"} could not be added.`,
           tone: "warn",
           action: openIssueAction,
@@ -1450,7 +1451,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
           }
         }}
       >
-        <DialogTitle className="sr-only">{isSubIssueMode ? "New sub-task" : "New task"}</DialogTitle>
+        <DialogTitle className="sr-only">{isSubIssueMode ? uiT("ui:messages.m_158c2daec9a72df3") : uiT("ui:messages.m_3e992276b2298a1f")}</DialogTitle>
         <div
           ref={dialogBodyRef}
           className={cn("min-h-0 overflow-y-auto overscroll-contain", isFileDragOver && "bg-accent/20")}
@@ -1566,7 +1567,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                           <div className="max-w-full rounded-md border border-border bg-muted/30 px-2.5 py-1.5 text-xs text-muted-foreground">
                             <div className="flex items-center gap-1.5">
                               <ListTree className="h-3.5 w-3.5 shrink-0" />
-                              <span className="shrink-0">Sub-task of</span>
+                              <span className="shrink-0">{uiT("ui:messages.m_e05746403d004aed")}</span>
                               <span className="font-medium text-foreground">{parentIssueLabel}</span>
                             </div>
                             {newIssueDefaults.parentTitle ? (
@@ -1575,7 +1576,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                           </div>
                         </div>
                       ) : null}
-                      {coordinatorEnabled ? <p className="text-sm font-medium text-foreground">New Task</p> : null}
+                      {coordinatorEnabled ? <p className="text-sm font-medium text-foreground">{uiT("ui:messages.m_718e58cc20d67514")}</p> : null}
                     </div>
                   ) : undefined,
                 details: (
@@ -1583,7 +1584,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                     {parentPrivacyUnresolved ? (
                       <div role={parentPrivacyError ? "alert" : "status"} className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{parentPrivacyError ? "Couldn't check parent access." : "Checking parent access…"}</span>
-                        {parentPrivacyError ? <Button variant="ghost" size="sm" onClick={() => void refetchParentPrivacy()}>Retry</Button> : null}
+                        {parentPrivacyError ? <Button variant="ghost" size="sm" onClick={() => void refetchParentPrivacy()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button> : null}
                       </div>
                     ) : null}
                     {worktreeSelectionIncomplete && !worktreesLoading ? (
@@ -1596,7 +1597,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       <div className="mt-4 space-y-3 rounded-lg border border-border/70 p-3">
                         {stagedDocuments.length > 0 ? (
                           <div className="space-y-2">
-                            <div className="text-xs font-medium text-muted-foreground">Documents</div>
+                            <div className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_b4e929d8bcfe0418")}</div>
                             <div className="space-y-2">
                               {stagedDocuments.map((file) => (
                                 <div
@@ -1626,7 +1627,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                                     className="shrink-0 text-muted-foreground"
                                     onClick={() => removeStagedFile(file.id)}
                                     disabled={createIssue.isPending}
-                                    title="Remove document"
+                                    title={uiT("ui:messages.m_e17eb479943674a9")}
                                   >
                                     <X className="h-3.5 w-3.5" />
                                   </Button>
@@ -1638,7 +1639,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
 
                         {stagedAttachments.length > 0 ? (
                           <div className="space-y-2">
-                            <div className="text-xs font-medium text-muted-foreground">Attachments</div>
+                            <div className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_634de114775082f0")}</div>
                             <div className="space-y-2">
                               {stagedAttachments.map((file) => (
                                 <div
@@ -1651,7 +1652,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                                       <span className="truncate text-sm">{file.file.name}</span>
                                     </div>
                                     <div className="mt-1 text-(length:--text-micro) text-muted-foreground">
-                                      {file.file.type || "application/octet-stream"} • {formatFileSize(file.file)}
+                                      {file.file.type || uiT("ui:messages.m_1e86d1bc52f24f75")} • {formatFileSize(file.file)}
                                     </div>
                                   </div>
                                   <Button
@@ -1660,7 +1661,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                                     className="shrink-0 text-muted-foreground"
                                     onClick={() => removeStagedFile(file.id)}
                                     disabled={createIssue.isPending}
-                                    title="Remove attachment"
+                                    title={uiT("ui:messages.m_595b066a8838734a")}
                                   >
                                     <X className="h-3.5 w-3.5" />
                                   </Button>
@@ -1679,9 +1680,8 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                         <Flag className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-300" />
                         <span className="leading-snug">
                           Assigning implies executable intent - leave status as{" "}
-                          <span className="font-medium">Backlog</span> only to deliberately park this. The assignee will
-                          not be woken until status moves to <span className="font-medium">Todo</span> or{" "}
-                          <span className="font-medium">In Progress</span>.
+                          <span className="font-medium">{uiT("ui:messages.m_bf986e9a4f860eb0")}</span>{uiT("ui:messages.m_d686dadef1cdba2e")}<span className="font-medium">{uiT("ui:messages.m_4ff402d768211082")}</span> or{" "}
+                          <span className="font-medium">{uiT("ui:messages.m_b4cc4b07c300103a")}</span>.
                         </span>
                       </div>
                     ) : null}
@@ -1689,13 +1689,9 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                     {selectedAssigneeAgent?.status === "paused" ? (
                       <div data-testid="new-issue-paused-assignee-note" className="mx-4 mb-2">
                         <InlineBanner tone="warning" icon={PauseCircle} compact>
-                          <span className="font-medium">{selectedAssigneeAgent.name}</span> is paused and will not start
-                          work on this task until it is resumed
-                          {selectedAssigneeAgent.pauseReason === "import"
-                            ? " — it arrived paused from an organization import"
-                            : ""}
-                          . You can resume it from the task page after creating the task.
-                        </InlineBanner>
+                          <span className="font-medium">{selectedAssigneeAgent.name}</span>{uiT("ui:messages.m_82ee60fbd21daa4f")}{selectedAssigneeAgent.pauseReason === "import"
+                            ? uiT("ui:messages.m_a1186289d25f8244")
+                            : ""}{uiT("ui:messages.m_b0733d3b0f9d22ca")}</InlineBanner>
                       </div>
                     ) : null}
 
@@ -1705,10 +1701,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                         className="mx-4 mb-2 flex items-start gap-2 rounded-md border border-amber-300/70 bg-amber-50/90 px-3 py-2 text-xs text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-100"
                       >
                         <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-300" />
-                        <span className="leading-snug">
-                          Low-trust review agent. It can only act inside its assigned review boundary; task, project, or
-                          run policy defines the concrete scope.
-                        </span>
+                        <span className="leading-snug">{uiT("ui:messages.m_d92516ba432f4cbc")}</span>
                       </div>
                     ) : null}
 
@@ -1716,7 +1709,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       <div className="mb-2">
                         <InlineBanner tone="warning" compact>
                           This sub-task will no longer use the parent task workspace
-                          {parentExecutionWorkspaceLabel ? ` (${parentExecutionWorkspaceLabel})` : ""}.
+                          {parentExecutionWorkspaceLabel ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (parentExecutionWorkspaceLabel) }) : ""}.
                         </InlineBanner>
                       </div>
                     ) : null}
@@ -1733,7 +1726,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       value={projectId}
                       options={projectOptions}
                       recentOptionIds={recentProjectIds}
-                      placeholder="Project"
+                      placeholder={uiT("ui:messages.m_9859597853197476")}
                       mobileTitle="Select project"
                       modal
                       className="h-8 min-w-0 flex-1 gap-1.5 border-0 bg-transparent px-2 text-xs shadow-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-0 sm:max-w-64 sm:flex-none"
@@ -1742,8 +1735,8 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       contentStyle={entityPickerViewportStyle}
                       noneLabel="No project"
                       noneAtTop
-                      searchPlaceholder="Search projects..."
-                      emptyMessage="No projects found."
+                      searchPlaceholder={uiT("ui:messages.m_c59dd5a3c5a25588")}
+                      emptyMessage={uiT("ui:messages.m_26e92309ba5b0ca9")}
                       onChange={handleProjectChange}
                       renderTriggerValue={(option) =>
                         option && currentProject ? (
@@ -1756,7 +1749,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                         ) : (
                           <>
                             <Folder className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
-                            <span className="truncate text-muted-foreground">Project</span>
+                            <span className="truncate text-muted-foreground">{uiT("ui:messages.m_9859597853197476")}</span>
                             <ChevronDown className="size-3 shrink-0 text-muted-foreground" aria-hidden />
                           </>
                         )

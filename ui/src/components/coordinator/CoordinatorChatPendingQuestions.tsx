@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import type { AttentionItem } from "@paperclipai/shared";
 import { ArrowUpRight } from "lucide-react";
@@ -36,7 +37,7 @@ export function CoordinatorChatPendingQuestion({ item }: { item: AttentionItem }
     <p className="text-sm text-muted-foreground">{item.originAgentName ?? "Your agent"} needs your input on {task.title ?? task.identifier ?? "this task"}.</p>
     <article className="coordinator-decision-card space-y-4 rounded-xl border border-border bg-card p-6">
       <AttentionInteractionResolver companyId={task.companyId} issueId={task.id} interactionId={item.subject.id} currentUserId={userId} presentation="coordinator-decision" footerSlot={<Link to={href} className="flex max-w-full items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-        <span className="shrink-0">{task.identifier ?? "Open task"}</span><span className="truncate">{task.title}</span><ArrowUpRight className="size-4 shrink-0" />
+        <span className="shrink-0">{task.identifier ?? uiT("ui:messages.m_6b5c9394cb7f900b")}</span><span className="truncate">{task.title}</span><ArrowUpRight className="size-4 shrink-0" />
       </Link>} />
 
     </article>
@@ -46,6 +47,6 @@ export function CoordinatorChatPendingQuestion({ item }: { item: AttentionItem }
 export function CoordinatorChatQuestionStatus({ query }: { query: ReturnType<typeof useCoordinatorChatPendingQuestions> }) {
   if (!query.enabled || !query.isError) return null;
   return <div role="status" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-    <span>Task questions couldn’t load.</span><Button size="sm" variant="ghost" onClick={() => void query.refetch()}>Retry</Button>
+    <span>Task questions couldn’t load.</span><Button size="sm" variant="ghost" onClick={() => void query.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
   </div>;
 }

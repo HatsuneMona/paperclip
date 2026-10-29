@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { SetupWizardFooter } from "@/components/SetupWizard";
 import { Input } from "@/components/ui/input";
@@ -30,7 +31,7 @@ export function SpekoProviderSetup({ agentName, onSaveExit, credentials, onChang
   }
   return <div className="space-y-5">
     <div>
-      <h1 className="text-xl font-bold">Connect {agentName} to Speko</h1>
+      <h1 className="text-xl font-bold">{uiT("ui:messages.m_3b887c9884f2c97a")}{agentName} to Speko</h1>
       <p className="mt-1 text-sm text-muted-foreground">Choose a dedicated Speko voice persona. Paperclip uses its voice while {agentName} keeps its existing runtime, tools, and task context.</p>
     </div>
     <ol className="list-decimal space-y-2 pl-5 text-sm">

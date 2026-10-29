@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ExecutionWorkspace } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -92,8 +93,7 @@ export function ExecutionWorkspaceCloseDialog({
       <DialogContent className="max-h-(--sz-85vh) overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{actionLabel}</DialogTitle>
-          <DialogDescription className="break-words">
-            Archive <span className="font-medium text-foreground">{workspaceName}</span> and clean up any owned workspace
+          <DialogDescription className="break-words">{uiT("ui:messages.m_603be23fb06ab3e6")}<span className="font-medium text-foreground">{workspaceName}</span> and clean up any owned workspace
             artifacts. Paperclip keeps the workspace record and task history, but removes it from active workspace views.
           </DialogDescription>
         </DialogHeader>
@@ -178,16 +178,16 @@ export function ExecutionWorkspaceCloseDialog({
                 <div className="rounded-xl border border-border bg-background px-4 py-3 text-sm">
                   <div className="grid gap-2 sm:grid-cols-2">
                     <div>
-                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Branch</div>
-                      <div className="font-mono text-xs">{readiness.git.branchName ?? "Unknown"}</div>
+                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_52656e8104eef3fd")}</div>
+                      <div className="font-mono text-xs">{readiness.git.branchName ?? uiT("ui:messages.m_b764cdc0eab71374")}</div>
                     </div>
                     <div>
-                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Base ref</div>
-                      <div className="font-mono text-xs">{readiness.git.baseRef ?? "Not set"}</div>
+                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_9c6c10f9d4c60b53")}</div>
+                      <div className="font-mono text-xs">{readiness.git.baseRef ?? uiT("ui:messages.m_4895f73177ab5d67")}</div>
                     </div>
                     <div>
                       <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Merged into base</div>
-                      <div>{readiness.git.isMergedIntoBase == null ? "Unknown" : readiness.git.isMergedIntoBase ? "Yes" : "No"}</div>
+                      <div>{readiness.git.isMergedIntoBase == null ? uiT("ui:messages.m_b764cdc0eab71374") : readiness.git.isMergedIntoBase ? uiT("ui:messages.m_85a39ab345d672ff") : uiT("ui:messages.m_1ea442a134b2a184")}</div>
                     </div>
                     <div>
                       <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Ahead / behind</div>
@@ -282,8 +282,7 @@ export function ExecutionWorkspaceCloseDialog({
             ) : null}
 
             {readiness.git?.repoRoot ? (
-              <div className="break-words text-xs text-muted-foreground">
-                Repo root: <span className="font-mono break-all">{readiness.git.repoRoot}</span>
+              <div className="break-words text-xs text-muted-foreground">{uiT("ui:messages.m_c1137c85d0e62a10")}<span className="font-mono break-all">{readiness.git.repoRoot}</span>
                 {readiness.git.workspacePath ? (
                   <>
                     {" · "}Workspace path: <span className="font-mono break-all">{readiness.git.workspacePath}</span>
@@ -303,9 +302,7 @@ export function ExecutionWorkspaceCloseDialog({
             variant="outline"
             onClick={() => onOpenChange(false)}
             disabled={closeWorkspace.isPending}
-          >
-            Cancel
-          </Button>
+          >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             variant={currentStatus === "cleanup_failed" ? "default" : "destructive"}
             onClick={() => closeWorkspace.mutate()}

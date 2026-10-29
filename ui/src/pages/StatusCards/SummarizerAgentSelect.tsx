@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -60,8 +61,8 @@ export function SummarizerAgentSelect({
       options={agentOptions}
       placeholder="Summarizer (default)"
       noneLabel="Summarizer (default)"
-      searchPlaceholder="Search agents..."
-      emptyMessage="No agents found."
+      searchPlaceholder={uiT("ui:messages.m_32f4468b0b6f9410")}
+      emptyMessage={uiT("ui:messages.m_61666542b1caa1e2")}
       onChange={(next) => onChange(next.startsWith("agent:") ? next.slice("agent:".length) : "")}
       className="h-8 text-sm"
       renderTriggerValue={renderAgent}

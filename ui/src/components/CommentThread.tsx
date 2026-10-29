@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "./AgentIdentity";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { memo, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
@@ -256,7 +257,7 @@ function CopyMarkdownButton({ text }: { text: string }) {
     }
   }, []);
 
-  const label = status === "copied" ? "Copied" : status === "failed" ? "Copy failed" : "Copy";
+  const label = status === "copied" ? uiT("ui:messages.m_8d525e5f158b9afe") : status === "failed" ? uiT("ui:messages.m_5b50e7a693fee952") : uiT("ui:messages.m_e21f935f11d7e966");
 
   return (
     <button
@@ -270,7 +271,7 @@ function CopyMarkdownButton({ text }: { text: string }) {
             : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
       )}
       title={label}
-      aria-label="Copy comment as markdown"
+      aria-label={uiT("ui:messages.m_35d3333040609376")}
       onClick={() => {
         void copyTextToClipboard(text)
           .then(() => setStatus("copied"))
@@ -355,14 +356,10 @@ function CommentCard({
         )}
         <span className="flex items-center gap-1.5">
           {isQueued ? (
-            <Badge variant="outline" className="border-amber-400/60 bg-amber-100/70 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-amber-800 dark:border-amber-400/40 dark:bg-amber-500/20 dark:text-amber-200">
-              Queued
-            </Badge>
+            <Badge variant="outline" className="border-amber-400/60 bg-amber-100/70 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-amber-800 dark:border-amber-400/40 dark:bg-amber-500/20 dark:text-amber-200">{uiT("ui:messages.m_661ff40a07e037bb")}</Badge>
           ) : null}
           {followUpRequested ? (
-            <Badge variant="outline" className="text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow)">
-              Follow-up
-            </Badge>
+            <Badge variant="outline" className="text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow)">{uiT("ui:messages.m_09b2d9cd1123792a")}</Badge>
           ) : null}
           {companyId && !isPending && !isDeleted ? (
             <PluginSlotOutlet
@@ -381,7 +378,7 @@ function CommentCard({
             />
           ) : null}
           {isPending ? (
-            <span className="text-xs text-muted-foreground">{isQueued ? "Queueing..." : "Sending..."}</span>
+            <span className="text-xs text-muted-foreground">{isQueued ? "Queueing..." : uiT("ui:messages.m_286a3af7348e8312")}</span>
           ) : (
             <a
               href={`#comment-${comment.id}`}
@@ -394,7 +391,7 @@ function CommentCard({
         </span>
       </div>
       {isDeleted ? (
-        <div className="text-sm italic text-muted-foreground">Comment deleted</div>
+        <div className="text-sm italic text-muted-foreground">{uiT("ui:messages.m_7199a134a33912a5")}</div>
       ) : (
         <MarkdownBody className="text-sm" softBreaks externalReferences={externalReferences}>{comment.body}</MarkdownBody>
       )}
@@ -428,12 +425,10 @@ function CommentCard({
               <Link
                 to={`/agents/${comment.runAgentId}/runs/${comment.runId}`}
                 className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
-              >
-                run {comment.runId.slice(0, 8)}
+              >{uiT("ui:messages.m_3330b30ee29389c1")}{comment.runId.slice(0, 8)}
               </Link>
             ) : (
-              <span className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground">
-                run {comment.runId.slice(0, 8)}
+              <span className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground">{uiT("ui:messages.m_3330b30ee29389c1")}{comment.runId.slice(0, 8)}
               </span>
             )
           ) : undefined}
@@ -445,12 +440,10 @@ function CommentCard({
             <Link
               to={`/agents/${comment.runAgentId}/runs/${comment.runId}`}
               className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
-            >
-              run {comment.runId.slice(0, 8)}
+            >{uiT("ui:messages.m_3330b30ee29389c1")}{comment.runId.slice(0, 8)}
             </Link>
           ) : (
-            <span className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground">
-              run {comment.runId.slice(0, 8)}
+            <span className="inline-flex items-center rounded-md border border-border bg-accent/30 px-2 py-1 text-(length:--text-nano) font-mono text-muted-foreground">{uiT("ui:messages.m_3330b30ee29389c1")}{comment.runId.slice(0, 8)}
             </span>
           )}
         </div>
@@ -497,9 +490,7 @@ function TimelineEventCard({
 
         {event.statusChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Status
-            </span>
+            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_920e413c7d411b61")}</span>
             <span className="text-muted-foreground">
               {humanizeValue(event.statusChange.from)}
             </span>
@@ -512,9 +503,7 @@ function TimelineEventCard({
 
         {event.assigneeChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Assignee
-            </span>
+            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_5e20d20e3978dcf8")}</span>
             <span className="text-muted-foreground">
               {formatTimelineAssigneeLabel(event.assigneeChange.from, agentMap, currentUserId)}
             </span>
@@ -527,9 +516,7 @@ function TimelineEventCard({
 
         {event.workspaceChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Workspace
-            </span>
+            <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_87bb59ba2f92f2a5")}</span>
             <span className="text-muted-foreground">
               {formatTimelineWorkspaceLabel(event.workspaceChange.from)}
             </span>
@@ -632,7 +619,7 @@ const TimelineList = memo(function TimelineList({
                   <Link to={`/agents/${run.agentId}`} className="font-medium text-foreground transition-colors hover:underline">
                     {actorName}
                   </Link>
-                  <span className="text-muted-foreground">run</span>
+                  <span className="text-muted-foreground">{uiT("ui:messages.m_acba25512100f80b")}</span>
                   <Link
                     to={`/agents/${run.agentId}/runs/${run.runId}`}
                     className="inline-flex items-center rounded-md border border-border bg-accent/40 px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"
@@ -996,7 +983,7 @@ export function CommentThread({
                 disabled={interruptingQueuedRunId === queuedComments[0].queueTargetRunId}
                 onClick={() => void onInterruptQueued(queuedComments[0]!.queueTargetRunId!)}
               >
-                {interruptingQueuedRunId === queuedComments[0].queueTargetRunId ? "Interrupting..." : "Interrupt"}
+                {interruptingQueuedRunId === queuedComments[0].queueTargetRunId ? uiT("ui:messages.m_f60f33ede21dcecc") : uiT("ui:messages.m_b62523141249e0f2")}
               </Button>
             ) : null}
           </div>
@@ -1027,7 +1014,7 @@ export function CommentThread({
             ref={editorRef}
             value={body}
             onChange={setBody}
-            placeholder="Leave a comment..."
+            placeholder={uiT("ui:messages.m_4dff58ab6888329d")}
             mentions={mentions}
             onSubmit={handleSubmit}
             imageUploadHandler={imageUploadHandler}
@@ -1048,7 +1035,7 @@ export function CommentThread({
                   size="icon-sm"
                   onClick={() => attachInputRef.current?.click()}
                   disabled={attaching}
-                  title="Attach image"
+                  title={uiT("ui:messages.m_2eacc5e02758c0b0")}
                 >
                   <Paperclip className="h-4 w-4" />
                 </Button>
@@ -1058,14 +1045,14 @@ export function CommentThread({
               <InlineEntitySelector
                 value={reassignTarget}
                 options={reassignOptions}
-                placeholder="Responsible"
+                placeholder={uiT("ui:messages.m_bc110a6d0722098a")}
                 noneLabel="No responsible"
-                searchPlaceholder="Search responsible..."
-                emptyMessage="No responsible found."
+                searchPlaceholder={uiT("ui:messages.m_9cb8d79fc8b40d38")}
+                emptyMessage={uiT("ui:messages.m_045a8ffe4067d6d2")}
                 onChange={selectAssignee}
                 className="text-xs h-8"
                 renderTriggerValue={(option) => {
-                  if (!option) return <span className="text-muted-foreground">Responsible</span>;
+                  if (!option) return <span className="text-muted-foreground">{uiT("ui:messages.m_bc110a6d0722098a")}</span>;
                   const agentId = option.id.startsWith("agent:") ? option.id.slice("agent:".length) : null;
                   const agent = agentId ? agentMap?.get(agentId) : null;
                   return (
@@ -1093,7 +1080,7 @@ export function CommentThread({
               />
             )}
             <Button size="sm" disabled={!canSubmit} onClick={handleSubmit}>
-              {submitting ? "Posting..." : "Comment"}
+              {submitting ? uiT("ui:messages.m_e24da73ee9535f11") : uiT("ui:messages.m_44f5e3fbec57be75")}
             </Button>
           </div>
         </div>

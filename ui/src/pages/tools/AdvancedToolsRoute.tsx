@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ShieldAlert } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -22,7 +23,7 @@ export function AdvancedToolsRoute() {
   });
 
   if (boardAccess.isLoading) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">Loading…</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">{uiT("ui:messages.m_ba3bbbe10d8bef66")}</div>;
   }
 
   const data = boardAccess.data;

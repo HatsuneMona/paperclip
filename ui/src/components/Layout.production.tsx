@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useDesignSandbox } from "@/context/DesignSandboxContext";
 import { DesignSandboxSidebar } from "./DesignSandboxSidebar";
 import { BoardDialogs } from "./BoardDialogs";
@@ -319,7 +320,7 @@ export function Layout() {
     });
     if (bounce) {
       pushToast?.({
-        title: `${matchedCompany.name} is archived`,
+        title: uiT("ui:messages.m_7fed88830a66d575", { v0: (matchedCompany.name) }),
         body: `Switched to ${bounce.name}.`,
         tone: "info",
         dedupeKey: `archived-company-bounce:${matchedCompany.id}`,

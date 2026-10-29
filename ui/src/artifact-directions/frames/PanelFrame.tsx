@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidePanelFrame, SidePanelWindowControls } from "@/components/side-panel/SidePanelFrame";
@@ -20,9 +21,9 @@ export const TASK_DETAIL_PANE_WIDTH = 434;
 
 // TaskSidePanel.tsx:280,562 — every tab is closable, Properties included.
 const TABS: SidePanelTabItem[] = [
-  { id: "properties", type: "properties", label: "Properties", closable: true },
+  { id: "properties", type: "properties", label: uiT("ui:messages.m_ae43692b2a310b8e"), closable: true },
   { id: "subtasks", type: "subtasks", label: "Tasks", closable: true },
-  { id: "artifacts", type: "artifacts", label: "Artifacts", closable: true },
+  { id: "artifacts", type: "artifacts", label: uiT("ui:messages.m_314ae71b8c8dc9c9"), closable: true },
 ];
 
 const noop = () => {};
@@ -49,7 +50,7 @@ export function PanelFrame({ kit, artifacts, width = TASK_DETAIL_PANE_WIDTH }: {
                   variant="ghost"
                   size="icon-sm"
                   className="shrink-0 text-muted-foreground hover:text-foreground focus-visible:text-foreground h-(--side-panel-tab-height) w-(--side-panel-tab-height) rounded-md"
-                  aria-label="Open a new tab"
+                  aria-label={uiT("ui:messages.m_2b75279f7878c031")}
                 >
                   <Plus aria-hidden />
                 </Button>

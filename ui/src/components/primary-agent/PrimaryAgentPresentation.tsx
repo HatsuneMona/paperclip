@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext } from "react";
 import { ArrowRight, Crown, Loader2 } from "lucide-react";
 import type { Agent } from "@paperclipai/shared";
@@ -64,12 +65,12 @@ export function SetPrimaryAgentButton({ agent }: {
     <AlertDialogContent>
       <div className="flex items-start justify-center gap-5 pt-2">
         <div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-          <AgentAvatar agent={previous} size={64} label={`${previous.name} avatar`} />
+          <AgentAvatar agent={previous} size={64} label={uiT("ui:messages.m_b694db30b192024c", { v0: (previous.name) })} />
           <span className="max-w-full break-words text-sm font-medium">{previous.name}</span>
         </div>
         <ArrowRight aria-hidden="true" className="mt-5 size-6 shrink-0 text-muted-foreground" />
         <div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-          <AgentAvatar agent={agent} size={64} label={`${agent.name} avatar`}
+          <AgentAvatar agent={agent} size={64} label={uiT("ui:messages.m_b694db30b192024c", { v0: (agent.name) })}
             className="rounded-xl ring-1 ring-primary ring-offset-2 ring-offset-background" />
           <span className="flex max-w-full items-center justify-center gap-1.5 text-sm font-medium">
             <span className="min-w-0 break-words">{agent.name}</span>
@@ -86,7 +87,7 @@ export function SetPrimaryAgentButton({ agent }: {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter className="flex-row justify-between sm:justify-between">
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
         <AlertDialogAction disabled={disabled} onClick={() => primary.onChange(agent.id)}>Set as my primary</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useLocation } from "@/lib/router";
 import { ChatDetailSidebar } from "./chat/ChatDetailSidebar";
 import { ChatSetupSidebar } from "./chat/ChatSetupNavigation";
@@ -53,23 +54,21 @@ export function AppsSidebar() {
           className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
         >
           <ChevronLeft className="h-3.5 w-3.5 shrink-0" />
-          <span className="truncate">{selectedCompany?.name ?? "Company"}</span>
+          <span className="truncate">{selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3")}</span>
         </Link>
         <div className="flex items-center gap-2 px-2 py-1">
           <AppWindow className="h-4 w-4 text-muted-foreground shrink-0" />
-          <span className="flex-1 truncate text-sm font-bold text-foreground">Connectors</span>
+          <span className="flex-1 truncate text-sm font-bold text-foreground">{uiT("ui:messages.m_c3d2e79ebdd046c6")}</span>
         </div>
       </div>
 
       <nav className="flex-1 min-h-0 overflow-y-auto scrollbar-auto-hide px-3 py-2">
-        <div className="px-3 pb-1 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-          Connectors
-        </div>
+        <div className="px-3 pb-1 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_c3d2e79ebdd046c6")}</div>
         <div className="flex flex-col gap-0.5">
-          <SidebarNavItem to="/apps" label="Browse" icon={Store} end />
+          <SidebarNavItem to="/apps" label={uiT("ui:messages.m_3227aa9666253f7a")} icon={Store} end />
           <SidebarNavItem
             to="/apps/review"
-            label="Review"
+            label={uiT("ui:messages.m_aff0766a5290e117")}
             icon={ShieldQuestion}
             badge={reviewCount > 0 ? reviewCount : undefined}
             badgeTone="warning"
@@ -83,7 +82,7 @@ export function AppsSidebar() {
           Advanced setup for developers. Most teams never open this.
         </p>
         <div className="flex flex-col gap-0.5">
-          <SidebarNavItem to="/apps/connections" label="Connections" icon={AppWindow} end />
+          <SidebarNavItem to="/apps/connections" label={uiT("ui:messages.m_dc273117482b4429")} icon={AppWindow} end />
           {developerTabs.map((tab) => (
             <SidebarNavItem
               key={tab.key}

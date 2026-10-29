@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
@@ -51,15 +52,15 @@ function ComposioAccountObservations({ app, connection, onClose }: { app: Aggreg
       {accounts.map(({ account, snapshot }) => <div key={`${snapshot.toolkit}:${account.id}`} className="py-3">
         <p className="truncate text-sm font-medium">{account.alias || `${app.name} account`}</p>
         <p className="text-xs text-muted-foreground">{snapshot.errorAt || Date.now() - new Date(snapshot.checkedAt).getTime() > 5 * 60_000
-          ? "Last known account · Refresh to verify" : account.status === "ACTIVE" ? "Connected" : account.status === "INITIATED" ? "Waiting for sign-in" : "Needs sign-in"}{account.isDefault ? " · Default" : ""}</p>
+          ? "Last known account · Refresh to verify" : account.status === "ACTIVE" ? uiT("ui:messages.m_22965568d22a14ee") : account.status === "INITIATED" ? "Waiting for sign-in" : "Needs sign-in"}{account.isDefault ? " · Default" : ""}</p>
       </div>)}
     </div>}
     <div className="space-y-1 text-xs text-muted-foreground">
       <p>Via <Link to={`/apps/${connection.id}/permissions`} onClick={onClose} className="underline underline-offset-2">“{connection.name}”</Link></p>
       <p>Composio permissions apply to all apps on this connection.</p>
     </div>
-    <DialogFooter className="sm:items-center sm:justify-between"><Button variant="ghost" onClick={onClose}>Close</Button>
-      <div className="flex items-center gap-2"><Button variant="ghost" disabled={busy} onClick={() => void refresh()}>{busy ? "Checking…" : "Refresh"}</Button>
+    <DialogFooter className="sm:items-center sm:justify-between"><Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_7d9eb7acb13e2462")}</Button>
+      <div className="flex items-center gap-2"><Button variant="ghost" disabled={busy} onClick={() => void refresh()}>{busy ? uiT("ui:messages.m_ec963ffc911b8401") : uiT("ui:messages.m_0e91610117029a62")}</Button>
         <Button asChild><a href={COMPOSIO_APP_MANAGEMENT_URL} target="_blank" rel="noopener noreferrer">Open in Composio<ExternalLink className="size-4" /></a></Button></div>
     </DialogFooter>
   </>;

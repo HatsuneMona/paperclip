@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { TaskBrowser } from "@paperclipai/shared";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ export function TaskBrowserActivity({
       <span className="text-muted-foreground">· {browser.status}</span>
       {onOpen && (
         <Button variant="ghost" size="sm" onClick={() => onOpen(browser.id)}>
-          {closed ? "View session" : "Open browser"}
+          {closed ? "View session" : uiT("ui:messages.m_b84a7dc03e31fe5f")}
         </Button>
       )}
     </div>

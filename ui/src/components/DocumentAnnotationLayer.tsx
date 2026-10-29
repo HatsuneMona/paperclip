@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Profiler, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, MessageSquarePlus } from "lucide-react";
 import type {
@@ -611,9 +612,7 @@ export function DocumentAnnotationLayer({
                   ? newCommentDisabledReason ?? undefined
                   : "Add comment on selection (⌘⇧M)"}
               >
-                <MessageSquarePlus className="h-3.5 w-3.5" aria-hidden="true" />
-                Comment
-              </Button>
+                <MessageSquarePlus className="h-3.5 w-3.5" aria-hidden="true" />{uiT("ui:messages.m_44f5e3fbec57be75")}</Button>
             </div>
           ) : null}
         </div>

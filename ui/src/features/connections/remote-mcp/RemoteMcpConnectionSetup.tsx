@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { CheckCircle2, ExternalLink, HelpCircle, Loader2, Plus, Trash2 } from "lucide-react";
 import { InlineBanner } from "@/components/InlineBanner";
@@ -30,7 +31,7 @@ const selectClass = "h-9 w-full rounded-md border border-input bg-background px-
 function FieldHelp({ label, children }: { label: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return <Tooltip open={open} onOpenChange={setOpen}>
-    <TooltipTrigger asChild><button type="button" aria-label={`Help with ${label}`} onClick={() => setOpen(!open)} className="rounded-sm text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><HelpCircle className="size-4" /></button></TooltipTrigger>
+    <TooltipTrigger asChild><button type="button" aria-label={uiT("ui:messages.m_99385c23eda6dadb", { v0: (label) })} onClick={() => setOpen(!open)} className="rounded-sm text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><HelpCircle className="size-4" /></button></TooltipTrigger>
     <TooltipContent className="max-w-xs">{children}</TooltipContent>
   </Tooltip>;
 }
@@ -118,7 +119,7 @@ export function RemoteMcpConnectionSetup({ provider, state: s, actions: a, agent
     : s.connectStatus === "unreachable" ? { title: "Paperclip could not reach this server", body: "Check that the endpoint is running and reachable from Paperclip, then try again. Your draft is still here." }
     : null;
   const urlField = <div className="space-y-2">
-    <div className="flex items-center gap-2"><Label htmlFor={`${uid}-url`}>MCP server URL</Label><FieldHelp label="MCP server URL">{provider.urlHelp}</FieldHelp></div>
+    <div className="flex items-center gap-2"><Label htmlFor={`${uid}-url`}>{uiT("ui:messages.m_4f5aff033a99aafc")}</Label><FieldHelp label={uiT("ui:messages.m_4f5aff033a99aafc")}>{provider.urlHelp}</FieldHelp></div>
     <Input id={`${uid}-url`} type="password" autoComplete="off" spellCheck={false} placeholder={provider.placeholder} value={s.url} aria-invalid={s.connectStatus === "invalid_url"} aria-describedby={`${uid}-url-help`} onChange={(event) => change({ url: event.target.value })} />
     <p id={`${uid}-url-help`} className="text-xs text-muted-foreground">{provider.urlHelp}</p>
     {provider.id === "executor" ? <div className="space-y-2"><div className="flex items-center gap-2"><Label htmlFor={`${uid}-management`}>Console URL (optional)</Label>
@@ -139,9 +140,9 @@ export function RemoteMcpConnectionSetup({ provider, state: s, actions: a, agent
         {s.step === "access" && <AccessStepContent agents={agents} lockedAgentId={lockedAgentId} authKind="oauth" grantKinds={fixedGrantKind ? [fixedGrantKind] : undefined} grantKind={s.grantKind} setGrantKind={(grantKind) => { if (grantKind !== "agent") change({ grantKind }); }}
           installChoice={s.allAgents ? "all" : "specific"} setInstallChoice={(choice) => change({ allAgents: choice === "all" })}
           installAgentIds={new Set(s.agentIds)} setInstallAgentIds={(ids) => change({ agentIds: [...ids] })}
-          submitLabel={s.setupComplete ? "Done" : "Continue"} onBack={s.setupComplete ? a.finish : a.saveExit} onContinue={s.setupComplete ? a.finish : () => a.navigate("connect")} />}
+          submitLabel={s.setupComplete ? uiT("ui:messages.m_11a6767d5674c7e4") : uiT("ui:messages.m_31fbef162594de01")} onBack={s.setupComplete ? a.finish : a.saveExit} onContinue={s.setupComplete ? a.finish : () => a.navigate("connect")} />}
         {s.step === "permissions" && <>
-          <div className="flex items-center justify-between gap-3"><h2 className="text-sm font-semibold">Permissions</h2><Button variant="outline" onClick={a.finish}>Connection settings</Button></div>
+          <div className="flex items-center justify-between gap-3"><h2 className="text-sm font-semibold">{uiT("ui:messages.m_abccc78cc93c0793")}</h2><Button variant="outline" onClick={a.finish}>{uiT("ui:messages.m_b4ddb3c1ca6cd289")}</Button></div>
           {s.tools.some((entry) => entry.broad) && boundary}
           <ActionsSection connectionId={connectionId} appName={provider.name}
             readOnly={s.tools.filter((entry) => entry.isReadOnly)} canChange={s.tools.filter((entry) => !entry.isReadOnly)} quarantined={[]}
@@ -172,16 +173,16 @@ export function RemoteMcpConnectionSetup({ provider, state: s, actions: a, agent
                 <CollapsibleContent className="mt-3">{urlField}</CollapsibleContent>
               </Collapsible> : urlField}
               {defaults(<div className="space-y-4">
-                  <p className="text-sm font-medium text-foreground">Authentication</p>
+                  <p className="text-sm font-medium text-foreground">{uiT("ui:messages.m_66880d2d8216260d")}</p>
                   <p className="text-sm text-muted-foreground">{provider.authHelp}</p>
                   <div className="space-y-2"><Label htmlFor={`${uid}-auth`}>Sign-in method</Label><select id={`${uid}-auth`} className={selectClass} value={s.auth} onChange={(event) => change({ auth: event.target.value as RemoteMcpSetupState["auth"] })}>
-                    {provider.supportsBrowserAuth && <option value="auto">Automatic (sign in if required)</option>}<option value="bearer">Bearer token</option><option value="headers">Custom headers</option><option value="none">No additional authentication</option>
+                    {provider.supportsBrowserAuth && <option value="auto">Automatic (sign in if required)</option>}<option value="bearer">{uiT("ui:messages.m_b22ac30e61f624d5")}</option><option value="headers">Custom headers</option><option value="none">No additional authentication</option>
                   </select></div>
-                  {s.auth === "bearer" && <div className="space-y-2"><div className="flex items-center gap-2"><Label htmlFor={`${uid}-token`}>Bearer token</Label><FieldHelp label="bearer token">Paste the token only, without the word Bearer. It is kept in the connection’s credentials.</FieldHelp></div><Input id={`${uid}-token`} type="password" autoComplete="off" value={s.token} onChange={(event) => change({ token: event.target.value })} /></div>}
+                  {s.auth === "bearer" && <div className="space-y-2"><div className="flex items-center gap-2"><Label htmlFor={`${uid}-token`}>{uiT("ui:messages.m_b22ac30e61f624d5")}</Label><FieldHelp label="bearer token">Paste the token only, without the word Bearer. It is kept in the connection’s credentials.</FieldHelp></div><Input id={`${uid}-token`} type="password" autoComplete="off" value={s.token} onChange={(event) => change({ token: event.target.value })} /></div>}
                   {(s.auth === "bearer" || s.auth === "headers") && <div className="space-y-3">
                     <p className="text-sm font-medium">{s.auth === "bearer" ? "Additional headers" : "Headers"}</p>
                     {s.headers.map((header, index) => <div key={header.id} className="flex flex-wrap items-end gap-2">
-                      <div className="min-w-0 flex-1 space-y-2"><Label htmlFor={`${uid}-${header.id}-name`}>Header {index + 1} name</Label><Input id={`${uid}-${header.id}-name`} value={header.name} placeholder={provider.id === "arcade" ? "Arcade-User-ID" : "Header name"} onChange={(event) => change({ headers: s.headers.map((h) => h.id === header.id ? { ...h, name: event.target.value } : h) })} /></div>
+                      <div className="min-w-0 flex-1 space-y-2"><Label htmlFor={`${uid}-${header.id}-name`}>Header {index + 1} name</Label><Input id={`${uid}-${header.id}-name`} value={header.name} placeholder={provider.id === "arcade" ? "Arcade-User-ID" : uiT("ui:messages.m_c1dcc8fb31f6ee89")} onChange={(event) => change({ headers: s.headers.map((h) => h.id === header.id ? { ...h, name: event.target.value } : h) })} /></div>
                       <div className="min-w-0 flex-1 space-y-2"><Label htmlFor={`${uid}-${header.id}-value`}>Header {index + 1} value</Label><Input id={`${uid}-${header.id}-value`} type="password" autoComplete="off" value={header.value} onChange={(event) => change({ headers: s.headers.map((h) => h.id === header.id ? { ...h, value: event.target.value } : h) })} /></div>
                       <Button type="button" variant="ghost" size="icon" aria-label={`Remove header ${index + 1}`} onClick={() => change({ headers: s.headers.filter((h) => h.id !== header.id) })}><Trash2 className="size-4" /></Button>
                     </div>)}
@@ -191,15 +192,15 @@ export function RemoteMcpConnectionSetup({ provider, state: s, actions: a, agent
             </fieldset>
             {additionalSettings}
             {busy && <p role="status" className="flex items-center gap-2 text-sm"><Loader2 className="size-4 animate-spin motion-reduce:animate-none" />Connecting and discovering tools…</p>}
-            {footer(<>{s.setupComplete ? <Button type="button" variant="outline" disabled={busy} onClick={a.finish}>Back</Button> : <span />}<Button type="submit" disabled={busy || !s.url.trim() || !settingsValid}>{busy ? "Connecting…" : error || s.connectStatus === "cancelled" ? "Try again" : `Connect ${provider.name}`}</Button></>)}
+            {footer(<>{s.setupComplete ? <Button type="button" variant="outline" disabled={busy} onClick={a.finish}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button> : <span />}<Button type="submit" disabled={busy || !s.url.trim() || !settingsValid}>{busy ? uiT("ui:messages.m_72021eb70e91b4d5") : error || s.connectStatus === "cancelled" ? uiT("ui:messages.m_d8b8392e2c542950") : uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (provider.name) })}</Button></>)}
           </form>}
         </>}
 
         {s.step === "management" && <>
-          {!s.connected ? <InlineBanner tone="warning" title="Disconnected">Agents cannot use this connection. Reconnect to restore access under the saved permission choices.</InlineBanner> : <div className="space-y-2"><p className="flex items-center gap-2 text-sm"><CheckCircle2 className="size-4" />Connected{s.identity ? ` as ${s.identity}` : ""}</p><p className="text-sm text-muted-foreground">{s.grantKind === "user" ? "Just me" : "Any human in the organization"} · {s.tools.length} tools · {s.allAgents ? "Any agent" : `${s.agentIds.length} agents with access`}</p></div>}
-          <div className="flex flex-wrap gap-2"><Button onClick={() => a.navigate("access")}>Who can use this connection</Button><Button variant="outline" disabled={!s.connected} onClick={() => a.navigate("permissions")}>Permissions</Button></div>
+          {!s.connected ? <InlineBanner tone="warning" title={uiT("ui:messages.m_04dfac3671b494ad")}>Agents cannot use this connection. Reconnect to restore access under the saved permission choices.</InlineBanner> : <div className="space-y-2"><p className="flex items-center gap-2 text-sm"><CheckCircle2 className="size-4" />{uiT("ui:messages.m_22965568d22a14ee")}{s.identity ? uiT("ui:messages.m_c9989a584618562c", { v0: (s.identity) }) : ""}</p><p className="text-sm text-muted-foreground">{s.grantKind === "user" ? uiT("ui:messages.m_3a4b4df869c76a24") : "Any human in the organization"} · {s.tools.length} tools · {s.allAgents ? uiT("ui:messages.m_ee3e7690173b4911") : `${s.agentIds.length} agents with access`}</p></div>}
+          <div className="flex flex-wrap gap-2"><Button onClick={() => a.navigate("access")}>Who can use this connection</Button><Button variant="outline" disabled={!s.connected} onClick={() => a.navigate("permissions")}>{uiT("ui:messages.m_abccc78cc93c0793")}</Button></div>
           <p className="text-sm text-muted-foreground">Refresh the catalog after changing tools in {provider.name}. Existing Off and Ask first choices are preserved.</p>
-          <Button variant="outline" disabled={!s.connected || s.refreshing} onClick={a.refresh}>{s.refreshing ? "Refreshing…" : "Refresh tools"}</Button>
+          <Button variant="outline" disabled={!s.connected || s.refreshing} onClick={a.refresh}>{s.refreshing ? uiT("ui:messages.m_1c0def7be0607b96") : "Refresh tools"}</Button>
           <RemoteMcpManagement providerName={provider.name} connected={s.connected} onReconnect={a.reconnect} onManage={() => a.openProvider("manage")} onDisconnect={a.disconnect} />
         </>}
         {s.step === "draft" && <><p className="text-sm">Your access choices and setup progress are kept with this connection.</p><div className="flex justify-end"><Button onClick={a.resumeDraft}>Resume setup</Button></div></>}

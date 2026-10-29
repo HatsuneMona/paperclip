@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { CompanySecret } from "@paperclipai/shared";
@@ -74,9 +75,7 @@ export function MyUserSecretsTab({ companyId }: { companyId: string }) {
           <div className="flex items-center gap-2 py-4 text-sm text-destructive">
             <AlertCircle className="h-4 w-4" /> Failed to load your secrets:{" "}
             {(mySecretsQuery.error as Error).message}
-            <Button variant="ghost" size="sm" onClick={() => mySecretsQuery.refetch()}>
-              Retry
-            </Button>
+            <Button variant="ghost" size="sm" onClick={() => mySecretsQuery.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           </div>
         ) : entries.length === 0 && !mySecretsQuery.isPending ? (
           <EmptyState
@@ -161,7 +160,7 @@ function MyUserSecretRow({
         </Badge>
         {!disabledDefinition ? (
           <Button size="sm" variant={secret ? "outline" : "default"} onClick={onSet}>
-            {secret ? "Update" : "Set value"}
+            {secret ? uiT("ui:messages.m_c1c1009d3f37ec05") : "Set value"}
           </Button>
         ) : null}
         {secret ? (

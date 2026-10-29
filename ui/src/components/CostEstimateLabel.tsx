@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CostByAgent } from "@paperclipai/shared";
 import { Badge } from "./ui/badge";
 
@@ -14,7 +15,7 @@ export function CostEstimateLabel({
       className="font-normal text-muted-foreground"
       title={`${estimatedEventCount} estimated ${estimatedEventCount === 1 ? "charge" : "charges"}. Calculated from token usage and published rates; provider bills may differ.`}
     >
-      {allEstimated ? "Estimated" : "Partially estimated"}
+      {allEstimated ? uiT("ui:messages.m_b774599a9cd1f9a7") : "Partially estimated"}
     </Badge>
   );
 }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -106,11 +107,11 @@ export function AgentObservabilitySettingsView(props: AgentObservabilitySettings
           </select>
         </div>
         {provider === "braintrust" ? <>
-          <div className="space-y-2"><Label htmlFor="agent-observability-project">Project ID</Label>
+          <div className="space-y-2"><Label htmlFor="agent-observability-project">{uiT("ui:messages.m_e511470b21a90cea")}</Label>
             <Input id="agent-observability-project" value={projectId} onChange={event => setProjectId(event.target.value)} placeholder="Braintrust project UUID" autoComplete="off" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="agent-observability-key">API key</Label>
+            <Label htmlFor="agent-observability-key">{uiT("ui:messages.m_16f0ee47f993d627")}</Label>
             {!providerChanged && original?.credentialsConfigured && !replaceKey ? <div className="flex items-center justify-between gap-3">
               <span className="text-sm text-muted-foreground">API key configured</span><Button type="button" variant="outline" size="sm" onClick={() => setReplaceKey(true)}>Replace API key</Button>
             </div> : <Input id="agent-observability-key" type="password" value={apiKey} onChange={event => setApiKey(event.target.value)} autoComplete="new-password" />}
@@ -124,10 +125,10 @@ export function AgentObservabilitySettingsView(props: AgentObservabilitySettings
             <Button type="button" variant="outline" size="sm" disabled={headers.length >= 16} onClick={() => setHeaders(rows => [...rows, { id: nextHeader.current++, originalName: null, name: "", value: "" }])}>Add header</Button></div>
             {headers.length === 0 && <p className="text-sm text-muted-foreground">No authentication headers.</p>}
             {headers.map(row => <div key={row.id} className="flex flex-wrap items-center gap-2">
-              <Input className="min-w-0 flex-1" aria-label="Header name" value={row.name} onChange={event => setHeaders(rows => rows.map(item => item.id === row.id ? { ...item, name: event.target.value } : item))} autoComplete="off" />
-              <Input className="min-w-0 flex-1" aria-label={`Value for ${row.name || "header"}`} type="password" value={row.value} placeholder={row.originalName && !requireFreshHeaders ? "Keep saved value" : "Header value"}
+              <Input className="min-w-0 flex-1" aria-label={uiT("ui:messages.m_c1dcc8fb31f6ee89")} value={row.name} onChange={event => setHeaders(rows => rows.map(item => item.id === row.id ? { ...item, name: event.target.value } : item))} autoComplete="off" />
+              <Input className="min-w-0 flex-1" aria-label={`Value for ${row.name || "header"}`} type="password" value={row.value} placeholder={row.originalName && !requireFreshHeaders ? "Keep saved value" : uiT("ui:messages.m_f9a9058c0c22e511")}
                 onChange={event => setHeaders(rows => rows.map(item => item.id === row.id ? { ...item, value: event.target.value } : item))} autoComplete="new-password" />
-              <Button type="button" size="sm" variant="ghost" aria-label={`Remove ${row.name || "header"}`} onClick={() => setHeaders(rows => rows.filter(item => item.id !== row.id))}>Remove</Button>
+              <Button type="button" size="sm" variant="ghost" aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (row.name || "header") })} onClick={() => setHeaders(rows => rows.filter(item => item.id !== row.id))}>{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
             </div>)}
           </div>
         </>}
@@ -147,14 +148,14 @@ export function AgentObservabilitySettingsView(props: AgentObservabilitySettings
         {(["logs", "traces"] as const).map(signal => receipt.signals[signal].message && <p key={signal}>{signal === "logs" ? "Logs" : "Traces"}: {receipt.signals[signal].message}</p>)}
       </div>}
       <div className="flex items-center justify-between gap-3">
-        <Button type="button" variant="ghost" disabled={busy || !dirty} onClick={reset}>Cancel</Button>
-        <Button type="button" disabled={busy || !dirty || hasConflict} onClick={() => save()}>{saving ? "Saving…" : "Save changes"}</Button>
+        <Button type="button" variant="ghost" disabled={busy || !dirty} onClick={reset}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+        <Button type="button" disabled={busy || !dirty || hasConflict} onClick={() => save()}>{saving ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}</Button>
       </div>
       {dirty && settings && <p className="text-xs text-muted-foreground">Save changes before testing.</p>}
       {settings && <div className="flex flex-wrap items-center gap-2">
-        <Button type="button" variant="outline" disabled={busy || dirty || hasConflict} onClick={onTest}>{testing ? "Testing…" : "Test saved settings"}</Button>
+        <Button type="button" variant="outline" disabled={busy || dirty || hasConflict} onClick={onTest}>{testing ? uiT("ui:messages.m_407b7a04662f2aab") : "Test saved settings"}</Button>
         {settings.enabled && <Button type="button" size="sm" variant="ghost" disabled={busy || dirty || hasConflict} onClick={() => save(false)}>Disable export</Button>}
-        <Button type="button" size="sm" variant="ghost" disabled={busy || dirty || hasConflict} onClick={onRemove}>{removing ? "Removing…" : "Remove configuration"}</Button>
+        <Button type="button" size="sm" variant="ghost" disabled={busy || dirty || hasConflict} onClick={onRemove}>{removing ? uiT("ui:messages.m_d4b09919ec929f15") : "Remove configuration"}</Button>
       </div>}
     </>}
   </section>;
@@ -184,7 +185,7 @@ function AgentObservabilitySettingsContainer({ companyId }: { companyId: string 
   }, onError: reject });
   useEffect(() => { setError(null); setConflict(false); save.reset(); test.reset(); remove.reset(); }, [companyId]);
   if (query.isPending) return <p className="text-sm text-muted-foreground">Loading agent observability…</p>;
-  if (!query.data) return <div role="alert" className="space-y-2 text-sm"><p>Agent observability settings could not be loaded.</p><Button variant="outline" size="sm" onClick={() => void query.refetch()}>Retry</Button></div>;
+  if (!query.data) return <div role="alert" className="space-y-2 text-sm"><p>Agent observability settings could not be loaded.</p><Button variant="outline" size="sm" onClick={() => void query.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></div>;
   return <AgentObservabilitySettingsView key={companyId} companyId={companyId} settings={query.data.settings} canManage={query.data.canManage}
     saving={save.isPending} removing={remove.isPending} testing={test.isPending} error={error ?? (query.isError ? "Saved settings could not be refreshed. Your draft is unchanged." : null)} conflict={conflict} resetKey={resetKey}
     onSave={input => save.mutate(input)} onTest={() => { if (query.data.settings) test.mutate(query.data.settings.revision); }}

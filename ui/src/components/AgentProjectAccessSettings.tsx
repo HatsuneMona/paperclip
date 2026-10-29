@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isUuidLike } from "@paperclipai/shared";
 import { agentsApi } from "../api/agents";
@@ -14,7 +15,7 @@ export function AgentProjectAccessSettings({ agent }: { agent: { id: string; com
   const access = useQuery({ queryKey: queryKeys.agents.projectAccess(agent.id), queryFn: () => agentsApi.projectAccess(agent.id) });
   const projects = useQuery({ queryKey: queryKeys.projects.list(agent.companyId), queryFn: () => projectsApi.list(agent.companyId) });
   if (access.error || projects.error) return <div role="alert" className="space-y-2 text-sm">
-    <p>Couldn’t load project access.</p><Button variant="outline" size="sm" onClick={() => { void access.refetch(); void projects.refetch(); }}>Try again</Button>
+    <p>Couldn’t load project access.</p><Button variant="outline" size="sm" onClick={() => { void access.refetch(); void projects.refetch(); }}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
   </div>;
   if (!access.data || !projects.data) return <p role="status" className="text-sm text-muted-foreground">Loading project access…</p>;
   return <div className="space-y-4">

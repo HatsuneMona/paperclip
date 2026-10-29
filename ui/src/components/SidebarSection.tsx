@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ComponentType, type ReactNode } from "react";
 import { Link } from "@/lib/router";
 import { ChevronRight } from "lucide-react";
@@ -102,7 +103,7 @@ function SidebarSectionHeader({
             "hover:bg-accent/50 focus-visible:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
             menuOpen && "bg-accent/50",
           )}
-          aria-label={menu?.ariaLabel ?? `${label} actions`}
+          aria-label={menu?.ariaLabel ?? uiT("ui:messages.m_f55b5fbbdd43ced8", { v0: (label) })}
         >
           {headerContent}
         </button>
@@ -160,7 +161,7 @@ function SidebarSectionHeader({
               type="button"
               data-slot="icon-button"
               className="absolute -left-4 flex h-5 w-5 items-center justify-center rounded-sm outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-              aria-label={collapsible.open ? `Collapse ${label}` : `Expand ${label}`}
+              aria-label={collapsible.open ? uiT("ui:messages.m_f894262163d19cdd", { v0: (label) }) : uiT("ui:messages.m_614e2df2bcb3682c", { v0: (label) })}
             >
               <ChevronRight className={caretClassName} aria-hidden="true" />
             </button>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import { useCallback, useMemo, useRef, useState, useEffect } from "react";
 import type {
@@ -88,7 +89,7 @@ export function DocumentAnnotationPanel(props: AnnotationPanelProps) {
   return (
     <aside
       role="complementary"
-      aria-label={`Annotations for ${props.documentKey.toUpperCase()}, revision ${props.documentRevisionNumber}`}
+      aria-label={uiT("ui:messages.m_55d889a1b613e7e6", { v0: (props.documentKey.toUpperCase()), v1: (props.documentRevisionNumber) })}
       data-testid="document-annotation-panel"
       className={cn(
         "isolate flex h-full max-h-(--sz-80vh) shrink-0 flex-col overflow-hidden rounded-none border border-border bg-popover text-popover-foreground shadow-xl",
@@ -177,8 +178,7 @@ export function AnnotationPanelBody(props: AnnotationPanelProps) {
         data-testid={bodyTestId}
         className="flex items-center justify-end gap-1 border-b border-border bg-popover px-2 py-1.5"
       >
-        <span className="text-(length:--text-micro) tabular-nums text-muted-foreground">
-          rev {props.documentRevisionNumber}
+        <span className="text-(length:--text-micro) tabular-nums text-muted-foreground">{uiT("ui:messages.m_efd46cd7c40429d4")}{props.documentRevisionNumber}
         </span>
         <Button
           type="button"
@@ -189,7 +189,7 @@ export function AnnotationPanelBody(props: AnnotationPanelProps) {
             props.onFocusThread(null);
             props.onOpenChange(false);
           }}
-          aria-label="Close annotation panel"
+          aria-label={uiT("ui:messages.m_f3bbe766c799902c")}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -279,7 +279,7 @@ export function AnnotationPanelBody(props: AnnotationPanelProps) {
                 }
               }
             }}
-            placeholder="Write a comment…"
+            placeholder={uiT("ui:messages.m_d21c3e2f61407ea0")}
             disabled={props.newCommentDisabled}
             className="resize-y rounded-none text-sm"
           />
@@ -292,9 +292,7 @@ export function AnnotationPanelBody(props: AnnotationPanelProps) {
                 props.onClearPendingAnchor();
                 setComposerValue("");
               }}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               type="button"
               size="sm"
@@ -306,7 +304,7 @@ export function AnnotationPanelBody(props: AnnotationPanelProps) {
               }
               onClick={() => createThread.mutate(composerValue.trim())}
             >
-              {createThread.isPending ? "Posting…" : "Comment"}
+              {createThread.isPending ? uiT("ui:messages.m_648a2ef491ba918c") : uiT("ui:messages.m_44f5e3fbec57be75")}
             </Button>
           </div>
         </div>
@@ -383,7 +381,7 @@ export function ThreadCard(props: {
                   }
                 }
               }}
-              placeholder="Reply…"
+              placeholder={uiT("ui:messages.m_1d627af010c02edc")}
               className="resize-y rounded-none text-sm"
               disabled={props.pendingReply}
             />
@@ -412,7 +410,7 @@ export function ThreadCard(props: {
                 disabled={!props.replyDraft.trim() || props.pendingReply}
                 onClick={props.onSubmitReply}
               >
-                {props.pendingReply ? "Sending…" : "Reply"}
+                {props.pendingReply ? uiT("ui:messages.m_b8ed5279e897be5d") : uiT("ui:messages.m_c253f451bdd56431")}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -421,8 +419,8 @@ export function ThreadCard(props: {
                     variant="ghost"
                     size="icon-xs"
                     className="text-muted-foreground"
-                    title="More actions"
-                    aria-label="More thread actions"
+                    title={uiT("ui:messages.m_f8d46c2570e70736")}
+                    aria-label={uiT("ui:messages.m_a96a172d641cb155")}
                   >
                     <MoreHorizontal className="h-3.5 w-3.5" />
                   </Button>
@@ -434,9 +432,7 @@ export function ThreadCard(props: {
                       props.onCopyLink();
                     }}
                   >
-                    <Copy className="h-3.5 w-3.5" />
-                    Copy link
-                  </DropdownMenuItem>
+                    <Copy className="h-3.5 w-3.5" />{uiT("ui:messages.m_dbf362d4f210c780")}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -444,7 +440,7 @@ export function ThreadCard(props: {
         ) : (
           <p className="px-3 py-2 text-xs text-muted-foreground">
             <span className="font-medium text-foreground">
-              {thread.comments.length} comment{thread.comments.length === 1 ? "" : "s"}
+              {thread.comments.length} comment{thread.comments.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
             </span>
             {latestComment ? <span className="ml-1">· {truncate(latestComment.body, 120)}</span> : null}
           </p>

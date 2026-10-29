@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Copy, Check, Loader2 } from "lucide-react";
@@ -303,9 +304,7 @@ export function OnboardingLoginCodeRow({
             initial={{ opacity: 0, y: COPIED_REVEAL_TRAVEL }}
             animate={{ opacity: 1, y: 0, transition: COPIED_REVEAL }}
             exit={{ opacity: 0, transition: COPIED_REVEAL }}
-          >
-            Copied!
-          </motion.span>
+          >{uiT("ui:messages.m_ea61bc15688d1e48")}</motion.span>
         )}
       </AnimatePresence>
       <LoginCardCopyButton
@@ -461,7 +460,7 @@ export function ProviderApiKeyCard({
     <OnboardingLoginCard
       instruction={`Provide your ${providerName} API key to connect`}
     >
-      <OnboardingCardField {...field} label="API key" masked />
+      <OnboardingCardField {...field} label={uiT("ui:messages.m_16f0ee47f993d627")} masked />
     </OnboardingLoginCard>
   );
 }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
@@ -61,7 +62,7 @@ export function MissingUserSecretsBanner({
         <div className="min-w-0 flex-1">
           <p className="font-medium">{title}</p>
           <p className="mt-0.5 text-amber-700/90 dark:text-amber-300/90">
-            {missing.length} user secret{missing.length === 1 ? "" : "s"} you are responsible for
+            {missing.length} user secret{missing.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} you are responsible for
             {missing.length === 1 ? " has" : " have"} no value yet. Runs that require
             {missing.length === 1 ? " it" : " them"} will fail until you set your value.
           </p>

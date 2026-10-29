@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FileText } from "lucide-react";
@@ -30,7 +31,7 @@ export function CaseDocumentPreview({ caseIdentifier, document: documentRef }: {
       <Button variant="ghost" aria-label={documentRef.document.title ?? documentRef.key} className="h-auto w-full justify-start gap-3 rounded-none px-0 py-3 text-left font-normal whitespace-normal">
         <FileText aria-hidden className="size-4 shrink-0 text-muted-foreground" />
         <span className="min-w-0 flex-1">{documentRef.document.title ?? documentRef.key}</span>
-        {taskRef && <span className="shrink-0 font-mono text-xs text-muted-foreground">{taskRef.taskIdentifier ?? "Task"}</span>}
+        {taskRef && <span className="shrink-0 font-mono text-xs text-muted-foreground">{taskRef.taskIdentifier ?? uiT("ui:messages.m_4bc74b21357c6cf5")}</span>}
       </Button>
     </DialogTrigger>
     <DialogContent className="max-h-(--pct-80) overflow-y-auto sm:max-w-3xl">
@@ -45,7 +46,7 @@ export function CaseDocumentPreview({ caseIdentifier, document: documentRef }: {
         <SourceTrustBadge sourceTrust={document.sourceTrust} artifactLabel="document" />
         {document.body ? <MarkdownBody linkIssueReferences linkCaseReferences>{document.body}</MarkdownBody> : <p className="text-sm text-muted-foreground">This document is empty.</p>}
         <details open={historyOpen} onToggle={event => setHistoryOpen(event.currentTarget.open)} className="space-y-3">
-          <summary className="w-fit cursor-pointer text-sm text-muted-foreground hover:text-foreground">Revision history</summary>
+          <summary className="w-fit cursor-pointer text-sm text-muted-foreground hover:text-foreground">{uiT("ui:messages.m_5ae0d3d186c734b2")}</summary>
           {historyOpen && <CaseRevisionRail caseIdentifier={caseIdentifier} documentKey={documentRef.key} taskId={taskRef?.taskId} />}
         </details>
       </div> : null}

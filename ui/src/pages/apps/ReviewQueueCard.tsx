@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Loader2, ShieldQuestion, X } from "lucide-react";
@@ -146,7 +147,7 @@ function ReviewRow({
     mutationFn: () => toolsApi.declineActionRequest(companyId, item.request.id),
     onMutate: () => setResolving("decline"),
     onSuccess: () => {
-      pushToast({ title: "Declined", body: `${actionLabel(item)} won’t run.`, tone: "info" });
+      pushToast({ title: uiT("ui:messages.m_dce083a2c47ffdc4"), body: `${actionLabel(item)} won’t run.`, tone: "info" });
       invalidate();
     },
     onError: (error) => {
@@ -176,8 +177,7 @@ function ReviewRow({
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
         <span className="font-bold text-foreground">{actionLabel(item)}</span>
         {item.applicationName && (
-          <span className="text-muted-foreground">
-            in {humanizeConnectionDisplayName(item.applicationName)}
+          <span className="text-muted-foreground">{uiT("ui:messages.m_74241f65e5ac9f84")}{humanizeConnectionDisplayName(item.applicationName)}
           </span>
         )}
         <span className="text-xs text-muted-foreground">· asked {timeAgo(item.request.createdAt)}</span>
@@ -200,13 +200,9 @@ function ReviewRow({
           Allow once
         </Button>
         {item.requestedByAgentId && item.connectionId && !item.request.approvalId ? <Button size="sm" variant="outline" onClick={() => alwaysAllow.mutate()} disabled={busy}>
-          {resolving === "always" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-          Always allow
-        </Button> : null}
+          {resolving === "always" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}{uiT("ui:messages.m_977618bd8bc7eef4")}</Button> : null}
         <Button size="sm" variant="ghost" onClick={() => decline.mutate()} disabled={busy}>
-          {resolving === "decline" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <X className="mr-1.5 h-3.5 w-3.5" />}
-          Decline
-        </Button>
+          {resolving === "decline" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <X className="mr-1.5 h-3.5 w-3.5" />}{uiT("ui:messages.m_a2d285b352873457")}</Button>
       </div>
     </div>
   );

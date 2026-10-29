@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ export function CopyField({
         <Button
           variant="ghost"
           size="sm"
-          aria-label={`Copy ${label}`}
+          aria-label={uiT("ui:messages.m_3f3ebff426db5fa6", { v0: (label) })}
           onClick={async () => {
             try {
               await copyTextToClipboard(value);
@@ -42,7 +43,7 @@ export function CopyField({
           ) : (
             <Copy className="h-3.5 w-3.5" />
           )}
-          {copied ? "Copied" : "Copy"}
+          {copied ? uiT("ui:messages.m_8d525e5f158b9afe") : uiT("ui:messages.m_e21f935f11d7e966")}
         </Button>
       </div>
       {help && <p className="text-xs text-muted-foreground">{help}</p>}
@@ -67,11 +68,11 @@ export function CopyField({
 export function AgentInstructions({ value }: { value: string }) {
   return (
     <section
-      aria-label="Agent instructions"
+      aria-label={uiT("ui:messages.m_dc390e1824d45589")}
       className="space-y-3 rounded-md bg-muted/40 p-4"
     >
       <div className="space-y-1">
-        <h2 className="text-sm font-medium">Agent instructions</h2>
+        <h2 className="text-sm font-medium">{uiT("ui:messages.m_dc390e1824d45589")}</h2>
         <p className="text-sm text-muted-foreground">
           Give your agent everything it needs to connect this webhook: the URL,
           authentication key, and step-by-step instructions.

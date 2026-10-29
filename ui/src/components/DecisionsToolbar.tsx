@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type ReactNode } from "react";
 import { ArrowUpDown, Check, Layers, ListFilter } from "lucide-react";
 import {
@@ -70,9 +71,9 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className={cn("h-8 w-8 shrink-0", activeFilterCount > 0 && "bg-accent")}
-            title="Filter"
+            title={uiT("ui:messages.m_638e249f4a15ebb8")}
             data-active={activeFilterCount > 0}
-            aria-label="Filter"
+            aria-label={uiT("ui:messages.m_638e249f4a15ebb8")}
           >
             <ListFilter className="h-3.5 w-3.5" />
           </Button>
@@ -89,9 +90,9 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")}
-            title="Group"
+            title={uiT("ui:messages.m_34ca0e76608842ff")}
             data-active={groupBy !== "none"}
-            aria-label="Group"
+            aria-label={uiT("ui:messages.m_34ca0e76608842ff")}
           >
             <Layers className="h-3.5 w-3.5" />
           </Button>
@@ -123,8 +124,8 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className="h-8 w-8 shrink-0"
-            title="Sort"
-            aria-label="Sort"
+            title={uiT("ui:messages.m_bec69036aa27e7fa")}
+            aria-label={uiT("ui:messages.m_bec69036aa27e7fa")}
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
           </Button>
@@ -148,7 +149,7 @@ export function DecisionsToolbar({
           </div>
         </PopoverContent>
       </Popover>
-      <span data-toolbar-count className="w-full text-xs text-muted-foreground" aria-live="polite">{visibleCount} {visibleCount === 1 ? "decision" : "decisions"}</span>
+      <span data-toolbar-count className="w-full text-xs text-muted-foreground" aria-live="polite">{visibleCount} {visibleCount === 1 ? uiT("ui:messages.m_86ae35d58a6aa3b5") : "decisions"}</span>
     </div>
   );
 }
@@ -172,20 +173,18 @@ function FilterMenu({
   return (
     <div className="max-h-(--sz-70vh) overflow-y-auto">
       <div className="flex items-center justify-between px-3 py-2">
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Filter</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_638e249f4a15ebb8")}</span>
         {hasActive && (
           <button
             type="button"
             className="text-xs text-muted-foreground hover:text-foreground"
             onClick={() => onChange(defaultAttentionFilterState)}
-          >
-            Clear
-          </button>
+          >{uiT("ui:messages.m_83b12c2216efb4fd")}</button>
         )}
       </div>
 
       {options.sourceKinds.length > 1 && (
-        <FilterSection title="Type">
+        <FilterSection title={uiT("ui:messages.m_baaddf70fb5d432b")}>
           {options.sourceKinds.map((kind) => (
             <FilterRow
               key={kind}
@@ -198,7 +197,7 @@ function FilterMenu({
       )}
 
       {options.severities.length > 1 && (
-        <FilterSection title="Severity">
+        <FilterSection title={uiT("ui:messages.m_5e9f98120dbe5682")}>
           {options.severities.map((severity) => (
             <FilterRow
               key={severity}
@@ -211,7 +210,7 @@ function FilterMenu({
       )}
 
       {(options.projects.length > 0 || options.hasNoProject) && (
-        <FilterSection title="Project">
+        <FilterSection title={uiT("ui:messages.m_9859597853197476")}>
           {options.projects.map((project) => (
             <FilterRow
               key={project.id}
@@ -222,7 +221,7 @@ function FilterMenu({
           ))}
           {options.hasNoProject && (
             <FilterRow
-              label="No project"
+              label={uiT("ui:messages.m_f34c2be0d1c5f562")}
               checked={filters.projectIds.includes(NO_GROUP_SENTINEL)}
               onToggle={() => toggle("projectIds", NO_GROUP_SENTINEL)}
             />
@@ -231,7 +230,7 @@ function FilterMenu({
       )}
 
       {(options.workspaces.length > 0 || options.hasNoWorkspace) && (
-        <FilterSection title="Workspace">
+        <FilterSection title={uiT("ui:messages.m_87bb59ba2f92f2a5")}>
           {options.workspaces.map((workspace) => (
             <FilterRow
               key={workspace.id}

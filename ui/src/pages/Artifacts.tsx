@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ArrowLeft, Layers, Package } from "lucide-react";
@@ -217,11 +218,11 @@ export function Artifacts() {
   useEffect(() => {
     if (viewingSelectedStack && selectedGroup) {
       setBreadcrumbs([
-        { label: "Artifacts", href: "/artifacts" },
+        { label: uiT("ui:messages.m_314ae71b8c8dc9c9"), href: "/artifacts" },
         { label: `${selectedGroup.issue.identifier} · ${selectedGroup.title}` },
       ]);
     } else {
-      setBreadcrumbs([{ label: "Artifacts" }]);
+      setBreadcrumbs([{ label: uiT("ui:messages.m_314ae71b8c8dc9c9") }]);
     }
   }, [setBreadcrumbs, viewingSelectedStack, selectedGroup]);
 

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useCombinedInboxTasksEnabled } from "@/hooks/useCombinedInboxTasksEnabled";
 import { useState, useEffect, useMemo } from "react";
@@ -225,7 +226,7 @@ export function CommandPalette() {
         if (v && isMobile) setSidebarOpen(false);
       }}>
       <CommandInput
-        placeholder="Search tasks, agents, projects..."
+        placeholder={uiT("ui:messages.m_b6dd3896a64ae64c")}
         value={query}
         onValueChange={setQuery}
         onKeyDown={(event) => {
@@ -243,18 +244,15 @@ export function CommandPalette() {
       <CommandList>
         <CommandEmpty>
           {showSearchAll ? (
-            <span>
-              No quick task matches. Press{" "}
-              <kbd className="rounded border border-border bg-muted px-1 py-0.5 text-(length:--text-nano)">↵</kbd>{" "}
-              to <span className="font-medium">search all</span> or keep typing to refine.
-            </span>
+            <span>{uiT("ui:messages.m_cd86343ff1f71d42")}{" "}
+              <kbd className="rounded border border-border bg-muted px-1 py-0.5 text-(length:--text-nano)">↵</kbd>{" "}{uiT("ui:messages.m_4b00b1b86bfdb5b2")}<span className="font-medium">{uiT("ui:messages.m_3dcb3b3b02cfed84")}</span>{uiT("ui:messages.m_f62b7ae5a63439c8")}</span>
           ) : (
-            "No results found."
+            uiT("ui:messages.m_7ecdbfee6d1ce285")
           )}
         </CommandEmpty>
 
         {showSearchAll ? (
-          <CommandGroup heading="Search">
+          <CommandGroup heading={uiT("ui:messages.m_49c266baaaa70981")}>
             <CommandItem
               value={`${SEARCH_ALL_VALUE} ${searchQuery}`}
               onSelect={goFullSearch}
@@ -262,11 +260,10 @@ export function CommandPalette() {
               data-testid="command-search-all"
             >
               <Search className="mr-2 h-4 w-4" />
-              <span className="flex-1 truncate">
-                Search all for <span className="font-semibold">&ldquo;{searchQuery}&rdquo;</span>
+              <span className="flex-1 truncate">{uiT("ui:messages.m_83b6601b319a7e57")}<span className="font-semibold">&ldquo;{searchQuery}&rdquo;</span>
               </span>
               <span className="ml-auto inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <span>open full search</span>
+                <span>{uiT("ui:messages.m_2a0b5e5ebd907f39")}</span>
                 <kbd className="rounded border border-border bg-background px-1 py-0.5 text-(length:--text-nano)">↵</kbd>
               </span>
             </CommandItem>
@@ -275,7 +272,7 @@ export function CommandPalette() {
 
         {showSearchAll ? <CommandSeparator /> : null}
 
-        <CommandGroup heading="Quick filters">
+        <CommandGroup heading={uiT("ui:messages.m_e01c5f270819f8ff")}>
           {SEARCH_OPERATOR_QUICK_FILTERS.map((chip) => (
             <CommandItem
               key={chip}
@@ -293,7 +290,7 @@ export function CommandPalette() {
 
         {showPromotedProjects && (
           <>
-            <CommandGroup heading="Projects">
+            <CommandGroup heading={uiT("ui:messages.m_04e2a9728af75840")}>
               {matchedProjects.map((project) => (
                 <CommandItem
                   key={project.id}
@@ -315,16 +312,14 @@ export function CommandPalette() {
           </>
         )}
 
-        <CommandGroup heading="Actions">
+        <CommandGroup heading={uiT("ui:messages.m_ff8059dc6752afdd")}>
           <CommandItem
             onSelect={() => {
               setOpen(false);
               openNewIssue();
             }}
           >
-            <SquarePen className="mr-2 h-4 w-4" />
-            Create new task
-            <span className="ml-auto text-xs text-muted-foreground">C</span>
+            <SquarePen className="mr-2 h-4 w-4" />{uiT("ui:messages.m_513475c7b83d1ede")}<span className="ml-auto text-xs text-muted-foreground">C</span>
           </CommandItem>
           {onIssueDetail && fileViewerEnabled && (
             <CommandItem
@@ -333,9 +328,7 @@ export function CommandPalette() {
                 window.dispatchEvent(new CustomEvent("paperclip:open-file-viewer"));
               }}
             >
-              <FileCode2 className="mr-2 h-4 w-4" />
-              Open file in this issue...
-              <span className="ml-auto text-xs text-muted-foreground">g f</span>
+              <FileCode2 className="mr-2 h-4 w-4" />{uiT("ui:messages.m_b9114f6c9bf6031a")}<span className="ml-auto text-xs text-muted-foreground">{uiT("ui:messages.m_cca77cde210e47e5")}</span>
             </CommandItem>
           )}
           <CommandItem
@@ -344,56 +337,38 @@ export function CommandPalette() {
               openNewAgent();
             }}
           >
-            <Plus className="mr-2 h-4 w-4" />
-            Create new agent
-          </CommandItem>
+            <Plus className="mr-2 h-4 w-4" />{uiT("ui:messages.m_ba44b23ccf6d5961")}</CommandItem>
           <CommandItem onSelect={() => go("/projects")}>
-            <Plus className="mr-2 h-4 w-4" />
-            Create new project
-          </CommandItem>
+            <Plus className="mr-2 h-4 w-4" />{uiT("ui:messages.m_3de908dd0fec5e22")}</CommandItem>
         </CommandGroup>
 
         <CommandSeparator />
 
-        <CommandGroup heading="Pages">
+        <CommandGroup heading={uiT("ui:messages.m_9046da16aea909ba")}>
           <CommandItem onSelect={() => go("/dashboard")}>
-            <LayoutDashboard className="mr-2 h-4 w-4" />
-            Dashboard
-          </CommandItem>
+            <LayoutDashboard className="mr-2 h-4 w-4" />{uiT("ui:messages.m_67b696468610b879")}</CommandItem>
           <CommandItem onSelect={() => go(combinedInboxTasksEnabled ? "/issues?view=mine" : "/inbox")}>
             <Inbox className="mr-2 h-4 w-4" />
-            {combinedInboxTasksEnabled ? "My work" : "Inbox"}
+            {combinedInboxTasksEnabled ? "My work" : uiT("ui:messages.m_94835ea2fcf775cd")}
           </CommandItem>
           <CommandItem onSelect={() => go("/issues")}>
-            <CircleDot className="mr-2 h-4 w-4" />
-            Tasks
-          </CommandItem>
+            <CircleDot className="mr-2 h-4 w-4" />{uiT("ui:messages.m_b3a60e61a5233d05")}</CommandItem>
           <CommandItem onSelect={() => go("/projects")}>
-            <Hexagon className="mr-2 h-4 w-4" />
-            Projects
-          </CommandItem>
+            <Hexagon className="mr-2 h-4 w-4" />{uiT("ui:messages.m_04e2a9728af75840")}</CommandItem>
           <CommandItem onSelect={() => go("/goals")}>
-            <Target className="mr-2 h-4 w-4" />
-            Goals
-          </CommandItem>
+            <Target className="mr-2 h-4 w-4" />{uiT("ui:messages.m_116cd3982a9bc435")}</CommandItem>
           <CommandItem onSelect={() => go("/agents")}>
-            <Bot className="mr-2 h-4 w-4" />
-            Agents
-          </CommandItem>
+            <Bot className="mr-2 h-4 w-4" />{uiT("ui:messages.m_279b44d2ab4b40c0")}</CommandItem>
           <CommandItem onSelect={() => go("/costs")}>
-            <DollarSign className="mr-2 h-4 w-4" />
-            Costs
-          </CommandItem>
+            <DollarSign className="mr-2 h-4 w-4" />{uiT("ui:messages.m_b88fc5fc4765148e")}</CommandItem>
           <CommandItem onSelect={() => go("/activity")}>
-            <History className="mr-2 h-4 w-4" />
-            Activity
-          </CommandItem>
+            <History className="mr-2 h-4 w-4" />{uiT("ui:messages.m_38da1505ca837328")}</CommandItem>
         </CommandGroup>
 
         {visibleIssues.length > 0 && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Tasks">
+            <CommandGroup heading={uiT("ui:messages.m_b3a60e61a5233d05")}>
               {visibleIssues.slice(0, taskLimit).map((issue) => (
                 <CommandItem
                   key={issue.id}
@@ -422,7 +397,7 @@ export function CommandPalette() {
         {agents.length > 0 && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Agents">
+            <CommandGroup heading={uiT("ui:messages.m_279b44d2ab4b40c0")}>
               {agents.slice(0, 10).map((agent) => (
                 <CommandItem key={agent.id} onSelect={() => go(agentUrl(agent))}>
                   <Bot className="mr-2 h-4 w-4" />
@@ -437,7 +412,7 @@ export function CommandPalette() {
         {projects.length > 0 && !showSearchAll && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Projects">
+            <CommandGroup heading={uiT("ui:messages.m_04e2a9728af75840")}>
               {projects.slice(0, 10).map((project) => (
                 <CommandItem key={project.id} onSelect={() => go(projectUrl(project))}>
                   <Hexagon className="mr-2 h-4 w-4" />

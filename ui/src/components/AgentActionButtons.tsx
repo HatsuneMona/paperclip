@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "@/lib/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -85,7 +86,7 @@ export function PauseResumeButton({
     return (
       <Button variant="outline" size={size} onClick={onResume} disabled={disabled}>
         <Play className="h-3.5 w-3.5 sm:mr-1" />
-        <span className="hidden sm:inline">Resume</span>
+        <span className="hidden sm:inline">{uiT("ui:messages.m_d640c7421da06661")}</span>
       </Button>
     );
   }
@@ -93,7 +94,7 @@ export function PauseResumeButton({
   return (
     <Button variant="outline" size={size} onClick={onPause} disabled={disabled}>
       <Pause className="h-3.5 w-3.5 sm:mr-1" />
-      <span className="hidden sm:inline">Pause</span>
+      <span className="hidden sm:inline">{uiT("ui:messages.m_858e4ba7a29fd38b")}</span>
     </Button>
   );
 }
@@ -114,10 +115,10 @@ export function ClearErrorButton({
       onClick={onClick}
       disabled={disabled}
       className="border-destructive/60 text-destructive hover:bg-destructive/10 hover:text-destructive dark:border-destructive/50"
-      aria-label="Clear error and return agent to idle"
+      aria-label={uiT("ui:messages.m_3fa076871930df3c")}
     >
       <CheckCircle2 className="h-3.5 w-3.5 sm:mr-1" />
-      <span className="hidden sm:inline">Clear error</span>
+      <span className="hidden sm:inline">{uiT("ui:messages.m_62eb53cf43f8d762")}</span>
     </Button>
   );
 }
@@ -248,7 +249,7 @@ export function AgentActionButtons({
       if (onActionError) {
         onActionError(message);
       } else {
-        pushToast({ title: "Action failed", body: message, tone: "error" });
+        pushToast({ title: uiT("ui:messages.m_6e1704d8eca96bd7"), body: message, tone: "error" });
       }
     },
     [onActionError, pushToast],
@@ -318,21 +319,21 @@ export function AgentActionButtons({
       if (resolvedCompanyId) {
         await queryClient.invalidateQueries({ queryKey: queryKeys.agents.list(resolvedCompanyId) });
       }
-      pushToast({ title: "Agent duplicated", body: createdAgent.name, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_eec8cfadc3543276"), body: createdAgent.name, tone: "success" });
       if (!confirmLateNavigationChanges(duplicateStartedDirtyRef)) return;
       navigate(`/agents/${agentRouteRef(createdAgent)}/dashboard`);
     },
     onError: (err) => {
       const message = err instanceof Error ? err.message : "Failed to duplicate agent";
       onActionError?.(message);
-      pushToast({ title: "Could not duplicate agent", body: message, tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_db10f77ebeb7f8c9"), body: message, tone: "error" });
     },
   });
 
   const handleDuplicateAgent = useCallback(() => {
     if (duplicateAgent.isPending) return;
     const nextName = duplicateAgentName(agent.name);
-    const confirmed = window.confirm(`Duplicate ${agent.name} as ${nextName}?`);
+    const confirmed = window.confirm(uiT("ui:messages.m_9e4c1d20111bd1b0", { v0: (agent.name), v1: (nextName) }));
     setMoreOpen(false);
     if (!confirmed || !confirmNavigationStart(duplicateStartedDirtyRef)) return;
     duplicateAgent.mutate();
@@ -368,11 +369,9 @@ export function AgentActionButtons({
       {persistentProviderTrace ? (
         <span
           className="hidden items-center gap-1 rounded-md border border-primary/30 bg-primary/10 px-2 py-1 text-xs font-medium text-primary lg:inline-flex"
-          title="Exact provider traffic will be captured for future runs and retained for up to 24 hours."
+          title={uiT("ui:messages.m_43068965efe2eeb0")}
         >
-          <Bug className="h-3.5 w-3.5" />
-          Raw tracing on
-        </span>
+          <Bug className="h-3.5 w-3.5" />{uiT("ui:messages.m_9723e80b5a39df4e")}</span>
       ) : null}
       <Button
         variant="outline"
@@ -392,7 +391,7 @@ export function AgentActionButtons({
             runnerProvider: String(agent.adapterConfig.provider === "acpx" ? agent.adapterConfig.acpxAgent : agent.adapterConfig.provider ?? "codex"),
             ...(agent.adapterType === "paperclip_runner" ? { runner: "paperclip" } : ["codex_local", "claude_local", "opencode_local", "pi_local"].includes(agent.adapterType) ? { runner: "legacy" } : {}),
           })}`);
-        }}>Finish setup</Button>
+        }}>{uiT("ui:messages.m_bc01ae77f37cf304")}</Button>
       ) : showRun && <RunButton
         onClick={() => {
           if (navigateToRunOnInvoke && !confirmNavigationStart(agentActionStartedDirtyRef)) return;
@@ -427,10 +426,8 @@ export function AgentActionButtons({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => agentAction.mutate("pause")}>
-                Pause anyway
-              </AlertDialogAction>
+              <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
+              <AlertDialogAction onClick={() => agentAction.mutate("pause")}>{uiT("ui:messages.m_eb9e4103b0a48b2d")}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
@@ -443,7 +440,7 @@ export function AgentActionButtons({
       {children}
       <Popover open={moreOpen} onOpenChange={setMoreOpen}>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="icon-xs" aria-label={`Open actions for ${agent.name}`}>
+          <Button variant="ghost" size="icon-xs" aria-label={uiT("ui:messages.m_45ad2792453510ba", { v0: (agent.name) })}>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </PopoverTrigger>
@@ -457,21 +454,17 @@ export function AgentActionButtons({
               <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
               <Copy className="h-3 w-3" />
-            )}
-            Duplicate Agent
-          </button>
+            )}{uiT("ui:messages.m_404582091d6fe7a4")}</button>
           <button
             className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50"
             onClick={() => {
               void copyTextToClipboard(agent.id).catch(() => {
-                pushToast({ title: "Copy failed", body: "Clipboard access is unavailable.", tone: "error" });
+                pushToast({ title: uiT("ui:messages.m_5b50e7a693fee952"), body: "Clipboard access is unavailable.", tone: "error" });
               });
               setMoreOpen(false);
             }}
           >
-            <Copy className="h-3 w-3" />
-            Copy Agent ID
-          </button>
+            <Copy className="h-3 w-3" />{uiT("ui:messages.m_48fe747f5f5b8bf0")}</button>
           <button
             className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50"
             onClick={() => {
@@ -479,9 +472,7 @@ export function AgentActionButtons({
               setMoreOpen(false);
             }}
           >
-            <RotateCcw className="h-3 w-3" />
-            Reset Sessions
-          </button>
+            <RotateCcw className="h-3 w-3" />{uiT("ui:messages.m_03984477f11971b6")}</button>
           {!hideTerminate && (
             <button
               className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50 text-destructive"
@@ -491,9 +482,7 @@ export function AgentActionButtons({
                 agentAction.mutate("terminate");
               }}
             >
-              <Trash2 className="h-3 w-3" />
-              Terminate
-            </button>
+              <Trash2 className="h-3 w-3" />{uiT("ui:messages.m_f913f09210e8cbbc")}</button>
           )}
         </PopoverContent>
       </Popover>

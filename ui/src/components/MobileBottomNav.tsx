@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -64,15 +65,15 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
   // tracks the live count, so the bar stays evenly divided in every mix.
   const items = useMemo<MobileNavItem[]>(
     () => coordinatorWorkspaceEnabled ? [
-      { type: "link", to: "/chats", label: "Chat", icon: MessageCircle },
+      { type: "link", to: "/chats", label: uiT("ui:messages.m_460b3a7da007b7af"), icon: MessageCircle },
       { type: "link", to: "/issues", label: "Tasks", icon: CircleCheck },
       { type: "link", to: "/decisions", label: "Needs You", icon: Bell, badge: attention?.totalCount ?? 0 },
-      { type: "action", label: "New task", icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "action", label: uiT("ui:messages.m_3e992276b2298a1f"), icon: SquarePen, onClick: () => openNewIssue() },
     ] : !agentChatEnabled && !combinedInboxTasksEnabled ? [
-      { type: "link", to: "/dashboard", label: "Home", icon: House },
+      { type: "link", to: "/dashboard", label: uiT("ui:messages.m_3a78695388b38b5c"), icon: House },
       { type: "link", to: "/issues", label: "Tasks", icon: CircleCheck },
-      { type: "action", label: "New Task", icon: SquarePen, onClick: () => openNewIssue() },
-      { type: "link", to: "/agents/all", label: "Agents", icon: Users },
+      { type: "action", label: uiT("ui:messages.m_718e58cc20d67514"), icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "link", to: "/agents/all", label: uiT("ui:messages.m_279b44d2ab4b40c0"), icon: Users },
       {
         type: "link",
         to: "/inbox",
@@ -81,11 +82,11 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
         badge: inboxBadge.inbox,
       },
     ] : [
-      { type: "link", to: "/dashboard", label: "Home", icon: House },
+      { type: "link", to: "/dashboard", label: uiT("ui:messages.m_3a78695388b38b5c"), icon: House },
       ...(agentChatEnabled
-        ? [{ type: "link", to: "/chats", label: "Chat", icon: MessageCircle } as MobileNavItem]
+        ? [{ type: "link", to: "/chats", label: uiT("ui:messages.m_460b3a7da007b7af"), icon: MessageCircle } as MobileNavItem]
         : []),
-      { type: "action", label: "New Task", icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "action", label: uiT("ui:messages.m_718e58cc20d67514"), icon: SquarePen, onClick: () => openNewIssue() },
       {
         type: "link",
         to: "/issues",
@@ -93,7 +94,7 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
         icon: CircleCheck,
         badge: combinedInboxTasksEnabled ? inboxBadge.inbox : undefined,
       },
-      { type: "link", to: "/agents/all", label: "Agents", icon: Users },
+      { type: "link", to: "/agents/all", label: uiT("ui:messages.m_279b44d2ab4b40c0"), icon: Users },
       ...(!combinedInboxTasksEnabled
         ? [{ type: "link", to: "/inbox", label: "Inbox", icon: Inbox, badge: inboxBadge.inbox } as MobileNavItem]
         : []),

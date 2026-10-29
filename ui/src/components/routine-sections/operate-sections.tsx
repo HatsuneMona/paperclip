@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Activity as ActivityIcon } from "lucide-react";
@@ -58,7 +59,7 @@ export function ActivitySection({ isLoading = false, error }: { isLoading?: bool
   const groups = useMemo(() => {
     const byDay = new Map<string, typeof events>();
     for (const event of events) {
-      let label = "Earlier";
+      let label = uiT("ui:messages.m_e10ae99074011888");
       try {
         label = new Date(event.createdAt).toLocaleDateString(undefined, {
           weekday: "short",

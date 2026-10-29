@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
@@ -113,7 +114,7 @@ export function PanelCard({ artifact }: { artifact: LabArtifact }) {
             />
           ))}
           {/* The button says "Open" (screen 10); its accessible name keeps the product's words — "Read document: …". */}
-          <ButtonAction action={{ ...primary, label: "Open" }} stretch="after:rounded-lg" className={secondary.length > 0 ? "ml-1" : undefined} />
+          <ButtonAction action={{ ...primary, label: uiT("ui:messages.m_ed077f3d8125d60d") }} stretch="after:rounded-lg" className={secondary.length > 0 ? "ml-1" : undefined} />
         </div>
       </footer>
     </li>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   WorkspaceCommandDefinition,
   RuntimeExposureStatus,
@@ -373,12 +374,12 @@ function CommandActionButtons({
         const request = buildRequest(item, action);
         const Icon = action === "stop" ? Square : action === "restart" ? RotateCcw : Play;
         const label = action === "run"
-          ? "Run"
+          ? uiT("ui:messages.m_00d60e31a4e6b834")
           : action === "start"
-            ? "Start"
+            ? uiT("ui:messages.m_e4bb9f1ece9af926")
             : action === "stop"
-              ? "Stop"
-              : "Restart";
+              ? uiT("ui:messages.m_cae7d57bc067a514")
+              : uiT("ui:messages.m_6b983a81e5e8099e");
         const showSpinner = isPending && requestMatchesPending(pendingRequest, request);
         const disabled =
           isPending
@@ -549,7 +550,7 @@ export function WorkspaceRuntimeControls({
       </div>
 
       <CommandSection
-        title="Services"
+        title={uiT("ui:messages.m_604dce445e326d95")}
         description="Long-running commands that Paperclip can supervise for this workspace."
         items={sections.services}
         emptyMessage={serviceEmptyMessage}

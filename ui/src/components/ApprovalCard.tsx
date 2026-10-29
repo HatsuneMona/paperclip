@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { CheckCircle2, XCircle, Clock } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -71,7 +72,7 @@ export function ApprovalCard({
                 </Badge>
                 {requesterAgent && (
                   <div className="inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
-                    <span>Requested by</span>
+                    <span>{uiT("ui:messages.m_9199a054972b1489")}</span>
                     <AgentIdentity agent={requesterAgent} size="sm" className="inline-flex" />
                   </div>
                 )}
@@ -120,7 +121,7 @@ export function ApprovalCard({
                   onClick={onApprove}
                   disabled={isPending}
                 >
-                  {pendingAction === "approve" ? "Approving..." : "Approve"}
+                  {pendingAction === "approve" ? uiT("ui:messages.m_cee0e61bdf8c8bda") : uiT("ui:messages.m_6007acbe30b2cd98")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -128,7 +129,7 @@ export function ApprovalCard({
                   onClick={onReject}
                   disabled={isPending}
                 >
-                  {pendingAction === "reject" ? "Rejecting..." : "Reject"}
+                  {pendingAction === "reject" ? "Rejecting..." : uiT("ui:messages.m_ab604a360777735f")}
                 </Button>
               </>
             )}
@@ -138,13 +139,9 @@ export function ApprovalCard({
               <Link
                 to={detailLink}
                 className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-auto px-2 text-xs text-muted-foreground")}
-              >
-                View details
-              </Link>
+              >{uiT("ui:messages.m_d1bf045bb524dae5")}</Link>
             ) : (
-              <Button variant="ghost" size="sm" className="h-auto px-2 text-xs text-muted-foreground" onClick={onOpen}>
-                View details
-              </Button>
+              <Button variant="ghost" size="sm" className="h-auto px-2 text-xs text-muted-foreground" onClick={onOpen}>{uiT("ui:messages.m_d1bf045bb524dae5")}</Button>
             )
           ) : null}
         </div>

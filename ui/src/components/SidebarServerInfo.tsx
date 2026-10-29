@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { Clock3, FileDiff, GitCommit, type LucideIcon } from "lucide-react";
 import { healthApi, type HealthStatus } from "@/api/health";
@@ -123,17 +124,15 @@ export function SidebarServerInfo() {
 
   return (
     <div className="mt-2 border-t border-border pt-2">
-      <p className="px-3 pb-1 pt-1 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-        Server
-      </p>
+      <p className="px-3 pb-1 pt-1 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_aef7de28d52977f1")}</p>
       <ServerInfoRow
         icon={Clock3}
-        label="Last restarted"
+        label={uiT("ui:messages.m_865e87f0f1469ae2")}
         value={lastRestartedLabel}
         dateTime={!healthUnavailable && !isWaitingForHealth && restartedAtIsValid ? restartedAt : null}
       />
-      <ServerInfoRow icon={GitCommit} label="Running commit" value={commit} />
-      <ServerInfoRow icon={FileDiff} label="Checkout state" value={localChanges} />
+      <ServerInfoRow icon={GitCommit} label={uiT("ui:messages.m_ac45532841c6f612")} value={commit} />
+      <ServerInfoRow icon={FileDiff} label={uiT("ui:messages.m_93896287e5a3e875")} value={localChanges} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useDeferredValue, useEffect, useRef } from "react";
 import { useInfiniteQuery, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ListChecks, SearchX } from "lucide-react";
@@ -176,20 +177,20 @@ export function CoordinatorTasks() {
   };
 
   if (!companyId) return <EmptyState icon={ListChecks} message="Select an organization to view tasks." />;
-  return <FlyoutAppearanceProvider><TruncatedTextMarqueeProvider><section className="coordinator-task-list task-row-design-preview flex min-w-0 flex-col gap-8" aria-label="Tasks">
+  return <FlyoutAppearanceProvider><TruncatedTextMarqueeProvider><section className="coordinator-task-list task-row-design-preview flex min-w-0 flex-col gap-8" aria-label={uiT("ui:messages.m_b3a60e61a5233d05")}>
     <TaskListToolbar view={needsAttention ? "blocked" : "all"} viewOptions={views} onViewChange={view => setView(view === "blocked")}
       query={collection.query} onQueryChange={collection.setQuery} layout={collection.layout} onLayoutChange={collection.setLayout}
       allExpanded={collection.allExpanded} onToggleExpanded={collection.toggleExpanded} onNewTask={() => openNewIssue()}
       filters={{ state: collection.filters, onChange: updateFilters, activeFilterCount: collection.activeFilterCount,
         agents: agents.data ?? [], projects: projects.data ?? [], labels: labels.data ?? [], currentUserId: userId, creators: collection.creators }} />
-    {error ? <div role="alert" className="flex items-center gap-2 text-sm text-destructive"><span>{error instanceof Error ? error.message : "Could not load tasks"}</span><Button variant="outline" size="sm" onClick={retry}>Retry</Button></div> : null}
+    {error ? <div role="alert" className="flex items-center gap-2 text-sm text-destructive"><span>{error instanceof Error ? error.message : "Could not load tasks"}</span><Button variant="outline" size="sm" onClick={retry}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></div> : null}
     {pending ? <p role="status" className="text-sm text-muted-foreground">Loading tasks…</p> : !error && <>
       <div hidden={collection.layout !== "list"} className="design-task-list-panel">{collection.matchingItems.length ? <TaskList key={companyId}
         items={needsAttention ? collection.matchingItems : collection.visibleItems} allItems={collection.companyItems}
         issueLinkState={issueLinkState} collapsedIds={collection.collapsedIds} onCollapsedIdsChange={collection.setCollapsedIds} /> : empty}</div>
       {collection.layout === "board" ? collection.matchingItems.length
         ? <KanbanBoard showOverflowFades issues={collection.matchingItems.map(item => item.issue)} agents={agents.data} onUpdateIssue={(id, data) => update.mutate({ id, data })} /> : empty : null}
-      {!needsAttention && tasks.hasNextPage ? <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground"><span>{items.length} tasks loaded. Load more to include them in filters.</span><Button variant="outline" size="sm" disabled={tasks.isFetchingNextPage} onClick={() => void tasks.fetchNextPage()}>{tasks.isFetchingNextPage ? "Loading…" : "Load more tasks"}</Button></div> : null}
+      {!needsAttention && tasks.hasNextPage ? <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground"><span>{items.length} tasks loaded. Load more to include them in filters.</span><Button variant="outline" size="sm" disabled={tasks.isFetchingNextPage} onClick={() => void tasks.fetchNextPage()}>{tasks.isFetchingNextPage ? uiT("ui:messages.m_ba3bbbe10d8bef66") : "Load more tasks"}</Button></div> : null}
     </>}
   </section></TruncatedTextMarqueeProvider></FlyoutAppearanceProvider>;
 }

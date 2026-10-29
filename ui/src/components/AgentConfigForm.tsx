@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { COPILOT_MODEL_DISCOVERY_QUERY_OPTIONS } from "@/lib/copilot-task-model-catalog";
 import { useConnectionModels } from "./ai-connections/useConnectionModels";
 import { agentHarnessType, agentRunner, paperclipRunnerProfileForHarness, normalizeClaudeRunnerOptions, type AgentRunnerChoice } from "@paperclipai/shared";
@@ -279,35 +280,35 @@ function formatArgList(value: unknown): string {
 }
 
 const openCodeThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "minimal", label: "Minimal" },
-  { id: "low", label: "Low" },
-  { id: "medium", label: "Medium" },
-  { id: "high", label: "High" },
-  { id: "xhigh", label: "X-High" },
-  { id: "max", label: "Max" },
+  { id: "", label: uiT("ui:messages.m_0286249762f7c943") },
+  { id: "minimal", label: uiT("ui:messages.m_057b5de48d7b90f1") },
+  { id: "low", label: uiT("ui:messages.m_f793de205ead5ac3") },
+  { id: "medium", label: uiT("ui:messages.m_8e588cd187741f1c") },
+  { id: "high", label: uiT("ui:messages.m_c4ebc6d4a5832cd9") },
+  { id: "xhigh", label: uiT("ui:messages.m_393d3e4bf2eea43a") },
+  { id: "max", label: uiT("ui:messages.m_a1a5936d3b0f8a69") },
 ] as const;
 
 const cursorModeOptions = [
-  { id: "", label: "Auto" },
-  { id: "plan", label: "Plan" },
-  { id: "ask", label: "Ask" },
+  { id: "", label: uiT("ui:messages.m_0286249762f7c943") },
+  { id: "plan", label: uiT("ui:messages.m_fa8ed0bdabdd6bcb") },
+  { id: "ask", label: uiT("ui:messages.m_b8c209cdead61a09") },
 ] as const;
 
 const claudeThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "low", label: "Low" },
-  { id: "medium", label: "Medium" },
-  { id: "high", label: "High" },
+  { id: "", label: uiT("ui:messages.m_0286249762f7c943") },
+  { id: "low", label: uiT("ui:messages.m_f793de205ead5ac3") },
+  { id: "medium", label: uiT("ui:messages.m_8e588cd187741f1c") },
+  { id: "high", label: uiT("ui:messages.m_c4ebc6d4a5832cd9") },
 ] as const;
 
 // Kimi exposes low/high/max (no "medium") via each model's support_efforts;
 // the kimi_local adapter maps a legacy "medium" onto "high" at runtime.
 const kimiThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "low", label: "Low" },
-  { id: "high", label: "High" },
-  { id: "max", label: "Max" },
+  { id: "", label: uiT("ui:messages.m_0286249762f7c943") },
+  { id: "low", label: uiT("ui:messages.m_f793de205ead5ac3") },
+  { id: "high", label: uiT("ui:messages.m_c4ebc6d4a5832cd9") },
+  { id: "max", label: uiT("ui:messages.m_a1a5936d3b0f8a69") },
 ] as const;
 
 const MAX_TURN_CONTINUATION_DEFAULT_MAX_ATTEMPTS = 2;
@@ -1322,7 +1323,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
     try {
       return await testEnvironment.mutateAsync();
     } catch (error) {
-      setTestActionError(error instanceof Error ? error.message : "Environment test failed");
+      setTestActionError(error instanceof Error ? error.message : uiT("ui:messages.m_2a2e34303328cb80"));
       throw error;
     } finally {
       setTestActionPending(false);
@@ -1375,7 +1376,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         ?? (testEnvironment.error instanceof Error
           ? testEnvironment.error.message
           : testEnvironment.error
-            ? "Environment test failed"
+            ? uiT("ui:messages.m_2a2e34303328cb80")
             : null),
       result: testEnvironment.data ?? null,
       // `showAdapterLogin` already requires a selected company and a non-empty
@@ -1413,7 +1414,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       const refreshed = await agentsApi.adapterModels(selectedCompanyId, modelAdapterType, { refresh: true, environmentId: currentDefaultEnvironmentId || null, provider: modelProvider, ...(runnerAcpxAgent === "copilot" ? { acpxAgent: runnerAcpxAgent, aiConnection: modelAiBinding, agentId: !isCreate ? props.agent.id : undefined } : {}) });
       queryClient.setQueryData(modelQueryKey, refreshed);
     } catch (error) {
-      setRefreshModelsError(error instanceof Error ? error.message : "Failed to refresh adapter models.");
+      setRefreshModelsError(error instanceof Error ? error.message : uiT("ui:messages.m_daabc710404731bf"));
     } finally {
       setRefreshingModels(false);
     }
@@ -1441,11 +1442,11 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
           : adapterType === "kimi_local"
             ? kimiThinkingEffortOptions
             : adapterType === "pi_local"
-              ? [{ id: "", label: "Auto" }, ...["off", "minimal", "low", "medium", "high", "xhigh"].map(id => ({ id, label: id }))]
+              ? [{ id: "", label: uiT("ui:messages.m_0286249762f7c943") }, ...["off", "minimal", "low", "medium", "high", "xhigh"].map(id => ({ id, label: id }))]
               : harnessType === "claude_local" || harnessType === "grok_local"
-                ? [{ id: "", label: "Auto" }, ...setupEfforts(harnessType, currentModelId).map((id) => ({
+                ? [{ id: "", label: uiT("ui:messages.m_0286249762f7c943") }, ...setupEfforts(harnessType, currentModelId).map((id) => ({
                     id,
-                    label: id === "xhigh" ? "X-High" : id[0].toUpperCase() + id.slice(1),
+                    label: id === "xhigh" ? uiT("ui:messages.m_393d3e4bf2eea43a") : id[0].toUpperCase() + id.slice(1),
                   }))]
                 : claudeThinkingEffortOptions;
   const currentThinkingEffort = isCreate
@@ -1542,9 +1543,9 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         {isDirty && !props.hideInlineSave && (
           <div className="sticky top-0 z-10 flex items-center justify-end border-b border-primary/20 bg-background/90 px-4 py-2 backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground">Unsaved changes</span>
+              <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_a710c2b90913b537")}</span>
               <Button size="sm" onClick={handleSave} disabled={props.isSaving}>
-                {props.isSaving ? "Saving..." : "Save"}
+                {props.isSaving ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_1509f561f2416598")}
               </Button>
             </div>
           </div>
@@ -1553,8 +1554,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         {props.environmentVariablesPlacement === "secrets" && (
           <div data-config-section="environment-variables" className={cn(!cards && "border-b border-border")}>
             {cards
-              ? <h3 className="mb-3 text-sm font-medium">Environment variables</h3>
-              : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment variables</div>
+              ? <h3 className="mb-3 text-sm font-medium">{uiT("ui:messages.m_aac7246f5e97142c")}</h3>
+              : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_aac7246f5e97142c")}</div>
             }
             <div className={cn(cards ? "rounded-lg border border-border p-4" : "px-4 pb-3")}>
               {environmentVariablesEditor}
@@ -1564,8 +1565,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
 
         <div data-config-section="secrets" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="mb-3 text-sm font-medium">Secret access</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Secret access</div>
+            ? <h3 className="mb-3 text-sm font-medium">{uiT("ui:messages.m_1a28ac1036029a83")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_1a28ac1036029a83")}</div>
           }
           <div className={cn(cards ? "space-y-3 rounded-lg border border-border p-4" : "space-y-3 px-4 pb-3")}>
             <p className="text-xs text-muted-foreground">{help.secretAccess}</p>
@@ -1623,13 +1624,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {isDirty && !props.hideInlineSave && (
         <div className="sticky top-0 z-10 flex items-center justify-end px-4 py-2 bg-background/90 backdrop-blur-sm border-b border-primary/20">
           <div className="flex items-center gap-3">
-            <span className="text-xs text-muted-foreground">Unsaved changes</span>
+            <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_a710c2b90913b537")}</span>
             <Button
               size="sm"
               onClick={handleSave}
               disabled={!isCreate && props.isSaving}
             >
-              {!isCreate && props.isSaving ? "Saving..." : "Save"}
+              {!isCreate && props.isSaving ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_1509f561f2416598")}
             </Button>
           </div>
         </div>
@@ -1639,29 +1640,29 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {!isCreate && (
         <div data-config-section="identity" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">{props.sectionTitles?.["identity"] ?? "Identity"}</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Identity</div>
+            ? <h3 className="text-sm font-medium mb-3">{props.sectionTitles?.["identity"] ?? uiT("ui:messages.m_999f23fcd7bec707")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_999f23fcd7bec707")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
-            <Field label="Name" hint={help.name}>
+            <Field label={uiT("ui:messages.m_dcd1d5223f73b3a9")} hint={help.name}>
               <DraftInput
                 value={eff("identity", "name", props.agent.name)}
                 onCommit={(v) => mark("identity", "name", v)}
                 immediate
                 className={inputClass}
-                placeholder="Agent name"
+                placeholder={uiT("ui:messages.m_1cfb21871a035769")}
               />
             </Field>
-            <Field label="Title" hint={help.title}>
+            <Field label={uiT("ui:messages.m_7e8cd2056da73a7f")} hint={help.title}>
               <DraftInput
                 value={eff("identity", "title", props.agent.title ?? "")}
                 onCommit={(v) => mark("identity", "title", v || null)}
                 immediate
                 className={inputClass}
-                placeholder="e.g. VP of Engineering"
+                placeholder={uiT("ui:messages.m_3d7748a741b38583")}
               />
             </Field>
-            <Field label="Reports to" hint={help.reportsTo}>
+            <Field label={uiT("ui:messages.m_2b488c09391b5a54")} hint={help.reportsTo}>
               <ReportsToPicker
                 agents={companyAgents}
                 value={eff("identity", "reportsTo", props.agent.reportsTo ?? null)}
@@ -1672,7 +1673,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
             </Field>
             {isLocal && !props.hidePromptTemplate && (
               <>
-                <Field label="Prompt Template" hint={help.promptTemplate}>
+                <Field label={uiT("ui:messages.m_8cd80ebe4e0ddf26")} hint={help.promptTemplate}>
                   <MarkdownEditor
                     value={eff(
                       "adapterConfig",
@@ -1680,7 +1681,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                       String(config.promptTemplate ?? ""),
                     )}
                     onChange={(v) => mark("adapterConfig", "promptTemplate", v ?? "")}
-                    placeholder="You are agent {{ agent.name }}. Your role is {{ agent.role }}..."
+                    placeholder={uiT("ui:messages.m_d325109b166d92e9")}
                     contentClassName="min-h-(--sz-88px) text-sm font-mono"
                     imageUploadHandler={async (file) => {
                       const namespace = `agents/${props.agent.id}/prompt-template`;
@@ -1689,9 +1690,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                     }}
                   />
                 </Field>
-                <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-900 dark:text-amber-100">
-                  Prompt template is replayed on every heartbeat. Keep it compact and dynamic to avoid recurring token cost and cache churn.
-                </div>
+                <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-900 dark:text-amber-100">{uiT("ui:messages.m_752de465d6612023")}</div>
               </>
             )}
           </div>
@@ -1705,24 +1704,19 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         // Render the environment read-only instead of the selectable picker.
         <div data-config-section="environment" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment</div>
+            ? <h3 className="text-sm font-medium mb-3">{uiT("ui:messages.m_9e471951a1b4106e")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_9e471951a1b4106e")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             <Field
-              label="Default environment"
-              hint="This instance runs all agents in the Kubernetes sandbox. Local execution is disabled."
+              label={uiT("ui:messages.m_4929026b6fc93bf8")}
+              hint={uiT("ui:messages.m_336e70dfd7200066")}
             >
               {kubernetesEnvironment ? (
                 <div className={cn(inputClass, "flex items-center text-muted-foreground")}>
-                  {kubernetesEnvironment.name} · Kubernetes sandbox
-                </div>
+                  {kubernetesEnvironment.name}{uiT("ui:messages.m_7f1c8cc6730bbdf7")}</div>
               ) : (
-                <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
-                  This instance requires the Kubernetes sandbox, but no managed Kubernetes
-                  environment is available for this organization yet. Configure one before creating
-                  agents; execution will not fall back to local.
-                </div>
+                <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">{uiT("ui:messages.m_e6dc1c9194db6a8a")}</div>
               )}
             </Field>
           </div>
@@ -1730,14 +1724,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       ) : showEnvironmentOverrideControl ? (
         <div data-config-section="environment" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment</div>
+            ? <h3 className="text-sm font-medium mb-3">{uiT("ui:messages.m_9e471951a1b4106e")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_9e471951a1b4106e")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
-            <Field label="Environment override">
+            <Field label={uiT("ui:messages.m_557f46090c16bcb3")}>
               <div className="space-y-2">
                 <SelectPopover
-                  aria-label="Environment override"
+                  aria-label={uiT("ui:messages.m_557f46090c16bcb3")}
                   value={currentDefaultEnvironmentId}
                   onValueChange={(nextValue) => {
                     if (isCreate) {
@@ -1764,8 +1758,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       <div data-config-section="adapter" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
         <div className={cn(cards ? "flex items-center justify-between mb-3" : "px-4 py-2 flex items-center justify-between gap-2")}>
           {cards
-            ? <h3 className="text-sm font-medium">{props.sectionTitles?.["adapter"] ?? "Adapter"}</h3>
-            : <span className="text-xs font-medium text-muted-foreground">Adapter</span>
+            ? <h3 className="text-sm font-medium">{props.sectionTitles?.["adapter"] ?? uiT("ui:messages.m_0252b84901033771")}</h3>
+            : <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_0252b84901033771")}</span>
           }
           {showInlineAdapterTestEnvironmentButton && (
             <Button
@@ -1776,7 +1770,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               onClick={triggerTestEnvironment}
               disabled={testEnvironmentDisabled}
             >
-              {testActionPending ? `${testActionLabel}...` : testActionLabel}
+              {testActionPending ? uiT("ui:messages.m_4432b1096e016042", { v0: (testActionLabel) }) : testActionLabel}
             </Button>
           )}
         </div>
@@ -1879,7 +1873,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               {testActionError
                 ?? (testEnvironment.error instanceof Error
                   ? testEnvironment.error.message
-                  : "Environment test failed")}
+                  : uiT("ui:messages.m_2a2e34303328cb80"))}
             </div>
           )}
 
@@ -1903,7 +1897,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
 
           {/* Working directory */}
           {showLegacyWorkingDirectoryField && (
-            <Field label="Working directory (deprecated)" hint={help.cwd}>
+            <Field label={uiT("ui:messages.m_e3519a0e608f5754")} hint={help.cwd}>
               <div className="flex items-center gap-2 rounded-md border border-border px-2.5 py-1.5">
                 <FolderOpen className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                 <DraftInput
@@ -1979,15 +1973,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   {refreshModelsError
                     ?? (modelError instanceof Error
                       ? modelError.message
-                      : "Failed to load adapter models.")}
+                      : uiT("ui:messages.m_54638131e3399c1d"))}
                 </p>
               )}
               {adapterType === "opencode_local"
                 && !connectionModels
                 && currentDefaultEnvironment
                 && currentDefaultEnvironment.driver !== "local" && (
-                <p className="text-xs text-muted-foreground">
-                  Live OpenCode model discovery only runs for Local environments. Using the curated list and manual entry for {currentDefaultEnvironment.name}.
+                <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_34ac80b46e3f27d5")}{currentDefaultEnvironment.name}.
                 </p>
               )}
 
@@ -2012,9 +2005,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   {adapterType === "codex_local" &&
                     codexSearchEnabled &&
                     currentThinkingEffort === "minimal" && (
-                      <p className="text-xs text-amber-400">
-                        Codex may reject `minimal` thinking when search is enabled.
-                      </p>
+                      <p className="text-xs text-amber-400">{uiT("ui:messages.m_e000a4c9116c3a8a")}</p>
                     )}
                 </>
               )}
@@ -2027,13 +2018,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {(
         <div data-config-section="configuration" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Configuration</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Configuration</div>
+            ? <h3 className="text-sm font-medium mb-3">{uiT("ui:messages.m_b332c3492d5eb10a")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_b332c3492d5eb10a")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
               {!isCreate && typeof config.bootstrapPromptTemplate === "string" && config.bootstrapPromptTemplate && (
                 <>
-                  <Field label="Bootstrap prompt (legacy)" hint={help.bootstrapPrompt}>
+                  <Field label={uiT("ui:messages.m_6017093e6a552b64")} hint={help.bootstrapPrompt}>
                     <MarkdownEditor
                       value={eff(
                         "adapterConfig",
@@ -2043,7 +2034,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                       onChange={(v) =>
                         mark("adapterConfig", "bootstrapPromptTemplate", v || undefined)
                       }
-                      placeholder="Optional initial setup prompt for the first run"
+                      placeholder={uiT("ui:messages.m_81ef2a863d2f1ff2")}
                       contentClassName="min-h-(--sz-44px) text-sm font-mono"
                       imageUploadHandler={async (file) => {
                         const namespace = `agents/${props.agent.id}/bootstrap-prompt`;
@@ -2052,15 +2043,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                       }}
                     />
                   </Field>
-                  <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
-                    Bootstrap prompt is legacy and will be removed in a future release. Consider moving this content into the agent&apos;s prompt template or instructions file instead.
-                  </div>
+                  <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">{uiT("ui:messages.m_973a49c50cb07755")}</div>
                 </>
               )}
               {renderAdapterFields("configuration")}
               {(isLocal || adapterType === "process" || configSchema?.fields.some((field) => schemaFieldSection(field.key) === "advanced")) && (
               <CollapsibleSection
-                title="Advanced"
+                title={uiT("ui:messages.m_9f088dbebd6c3c70")}
                 open={configurationAdvancedOpen}
                 onToggle={() => setConfigurationAdvancedOpen(!configurationAdvancedOpen)}
               >
@@ -2082,7 +2071,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 flashes on a managed instance.
               */}
               {!hideHostPaths && (
-                <Field label="Command" hint={help.localCommand}>
+                <Field label={uiT("ui:messages.m_713166971d730f81")} hint={help.localCommand}>
                   <DraftInput
                     value={
                       isCreate
@@ -2117,7 +2106,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 </Field>
               )}
 
-              <Field label="Extra args (comma-separated)" hint={help.extraArgs}>
+              <Field label={uiT("ui:messages.m_3136ac3aadf4364e")} hint={help.extraArgs}>
                 <DraftInput
                   value={
                     isCreate
@@ -2130,7 +2119,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                       : mark("adapterConfig", "extraArgs", v?.trim() ? parseCommaArgs(v) : null)
                   }
                   className={inputClass}
-                  placeholder="e.g. --verbose, --foo=bar"
+                  placeholder={uiT("ui:messages.m_1851c5925ecb3c58")}
                 />
               </Field>
 
@@ -2147,8 +2136,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {props.environmentVariablesPlacement !== "secrets" && (isLocal || configSchema?.fields.some((field) => schemaFieldSection(field.key) === "environment")) && (
         <div data-config-section="environment-variables" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment variables</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment variables</div>
+            ? <h3 className="text-sm font-medium mb-3">{uiT("ui:messages.m_aac7246f5e97142c")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_aac7246f5e97142c")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             {isLocal ? environmentVariablesEditor : renderAdapterFields("environment")}
@@ -2160,12 +2149,12 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {isCreate && showCreateRunPolicySection ? (
         <div data-config-section="run-policy" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> Run Policy</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> Run Policy</div>
+            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" />{uiT("ui:messages.m_6ddc0b5e33881581")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" />{uiT("ui:messages.m_6ddc0b5e33881581")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             <ToggleWithNumber
-              label="Heartbeat on interval"
+              label={uiT("ui:messages.m_b6da5e83c1983eff")}
               hint={help.heartbeatInterval}
               checked={val!.heartbeatEnabled}
               onCheckedChange={(v) => set!({ heartbeatEnabled: v })}
@@ -2176,7 +2165,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               numberHint={help.intervalSec}
               showNumber={val!.heartbeatEnabled}
             />
-            <CollapsibleSection title="Advanced Run Policy" open={runPolicyAdvancedOpen} onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}>
+            <CollapsibleSection title={uiT("ui:messages.m_aafc650021d56871")} open={runPolicyAdvancedOpen} onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}>
               <div className="space-y-3">{renderAdapterFields("runPolicy")}</div>
             </CollapsibleSection>
           </div>
@@ -2184,13 +2173,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       ) : !isCreate ? (
         <div data-config-section="run-policy" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> Run Policy</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> Run Policy</div>
+            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" />{uiT("ui:messages.m_6ddc0b5e33881581")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" />{uiT("ui:messages.m_6ddc0b5e33881581")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg overflow-hidden" : "")}>
             <div className={cn(cards ? "p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
               <ToggleWithNumber
-                label="Heartbeat on interval"
+                label={uiT("ui:messages.m_b6da5e83c1983eff")}
                 hint={help.heartbeatInterval}
                 checked={eff("heartbeat", "enabled", heartbeat.enabled === true)}
                 onCheckedChange={(v) => mark("heartbeat", "enabled", v)}
@@ -2203,7 +2192,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               />
             </div>
             <CollapsibleSection
-              title="Advanced Run Policy"
+              title={uiT("ui:messages.m_aafc650021d56871")}
               bordered={cards}
               open={runPolicyAdvancedOpen}
               onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}
@@ -2215,7 +2204,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               {!isCreate && (
                 <>
                   {!configSchema?.fields.some((field) => field.key === "timeoutSec") && (
-                  <Field label="Timeout (sec)" hint={help.timeoutSec}>
+                  <Field label={uiT("ui:messages.m_5ac8f7c285b61af1")} hint={help.timeoutSec}>
                     <DraftNumberInput
                       value={eff(
                         "adapterConfig",
@@ -2229,7 +2218,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   </Field>
                   )}
                   {!configSchema?.fields.some((field) => field.key === "graceSec") && (
-                  <Field label="Interrupt grace period (sec)" hint={help.graceSec}>
+                  <Field label={uiT("ui:messages.m_1709050c87497723")} hint={help.graceSec}>
                     <DraftNumberInput
                       value={eff(
                         "adapterConfig",
@@ -2246,7 +2235,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               )}
               </>)}
               <ToggleField
-                label="Wake on demand"
+                label={uiT("ui:messages.m_a7a5aea9b4fee592")}
                 hint={help.wakeOnDemand}
                 checked={eff(
                   "heartbeat",
@@ -2255,7 +2244,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 )}
                 onChange={(v) => mark("heartbeat", "wakeOnDemand", v)}
               />
-              <Field label="Cooldown (sec)" hint={help.cooldownSec}>
+              <Field label={uiT("ui:messages.m_ea609aed94718893")} hint={help.cooldownSec}>
                 <DraftNumberInput
                   value={eff(
                     "heartbeat",
@@ -2267,7 +2256,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   className={inputClass}
                 />
               </Field>
-              <Field label="Max concurrent runs" hint={help.maxConcurrentRuns}>
+              <Field label={uiT("ui:messages.m_3234893f415e405c")} hint={help.maxConcurrentRuns}>
                 <DraftNumberInput
                   value={eff(
                     "heartbeat",
@@ -2281,14 +2270,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               </Field>
               <div className="rounded-md border border-border/70 px-3 py-2">
                 <ToggleField
-                  label="Continue after max-turn stop"
+                  label={uiT("ui:messages.m_b16081c0b4ded71c")}
                   hint={help.maxTurnContinuationEnabled}
                   checked={maxTurnContinuationEnabled}
                   onChange={(v) => updateMaxTurnContinuation({ enabled: v })}
                 />
                 {maxTurnContinuationEnabled ? (
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Continuation attempts" hint={help.maxTurnContinuationMaxAttempts}>
+                    <Field label={uiT("ui:messages.m_521a9cb20830e53a")} hint={help.maxTurnContinuationMaxAttempts}>
                       <DraftNumberInput
                         value={maxTurnContinuationMaxAttempts}
                         onCommit={(v) =>
@@ -2299,7 +2288,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                         className={inputClass}
                       />
                     </Field>
-                    <Field label="Continuation delay (sec)" hint={help.maxTurnContinuationDelaySec}>
+                    <Field label={uiT("ui:messages.m_0d665277efadc341")} hint={help.maxTurnContinuationDelaySec}>
                       <DraftNumberInput
                         value={maxTurnContinuationDelaySec}
                         onCommit={(v) =>
@@ -2324,12 +2313,10 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         <div className={cn(!cards && "border-b border-border")}>
           {cards ? (
             <h3 className="mb-3 flex items-center gap-2 text-sm font-medium">
-              <Bug className="h-3 w-3" /> Debugging
-            </h3>
+              <Bug className="h-3 w-3" />{uiT("ui:messages.m_078ff7a1f36e8d3e")}</h3>
           ) : (
             <div className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-muted-foreground">
-              <Bug className="h-3 w-3" /> Debugging
-            </div>
+              <Bug className="h-3 w-3" />{uiT("ui:messages.m_078ff7a1f36e8d3e")}</div>
           )}
           <div
             className={cn(
@@ -2340,7 +2327,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
             )}
           >
             <ToggleField
-              label="Capture raw provider traces"
+              label={uiT("ui:messages.m_071aa7509f9921a3")}
               hint="Stores exact provider traffic for every future run until disabled. Traces may contain sensitive prompts and tool arguments, are administrator-only, and expire after 24 hours."
               checked={eff<unknown>("debug", "providerTrace", debug.providerTrace) === "raw"}
               onChange={(enabled) =>
@@ -2350,9 +2337,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
             {eff<unknown>("debug", "providerTrace", debug.providerTrace) === "raw" ? (
               <div className="mt-3 flex items-start gap-2 rounded-md border border-border bg-background/60 px-3 py-2 text-xs text-foreground">
                 <Bug className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                <span>
-                  Raw tracing is on for future runs. Paperclip keeps at most 64 MiB per run and automatically deletes it after 24 hours.
-                </span>
+                <span>{uiT("ui:messages.m_560f2fe708c13a09")}</span>
               </div>
             ) : null}
           </div>
@@ -2436,16 +2421,16 @@ function AdapterLoginTerminalState({
     return (
       <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
         <Check className="size-3 shrink-0" />
-        <span>Authenticated. The environment has credentials now.</span>
+        <span>{uiT("ui:messages.m_146f7fef101ff8d7")}</span>
       </div>
     );
   }
   const label =
     status === "timed_out"
-      ? "Login timed out"
+      ? uiT("ui:messages.m_bf33d297a6ba6516")
       : status === "cancelled"
-        ? "Login cancelled"
-        : "Login failed";
+        ? uiT("ui:messages.m_fcb9c05eed9f4515")
+        : uiT("ui:messages.m_5a96e8452f1ed477");
   return (
     <div className="flex items-start gap-2 text-(length:--text-micro) text-destructive">
       <TriangleAlert className="size-3 shrink-0" />
@@ -2617,7 +2602,7 @@ function DisplayedCodeLoginPanel({
       setSessionId(session.sessionId);
     },
     onError: (error) => {
-      setStartError(error instanceof Error ? error.message : "Could not start the login.");
+      setStartError(error instanceof Error ? error.message : uiT("ui:messages.m_632695246612f269"));
     },
   });
 
@@ -2634,7 +2619,7 @@ function DisplayedCodeLoginPanel({
     mutationFn: () => agentsApi.cancelAdapterAuthLogin(companyId, adapterType, sessionId!),
     onSuccess: clearActiveSession,
     onError: (error) => {
-      setStartError(error instanceof Error ? error.message : "Could not cancel the login.");
+      setStartError(error instanceof Error ? error.message : uiT("ui:messages.m_dbdd8dfc42122147"));
     },
   });
 
@@ -2765,7 +2750,7 @@ function DisplayedCodeLoginPanel({
       setStartError(null);
       await activeSessionQuery.refetch();
     },
-    onError: () => setStartError("Could not cancel the previous sign-in. Retry before starting a new one."),
+    onError: () => setStartError(uiT("ui:messages.m_f815303630e6bfd6")),
   });
   const startLoginRef = useRef(startLogin.mutate);
   startLoginRef.current = startLogin.mutate;
@@ -2779,7 +2764,7 @@ function DisplayedCodeLoginPanel({
       setStartError(
         activeSessionQuery.error instanceof Error
           ? activeSessionQuery.error.message
-          : "Could not check for an active login.",
+          : uiT("ui:messages.m_434338d0f202bc9c"),
       );
       return;
     }
@@ -2867,18 +2852,16 @@ function DisplayedCodeLoginPanel({
             <p role="alert" className="pl-2 text-xs text-destructive">{startError}</p>
             {activeSessionQuery.error instanceof AdapterLoginConflictError && (
               <Button type="button" variant="outline" disabled={cancelConflictingLogin.isPending}
-                onClick={() => cancelConflictingLogin.mutate()}>
-                Cancel previous sign-in and retry
-              </Button>
+                onClick={() => cancelConflictingLogin.mutate()}>{uiT("ui:messages.m_e414dc8650dd20ee")}</Button>
             )}
           </div>
         ) : failed ? (
           <p role="alert" className="pl-2 text-xs text-destructive">
             {status === "timed_out"
-              ? "The login timed out. Start it again."
+              ? uiT("ui:messages.m_5eee8063785ee3ab")
               : status === "cancelled"
-                ? "The login was cancelled."
-                : "The login did not finish. Start it again."}
+                ? uiT("ui:messages.m_c5900c017efa79c0")
+                : uiT("ui:messages.m_5fa21cabb36435ec")}
           </p>
         ) : (
           <OnboardingLoginCodeRow code={prompt?.code ?? ""} autoCopy />
@@ -2905,9 +2888,7 @@ function DisplayedCodeLoginPanel({
               className="h-7 px-2.5 text-xs text-muted-foreground hover:text-foreground"
               disabled={cancelLogin.isPending}
               onClick={() => cancelLogin.mutate()}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           )}
           <Button
             type="button"
@@ -2916,9 +2897,7 @@ function DisplayedCodeLoginPanel({
             className="h-7 px-2.5 text-xs"
             disabled={startDisabled}
             onClick={() => startLogin.mutate()}
-          >
-            Sign in
-          </Button>
+          >{uiT("ui:messages.m_bfd402b2f6f38125")}</Button>
         </div>
       </div>
 
@@ -2934,15 +2913,13 @@ function DisplayedCodeLoginPanel({
         {isActive && !prompt && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Preparing...</span>
+            <span>{uiT("ui:messages.m_74a6b5348c06cde0")}</span>
           </div>
         )}
 
         {isActive && prompt && (
           <div className="space-y-2">
-            <div className="text-(length:--text-micro) text-muted-foreground">
-              Copy the code, then open the authentication page.
-            </div>
+            <div className="text-(length:--text-micro) text-muted-foreground">{uiT("ui:messages.m_78517aff77b06980")}</div>
           {/* Code first, then the URL, and the sentence and the numbering both
               say so.
 
@@ -2960,29 +2937,25 @@ function DisplayedCodeLoginPanel({
               does come first. */}
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
-              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                1. Code
-              </div>
+              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_d2d022f4e2dc9403")}</div>
               <span className="font-mono text-xs text-foreground break-all">{prompt.code}</span>
             </div>
-            <AdapterLoginCopyButton value={prompt.code} label="Copy code" />
+            <AdapterLoginCopyButton value={prompt.code} label={uiT("ui:messages.m_49a0053f3b0d5045")} />
           </div>
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
-              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                2. Authentication URL
-              </div>
+              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_964992f45ce788f1")}</div>
               <span className="font-mono text-xs text-foreground break-all">{prompt.url}</span>
             </div>
             <div className="flex items-center">
-              <AdapterLoginCopyButton value={prompt.url} label="Copy URL" />
+              <AdapterLoginCopyButton value={prompt.url} label={uiT("ui:messages.m_b26d1037f1c2da31")} />
               <Button
                 asChild
                 type="button"
                 variant="ghost"
                 size="icon-xs"
-                aria-label="Open the authentication page"
-                title="Open the authentication page"
+                aria-label={uiT("ui:messages.m_81ae2f1df876651a")}
+                title={uiT("ui:messages.m_81ae2f1df876651a")}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <a href={prompt.url} target="_blank" rel="noreferrer noopener">
@@ -3004,21 +2977,19 @@ function DisplayedCodeLoginPanel({
         {status === "authenticated" && accountBindState === "saving" && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Binding this agent to the signed-in account...</span>
+            <span>{uiT("ui:messages.m_d23c6cd35a3407c4")}</span>
           </div>
         )}
         {status === "authenticated" && accountBindState === "bound" && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
             <Check className="size-3 shrink-0" />
-            <span>Agent bound to the signed-in account.</span>
+            <span>{uiT("ui:messages.m_3ca06200396de3cb")}</span>
           </div>
         )}
         {status === "authenticated" && accountBindState === "failed" && (
           <div className="flex items-center gap-2 text-(length:--text-micro)">
             <TriangleAlert className="size-3 shrink-0 text-destructive" />
-            <span className="text-destructive">
-              Could not bind this agent to the signed-in account.
-            </span>
+            <span className="text-destructive">{uiT("ui:messages.m_5fd3151c59488084")}</span>
             <Button
               type="button"
               variant="outline"
@@ -3027,9 +2998,7 @@ function DisplayedCodeLoginPanel({
               onClick={() => {
                 if (accountBinding) void runAccountBinding(accountBinding);
               }}
-            >
-              Retry
-            </Button>
+            >{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           </div>
         )}
       </div>
@@ -3190,7 +3159,7 @@ function SubmittedBrowserCodeLoginPanel({
       setSessionId(session.sessionId);
     },
     onError: (error) => {
-      setStartError(error instanceof Error ? error.message : "Could not start the login.");
+      setStartError(error instanceof Error ? error.message : uiT("ui:messages.m_632695246612f269"));
     },
   });
 
@@ -3217,7 +3186,7 @@ function SubmittedBrowserCodeLoginPanel({
         clearActiveSession();
         return;
       }
-      setStartError(error instanceof Error ? error.message : "Could not cancel the login.");
+      setStartError(error instanceof Error ? error.message : uiT("ui:messages.m_dbdd8dfc42122147"));
     },
   });
 
@@ -3381,7 +3350,7 @@ function SubmittedBrowserCodeLoginPanel({
     mutationFn: (code: string) =>
       agentsApi.submitClaudeSetupTokenBrowserCode(companyId, sessionId!, code),
     onError: (error) => {
-      setStartError(error instanceof Error ? error.message : "Could not submit the browser code.");
+      setStartError(error instanceof Error ? error.message : uiT("ui:messages.m_98528d759d0d84a3"));
     },
   });
 
@@ -3514,7 +3483,7 @@ function SubmittedBrowserCodeLoginPanel({
       setStartError(
         activeSessionQuery.error instanceof Error
           ? activeSessionQuery.error.message
-          : "Could not check for an active login.",
+          : uiT("ui:messages.m_434338d0f202bc9c"),
       );
       return;
     }
@@ -3608,10 +3577,7 @@ function SubmittedBrowserCodeLoginPanel({
             clear text. */}
         {transportInsecure && (
           <p className="flex items-start gap-2 pl-2 text-xs text-amber-700 dark:text-amber-200">
-            <TriangleAlert className="mt-0.5 size-3 shrink-0" />
-            This connection is not encrypted. The login code travels in clear text on this
-            network. Continue only on a network you trust.
-          </p>
+            <TriangleAlert className="mt-0.5 size-3 shrink-0" />{uiT("ui:messages.m_4e5f4271ae173e0e")}</p>
         )}
         {startError ? (
           <p role="alert" className="pl-2 text-xs text-destructive">
@@ -3658,9 +3624,7 @@ function SubmittedBrowserCodeLoginPanel({
               className="h-7 px-2.5 text-xs text-muted-foreground hover:text-foreground"
               disabled={cancelLogin.isPending}
               onClick={() => cancelLogin.mutate()}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           )}
           {/* Apply the existing stored login with no new login round trip. The
               affordance shows only when the status route reports a stored value
@@ -3675,9 +3639,7 @@ function SubmittedBrowserCodeLoginPanel({
                 onApplyStored();
                 setAppliedStored(true);
               }}
-            >
-              Use saved login
-            </Button>
+            >{uiT("ui:messages.m_9f072738a514de51")}</Button>
           )}
           <Button
             type="button"
@@ -3687,7 +3649,7 @@ function SubmittedBrowserCodeLoginPanel({
             disabled={startDisabled}
             onClick={() => startLogin.mutate()}
           >
-            {storedToken && !isActive && !isStored ? "Sign in to replace" : "Sign in"}
+            {storedToken && !isActive && !isStored ? uiT("ui:messages.m_fc9da33ecad423e9") : uiT("ui:messages.m_bfd402b2f6f38125")}
           </Button>
         </div>
       </div>
@@ -3696,16 +3658,13 @@ function SubmittedBrowserCodeLoginPanel({
           first and does not force a fresh login. Use saved login binds the stored
           token; a replacement login rotates it under the captured version. */}
       {storedToken && !isActive && !isStored && !appliedStored && (
-        <div className="text-(length:--text-micro) text-muted-foreground">
-          You have a saved Claude login. Use it to bind this agent, or log in again to replace the
-          stored token.
-        </div>
+        <div className="text-(length:--text-micro) text-muted-foreground">{uiT("ui:messages.m_723f9ebe631e5d5e")}</div>
       )}
 
       {appliedStored && (
         <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
           <Check className="size-3 shrink-0" />
-          <span>The saved Claude login is bound to this agent now.</span>
+          <span>{uiT("ui:messages.m_5bd5c9ed4d60c1e9")}</span>
         </div>
       )}
 
@@ -3721,7 +3680,7 @@ function SubmittedBrowserCodeLoginPanel({
         {isActive && !authorizationUrl && !isCompleting && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Preparing...</span>
+            <span>{uiT("ui:messages.m_74a6b5348c06cde0")}</span>
           </div>
         )}
 
@@ -3732,31 +3691,24 @@ function SubmittedBrowserCodeLoginPanel({
                 className="flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 px-2 py-1.5 text-(length:--text-micro) text-amber-800 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200"
               >
                 <TriangleAlert className="size-3 shrink-0 mt-0.5" />
-                <span>
-                  This connection is not encrypted. The login code travels in clear text on this
-                  network. Continue only on a network you trust.
-                </span>
+                <span>{uiT("ui:messages.m_4e5f4271ae173e0e")}</span>
               </div>
             )}
-            <div className="text-(length:--text-micro) text-muted-foreground">
-              Open the authorization page, then enter the browser code it shows.
-            </div>
+            <div className="text-(length:--text-micro) text-muted-foreground">{uiT("ui:messages.m_35bebcd32dfa69ce")}</div>
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
-                <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                  1. Authorization URL
-                </div>
+                <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_5dafba3f9041d4dd")}</div>
                 <span className="font-mono text-xs text-foreground break-all">{authorizationUrl}</span>
               </div>
               <div className="flex items-center">
-                <AdapterLoginCopyButton value={authorizationUrl} label="Copy URL" />
+                <AdapterLoginCopyButton value={authorizationUrl} label={uiT("ui:messages.m_b26d1037f1c2da31")} />
                 <Button
                   asChild
                   type="button"
                   variant="ghost"
                   size="icon-xs"
-                  aria-label="Open the authorization page"
-                  title="Open the authorization page"
+                  aria-label={uiT("ui:messages.m_b11efe92e917df1b")}
+                  title={uiT("ui:messages.m_b11efe92e917df1b")}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <a href={authorizationUrl} target="_blank" rel="noreferrer noopener">
@@ -3766,12 +3718,10 @@ function SubmittedBrowserCodeLoginPanel({
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                2. Browser code
-              </div>
+              <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_c536a15cc7bd8744")}</div>
               <div className="flex items-center gap-2">
                 <input
-                  aria-label="Browser code"
+                  aria-label={uiT("ui:messages.m_72da0a59119d61c3")}
                   type="text"
                   autoComplete="off"
                   spellCheck={false}
@@ -3792,9 +3742,7 @@ function SubmittedBrowserCodeLoginPanel({
                   className="h-7 px-2.5 text-xs"
                   disabled={!canSubmit}
                   onClick={handleSubmit}
-                >
-                  Submit
-                </Button>
+                >{uiT("ui:messages.m_155f816c0407310c")}</Button>
               </div>
             </div>
           </div>
@@ -3803,14 +3751,14 @@ function SubmittedBrowserCodeLoginPanel({
         {isCompleting && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Completing the login…</span>
+            <span>{uiT("ui:messages.m_0a329f96c1261fe4")}</span>
           </div>
         )}
 
         {isStored && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
             <Check className="size-3 shrink-0" />
-            <span>Authenticated. The environment has credentials now.</span>
+            <span>{uiT("ui:messages.m_146f7fef101ff8d7")}</span>
           </div>
         )}
 
@@ -3859,7 +3807,7 @@ export function AdapterEnvironmentResult({ result }: { result: AdapterEnvironmen
             <span className="mx-1 opacity-60">·</span>
             <span>{check.message}</span>
             {check.detail && <span className="block opacity-75 break-all">({check.detail})</span>}
-            {check.hint && <span className="block opacity-90 break-words">Hint: {check.hint}</span>}
+            {check.hint && <span className="block opacity-90 break-words">{uiT("ui:messages.m_c26c62214d85822e")}{check.hint}</span>}
           </div>
         ))}
       </div>
@@ -3906,9 +3854,7 @@ export function AdapterTypeDropdown({
 
 function ExperimentalBadge() {
   return (
-    <span className="shrink-0 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-(length:--text-nano) font-medium leading-none text-amber-700 dark:text-amber-200">
-      Experimental
-    </span>
+    <span className="shrink-0 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-(length:--text-nano) font-medium leading-none text-amber-700 dark:text-amber-200">{uiT("ui:messages.m_3dc9f569422dcfda")}</span>
   );
 }
 
@@ -4030,9 +3976,9 @@ export function ModelDropdown({
     const customOption = "__paperclip_custom_model__";
     const extraModels = [...new Set([value, ...promotedModelIds])].filter(id => id && (!models.some(model => model.id === id) || promotedModelIds.has(id)));
     return (
-      <Field label="Model" hint={help.model}>
+      <Field label={uiT("ui:messages.m_5e2c614c23f02239")} hint={help.model}>
         <NativeSelect
-          aria-label="Model"
+          aria-label={uiT("ui:messages.m_5e2c614c23f02239")}
           aria-busy={loadingModels || refreshingModels}
           value={enteringCustomModel ? customOption : value}
           required={required && !enteringCustomModel}
@@ -4043,7 +3989,7 @@ export function ModelDropdown({
           }}
         >
           <option value="" disabled={!allowDefault}>
-            {allowDefault ? (defaultLabel ?? "Default") : loadingModels ? "Loading models…" : required ? "Select model (required)" : "Select model"}
+            {allowDefault ? (defaultLabel ?? uiT("ui:messages.m_21b111cbfe6e8fca")) : loadingModels ? "Loading models…" : required ? uiT("ui:messages.m_62d45d1d404833f6") : uiT("ui:messages.m_1d446005add35afa")}
           </option>
           {extraModels.map(id => <option key={id} value={id}>{models.find(model => model.id === id)?.label ?? id}</option>)}
           {groupedModels.map(({ provider, entries }) => groupByProvider ? (
@@ -4062,16 +4008,16 @@ export function ModelDropdown({
         )}
         {loadingModels && <p role="status" className="mt-2 text-xs text-muted-foreground">Loading models…</p>}
         {onRefreshModels && <Button type="button" variant="ghost" size="sm" disabled={refreshingModels}
-          onClick={() => void onRefreshModels()}>{refreshingModels ? "Refreshing…" : "Refresh models"}</Button>}
+          onClick={() => void onRefreshModels()}>{refreshingModels ? uiT("ui:messages.m_1c0def7be0607b96") : uiT("ui:messages.m_04903063b2fd6a42")}</Button>}
       </Field>
     );
   }
 
   return (
-    <Field label="Model" hint={help.model}>
-      <SelectPopover aria-label="Model" value={value}
+    <Field label={uiT("ui:messages.m_5e2c614c23f02239")} hint={help.model}>
+      <SelectPopover aria-label={uiT("ui:messages.m_5e2c614c23f02239")} value={value}
         displayValue={<span className={cn("truncate", !value && "text-muted-foreground")}>
-          {selected?.label ?? (value || (allowDefault ? (defaultLabel ?? "Default") : required ? "Select model (required)" : "Select model"))}
+          {selected?.label ?? (value || (allowDefault ? (defaultLabel ?? uiT("ui:messages.m_21b111cbfe6e8fca")) : required ? uiT("ui:messages.m_62d45d1d404833f6") : uiT("ui:messages.m_1d446005add35afa")))}
         </span>}
         open={open}
         onOpenChange={(nextOpen) => {
@@ -4079,11 +4025,11 @@ export function ModelDropdown({
           if (!nextOpen) setModelSearch("");
         }}
       >
-        <div role="listbox" aria-label="Model">
+        <div role="listbox" aria-label={uiT("ui:messages.m_5e2c614c23f02239")}>
           <div className="relative mb-1">
             <input
               className="w-full px-2 py-1.5 pr-6 text-xs bg-transparent outline-none border-b border-border placeholder:text-muted-foreground/50"
-              placeholder={creatable ? "Search models... (type to create)" : "Search models..."}
+              placeholder={creatable ? uiT("ui:messages.m_e7eb0b73abb5d4a8") : uiT("ui:messages.m_37b90680b8421a45")}
               value={modelSearch}
               onChange={(e) => setModelSearch(e.target.value)}
               autoFocus
@@ -4114,7 +4060,7 @@ export function ModelDropdown({
                 <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                 <path d="M3 3v5h5" />
               </svg>
-              {detectingModel ? "Detecting..." : detectedModel ? (detectModelLabel?.replace(/^Detect\b/, "Re-detect") ?? "Re-detect from config") : (detectModelLabel ?? "Detect from config")}
+              {detectingModel ? uiT("ui:messages.m_5ac197f8103a9ea9") : detectedModel ? (detectModelLabel?.replace(/^Detect\b/, "Re-detect") ?? uiT("ui:messages.m_90c73096a9c99b3e")) : (detectModelLabel ?? uiT("ui:messages.m_8f7023001a223539"))}
             </button>
           )}
           {onRefreshModels && !modelSearch.trim() && (
@@ -4132,7 +4078,7 @@ export function ModelDropdown({
                 <path d="M21 12a9 9 0 0 1-15.28 6.36L3 16" />
                 <path d="M8 16H3v5" />
               </svg>
-              {refreshingModels ? "Refreshing..." : "Refresh models"}
+              {refreshingModels ? uiT("ui:messages.m_69d2daed978a7b05") : uiT("ui:messages.m_04903063b2fd6a42")}
             </button>
           )}
           {value && (!models.some((m) => m.id === value) || promotedModelIds.has(value)) && (
@@ -4149,9 +4095,7 @@ export function ModelDropdown({
               <span className="block w-full text-left truncate font-mono text-xs" title={value}>
                 {models.find((m) => m.id === value)?.label ?? value}
               </span>
-              <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-green-500/15 text-green-400 border-green-500/20">
-                current
-              </Badge>
+              <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-green-500/15 text-green-400 border-green-500/20">{uiT("ui:messages.m_97b0560280ed60a5")}</Badge>
             </button>
           )}
           {detectedModel && detectedModel !== value && (
@@ -4169,9 +4113,7 @@ export function ModelDropdown({
               <span className="block w-full text-left truncate font-mono text-xs" title={detectedModel}>
                 {models.find((m) => m.id === detectedModel)?.label ?? detectedModel}
               </span>
-              <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-blue-500/15 text-blue-400 border-blue-500/20">
-                detected
-              </Badge>
+              <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-blue-500/15 text-blue-400 border-blue-500/20">{uiT("ui:messages.m_b96da48a63e7d238")}</Badge>
             </button>
           )}
           {detectedModelCandidates
@@ -4194,9 +4136,7 @@ export function ModelDropdown({
                   <span className="block w-full text-left truncate font-mono text-xs" title={candidate}>
                     {entry?.label ?? candidate}
                   </span>
-                  <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-sky-500/15 text-sky-400 border-sky-500/20">
-                    config
-                  </Badge>
+                  <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-sky-500/15 text-sky-400 border-sky-500/20">{uiT("ui:messages.m_b79606fb3afea5bd")}</Badge>
                 </button>
               );
             })}
@@ -4213,9 +4153,7 @@ export function ModelDropdown({
                   onChange("");
                   onOpenChange(false);
                 }}
-              >
-                Default
-              </button>
+              >{uiT("ui:messages.m_21b111cbfe6e8fca")}</button>
             )}
             {canCreateManualModel && (
               <button
@@ -4228,7 +4166,7 @@ export function ModelDropdown({
                   setModelSearch("");
                 }}
               >
-                <span>Use manual model</span>
+                <span>{uiT("ui:messages.m_3490ecaa54933122")}</span>
                 <span className="text-xs font-mono text-muted-foreground">{manualModel}</span>
               </button>
             )}
@@ -4264,8 +4202,8 @@ export function ModelDropdown({
               <div className="px-2 py-2 space-y-2">
                 <p className="text-xs text-muted-foreground">
                   {loadingModels ? "Loading models…" : onDetectModel
-                    ? (emptyDetectHint ?? "No model detected yet. Enter a provider/model manually.")
-                    : "No models found."}
+                    ? (emptyDetectHint ?? uiT("ui:messages.m_f71129338255affa"))
+                    : uiT("ui:messages.m_339e5fcda064be02")}
                 </p>
               </div>
             )}
@@ -4289,8 +4227,8 @@ function ThinkingEffortDropdown({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  return <Field label="Thinking effort" hint={help.thinkingEffort}>
-    <SelectPopover aria-label="Thinking effort" value={value} onValueChange={onChange}
+  return <Field label={uiT("ui:messages.m_264c28cbf01ce9fa")} hint={help.thinkingEffort}>
+    <SelectPopover aria-label={uiT("ui:messages.m_264c28cbf01ce9fa")} value={value} onValueChange={onChange}
       open={open} onOpenChange={onOpenChange}
       options={options.map(option => ({ value: option.id, label: option.label,
         suffix: option.id ? <span className="text-xs text-muted-foreground font-mono">{option.id}</span> : undefined,

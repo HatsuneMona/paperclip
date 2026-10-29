@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Download, ExternalLink, Paperclip, Play } from "lucide-react";
 import type { CompanyArtifact } from "@/api/artifacts";
@@ -37,7 +38,7 @@ type PreviewArtifact = Pick<CompanyArtifact, "mediaKind" | "contentPath" | "titl
 function ImagePreview({ artifact }: { artifact: PreviewArtifact }) {
   const [errored, setErrored] = useState(false);
   if (errored || !artifact.contentPath) {
-    return <PlaceholderPreview label="Image" />;
+    return <PlaceholderPreview label={uiT("ui:messages.m_1aa4cb0bcca76e92")} />;
   }
   return (
     <PreviewFrame>
@@ -136,7 +137,7 @@ function VideoPreview({ artifact }: { artifact: PreviewArtifact }) {
 function TextPreview({ artifact }: { artifact: PreviewArtifact }) {
   const preview = artifact.previewText?.trim();
   if (!preview) {
-    return <PlaceholderPreview label={artifact.source === "document" ? "Document" : "Text"} />;
+    return <PlaceholderPreview label={artifact.source === "document" ? uiT("ui:messages.m_d6bd8c0aeee80fed") : uiT("ui:messages.m_71988c4d8e0803ba")} />;
   }
   return (
     <PreviewFrame className="bg-card">
@@ -219,7 +220,7 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
               </SecondaryAction>
             ) : null}
             {artifact.downloadPath ? (
-              <SecondaryAction href={artifact.downloadPath} download title="Download file">
+              <SecondaryAction href={artifact.downloadPath} download title={uiT("ui:messages.m_9de4149fb9716cfc")}>
                 <Download className="h-3.5 w-3.5" />
               </SecondaryAction>
             ) : null}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CompanySecret, UserSecretDefinition } from "@paperclipai/shared";
@@ -127,7 +128,7 @@ export function SetMyUserSecretDialog({
 
             {isExternal ? (
               <div className="space-y-1">
-                <label className="text-xs font-medium text-foreground">External reference</label>
+                <label className="text-xs font-medium text-foreground">{uiT("ui:messages.m_5c54252e696c327b")}</label>
                 <Input
                   value={externalRef}
                   onChange={(event) => setExternalRef(event.target.value)}
@@ -161,11 +162,9 @@ export function SetMyUserSecretDialog({
         ) : null}
 
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={save.isPending}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={save.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button onClick={() => save.mutate()} disabled={!canSave || save.isPending}>
-            {save.isPending ? "Saving…" : existingSecret ? "Update value" : "Save value"}
+            {save.isPending ? uiT("ui:messages.m_23e39291d6135814") : existingSecret ? "Update value" : "Save value"}
           </Button>
         </DialogFooter>
       </DialogContent>

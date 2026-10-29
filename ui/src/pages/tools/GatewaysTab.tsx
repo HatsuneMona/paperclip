@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type FormEvent, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
@@ -217,9 +218,9 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
   async function copyText(value: string, label: string) {
     try {
       await copyTextToClipboard(value);
-      pushToast({ title: "Copied to clipboard", body: label, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_d37078fe6a1faa15"), body: label, tone: "success" });
     } catch (error) {
-      pushToast({ title: "Copy failed", body: error instanceof Error ? error.message : "Clipboard access is unavailable.", tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_5b50e7a693fee952"), body: error instanceof Error ? error.message : "Clipboard access is unavailable.", tone: "error" });
     }
   }
 
@@ -252,7 +253,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
     createTokenMutation.mutate(gatewayId);
   }
 
-  if (gatewaysQuery.isLoading) return <LoadingState label="Loading gateways..." />;
+  if (gatewaysQuery.isLoading) return <LoadingState label={uiT("ui:messages.m_ed4b4d36ecff4cac")} />;
   if (gatewaysQuery.isError) return <ErrorState error={gatewaysQuery.error} />;
 
   const gateways = gatewaysQuery.data?.gateways ?? [];
@@ -263,8 +264,8 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
     <div className="space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <ToolsPageHeader
-          title="Named MCP gateways"
-          description="Stable endpoints for external clients that use the same profiles, rules, and audit trail as agent tool access."
+          title={uiT("ui:messages.m_62ac58f59016b487")}
+          description={uiT("ui:messages.m_d79cfff71f22faef")}
         />
         <Button
           type="button"
@@ -314,23 +315,21 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
             </label>
           </div>
           <label className="space-y-1.5 text-sm">
-            <span className="text-xs font-medium text-muted-foreground">Description</span>
+            <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_526e0087cc3f254d")}</span>
             <textarea
               className="min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={createDraft.description}
               onChange={(event) => setCreateDraft((current) => ({ ...current, description: event.target.value }))}
-              placeholder="Who this endpoint is for and when it should be rotated."
+              placeholder={uiT("ui:messages.m_1f1384e32cfac376")}
             />
           </label>
           {activeProfiles.length === 0 && !profileLoading ? (
             <p className="text-xs text-muted-foreground">Create an access profile before adding a gateway.</p>
           ) : null}
           <div className="flex flex-wrap justify-end gap-2">
-            <Button type="button" variant="ghost" size="sm" onClick={() => setCreating(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => setCreating(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button type="submit" size="sm" disabled={createDisabled || !createDraft.name.trim() || !createDraft.profileId}>
-              {createGatewayMutation.isPending ? "Creating..." : "Create gateway"}
+              {createGatewayMutation.isPending ? uiT("ui:messages.m_def70944c9bb9c3b") : "Create gateway"}
             </Button>
           </div>
         </form>
@@ -368,9 +367,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                       Copy endpoint
                     </Button>
                     <Button type="button" variant="outline" size="sm" onClick={() => startIssuing(gateway.id)}>
-                      <KeyRound className="mr-1.5 h-3.5 w-3.5" />
-                      Issue token
-                    </Button>
+                      <KeyRound className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_3f03f9be7b13c89b")}</Button>
                   </div>
                 </div>
 
@@ -380,21 +377,21 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
 
                 <dl className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Owner</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_4b1b8aa3608a26da")}</dt>
                     <dd className="mt-0.5 text-foreground">{formatOwner(gateway, agentNames)}</dd>
                   </div>
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Scope</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_b073f6c68ef87211")}</dt>
                     <dd className="mt-0.5 text-foreground">{formatScope(gateway, projectNames, agentNames)}</dd>
                   </div>
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Allowed tools</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_73f3619da32094de")}</dt>
                     <dd className="mt-0.5 text-foreground">
                       {profile ? `${formatAllowedTools(profile)} via ${profile.name}` : `Profile ${shortId(gateway.profileId)}`}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Last activity</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_06475633ed3e14cf")}</dt>
                     <dd className="mt-0.5 text-foreground">
                       {lastActivity ? <RelativeTime value={lastActivity} /> : "Never used"}
                     </dd>
@@ -447,12 +444,12 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                               [gateway.id]: { ...tokenDraft, ownerNote: event.target.value },
                             }))
                           }
-                          placeholder="Who owns this token and why it exists"
+                          placeholder={uiT("ui:messages.m_d28e03a01a78e6da")}
                           required
                         />
                       </label>
                       <label className="space-y-1.5 text-sm">
-                        <span className="text-xs font-medium text-muted-foreground">Expires</span>
+                        <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_f6725f3af08a06a2")}</span>
                         <input
                           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                           type="date"
@@ -485,9 +482,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                       ))}
                     </div>
                     <div className="flex flex-wrap justify-end gap-2">
-                      <Button type="button" variant="ghost" size="sm" onClick={() => setIssuingGatewayId(null)}>
-                        Cancel
-                      </Button>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => setIssuingGatewayId(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                       <Button
                         type="submit"
                         size="sm"
@@ -499,7 +494,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                           !tokenDraft.expiresAt
                         }
                       >
-                        {createTokenMutation.isPending ? "Issuing..." : "Issue token"}
+                        {createTokenMutation.isPending ? "Issuing..." : uiT("ui:messages.m_3f03f9be7b13c89b")}
                       </Button>
                     </div>
                   </form>
@@ -523,9 +518,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                 <div className="grid gap-3 md:grid-cols-2">
                   <div>
                     <div className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                      <KeyRound className="h-3.5 w-3.5" />
-                      Tokens
-                    </div>
+                      <KeyRound className="h-3.5 w-3.5" />{uiT("ui:messages.m_a039dfb9628b53dd")}</div>
                     <div className="space-y-1 text-sm">
                       {gateway.tokens.length === 0 ? (
                         <p className="text-muted-foreground">No tokens issued.</p>
@@ -563,11 +556,9 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                       size="sm"
                                       className="h-7 px-2 text-xs text-destructive hover:text-destructive"
                                       onClick={() => setConfirmingRevokeTokenId(token.id)}
-                                      aria-label={`Revoke ${token.name}`}
+                                      aria-label={uiT("ui:messages.m_d6e405ee4617e107", { v0: (token.name) })}
                                     >
-                                      <RotateCcw className="mr-1 h-3.5 w-3.5" />
-                                      Revoke
-                                    </Button>
+                                      <RotateCcw className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_87e6d00bbf53ec5a")}</Button>
                                   ) : null}
                                 </div>
                               </div>
@@ -581,9 +572,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                     className="h-7 px-2"
                                     onClick={() => setConfirmingRevokeTokenId(null)}
                                   >
-                                    <X className="mr-1 h-3.5 w-3.5" />
-                                    Cancel
-                                  </Button>
+                                    <X className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                                   <Button
                                     type="button"
                                     variant="destructive"
@@ -592,9 +581,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                     onClick={() => revokeTokenMutation.mutate(token.id)}
                                     disabled={revokeTokenMutation.isPending}
                                   >
-                                    <Check className="mr-1 h-3.5 w-3.5" />
-                                    Confirm
-                                  </Button>
+                                    <Check className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_eebdd24a77d9ad32")}</Button>
                                 </div>
                               ) : null}
                             </div>
@@ -627,9 +614,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                   void copyText(formatSnippetConfig(snippet.config), `${snippet.label} snippet`);
                                 }}
                               >
-                                <Copy className="mr-1 h-3.5 w-3.5" />
-                                Copy
-                              </Button>
+                                <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
                             </summary>
                             <pre className="mt-2 max-h-56 overflow-auto whitespace-pre-wrap break-words rounded bg-background p-3 text-xs text-muted-foreground">
                               {formatSnippetConfig(snippet.config)}

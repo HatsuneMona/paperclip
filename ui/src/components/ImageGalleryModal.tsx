@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { ChevronLeft, ChevronRight, Download, X } from "lucide-react";
@@ -104,8 +105,8 @@ export function ImageGalleryModal({
                 href={attachmentDownloadPath(current)}
                 download={filename}
                 className="text-white/50 hover:text-white transition-colors"
-                title="Download"
-                aria-label={`Download ${filename}`}
+                title={uiT("ui:messages.m_d6eafe8235910042")}
+                aria-label={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (filename) })}
                 onClick={(e) => e.stopPropagation()}
               >
                 <Download className="h-4.5 w-4.5" />
@@ -114,7 +115,7 @@ export function ImageGalleryModal({
                 type="button"
                 onClick={() => onOpenChange(false)}
                 className="text-white/50 hover:text-white transition-colors"
-                title="Close"
+                title={uiT("ui:messages.m_7d9eb7acb13e2462")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -130,7 +131,7 @@ export function ImageGalleryModal({
                   type="button"
                   onClick={goPrev}
                   className="rounded-full bg-white/10 p-3 text-white/60 hover:text-white hover:bg-white/20 transition-colors"
-                  title="Previous"
+                  title={uiT("ui:messages.m_a57b08a480b822a0")}
                 >
                   <ChevronLeft className="h-7 w-7" />
                 </button>
@@ -165,7 +166,7 @@ export function ImageGalleryModal({
                   type="button"
                   onClick={goNext}
                   className="rounded-full bg-white/10 p-3 text-white/60 hover:text-white hover:bg-white/20 transition-colors"
-                  title="Next"
+                  title={uiT("ui:messages.m_1ff57a29d7c9d11b")}
                 >
                   <ChevronRight className="h-7 w-7" />
                 </button>

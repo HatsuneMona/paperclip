@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Inbox, LoaderCircle, Save } from "lucide-react";
@@ -23,7 +24,7 @@ const MODE_OPTIONS: RadioCardOption[] = [
   },
   {
     value: "disabled",
-    title: "Off",
+    title: uiT("ui:messages.m_ca7981b46ecf2c17"),
     description: "Agents can never archive tasks from your inbox.",
   },
 ];
@@ -173,7 +174,7 @@ export function InboxAgentPolicyControl({ companyId }: { companyId: string | nul
 
       <div className="flex max-w-2xl items-center justify-end gap-3">
         {updateMutation.isSuccess && !isDirty ? (
-          <span className="text-xs text-muted-foreground" role="status">Saved</span>
+          <span className="text-xs text-muted-foreground" role="status">{uiT("ui:messages.m_b5c120b316c237a0")}</span>
         ) : null}
         <Button
           type="button"
@@ -181,7 +182,7 @@ export function InboxAgentPolicyControl({ companyId }: { companyId: string | nul
           onClick={() => draft && updateMutation.mutate(draft)}
         >
           {updateMutation.isPending ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
-          {updateMutation.isPending ? "Saving…" : "Save"}
+          {updateMutation.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_1509f561f2416598")}
         </Button>
       </div>
     </section>

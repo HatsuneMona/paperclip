@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
@@ -278,9 +279,7 @@ function ImportPreviewPane({
             <code>{textContent}</code>
           </pre>
         ) : (
-          <div className="rounded-lg border border-border bg-accent/10 px-4 py-3 text-sm text-muted-foreground">
-            Binary asset preview is not available for this file type.
-          </div>
+          <div className="rounded-lg border border-border bg-accent/10 px-4 py-3 text-sm text-muted-foreground">{uiT("ui:messages.m_0a5cc3efb5c91fe7")}</div>
         )}
       </div>
     </div>
@@ -457,11 +456,9 @@ function ConflictResolutionList({
     <div className="mx-5 mt-3">
       <div className="rounded-md border border-border">
         <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-          <h3 className="text-sm font-medium">
-            Renames
-          </h3>
+          <h3 className="text-sm font-medium">{uiT("ui:messages.m_bff42c25bfc4b899")}</h3>
           <span className="text-xs text-muted-foreground">
-            {conflicts.length} item{conflicts.length === 1 ? "" : "s"}
+            {conflicts.length}{uiT("ui:messages.m_a5f3c2e9f903f3c8")}{conflicts.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
           </span>
         </div>
         <div className="divide-y divide-border">
@@ -667,9 +664,9 @@ function AdapterPickerList({
     <div className="mx-5 mt-3">
       <div className="rounded-md border border-border">
         <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-          <h3 className="text-sm font-medium">Adapters</h3>
+          <h3 className="text-sm font-medium">{uiT("ui:messages.m_d20547a8145f719f")}</h3>
           <span className="text-xs text-muted-foreground">
-            {agents.length} agent{agents.length === 1 ? "" : "s"}
+            {agents.length}{uiT("ui:messages.m_02a0754fddbf1a03")}{agents.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
           </span>
         </div>
         <div className="divide-y divide-border">
@@ -689,9 +686,7 @@ function AdapterPickerList({
                   <Badge variant="outline" className={cn(
                     "text-(length:--text-nano) uppercase tracking-wide",
                     "text-blue-500 border-blue-500/30",
-                  )}>
-                    agent
-                  </Badge>
+                  )}>{uiT("ui:messages.m_d4f0bc5a29de06b5")}</Badge>
                   <span className="shrink-0 font-mono text-xs text-muted-foreground">
                     {agent.name}
                   </span>
@@ -707,7 +702,7 @@ function AdapterPickerList({
                       </option>
                     ))}
                     {!adapterOptions.some((option) => option.value === selectedType) && (
-                      <option value={selectedType}>{agent.adapterChoice === "openai_dot" ? "OpenAI Dot (experimental)" : `${getAdapterLabel(selectedType)} (${agentHarnessType(agent.adapterType, agent.adapterConfig)})`}</option>
+                      <option value={selectedType}>{agent.adapterChoice === "openai_dot" ? "OpenAI Dot (experimental)" : uiT("ui:messages.m_43cdd46200eb5db2", { v0: (getAdapterLabel(selectedType)), v1: (agentHarnessType(agent.adapterType, agent.adapterConfig)) })}</option>
                     )}
                   </select>
                   <button
@@ -1121,9 +1116,9 @@ export function CompanyImport() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Import" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_2cff9baabf56ca00") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -1244,7 +1239,7 @@ export function CompanyImport() {
       if (generation !== previewGenerationRef.current) return;
       pushToast({
         tone: "error",
-        title: "Preview failed",
+        title: uiT("ui:messages.m_97ce5234adcb4967"),
         body: err instanceof Error ? err.message : "Failed to preview import.",
       });
     },
@@ -1363,7 +1358,7 @@ export function CompanyImport() {
         });
         pushToast({
           tone: "success",
-          title: "Import completed",
+          title: uiT("ui:messages.m_69135372f0c4f593"),
           body: "Open the organization to view it.",
         });
         return;
@@ -1398,7 +1393,7 @@ export function CompanyImport() {
       setResumedWatchJobId(null);
       pushToast({
         tone: "error",
-        title: "Import failed",
+        title: uiT("ui:messages.m_0a26f41abd00f95e"),
         body: err instanceof Error ? err.message : "Failed to apply import.",
       });
     },
@@ -1452,7 +1447,7 @@ export function CompanyImport() {
     } catch (err) {
       pushToast({
         tone: "error",
-        title: "Package read failed",
+        title: uiT("ui:messages.m_4bb06e81c69099d8"),
         body: err instanceof Error ? err.message : "Failed to read folder.",
       });
     }
@@ -1672,7 +1667,7 @@ export function CompanyImport() {
     if (failureCount > 0) {
       pushToast({
         tone: "error",
-        title: "Some items were not activated",
+        title: uiT("ui:messages.m_3bd449d7bda6ebd7"),
         body: `${failureCount} item${failureCount === 1 ? "" : "s"} failed to activate; the rest were activated.`,
       });
     }
@@ -1824,16 +1819,14 @@ export function CompanyImport() {
     return (
       <div className="max-w-6xl space-y-4 px-5 py-5">
         <div>
-          <h2 className="text-base font-semibold">Import completed</h2>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_69135372f0c4f593")}</h2>
           <p className="text-xs text-muted-foreground mt-1">
             {importOutcome.companyName
-              ? <>The import finished and <span className="font-medium text-foreground">{importOutcome.companyName}</span> is ready. Its detailed summary is no longer available.</>
+              ? <>{uiT("ui:messages.m_832a4e4e4ae8fb3c")}<span className="font-medium text-foreground">{importOutcome.companyName}</span> is ready. Its detailed summary is no longer available.</>
               : "The import finished and your organization is ready. Its detailed summary is no longer available, but the organization has been added — select it from the organization switcher to view it."}
           </p>
           {importOutcome.pausedAutomations ? (
-            <p className="text-xs text-muted-foreground mt-1">
-              Imported agents arrived paused — resume them from the company's Agents page so assigned tasks can start.
-            </p>
+            <p className="text-xs text-muted-foreground mt-1">{uiT("ui:messages.m_94f886962ac01f38")}</p>
           ) : null}
         </div>
         {importOutcome.dashboardPath ? (
@@ -1845,9 +1838,7 @@ export function CompanyImport() {
               // Force a fresh dashboard load so newly imported agents are
               // immediately visible (same reason as the full-outcome CTA).
               onClick={() => window.location.assign(importOutcome.dashboardPath!)}
-            >
-              Open organization dashboard
-            </Button>
+            >{uiT("ui:messages.m_51cddc9a1d1d554e")}</Button>
           </div>
         ) : null}
       </div>
@@ -1864,19 +1855,19 @@ export function CompanyImport() {
     return (
       <div className="max-w-6xl space-y-4 px-5 py-5">
         <div>
-          <h2 className="text-base font-semibold">Import complete</h2>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_a9c747fe220f0a9f")}</h2>
           <p className="text-xs text-muted-foreground mt-1">
-            {result.company.name}: {result.agents.length} agent{result.agents.length === 1 ? "" : "s"},{" "}
-            {skillResults.length} skill{skillResults.length === 1 ? "" : "s"},{" "}
-            {result.projects.length} project{result.projects.length === 1 ? "" : "s"}, and{" "}
-            {result.routines.length} routine{result.routines.length === 1 ? "" : "s"} processed.
+            {result.company.name}: {result.agents.length}{uiT("ui:messages.m_02a0754fddbf1a03")}{result.agents.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")},{" "}
+            {skillResults.length} skill{skillResults.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")},{" "}
+            {result.projects.length}{uiT("ui:messages.m_c6e0c8d38fc71da5")}{result.projects.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}, and{" "}
+            {result.routines.length}{uiT("ui:messages.m_2fe51c04cef6ae9d")}{result.routines.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} processed.
           </p>
         </div>
 
         {skillResults.length > 0 && (
           <div className="rounded-md border border-border">
             <div className="border-b border-border px-4 py-2.5">
-              <h3 className="text-sm font-medium">Skill import results</h3>
+              <h3 className="text-sm font-medium">{uiT("ui:messages.m_44784eda0726a7df")}</h3>
             </div>
             <div className="divide-y divide-border">
               {skillResults.map((skill) => (
@@ -1903,7 +1894,7 @@ export function CompanyImport() {
         {activationItems.length > 0 && (
           <div className="rounded-md border border-border">
             <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-              <h3 className="text-sm font-medium">Activate imported agents and routines</h3>
+              <h3 className="text-sm font-medium">{uiT("ui:messages.m_2c27dd1868783341")}</h3>
               <span className="text-xs text-muted-foreground">imported paused</span>
             </div>
             <div className="divide-y divide-border">
@@ -1933,7 +1924,7 @@ export function CompanyImport() {
                     ) : failure ? (
                       <span className="shrink-0 text-xs text-destructive">failed: {failure}</span>
                     ) : (
-                      <span className="shrink-0 text-xs text-muted-foreground">paused</span>
+                      <span className="shrink-0 text-xs text-muted-foreground">{uiT("ui:messages.m_a7a9dc5bcf71adb2")}</span>
                     )}
                   </label>
                 );
@@ -1945,7 +1936,7 @@ export function CompanyImport() {
                 onClick={() => void handleActivateSelected()}
                 disabled={isActivating || pendingCount === 0}
               >
-                {isActivating ? "Activating..." : `Activate selected (${pendingCount})`}
+                {isActivating ? "Activating..." : uiT("ui:messages.m_d2bb88ffb85f8f94", { v0: (pendingCount) })}
               </Button>
             </div>
           </div>
@@ -1963,9 +1954,7 @@ export function CompanyImport() {
             size="sm"
             variant="outline"
             onClick={() => window.location.assign(dashboardPath)}
-          >
-            Go to dashboard
-          </Button>
+          >{uiT("ui:messages.m_f085ee865703cd07")}</Button>
         </div>
       </div>
     );
@@ -1978,16 +1967,12 @@ export function CompanyImport() {
     return (
       <div className="max-w-6xl space-y-4 px-5 py-5">
         <div>
-          <h2 className="text-base font-semibold">Resume watching import</h2>
-          <p className="text-xs text-muted-foreground mt-1">
-            An import you started earlier is still running on the server.
-          </p>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_a933e16f329dcfc6")}</h2>
+          <p className="text-xs text-muted-foreground mt-1">{uiT("ui:messages.m_d6e8190691fbba61")}</p>
         </div>
         <div className="flex items-start gap-2 rounded-md border border-border bg-muted/30 px-3 py-2.5">
           <Loader2 className="mt-0.5 h-3.5 w-3.5 shrink-0 animate-spin text-muted-foreground" />
-          <p className="text-xs text-muted-foreground">
-            Import running on the server — safe to keep waiting; reconnecting won&apos;t lose it.
-          </p>
+          <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_29e5a2577d150e84")}</p>
         </div>
       </div>
     );
@@ -2002,17 +1987,15 @@ export function CompanyImport() {
       {/* Source form section */}
       <div className="border-b border-border px-5 py-5 space-y-4">
         <div>
-          <h2 className="text-base font-semibold">Import source</h2>
-          <p className="text-xs text-muted-foreground mt-1">
-            Choose a GitHub repo or upload a local Paperclip zip package.
-          </p>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_dbff5bdee4bda1d2")}</h2>
+          <p className="text-xs text-muted-foreground mt-1">{uiT("ui:messages.m_1c2429b04882702a")}</p>
         </div>
 
         <div className="grid gap-2 md:grid-cols-2">
           {(
             [
-              { key: "github", icon: GithubIcon, label: "GitHub repo" },
-              { key: "local", icon: Upload, label: "Local zip" },
+              { key: "github", icon: GithubIcon, label: uiT("ui:messages.m_0a2e4df8c1d1d652") },
+              { key: "local", icon: Upload, label: uiT("ui:messages.m_6a0b2c3c6b3a7cfb") },
             ] as const
           ).map(({ key, icon: Icon, label }) => (
             <button
@@ -2054,14 +2037,11 @@ export function CompanyImport() {
                 variant="outline"
                 onClick={() => packageInputRef.current?.click()}
                 disabled={importMutation.isPending}
-              >
-                Choose zip
-              </Button>
+              >{uiT("ui:messages.m_d1fe8266d658fed4")}</Button>
               {localPackage && (
                 <span className="text-xs text-muted-foreground">
                   {localPackage.name} with{" "}
-                  {Object.keys(localPackage.files).length} file
-                  {Object.keys(localPackage.files).length === 1 ? "" : "s"}
+                  {Object.keys(localPackage.files).length}{uiT("ui:messages.m_b4c480d5276e0ff9")}{Object.keys(localPackage.files).length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                   {localCompressedBytes !== null ? ` (${formatMegabytes(localCompressedBytes)} zip)` : ""}
                 </span>
               )}
@@ -2091,7 +2071,7 @@ export function CompanyImport() {
           </Field>
         )}
 
-        <Field label="Target" hint="Import into this organization or create a new one.">
+        <Field label={uiT("ui:messages.m_978354db0c00fc78")} hint={uiT("ui:messages.m_a801114169b946fd")}>
           <select
             className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
             value={targetMode}
@@ -2101,17 +2081,16 @@ export function CompanyImport() {
               resetImportFlowState();
             }}
           >
-            <option value="new">Create new organization</option>
-            <option value="existing">
-              Existing company: {selectedCompany?.name}
+            <option value="new">{uiT("ui:messages.m_c7e9e6018ab9c48d")}</option>
+            <option value="existing">{uiT("ui:messages.m_af01cfa1efdcf5c5")}{selectedCompany?.name}
             </option>
           </select>
         </Field>
 
         {targetMode === "new" && (
           <Field
-            label="New organization name"
-            hint="Optional override. Leave blank to use the package name."
+            label={uiT("ui:messages.m_958cb49e8efa5eb2")}
+            hint={uiT("ui:messages.m_2e773b2394341131")}
           >
             <input
               className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
@@ -2121,14 +2100,14 @@ export function CompanyImport() {
                 setNewCompanyName(e.target.value);
                 resetMutationState();
               }}
-              placeholder="Imported Organization"
+              placeholder={uiT("ui:messages.m_7771473043b6e7ea")}
             />
           </Field>
         )}
 
         <Field
-          label="Collision strategy"
-          hint="Board imports can rename, skip, or replace matching organization content."
+          label={uiT("ui:messages.m_f2d126a181a16c44")}
+          hint={uiT("ui:messages.m_f303b67b55e2d135")}
         >
           <select
             className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
@@ -2139,9 +2118,9 @@ export function CompanyImport() {
               resetImportFlowState();
             }}
           >
-            <option value="rename">Rename on conflict</option>
-            <option value="skip">Skip on conflict</option>
-            <option value="replace">Replace existing</option>
+            <option value="rename">{uiT("ui:messages.m_c90814771b07b38d")}</option>
+            <option value="skip">{uiT("ui:messages.m_e5984701c988350d")}</option>
+            <option value="replace">{uiT("ui:messages.m_c72a3c56ffad6157")}</option>
           </select>
         </Field>
 
@@ -2154,17 +2133,13 @@ export function CompanyImport() {
               previewMutation.isPending || importMutation.isPending || !hasSource
             }
           >
-            {previewMutation.isPending ? "Previewing..." : "Preview import"}
+            {previewMutation.isPending ? uiT("ui:messages.m_9b0c77929c1cd4aa") : uiT("ui:messages.m_ab5c8e55ce2c0b2f")}
           </Button>
           {!hasSource && !previewMutation.isPending && (
-            <span className="text-xs text-muted-foreground">
-              Choose a package above to enable the preview.
-            </span>
+            <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_192d5a95330e5ac6")}</span>
           )}
           {importMutation.isPending && (
-            <span className="text-xs text-muted-foreground">
-              Import in progress — the package and settings unlock when it finishes.
-            </span>
+            <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_776046e3e021138a")}</span>
           )}
         </div>
         {previewMutation.isPending && (
@@ -2173,9 +2148,7 @@ export function CompanyImport() {
             <p className="text-xs text-muted-foreground">
               {transferProgress
                 ? `${formatTransferProgress(transferProgress)} An interrupted upload resumes from the finished parts.`
-                : `Uploading and analyzing your package${
-                    localCompressedBytes !== null ? ` (${formatMegabytes(localCompressedBytes)} zip)` : ""
-                  } — large packages can take a few minutes. Keep this page open.`}
+                : uiT("ui:messages.m_b2a7e62855a26943", { v0: (localCompressedBytes !== null ? ` (${formatMegabytes(localCompressedBytes)} zip)` : "") })}
             </p>
           </div>
         )}
@@ -2183,13 +2156,10 @@ export function CompanyImport() {
           !previewMutation.isPending &&
           previewMutation.variables === previewGenerationRef.current && (
           <div className="mt-3 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2.5">
-            <p className="text-xs text-destructive">
-              Preview failed:{" "}
+            <p className="text-xs text-destructive">{uiT("ui:messages.m_99683894c89570db")}{" "}
               {previewMutation.error instanceof Error
                 ? previewMutation.error.message
-                : "the request did not complete."}{" "}
-              Retry, or re-export the package without large attachments to shrink it.
-            </p>
+                : "the request did not complete."}{" "}{uiT("ui:messages.m_1192a4574947c0de")}</p>
           </div>
         )}
       </div>
@@ -2200,20 +2170,17 @@ export function CompanyImport() {
           {/* Sticky import action bar */}
           <div className="sticky top-0 z-10 border-b border-border bg-background px-5 py-3">
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="font-medium">
-                Import preview
-              </span>
+              <span className="font-medium">{uiT("ui:messages.m_ed144b77c0d788ce")}</span>
               <span className="text-muted-foreground">
-                {selectedCount} / {totalFiles} file{totalFiles === 1 ? "" : "s"} selected
-              </span>
+                {selectedCount} / {totalFiles}{uiT("ui:messages.m_b4c480d5276e0ff9")}{totalFiles === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}{uiT("ui:messages.m_97a2e8815acd21f3")}</span>
               {conflicts.length > 0 && (
                 <span className="text-amber-500">
-                  {conflicts.length} conflict{conflicts.length === 1 ? "" : "s"}
+                  {conflicts.length} conflict{conflicts.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                 </span>
               )}
               {importPreview.errors.length > 0 && (
                 <span className="text-destructive">
-                  {importPreview.errors.length} error{importPreview.errors.length === 1 ? "" : "s"}
+                  {importPreview.errors.length} error{importPreview.errors.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                 </span>
               )}
             </div>
@@ -2253,9 +2220,7 @@ export function CompanyImport() {
                   resetMutationState();
                 }}
                 className="accent-foreground"
-              />
-              Start imported agents and routines paused
-            </label>
+              />{uiT("ui:messages.m_1289f896671a7ac1")}</label>
             <Button
               size="sm"
               onClick={() => importMutation.mutate({ previewForImport: importPreview, pauseAutomations })}
@@ -2263,8 +2228,8 @@ export function CompanyImport() {
             >
               <Download className="mr-1.5 h-3.5 w-3.5" />
               {importMutation.isPending
-                ? "Importing..."
-                : `Import ${selectedCount} file${selectedCount === 1 ? "" : "s"}`}
+                ? uiT("ui:messages.m_b7a3cd401b23dd41")
+                : uiT("ui:messages.m_0392321870268216", { v0: (selectedCount), v1: (selectedCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
             </Button>
           </div>
           {importMutation.isPending && (
@@ -2273,20 +2238,16 @@ export function CompanyImport() {
               <p className="text-xs text-muted-foreground">
                 {transferProgress
                   ? `${formatTransferProgress(transferProgress)} An interrupted upload resumes from the finished parts.`
-                  : "Import running on the server — safe to keep waiting; reconnecting won't lose it. Large packages can take several minutes."}
+                  : uiT("ui:messages.m_76c5d31dd313e2f9")}
               </p>
             </div>
           )}
           {importMutation.isError && !importMutation.isPending && (
             <div className="mx-5 mt-3 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2.5">
-              <p className="text-xs text-destructive">
-                Import failed:{" "}
+              <p className="text-xs text-destructive">{uiT("ui:messages.m_113b8e2f4761d74c")}{" "}
                 {importMutation.error instanceof Error
                   ? importMutation.error.message
-                  : "the request did not complete."}{" "}
-                Nothing may have been created, or the import stopped partway — check the target company
-                before retrying.
-              </p>
+                  : "the request did not complete."}{" "}{uiT("ui:messages.m_d3b0bff6fb0c7637")}</p>
             </div>
           )}
 
@@ -2312,7 +2273,7 @@ export function CompanyImport() {
           <div className="grid gap-4 xl:h-(--sz-calc-31) xl:grid-cols-(--gtc-25) xl:gap-0">
             <aside className="flex max-h-(--sz-24rem) flex-col overflow-hidden border-b border-border xl:max-h-none xl:border-b-0 xl:border-r">
               <div className="border-b border-border px-4 py-3 shrink-0">
-                <h2 className="text-base font-semibold">Package files</h2>
+                <h2 className="text-base font-semibold">{uiT("ui:messages.m_0ae7e5128ad41af5")}</h2>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FileTree

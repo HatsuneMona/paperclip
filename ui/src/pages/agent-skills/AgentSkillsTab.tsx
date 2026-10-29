@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/lib/router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -400,7 +401,7 @@ export function AgentSkillsTab({ agent, companyId }: { agent: Agent; companyId?:
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm font-medium text-foreground">
-            {enabledRows.length} of {libraryRows.length} enabled
+            {enabledRows.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{libraryRows.length} enabled
           </span>
           {applicationLabel ? (
             <Tooltip>
@@ -469,9 +470,7 @@ export function AgentSkillsTab({ agent, companyId }: { agent: Agent; companyId?:
                 onClick={() => toggleSkill(key, false)}
                 className="inline-flex shrink-0 items-center gap-1 rounded-md border border-amber-400/50 px-2 py-0.5 font-medium transition-colors hover:bg-amber-100/60 dark:hover:bg-amber-900/30"
               >
-                <X className="h-3 w-3" />
-                Remove
-              </button>
+                <X className="h-3 w-3" />{uiT("ui:messages.m_c3812fc4acb861d5")}</button>
             </div>
           ))}
         </div>
@@ -535,8 +534,7 @@ export function AgentSkillsTab({ agent, companyId }: { agent: Agent; companyId?:
             </Collapsible>
           ) : null}
 
-          <div className="text-xs text-muted-foreground">
-            Adapter: {adapterLabels[agent.adapterType] ?? agent.adapterType}
+          <div className="text-xs text-muted-foreground">{uiT("ui:messages.m_75b6086f92dbd559")}{adapterLabels[agent.adapterType] ?? agent.adapterType}
           </div>
         </div>
       )}
@@ -556,9 +554,7 @@ function SaveStatusChip({
   if (pending) {
     return (
       <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-        Saving…
-      </span>
+        <Loader2 className="h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_23e39291d6135814")}</span>
     );
   }
   if (error) {
@@ -579,9 +575,7 @@ function SaveStatusChip({
   }
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-(--status-task-done)">
-      <CheckCircle2 className="h-3.5 w-3.5" />
-      Saved
-    </span>
+      <CheckCircle2 className="h-3.5 w-3.5" />{uiT("ui:messages.m_b5c120b316c237a0")}</span>
   );
 }
 

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   useCallback,
   useEffect,
@@ -253,10 +254,8 @@ export function SkillFolderRail({
         className="flex min-w-0 flex-1 flex-col overflow-y-auto border-r border-border pr-3"
       >
       <div className="mb-2 flex items-center justify-between gap-2 pt-0.5">
-        <div className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-          Folders
-        </div>
-        <Button variant="ghost" size="icon-sm" title="New folder" onClick={() => onCreateFolder(null)}>
+        <div className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_c4d6bb200f4c058a")}</div>
+        <Button variant="ghost" size="icon-sm" title={uiT("ui:messages.m_cf28f49ec597a6ed")} onClick={() => onCreateFolder(null)}>
           <Plus className="h-3.5 w-3.5" />
         </Button>
       </div>
@@ -302,7 +301,7 @@ export function SkillFolderRail({
           ) : onEnsureMyFolder ? (
             <VirtualRow
               active={false}
-              label="My Skills"
+              label={uiT("ui:messages.m_ea424d66243dffe9")}
               count={0}
               icon={<User className="h-3.5 w-3.5" />}
               muted
@@ -311,7 +310,7 @@ export function SkillFolderRail({
           ) : null}
 
           {/* Company — plain top-level company folders */}
-          <RailHeading label="Organization" onCreate={() => onCreateFolder(null)} />
+          <RailHeading label={uiT("ui:messages.m_d764d42592fc9687")} onCreate={() => onCreateFolder(null)} />
           {model.company.length > 0 ? (
             model.company.map((node) => (
               <TreeBranch
@@ -363,7 +362,7 @@ export function SkillFolderRail({
           ) : (
             <VirtualRow
               active={false}
-              label="Projects"
+              label={uiT("ui:messages.m_04e2a9728af75840")}
               count={0}
               icon={<Boxes className="h-3.5 w-3.5" />}
               muted
@@ -396,12 +395,10 @@ export function SkillFolderRail({
             />
           ) : null}
 
-          <div className="px-2 pb-1 pt-3 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-            System
-          </div>
+          <div className="px-2 pb-1 pt-3 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_6725e7bbcd28f3a8")}</div>
           <VirtualRow
             active={selection === "unfiled"}
-            label="Unfiled"
+            label={uiT("ui:messages.m_d64dc9ae400c2871")}
             count={unfiledCount}
             icon={<FolderSwatch color={null} />}
             onSelect={() => onSelect("unfiled")}
@@ -413,9 +410,7 @@ export function SkillFolderRail({
       {tags.length > 0 ? (
         <div className="mt-4 border-t border-border pt-3">
           <div className="mb-1.5 flex items-center gap-1.5 px-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-            <Hash className="h-3 w-3" />
-            Tags
-          </div>
+            <Hash className="h-3 w-3" />{uiT("ui:messages.m_1331275bc537b4c2")}</div>
           <div className="flex flex-wrap gap-1.5 px-1">
             {activeTag ? (
               <button
@@ -645,17 +640,14 @@ function TreeBranch({
               ) : null}
               {editable ? (
                 <>
-                  <DropdownMenuItem onSelect={() => onStartRename(folder)}>Rename</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => onStartRename(folder)}>{uiT("ui:messages.m_3064d79a295cefe4")}</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => onEditFolder(folder)}>Edit color</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => onMoveFolder(folder, isInMySkills ? "company" : "my")}>
-                    <MoveRight className="h-3.5 w-3.5" />
-                    Move to {isInMySkills ? "Organization" : "My Skills"}
+                    <MoveRight className="h-3.5 w-3.5" />{uiT("ui:messages.m_8e23a49a9af3f781")}{isInMySkills ? uiT("ui:messages.m_d764d42592fc9687") : uiT("ui:messages.m_ea424d66243dffe9")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem variant="destructive" onSelect={() => onDeleteFolder(folder)}>
-                    <Trash2 className="h-3.5 w-3.5" />
-                    Delete
-                  </DropdownMenuItem>
+                    <Trash2 className="h-3.5 w-3.5" />{uiT("ui:messages.m_e2d0a54968ead24e")}</DropdownMenuItem>
                 </>
               ) : null}
             </DropdownMenuContent>
@@ -712,7 +704,7 @@ export function FolderBreadcrumb({
     : folderBreadcrumbTrail(model, selection);
 
   return (
-    <nav aria-label="Folder path" className="flex flex-wrap items-center gap-1 text-sm">
+    <nav aria-label={uiT("ui:messages.m_98bca2fab915abe0")} className="flex flex-wrap items-center gap-1 text-sm">
       <button
         type="button"
         onClick={() => onSelect("all")}
@@ -727,7 +719,7 @@ export function FolderBreadcrumb({
       {selection === "unfiled" ? (
         <>
           <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/60" />
-          <span className="rounded px-1.5 py-0.5 font-medium text-foreground">Unfiled</span>
+          <span className="rounded px-1.5 py-0.5 font-medium text-foreground">{uiT("ui:messages.m_d64dc9ae400c2871")}</span>
         </>
       ) : null}
       {trail.map((folder, index) => {
@@ -778,9 +770,7 @@ export function FolderTiles({
 
   return (
     <div className="mb-4">
-      <div className="mb-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-        Folders
-      </div>
+      <div className="mb-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_c4d6bb200f4c058a")}</div>
       <div className="grid gap-2 [grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))]">
         {children.map((node) => (
           <button
@@ -904,7 +894,7 @@ export function MoveToFolderDialog({
             <FolderSwatch color={folder.color} />
           )}
           <span className="min-w-0 flex-1 truncate">{reservedRootLabel(folder)}</span>
-          {isCurrent ? <span className="text-xs text-muted-foreground">current</span> : null}
+          {isCurrent ? <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_97b0560280ed60a5")}</span> : null}
           {bundled ? <span className="text-xs text-muted-foreground">read-only</span> : null}
           {isChosen ? <Check className="h-3.5 w-3.5" /> : null}
           {nestable ? (
@@ -964,8 +954,8 @@ export function MoveToFolderDialog({
             onClick={() => setTarget(null)}
           >
             <FolderSwatch color={null} />
-            <span className="min-w-0 flex-1 truncate">Unfiled</span>
-            {currentFolderId == null ? <span className="text-xs text-muted-foreground">current</span> : null}
+            <span className="min-w-0 flex-1 truncate">{uiT("ui:messages.m_d64dc9ae400c2871")}</span>
+            {currentFolderId == null ? <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_97b0560280ed60a5")}</span> : null}
             {chosen === null ? <Check className="h-3.5 w-3.5" /> : null}
           </div>
           {model.roots.map((node) => renderNode(node, 0))}
@@ -1006,9 +996,7 @@ export function MoveToFolderDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={pending}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             disabled={pending || chosen === undefined || chosen === currentFolderId}
             onClick={() => chosen !== undefined && onMove(chosen)}
@@ -1047,7 +1035,7 @@ function InlineNewFolder({
       <Input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Folder name"
+        placeholder={uiT("ui:messages.m_14d34edf50ef6c87")}
         autoFocus
         className="h-7 flex-1 text-sm"
         onKeyDown={(event) => {
@@ -1055,12 +1043,8 @@ function InlineNewFolder({
           if (event.key === "Escape") onCancel();
         }}
       />
-      <Button size="sm" variant="ghost" onClick={onCancel} disabled={pending}>
-        Cancel
-      </Button>
-      <Button size="sm" onClick={onSubmit} disabled={pending || !value.trim()}>
-        Add
-      </Button>
+      <Button size="sm" variant="ghost" onClick={onCancel} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+      <Button size="sm" onClick={onSubmit} disabled={pending || !value.trim()}>{uiT("ui:messages.m_9fd728c66c9a256b")}</Button>
     </div>
   );
 }

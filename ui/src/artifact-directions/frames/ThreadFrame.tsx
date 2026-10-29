@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { PanelRightClose, PanelRightOpen } from "lucide-react";
 import { StatusIcon } from "@/components/StatusIcon";
@@ -26,7 +27,7 @@ function TaskTopBar({ panelOpen }: { panelOpen: boolean }) {
         <Breadcrumb className="min-w-0 overflow-hidden">
           <BreadcrumbList className="flex-nowrap">
             <BreadcrumbItem className="shrink-0">
-              <span className="min-w-0 truncate font-semibold uppercase tracking-wider text-muted-foreground">Tasks</span>
+              <span className="min-w-0 truncate font-semibold uppercase tracking-wider text-muted-foreground">{uiT("ui:messages.m_b3a60e61a5233d05")}</span>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem className="min-w-0">
@@ -100,7 +101,7 @@ export function ThreadFrame({ kit, panelOpen }: { kit: DirectionKit; panelOpen: 
                     Uploaded and registered <ProseLink to="work-product-ic-pptx">editable PowerPoint</ProseLink>,{" "}
                     <ProseLink to="work-product-ic-pdf">matching PDF</ProseLink>,{" "}
                     <ProseLink to="work-product-ic-image">slide overview</ProseLink>,{" "}
-                    <ProseLink to="work-product-ic-guide">guide</ProseLink> and{" "}
+                    <ProseLink to="work-product-ic-guide">guide</ProseLink>{uiT("ui:messages.m_2e5f769687c77317")}{" "}
                     <ProseLink to="work-product-ic-zip">editing source</ProseLink>. Prior revisions preserved.
                   </li>
                   <li>

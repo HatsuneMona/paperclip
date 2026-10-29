@@ -1,12 +1,13 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { Link } from "@/lib/router";
 import { useStreamlinedUiEnabled } from "@/hooks/useStreamlinedUiEnabled";
 import { SKILLS_NAVIGATION_HREFS, type SkillsNavigationView } from "@/pages/skills/skills-navigation";
 
 const views = [
-  { value: "installed", label: "Installed" },
+  { value: "installed", label: uiT("ui:messages.m_f8b32f4e92bd84ce") },
   { value: "discover", label: "Discover" },
-  { value: "authored", label: "My Skills" },
+  { value: "authored", label: uiT("ui:messages.m_ea424d66243dffe9") },
 ] as const;
 
 /** Route navigation with the canonical tab appearance. Sources stays in the actions menu. */

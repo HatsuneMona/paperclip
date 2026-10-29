@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   CompanySkillCreateRequest,
   CompanySkillDetail,
@@ -49,7 +50,7 @@ export function splitCategoryDraft(value: string) {
 }
 
 export function defaultSkillMarkdown(name: string, tagline: string) {
-  const title = name.trim() || "New Skill";
+  const title = name.trim() || uiT("ui:messages.m_7fe2a91dd45375d4");
   const summary = tagline.trim() || "Describe when agents should use this skill.";
   return [
     "---",

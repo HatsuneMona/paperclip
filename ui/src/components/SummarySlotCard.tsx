@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -274,9 +275,7 @@ export function SummarySlotCard({
               size="sm"
               variant="outline"
               onClick={() => setSelectedRevisionId(null)}
-            >
-              Latest
-            </Button>
+            >{uiT("ui:messages.m_8730d3c2022abf1f")}</Button>
           ) : null}
           {latestDocument && !generationFailed ? (
             <Button
@@ -286,9 +285,7 @@ export function SummarySlotCard({
               onClick={startGeneration}
               disabled={!selector || generateMutation.isPending || Boolean(isGenerating)}
             >
-              {generateMutation.isPending ? <Loader2 className="animate-spin" /> : <RefreshCw />}
-              Refresh
-            </Button>
+              {generateMutation.isPending ? <Loader2 className="animate-spin" /> : <RefreshCw />}{uiT("ui:messages.m_0e91610117029a62")}</Button>
           ) : null}
         </div>
       </div>
@@ -343,7 +340,7 @@ export function SummarySlotCard({
               onClick={() => summarizerState.agent && resumeSummarizer.mutate(summarizerState.agent.id)}
               disabled={resumeSummarizer.isPending}
             >
-              {resumeSummarizer.isPending ? "Resuming..." : "Resume agent"}
+              {resumeSummarizer.isPending ? "Resuming..." : uiT("ui:messages.m_0bb60c4501919e6a")}
             </Button>
           }
         >
@@ -362,9 +359,7 @@ export function SummarySlotCard({
           tone="warning"
           title="Summary could not be loaded"
           actions={
-            <Button type="button" size="sm" variant="outline" onClick={() => void slotQuery.refetch()}>
-              Retry
-            </Button>
+            <Button type="button" size="sm" variant="outline" onClick={() => void slotQuery.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           }
         >
           {slotQuery.error instanceof Error ? slotQuery.error.message : "Try loading the summary again."}
@@ -382,7 +377,7 @@ export function SummarySlotCard({
               onClick={startGeneration}
               disabled={!selector || generateMutation.isPending}
             >
-              {generateMutation.isPending ? "Retrying..." : "Retry"}
+              {generateMutation.isPending ? uiT("ui:messages.m_84a657bcf3d968b4") : uiT("ui:messages.m_942087cc2d41e013")}
             </Button>
           }
         >
@@ -459,8 +454,7 @@ export function SummarySlotCard({
           </MarkdownBody>
 
           <div className="flex flex-col gap-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <span title={formatDateTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}>
-              Updated {relativeTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}
+            <span title={formatDateTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}>{uiT("ui:messages.m_a919c7c2d1a48683")}{relativeTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}
             </span>
 
             {revisions.length > 1 ? (

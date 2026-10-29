@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, MessageSquarePlus } from "lucide-react";
 import { chatEndpointsApi, type ChatProvider } from "@/api/chatEndpoints";
@@ -39,7 +40,7 @@ export function AgentChannelsPanel({
     <section className="max-w-3xl space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-lg font-semibold">Channels</h2>
+          <h2 className="text-lg font-semibold">{uiT("ui:messages.m_4c8906cf76f5740a")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Chat and email identities connected to this agent.
           </p>

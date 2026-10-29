@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { GOOGLE_WORKSPACE_DEFAULT_SELECTION, GOOGLE_WORKSPACE_SERVICE_GROUPS, googleWorkspaceSelectionForScopes, type GoogleWorkspaceServiceSelection, type ToolConnection } from "@paperclipai/shared";
@@ -22,7 +23,7 @@ export function GoogleWorkspaceServiceFields({ value, onChange }: {
       <NativeSelect aria-label={`${group.name} access`} disabled={!value[group.id]} value={value[group.id] ?? "write"}
         className="w-auto shrink-0 disabled:opacity-50"
         onChange={event => onChange({ ...value, [group.id]: event.target.value as "read" | "write" })}>
-        <option value="read">Read only</option><option value="write">Read &amp; write</option>
+        <option value="read">{uiT("ui:messages.m_8ac767353080eae7")}</option><option value="write">Read &amp; write</option>
       </NativeSelect>
       <ToggleSwitch id={`workspace-service-${group.id}`} aria-label={group.name} checked={Boolean(value[group.id])}
         onCheckedChange={checked => {
@@ -50,7 +51,7 @@ export function GoogleWorkspaceServicesDialog(props: DialogProps) {
   const grants = useQuery({ queryKey: ["workspace-service-consent", loadConnection?.id], queryFn: () => toolsApi.listConnectionGrants(loadConnection!.id), enabled: Boolean(loadConnection) });
   if (loadConnection && !grants.data) return <Dialog open onOpenChange={open => { if (!open) props.onCancel(); }}><DialogContent>
     <DialogTitle>Connect Google Workspace</DialogTitle><DialogDescription>{grants.isError ? "Could not load your saved service access. Your connection has not changed." : "Loading your saved service access…"}</DialogDescription>
-    <footer className="flex items-center justify-between gap-3"><Button variant="ghost" onClick={() => props.onCancel()}>Cancel</Button>{grants.isError && <Button onClick={() => void grants.refetch()}>Try again</Button>}</footer>
+    <footer className="flex items-center justify-between gap-3"><Button variant="ghost" onClick={() => props.onCancel()}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>{grants.isError && <Button onClick={() => void grants.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>}</footer>
   </DialogContent></Dialog>;
   const grant = grants.data?.grants.find(grant => existing?.credentialPolicy === "per_user"
     ? grant.kind === "user" && grant.subjectUserId === grants.data?.currentUserId
@@ -80,8 +81,8 @@ function ServicePicker({ onContinue, onCancel, initial = GOOGLE_WORKSPACE_DEFAUL
       <GoogleWorkspaceServiceFields value={selection} onChange={setSelection} />
       {empty && <p role="status" className="text-xs text-muted-foreground">Select at least one service to continue.</p>}
       <footer className="flex items-center justify-between gap-3 pt-4">
-        <Button variant="ghost" onClick={() => onCancel(selection)}>Cancel</Button>
-        <Button disabled={empty} onClick={() => onContinue(selection)}>Continue</Button>
+        <Button variant="ghost" onClick={() => onCancel(selection)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+        <Button disabled={empty} onClick={() => onContinue(selection)}>{uiT("ui:messages.m_31fbef162594de01")}</Button>
       </footer>
     </DialogContent>
   </Dialog>;

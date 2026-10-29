@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cloneElement, isValidElement, useState } from "react";
 import { CalendarRange } from "lucide-react";
 import {
@@ -42,7 +43,7 @@ export function DecisionDateChips({ value, custom, onChange }: DecisionDateChips
               <CalendarRange className="h-3.5 w-3.5" />
               {value === "custom" && (custom.from || custom.to)
                 ? `${custom.from ?? "…"} → ${custom.to ?? "…"}`
-                : "Custom"}
+                : uiT("ui:messages.m_494ca78f7374e46f")}
             </button>
           </ChipButton>
         </PopoverTrigger>
@@ -80,9 +81,7 @@ export function DecisionDateChips({ value, custom, onChange }: DecisionDateChips
                 onChange("all", { from: null, to: null });
                 setOpen(false);
               }}
-            >
-              Clear
-            </Button>
+            >{uiT("ui:messages.m_83b12c2216efb4fd")}</Button>
           </div>
         </PopoverContent>
       </Popover>

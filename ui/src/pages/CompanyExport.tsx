@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
@@ -575,9 +576,7 @@ function ExportPreviewPane({
             <code>{textContent}</code>
           </pre>
         ) : (
-          <div className="rounded-lg border border-border bg-accent/10 px-4 py-3 text-sm text-muted-foreground">
-            Binary asset preview is not available for this file type.
-          </div>
+          <div className="rounded-lg border border-border bg-accent/10 px-4 py-3 text-sm text-muted-foreground">{uiT("ui:messages.m_0a5cc3efb5c91fe7")}</div>
         )}
       </div>
     </div>
@@ -733,9 +732,9 @@ export function CompanyExport() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Organization", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Export" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_d764d42592fc9687"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_3664895579f0a7e6") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -776,7 +775,7 @@ export function CompanyExport() {
       if (request.requestId !== previewRequestIdRef.current || isAbortError(err)) return;
       pushToast({
         tone: "error",
-        title: "Export failed",
+        title: uiT("ui:messages.m_e94d3ee06ecf6aac"),
         body: previewErrorMessage(err),
       });
     },
@@ -810,14 +809,14 @@ export function CompanyExport() {
       downloadZip(result, resultCheckedFiles, result.files);
       pushToast({
         tone: "success",
-        title: "Export downloaded",
+        title: uiT("ui:messages.m_6bf7c6faa01d9498"),
         body: `${resultCheckedFiles.size} file${resultCheckedFiles.size === 1 ? "" : "s"} exported as ${result.rootPath}.zip`,
       });
     },
     onError: (err) => {
       pushToast({
         tone: "error",
-        title: "Export failed",
+        title: uiT("ui:messages.m_e94d3ee06ecf6aac"),
         body: err instanceof Error ? err.message : "Failed to build export package.",
       });
     },
@@ -1035,7 +1034,7 @@ export function CompanyExport() {
     return (
       <EmptyState
         icon={Package}
-        title="Export preview cancelled"
+        title={uiT("ui:messages.m_323b073ade975014")}
         message="The preview request was cancelled. Your export settings are unchanged."
         action="Retry preview"
         onAction={startPreviewRequest}
@@ -1048,9 +1047,9 @@ export function CompanyExport() {
     return (
       <EmptyState
         icon={Package}
-        title="Export preview failed"
+        title={uiT("ui:messages.m_8b47150b209de336")}
         message={previewErrorMessage(exportPreviewMutation.error)}
-        description="Retry the preview. You do not need to reload this page."
+        description={uiT("ui:messages.m_734ae75d1485895a")}
         action="Retry preview"
         onAction={startPreviewRequest}
         hideActionIcon
@@ -1062,7 +1061,7 @@ export function CompanyExport() {
     return (
       <EmptyState
         icon={Package}
-        title="Export preview unavailable"
+        title={uiT("ui:messages.m_0bcf70b3385d5037")}
         message="No export preview is loaded."
         action="Load preview"
         onAction={startPreviewRequest}
@@ -1084,15 +1083,14 @@ export function CompanyExport() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <span className="font-medium">
-              {selectedCompany?.name ?? "Organization"} export
+              {selectedCompany?.name ?? uiT("ui:messages.m_d764d42592fc9687")} export
             </span>
-            <span className="text-muted-foreground">
-              Exporting {selectedCount.toLocaleString()} of {totalFiles.toLocaleString()} file{totalFiles === 1 ? "" : "s"}
-              {selectedCount > 0 && ` (~${formatBytes(estimatedZipBytes)})`}
+            <span className="text-muted-foreground">{uiT("ui:messages.m_86cb5c58f56557b2")}{selectedCount.toLocaleString()}{uiT("ui:messages.m_a4282e4b2298b90b")}{totalFiles.toLocaleString()}{uiT("ui:messages.m_b4c480d5276e0ff9")}{totalFiles === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
+              {selectedCount > 0 && uiT("ui:messages.m_b18bc91550655353", { v0: (formatBytes(estimatedZipBytes)) })}
             </span>
             {warnings.length > 0 && (
               <span className="text-amber-500">
-                {warnings.length} warning{warnings.length === 1 ? "" : "s"}
+                {warnings.length}{uiT("ui:messages.m_17b50e771ea99874")}{warnings.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
               </span>
             )}
           </div>
@@ -1109,8 +1107,8 @@ export function CompanyExport() {
           >
             <Download className="mr-1.5 h-3.5 w-3.5" />
             {downloadMutation.isPending
-              ? "Building export..."
-              : `Export ${selectedCount.toLocaleString()} file${selectedCount === 1 ? "" : "s"}`}
+              ? uiT("ui:messages.m_4d6949b8cea498fc")
+              : uiT("ui:messages.m_9f5d8502a22972cc", { v0: (selectedCount.toLocaleString()), v1: (selectedCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
           </Button>
         </div>
       </div>
@@ -1127,7 +1125,7 @@ export function CompanyExport() {
       {/* Export fidelity: data the bundle will not carry */}
       {fidelityReport && fidelityReport.warnings.length > 0 && (
         <div className="mx-5 mt-3 rounded-md border border-amber-500/30 bg-amber-500/5 px-4 py-3">
-          <h3 className="mb-1.5 text-xs font-medium">Not included in this export</h3>
+          <h3 className="mb-1.5 text-xs font-medium">{uiT("ui:messages.m_13b26a142440f46a")}</h3>
           {fidelityReport.warnings.map((warning) => (
             <div
               key={warning.code}
@@ -1146,11 +1144,11 @@ export function CompanyExport() {
       <div className="grid gap-4 xl:h-(--sz-calc-30) xl:grid-cols-(--gtc-25) xl:gap-0">
         <aside className="flex max-h-(--sz-24rem) flex-col overflow-hidden border-b border-border xl:max-h-none xl:border-b-0 xl:border-r">
           <div className="border-b border-border px-4 py-3 shrink-0">
-            <h2 className="text-base font-semibold">Package files</h2>
+            <h2 className="text-base font-semibold">{uiT("ui:messages.m_0ae7e5128ad41af5")}</h2>
           </div>
           <div className="border-b border-border px-4 py-3 shrink-0">
-            <h3 className="mb-2 text-xs font-medium text-muted-foreground">What to include</h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5" role="group" aria-label="What to include">
+            <h3 className="mb-2 text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_e53ffc0de7afac8c")}</h3>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5" role="group" aria-label={uiT("ui:messages.m_e53ffc0de7afac8c")}>
               {EXPORT_CATEGORY_ORDER.map((key) => {
                 const isAttachments = key === "attachments";
                 const disabled = isAttachments && !isAttachmentsCategoryEnabled(categories);
@@ -1167,7 +1165,7 @@ export function CompanyExport() {
                     )}
                     title={
                       disabled
-                        ? "Attachments travel with tasks and routines; re-enable one of them to include attachments."
+                        ? uiT("ui:messages.m_4a6bbae0cfea2cb9")
                         : undefined
                     }
                   >
@@ -1187,9 +1185,7 @@ export function CompanyExport() {
                 );
               })}
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Task and routine history is opt-in because it can be large.
-            </p>
+            <p className="mt-2 text-xs text-muted-foreground">{uiT("ui:messages.m_f4c71db3a845f0c8")}</p>
           </div>
           <div className="border-b border-border px-3 py-2 shrink-0">
             <div className="flex items-center gap-2 rounded-md border border-border px-2 py-1">
@@ -1198,7 +1194,7 @@ export function CompanyExport() {
                 type="text"
                 value={treeSearch}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Search files..."
+                placeholder={uiT("ui:messages.m_04470fc07c2635f4")}
                 className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                 data-page-search-target="true"
               />
@@ -1221,8 +1217,7 @@ export function CompanyExport() {
                   type="button"
                   onClick={() => setTaskLimit((prev) => prev + TASKS_PAGE_SIZE)}
                   className="w-full rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent/30 hover:text-foreground transition-colors"
-                >
-                  Show more tasks ({visibleTaskChildren} of {totalTaskChildren})
+                >{uiT("ui:messages.m_142284a6df3d7aec")}{visibleTaskChildren}{uiT("ui:messages.m_a4282e4b2298b90b")}{totalTaskChildren})
                 </button>
               </div>
             )}
@@ -1247,15 +1242,11 @@ export function CompanyExport() {
               <div className="flex max-w-md flex-col items-center gap-3">
                 <LoaderCircle className="h-6 w-6 animate-spin text-muted-foreground" />
                 <div>
-                  <p className="text-sm font-medium">Updating export preview…</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Large task histories can take a minute. You can untick Tasks or cancel this update.
-                  </p>
+                  <p className="text-sm font-medium">{uiT("ui:messages.m_cb20152df2932e25")}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{uiT("ui:messages.m_110b560a94d0c844")}</p>
                 </div>
                 <Button type="button" variant="outline" size="sm" onClick={handleCancelPreview}>
-                  <X />
-                  Cancel update
-                </Button>
+                  <X />{uiT("ui:messages.m_2b345aa422ba7c36")}</Button>
               </div>
             </div>
           ) : previewCancelled ? (
@@ -1265,15 +1256,11 @@ export function CompanyExport() {
             >
               <div className="flex max-w-md flex-col items-center gap-3">
                 <div>
-                  <p className="text-sm font-medium">Preview update cancelled</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    The previous preview remains available. Retry when you are ready.
-                  </p>
+                  <p className="text-sm font-medium">{uiT("ui:messages.m_73e0c70670bb2062")}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{uiT("ui:messages.m_75f815c4d6725448")}</p>
                 </div>
                 <Button type="button" variant="outline" size="sm" onClick={startPreviewRequest}>
-                  <RotateCcw />
-                  Retry preview
-                </Button>
+                  <RotateCcw />{uiT("ui:messages.m_ceba352728693758")}</Button>
               </div>
             </div>
           ) : exportPreviewMutation.isError ? (
@@ -1284,15 +1271,13 @@ export function CompanyExport() {
             >
               <div className="flex max-w-md flex-col items-center gap-3">
                 <div>
-                  <p className="text-sm font-medium text-destructive">Export preview failed</p>
+                  <p className="text-sm font-medium text-destructive">{uiT("ui:messages.m_8b47150b209de336")}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {previewErrorMessage(exportPreviewMutation.error)}
                   </p>
                 </div>
                 <Button type="button" variant="outline" size="sm" onClick={startPreviewRequest}>
-                  <RotateCcw />
-                  Retry preview
-                </Button>
+                  <RotateCcw />{uiT("ui:messages.m_ceba352728693758")}</Button>
               </div>
             </div>
           ) : null}

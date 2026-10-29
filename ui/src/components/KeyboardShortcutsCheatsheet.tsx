@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface ShortcutEntry {
@@ -15,19 +16,19 @@ interface ShortcutSection {
 
 const sections: ShortcutSection[] = [
   {
-    title: "Inbox",
+    title: uiT("ui:messages.m_94835ea2fcf775cd"),
     shortcuts: [
-      { keys: ["j"], label: "Move down" },
-      { keys: ["↓"], label: "Move down" },
-      { keys: ["k"], label: "Move up" },
-      { keys: ["↑"], label: "Move up" },
+      { keys: ["j"], label: uiT("ui:messages.m_40bb50da160cdc21") },
+      { keys: ["↓"], label: uiT("ui:messages.m_40bb50da160cdc21") },
+      { keys: ["k"], label: uiT("ui:messages.m_c66feb5eb8f217c7") },
+      { keys: ["↑"], label: uiT("ui:messages.m_c66feb5eb8f217c7") },
       { keys: ["←"], label: "Collapse selected group" },
       { keys: ["→"], label: "Expand selected group" },
       { keys: ["Enter"], label: "Open selected item" },
       { keys: ["a"], label: "Archive item" },
       { keys: ["y"], label: "Archive item" },
-      { keys: ["r"], label: "Mark as read" },
-      { keys: ["U"], label: "Mark as unread" },
+      { keys: ["r"], label: uiT("ui:messages.m_50c8b81faf51e7d1") },
+      { keys: ["U"], label: uiT("ui:messages.m_2c19d584bf8ad518") },
     ],
   },
   {
@@ -39,12 +40,12 @@ const sections: ShortcutSection[] = [
     ],
   },
   {
-    title: "Decisions",
+    title: uiT("ui:messages.m_cfa6a08af3ed5871"),
     shortcuts: [
-      { keys: ["j"], label: "Move down" },
-      { keys: ["↓"], label: "Move down" },
-      { keys: ["k"], label: "Move up" },
-      { keys: ["↑"], label: "Move up" },
+      { keys: ["j"], label: uiT("ui:messages.m_40bb50da160cdc21") },
+      { keys: ["↓"], label: uiT("ui:messages.m_40bb50da160cdc21") },
+      { keys: ["k"], label: uiT("ui:messages.m_c66feb5eb8f217c7") },
+      { keys: ["↑"], label: uiT("ui:messages.m_c66feb5eb8f217c7") },
       { keys: ["Enter"], label: "Open or close selected decision" },
       { keys: ["x"], label: "Dismiss selected decision" },
     ],
@@ -53,7 +54,7 @@ const sections: ShortcutSection[] = [
     title: "Global",
     shortcuts: [
       { keys: ["/"], label: "Search current page or quick search" },
-      { keys: ["c"], label: "New task" },
+      { keys: ["c"], label: uiT("ui:messages.m_3e992276b2298a1f") },
       { keys: ["["], label: "Toggle sidebar" },
       { keys: ["]"], label: "Toggle panel" },
       { keys: ["?"], label: "Show keyboard shortcuts" },
@@ -123,7 +124,7 @@ export function KeyboardShortcutsCheatsheet({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md gap-0 p-0 overflow-hidden" showCloseButton={false}>
         <DialogHeader className="px-5 pt-5 pb-3">
-          <DialogTitle className="text-base">Keyboard shortcuts</DialogTitle>
+          <DialogTitle className="text-base">{uiT("ui:messages.m_e9bef0b0f3c25e6e")}</DialogTitle>
         </DialogHeader>
         <KeyboardShortcutsCheatsheetContent />
       </DialogContent>

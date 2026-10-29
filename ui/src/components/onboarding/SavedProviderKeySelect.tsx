@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { aiConnectionsApi } from "@/api/ai-connections";
 import type { AiProvider } from "@paperclipai/shared";
 import { useQuery } from "@tanstack/react-query";
@@ -91,7 +92,7 @@ export function SavedProviderKeySelect({
     <div className="space-y-2">
       {options.length > 0 && (
         <label className="block space-y-2 text-sm">
-          <span>{kind === "api" ? "API key" : "Subscription"}</span>
+          <span>{kind === "api" ? uiT("ui:messages.m_16f0ee47f993d627") : uiT("ui:messages.m_4999c6c6c7badf45")}</span>
           <select
             aria-label={kind === "api" ? "Saved API key" : "Saved subscription"}
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -124,7 +125,7 @@ export function SavedProviderKeySelect({
       )}
       {value && (
         <p className="text-sm text-muted-foreground">
-          Reuse this saved {kind === "api" ? "key" : "subscription"} for this
+          Reuse this saved {kind === "api" ? uiT("ui:messages.m_2c70e12b7a0646f9") : "subscription"} for this
           agent.
         </p>
       )}

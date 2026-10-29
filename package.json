@@ -94,7 +94,10 @@
     "connections:ingest-app-definitions": "node scripts/ingest-app-definitions.mjs",
     "test:lifecycle-baseline": "node tests/lifecycle-baseline/run.mjs",
     "test:lifecycle-baseline:support": "node --test tests/lifecycle-baseline/report.test.mjs",
-    "test:lifecycle-baseline:typecheck": "tsc -p tests/lifecycle-baseline/tsconfig.json"
+    "test:lifecycle-baseline:typecheck": "tsc -p tests/lifecycle-baseline/tsconfig.json",
+    "i18n:extract": "node scripts/i18n/localize.cjs extract",
+    "i18n:apply": "node scripts/i18n/localize.cjs apply",
+    "test:i18n-codemod": "node --test scripts/i18n/localize.test.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
@@ -103,7 +106,8 @@
     "esbuild": "^0.28.2",
     "typescript": "^7.0.2",
     "vitest": "^5.0.3",
-    "yaml": "^2.8.1"
+    "yaml": "^2.8.1",
+    "@babel/parser": "7.29.8"
   },
   "engines": {
     "node": ">=24.11.0"

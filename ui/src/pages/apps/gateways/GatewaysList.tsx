@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Search } from "lucide-react";
@@ -39,8 +40,8 @@ export function GatewaysList() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
-      { label: "Gateways" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
+      { label: uiT("ui:messages.m_9e4635769f0aaf0d") },
     ]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
@@ -133,7 +134,7 @@ export function GatewaysList() {
   return (
     <div className="max-w-5xl space-y-5">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">Apps</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{uiT("ui:messages.m_89dd748442c19485")}</h1>
         <p className="text-sm text-muted-foreground">
           A gateway is one safe MCP endpoint that exposes only the apps you assign. Hand it to a client
           like Cursor or Claude Desktop.
@@ -211,11 +212,11 @@ export function GatewaysList() {
                     <thead>
                       <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
                         <th className="whitespace-nowrap px-4 py-2.5">Gateway</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Scope</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Apps</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Tokens</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Last used</th>
-                        <th className="whitespace-nowrap px-4 py-2.5 text-right">On</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{uiT("ui:messages.m_b073f6c68ef87211")}</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{uiT("ui:messages.m_89dd748442c19485")}</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{uiT("ui:messages.m_a039dfb9628b53dd")}</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{uiT("ui:messages.m_830ec7f812f9d862")}</th>
+                        <th className="whitespace-nowrap px-4 py-2.5 text-right">{uiT("ui:messages.m_130011756125313c")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -232,7 +233,7 @@ export function GatewaysList() {
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{scope}</td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{appsLabel}</td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
-                            {active} active{expiring > 0 ? ` · ${expiring} expiring` : ""}
+                            {active}{uiT("ui:messages.m_2a222bd79b1a5483")}{expiring > 0 ? ` · ${expiring} expiring` : ""}
                           </td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
                             {lastUsed ? <RelativeTime value={lastUsed} /> : "—"}
@@ -267,14 +268,14 @@ export function GatewaysList() {
                         <div className="shrink-0">{toggle(gateway)}</div>
                       </div>
                       <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <MobileField label="Scope" value={scope} />
-                        <MobileField label="Apps" value={appsLabel} />
+                        <MobileField label={uiT("ui:messages.m_b073f6c68ef87211")} value={scope} />
+                        <MobileField label={uiT("ui:messages.m_89dd748442c19485")} value={appsLabel} />
                         <MobileField
-                          label="Tokens"
+                          label={uiT("ui:messages.m_a039dfb9628b53dd")}
                           value={`${active} active${expiring > 0 ? ` · ${expiring} expiring` : ""}`}
                         />
                         <MobileField
-                          label="Last used"
+                          label={uiT("ui:messages.m_830ec7f812f9d862")}
                           value={lastUsed ? <RelativeTime value={lastUsed} /> : "—"}
                         />
                       </dl>

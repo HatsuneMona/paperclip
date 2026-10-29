@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type Ref, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Check, Copy, Terminal, X } from "lucide-react";
@@ -201,7 +202,7 @@ export function AgentSetupPrompt({
             {status === "copied" ? <Check className="agent-setup-check size-4" /> : <Terminal className="size-4 text-muted-foreground" />}
             <span className="relative min-w-0">
               <span className={status === "copied" ? "invisible" : undefined}>{label}</span>
-              {status === "copied" && <span className="agent-setup-confirmation absolute inset-0 flex items-center">Copied!</span>}
+              {status === "copied" && <span className="agent-setup-confirmation absolute inset-0 flex items-center">{uiT("ui:messages.m_ea61bc15688d1e48")}</span>}
             </span>
             <span className="agent-setup-trigger-logos" data-single={Boolean(agent)}><AgentLogos agents={agents} ref={triggerLogos} hidden={open || Boolean(flight)} /></span>
           </Button>
@@ -262,7 +263,7 @@ export function AgentSetupPrompt({
               onClick={() => { if (prompt.trim()) void copyPrompt(); }}
             >
               {status === "copied" ? <Check className="agent-setup-check size-4" /> : <Copy className="size-4" />}
-              {status === "copied" ? "Copied to clipboard" : status === "copying" ? "Copying…" : status === "failed" ? "Try copying again" : "Copy prompt"}
+              {status === "copied" ? uiT("ui:messages.m_d37078fe6a1faa15") : status === "copying" ? "Copying…" : status === "failed" ? "Try copying again" : uiT("ui:messages.m_ffc64b8bb8c4532d")}
             </Button>
             <p className="text-center text-xs text-muted-foreground">
               {status === "copied" ? `Ready to paste into ${recipient}.` : agent ? `Give this prompt to ${recipient}.` : "Works with Codex, ChatGPT, Claude, and more."}

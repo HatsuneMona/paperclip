@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -329,7 +330,7 @@ export function RoutineDetail() {
 
   useEffect(() => {
     if (!routine) return;
-    if (!triggerSetup) setBreadcrumbs([{ label: "Routines", href: "/routines" }, { label: routine.title }]);
+    if (!triggerSetup) setBreadcrumbs([{ label: uiT("ui:messages.m_61b7bb44e2b47b7c"), href: "/routines" }, { label: routine.title }]);
     if (!routineDefaults) return;
     const changedRoutine = hydratedRoutineIdRef.current !== routine.id;
     if (changedRoutine || !isEditDirty) {
@@ -350,7 +351,7 @@ export function RoutineDetail() {
     async (label: string, value: string) => {
       try {
         await copyTextToClipboard(value);
-        pushToast({ title: `${label} copied`, tone: "success" });
+        pushToast({ title: uiT("ui:messages.m_42116c7be636b7e9", { v0: (label) }), tone: "success" });
       } catch (copyError) {
         pushToast({
           title: `Failed to copy ${label.toLowerCase()}`,
@@ -426,7 +427,7 @@ export function RoutineDetail() {
     },
     onError: (runError) => {
       pushToast({
-        title: "Routine run failed",
+        title: uiT("ui:messages.m_296c7ca6e9b82b39"),
         body: runError instanceof Error ? runError.message : "Paperclip could not start the routine run.",
         tone: "error",
       });
@@ -448,7 +449,7 @@ export function RoutineDetail() {
     },
     onError: (statusError) => {
       pushToast({
-        title: "Failed to update routine",
+        title: uiT("ui:messages.m_658553fd32ab2e2a"),
         body: statusError instanceof Error ? statusError.message : "Paperclip could not update the routine.",
         tone: "error",
       });
@@ -516,7 +517,7 @@ export function RoutineDetail() {
   const deleteTrigger = useMutation({
     mutationFn: (id: string) => routinesApi.deleteTrigger(id),
     onSuccess: async () => {
-      pushToast({ title: "Trigger deleted", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_f05261cf7c2fa31f"), tone: "success" });
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.routines.detail(routineId!) }),
         queryClient.invalidateQueries({ queryKey: queryKeys.routines.list(selectedCompanyId!) }),
@@ -721,7 +722,7 @@ export function RoutineDetail() {
     onToggleAutomation: () => {
       if (!automationEnabled && !routine.assigneeAgentId) {
         pushToast({
-          title: "Default agent required",
+          title: uiT("ui:messages.m_2761f376d7aad0e8"),
           body: "Set a default agent before enabling routine automation.",
           tone: "warn",
         });
@@ -808,7 +809,7 @@ export function RoutineDetail() {
                 ref={titleInputRef}
                 data-autosize-title
                 className="min-w-0 flex-1 resize-none overflow-hidden bg-transparent text-base font-semibold leading-7 outline-none placeholder:text-muted-foreground/50"
-                placeholder="Routine title"
+                placeholder={uiT("ui:messages.m_26d0f82a0da1d5ef")}
                 rows={1}
                 value={editDraft.title}
                 onChange={(event) => {
@@ -848,9 +849,7 @@ export function RoutineDetail() {
                 size="sm"
                 onClick={() => navigate(routineDetailHref(routine.id, "history"))}
               >
-                <History className="h-3.5 w-3.5" />
-                History
-              </Button>
+                <History className="h-3.5 w-3.5" />{uiT("ui:messages.m_0e76960093379060")}</Button>
             )}
             {section === "overview" ? (
               overviewEditing ? (
@@ -867,9 +866,7 @@ export function RoutineDetail() {
                 </Button>
               ) : (
                 <Button variant="outline" size="sm" onClick={() => setOverviewEditing(true)}>
-                  <Pencil className="h-3.5 w-3.5" />
-                  Edit routine
-                </Button>
+                  <Pencil className="h-3.5 w-3.5" />{uiT("ui:messages.m_801e2738261ad99f")}</Button>
               )
             ) : null}
             <RunButton onClick={() => setRunVariablesOpen(true)} disabled={runRoutine.isPending} />

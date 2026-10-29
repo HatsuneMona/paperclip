@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Fragment } from "react";
 import {
   ISSUE_THREAD_INTERACTION_KINDS,
@@ -261,9 +262,7 @@ export function InteractionGovernancePanel({
          * its own inline label. At `sm`+ it restores the aligned 3-col grid.
          */}
         <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-x-4 sm:gap-y-2.5">
-          <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">
-            Kind
-          </div>
+          <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">{uiT("ui:messages.m_f5387f9bb6ed7031")}</div>
           <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">
             Default policy
           </div>

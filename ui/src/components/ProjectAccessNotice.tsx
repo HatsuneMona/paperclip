@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ShieldCheck, ShieldX, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
@@ -32,7 +33,7 @@ export function ProjectAccessNotice({ agentName = "This agent", projectName, rea
     </div>
     {error && <p role="alert" className="text-sm text-destructive">{error.message}</p>}
     {!ready && <details className="pl-8 text-xs text-muted-foreground"><summary className="cursor-pointer">Run details</summary>
-      <dl className="mt-3 grid grid-cols-2 gap-2"><dt>Stopped during</dt><dd>Workspace setup</dd><dt>Reason</dt><dd>Project outside allowed scope</dd><dt>Provider started</dt><dd>No</dd></dl>
+      <dl className="mt-3 grid grid-cols-2 gap-2"><dt>Stopped during</dt><dd>Workspace setup</dd><dt>{uiT("ui:messages.m_f81ab834de5f8491")}</dt><dd>Project outside allowed scope</dd><dt>Provider started</dt><dd>{uiT("ui:messages.m_1ea442a134b2a184")}</dd></dl>
     </details>}
   </section>;
 }

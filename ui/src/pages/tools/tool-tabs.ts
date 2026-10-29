@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   ClipboardPaste,
   FlaskConical,
@@ -20,7 +21,7 @@ export function advancedTabHref(tab: ToolTabKey): string {
 // M8a/M8b — the prosumer-facing Advanced setup tabs (PAP-10839 wires). The only
 // screens where "MCP" vocabulary is permitted (PAP-10827).
 export const ADVANCED_TABS = [
-  { key: "paste-config", label: "Paste a config", icon: ClipboardPaste },
+  { key: "paste-config", label: uiT("ui:messages.m_27261473ca2777b7"), icon: ClipboardPaste },
 ] as const;
 
 // The pre-Apps developer surface, kept reachable behind the Advanced door.
@@ -28,7 +29,7 @@ export const ADVANCED_TABS = [
 // `experimental.enableSmokeLab` is on (see `isExperimentalToolTab` +
 // `useSmokeLabEnabled`), and the route/tab itself gates on the same flag.
 export const DEVELOPER_TABS = [
-  { key: "gateways", label: "Gateways", icon: Network },
+  { key: "gateways", label: uiT("ui:messages.m_9e4635769f0aaf0d"), icon: Network },
   { key: "profiles", label: "Profiles", icon: Layers },
   { key: "smoke-lab", label: "Smoke Lab", icon: FlaskConical },
 ] as const;

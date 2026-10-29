@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -99,7 +100,7 @@ export function CostDataQualityNotice({ companyId, from, to, reportKey, unpriced
         <Badge variant="outline" className="font-normal text-muted-foreground">{explanation.label}</Badge>
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <time dateTime={item.occurredAt}>{formatDateTime(item.occurredAt)}</time>
-          {item.runId && item.agentId && <Link className="text-primary underline underline-offset-4 hover:text-primary/80" to={`/agents/${item.agentId}/runs/${item.runId}`}>View run</Link>}
+          {item.runId && item.agentId && <Link className="text-primary underline underline-offset-4 hover:text-primary/80" to={`/agents/${item.agentId}/runs/${item.runId}`}>{uiT("ui:messages.m_aaf7fccc7d1315f2")}</Link>}
           {item.reason === "retryable" && item.runId && data?.canRetry && <Button type="button" variant="link" size="sm" className="h-auto p-0 text-xs font-normal underline hover:text-primary/80" disabled={retry.isPending}
             onClick={() => { retry.reset(); retry.mutate(item.runId!); }}>Retry cost recording</Button>}
         </div>

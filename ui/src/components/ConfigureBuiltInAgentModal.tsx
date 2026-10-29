@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { agentHarnessType, agentRunner, type AgentRunnerChoice } from "@paperclipai/shared";
 import { adaptersApi } from "@/api/adapters";
@@ -173,7 +174,7 @@ export function ConfigureBuiltInAgentModal({
         <div className="space-y-4">
           <InlineBanner tone="info" compact>
             Creates <strong>{definition.displayName}</strong> in your roster, badged{" "}
-            <strong>Built-in</strong>. Organizations that require hire approval will queue this for the
+            <strong>{uiT("ui:messages.m_1f43948106d1d47f")}</strong>. Organizations that require hire approval will queue this for the
             board.
           </InlineBanner>
 
@@ -190,7 +191,7 @@ export function ConfigureBuiltInAgentModal({
           </Field>
 
           {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-            <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+            <summary className="cursor-pointer text-sm text-muted-foreground">{uiT("ui:messages.m_9f088dbebd6c3c70")}</summary>
             <AgentRunnerSelect value={runner ?? (state.agent ? agentRunner(state.agent.adapterType) : "auto")}
               pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
               defaultRunner={runnerAvailability?.defaultRunner} supportedRunners={runnerAvailability?.supportedRunners}
@@ -226,7 +227,7 @@ export function ConfigureBuiltInAgentModal({
             </InlineBanner>
           )}
 
-          <Field label="Monthly budget (optional)" hint="Leave blank for no cap.">
+          <Field label={uiT("ui:messages.m_4e4490135805f013")} hint={uiT("ui:messages.m_819c7fa8019f3a36")}>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">$</span>
               <Input
@@ -255,9 +256,7 @@ export function ConfigureBuiltInAgentModal({
             variant="ghost"
             onClick={() => onOpenChange(false)}
             disabled={provision.isPending}
-          >
-            Not now
-          </Button>
+          >{uiT("ui:messages.m_a0e63d7c7125d29a")}</Button>
           <Button
             onClick={() => {
               setError(null);

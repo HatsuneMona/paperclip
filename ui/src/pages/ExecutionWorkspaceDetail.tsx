@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate, useParams } from "@/lib/router";
@@ -86,10 +87,10 @@ type OrderedExecutionWorkspaceTabItem = {
 const DEFAULT_PLUGIN_DETAIL_TAB_ORDER = 100;
 const EXECUTION_WORKSPACE_BASE_TAB_ITEMS: OrderedExecutionWorkspaceTabItem[] = [
   { value: "issues", label: "Tasks", order: 10 },
-  { value: "services", label: "Services", order: 20 },
-  { value: "configuration", label: "Configuration", order: 30 },
+  { value: "services", label: uiT("ui:messages.m_604dce445e326d95"), order: 20 },
+  { value: "configuration", label: uiT("ui:messages.m_b332c3492d5eb10a"), order: 30 },
   { value: "runtime_logs", label: "Runtime logs", order: 40 },
-  { value: "routines", label: "Routines", order: 60 },
+  { value: "routines", label: uiT("ui:messages.m_61b7bb44e2b47b7c"), order: 60 },
 ];
 
 function isExecutionWorkspacePluginTab(value: string | null): value is ExecutionWorkspacePluginTab {
@@ -636,7 +637,7 @@ function WorkspaceRoutineRow({
         onClick={() => onRunNow(routine)}
       >
         {isRunning ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
-        {isRunning ? "Running..." : "Run now"}
+        {isRunning ? uiT("ui:messages.m_4977a7e5bb3675c4") : uiT("ui:messages.m_0991397702fabb40")}
       </Button>
     </div>
   );
@@ -704,7 +705,7 @@ function ExecutionWorkspaceRoutinesList({
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Routine run failed",
+        title: uiT("ui:messages.m_296c7ca6e9b82b39"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not start the routine run.",
         tone: "error",
       });
@@ -716,9 +717,7 @@ function ExecutionWorkspaceRoutinesList({
       <Card className="rounded-none">
         <CardHeader>
           <CardTitle>Workspace routines</CardTitle>
-          <CardDescription>
-            Routines that use workspace-specific variables can be run against this execution workspace.
-          </CardDescription>
+          <CardDescription>{uiT("ui:messages.m_a720219337f60705")}</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -908,9 +907,9 @@ export function ExecutionWorkspaceDetail() {
   useEffect(() => {
     if (!workspace) return;
     const crumbs = [
-      { label: "Projects", href: "/projects" },
+      { label: uiT("ui:messages.m_04e2a9728af75840"), href: "/projects" },
       ...(project ? [{ label: project.name, href: `/projects/${projectRef}` }] : []),
-      ...(project ? [{ label: "Workspaces", href: `/projects/${projectRef}/workspaces` }] : []),
+      ...(project ? [{ label: uiT("ui:messages.m_1377264ba3b0a717"), href: `/projects/${projectRef}/workspaces` }] : []),
       { label: workspace.name },
     ];
     setBreadcrumbs(crumbs);
@@ -973,7 +972,7 @@ export function ExecutionWorkspaceDetail() {
     },
     onError: (error) => {
       setRuntimeActionMessage(null);
-      setRuntimeActionErrorMessage(error instanceof Error ? error.message : "Failed to control workspace commands.");
+      setRuntimeActionErrorMessage(error instanceof Error ? error.message : uiT("ui:messages.m_2f75add6dd0a2c01"));
     },
     onSettled: (_result, _error, request) => {
       setPendingRuntimeActions((current) => current.filter((pendingRequest) => pendingRequest !== request));
@@ -1065,9 +1064,7 @@ export function ExecutionWorkspaceDetail() {
       <div className="space-y-4 overflow-hidden sm:space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0 space-y-2">
-            <div className="text-xs font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Execution workspace
-            </div>
+            <div className="text-xs font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_d31c92b6bb53c871")}</div>
             <h1 className="truncate text-xl font-semibold sm:text-2xl">{workspace.name}</h1>
           </div>
           <WorkspaceServiceControlBar
@@ -1124,7 +1121,7 @@ export function ExecutionWorkspaceDetail() {
           <div className="space-y-4 sm:space-y-6">
             <Card className="rounded-none">
               <CardHeader>
-                <CardTitle>Workspace settings</CardTitle>
+                <CardTitle>{uiT("ui:messages.m_5ebc59145b59b496")}</CardTitle>
                 <CardDescription>
                   Edit the concrete path, repo, branch, provisioning, teardown, and runtime overrides attached to this execution workspace. Saved changes affect future runs; Paperclip may refresh or replace a reused workspace when config changes.
                 </CardDescription>
@@ -1136,7 +1133,7 @@ export function ExecutionWorkspaceDetail() {
                     onClick={() => setCloseDialogOpen(true)}
                     disabled={workspace.status === "archived"}
                   >
-                    {workspace.status === "cleanup_failed" ? "Retry close" : "Close workspace"}
+                    {workspace.status === "cleanup_failed" ? "Retry close" : uiT("ui:messages.m_e5086f0455d55b20")}
                   </Button>
                 </CardAction>
               </CardHeader>
@@ -1145,12 +1142,12 @@ export function ExecutionWorkspaceDetail() {
 
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">General</div>
-                  <Field label="Workspace name">
+                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{uiT("ui:messages.m_c910d474dcd724bf")}</div>
+                  <Field label={uiT("ui:messages.m_9619649d8dc1394f")}>
                     <Input
                       value={form.name}
                       onChange={(event) => setForm((current) => current ? { ...current, name: event.target.value } : current)}
-                      placeholder="Execution workspace name"
+                      placeholder={uiT("ui:messages.m_762ada40b14efd98")}
                     />
                   </Field>
                 </div>
@@ -1160,7 +1157,7 @@ export function ExecutionWorkspaceDetail() {
                 <div className="space-y-4">
                   <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Source control</div>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <Field label="Branch name" hint="Useful for isolated worktrees">
+                    <Field label={uiT("ui:messages.m_06f6bb7108ffdb5c")} hint={uiT("ui:messages.m_8837c71905c76303")}>
                       <Input
                         className="font-mono"
                         value={form.branchName}
@@ -1169,17 +1166,17 @@ export function ExecutionWorkspaceDetail() {
                       />
                     </Field>
 
-                    <Field label="Base ref">
+                    <Field label={uiT("ui:messages.m_9c6c10f9d4c60b53")}>
                       <Input
                         className="font-mono"
                         value={form.baseRef}
                         onChange={(event) => setForm((current) => current ? { ...current, baseRef: event.target.value } : current)}
-                        placeholder="origin/main"
+                        placeholder={uiT("ui:messages.m_e52d7adb77ca8882")}
                       />
                     </Field>
                   </div>
 
-                  <Field label="Repo URL">
+                  <Field label={uiT("ui:messages.m_de5c1d1e3353a331")}>
                     <Input
                       value={form.repoUrl}
                       onChange={(event) => setForm((current) => current ? { ...current, repoUrl: event.target.value } : current)}
@@ -1201,7 +1198,7 @@ export function ExecutionWorkspaceDetail() {
                   <>
                     <div className="space-y-4">
                       <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Paths</div>
-                      <Field label="Working directory">
+                      <Field label={uiT("ui:messages.m_865e85c6fbf9d3b2")}>
                         <Input
                           className="font-mono"
                           value={form.cwd}
@@ -1210,7 +1207,7 @@ export function ExecutionWorkspaceDetail() {
                         />
                       </Field>
 
-                      <Field label="Provider path / ref">
+                      <Field label={uiT("ui:messages.m_efa81cfb64178079")}>
                         <Input
                           className="font-mono"
                           value={form.providerRef}
@@ -1235,37 +1232,37 @@ export function ExecutionWorkspaceDetail() {
                   <>
                     <div className="space-y-4">
                       <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Lifecycle commands</div>
-                      <Field label="Provision command" hint="Runs when Paperclip prepares this execution workspace">
+                      <Field label={uiT("ui:messages.m_bfbc86f8f1c03ac2")} hint={uiT("ui:messages.m_577ae5a9e3f547b7")}>
                         <Textarea
                           className="min-h-20 font-mono"
                           value={form.provisionCommand}
                           onChange={(event) => setForm((current) => current ? { ...current, provisionCommand: event.target.value } : current)}
-                          placeholder="bash ./scripts/provision-worktree.sh"
+                          placeholder={uiT("ui:messages.m_a3f9711286351477")}
                         />
                       </Field>
 
                       <Field
-                        label="Runtime provision command"
-                        hint="Runs once before the first runtime-service start. Leave empty to keep eager provisioning."
+                        label={uiT("ui:messages.m_e538baaa678ee752")}
+                        hint={uiT("ui:messages.m_46e46d2301182c33")}
                       >
                         <Textarea
                           className="min-h-20 font-mono"
                           value={form.runtimeProvisionCommand}
                           onChange={(event) => setForm((current) => current ? { ...current, runtimeProvisionCommand: event.target.value } : current)}
-                          placeholder="bash ./scripts/provision-worktree-runtime.sh"
+                          placeholder={uiT("ui:messages.m_3de78b546fda2581")}
                         />
                       </Field>
 
-                      <Field label="Teardown command" hint="Runs when the execution workspace is archived or cleaned up">
+                      <Field label={uiT("ui:messages.m_b6a156773cbf656f")} hint={uiT("ui:messages.m_58d660f06fe5bd86")}>
                         <Textarea
                           className="min-h-20 font-mono"
                           value={form.teardownCommand}
                           onChange={(event) => setForm((current) => current ? { ...current, teardownCommand: event.target.value } : current)}
-                          placeholder="bash ./scripts/teardown-worktree.sh"
+                          placeholder={uiT("ui:messages.m_7861dfed1ee34be1")}
                         />
                       </Field>
 
-                      <Field label="Cleanup command" hint="Workspace-specific cleanup before teardown">
+                      <Field label={uiT("ui:messages.m_062a91a9fb17b4b4")} hint={uiT("ui:messages.m_e97c4a8d1abfa3b8")}>
                         <Textarea
                           className="min-h-16 font-mono"
                           value={form.cleanupCommand}
@@ -1319,7 +1316,7 @@ export function ExecutionWorkspaceDetail() {
                       Override the inherited workspace command model only when this execution workspace truly needs different service or job behavior.
                     </p>
                     <div className="mt-3">
-                      <Field label="Workspace commands JSON" hint="Legacy `services` arrays still work, but `commands` supports both services and jobs.">
+                      <Field label={uiT("ui:messages.m_bd7ac36ac97f1654")} hint={uiT("ui:messages.m_208df7bd716558e8")}>
                         <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                           <input
                             id="inherit-runtime-config"
@@ -1360,7 +1357,7 @@ export function ExecutionWorkspaceDetail() {
                       </div>
                       <div className="grid gap-3 sm:grid-cols-2">
                         {configuredRuntimeServicePorts.map((service) => (
-                          <Field key={`${service.collection}-${service.index}`} label={service.name} hint="Fixed port">
+                          <Field key={`${service.collection}-${service.index}`} label={service.name} hint={uiT("ui:messages.m_9b46ad0ca9557e85")}>
                             <Input
                               type="number"
                               min="1"
@@ -1404,9 +1401,7 @@ export function ExecutionWorkspaceDetail() {
 
               <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button className="w-full sm:w-auto" disabled={!isDirty || updateWorkspace.isPending} onClick={saveChanges}>
-                  {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                  Save changes
-                </Button>
+                  {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_dd0ae7a5cbcf2339")}</Button>
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"
@@ -1417,9 +1412,7 @@ export function ExecutionWorkspaceDetail() {
                     setRuntimeActionErrorMessage(null);
                     setRuntimeActionMessage(null);
                   }}
-                >
-                  Reset
-                </Button>
+                >{uiT("ui:messages.m_daee7606b339f3c3")}</Button>
                 {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
                 {!errorMessage && !isDirty ? <p className="text-sm text-muted-foreground">No unsaved changes.</p> : null}
               </div>
@@ -1432,19 +1425,19 @@ export function ExecutionWorkspaceDetail() {
                 <CardDescription>Linked objects and relationships</CardDescription>
               </CardHeader>
               <CardContent>
-              <DetailRow label="Project">
+              <DetailRow label={uiT("ui:messages.m_9859597853197476")}>
                 {project ? <Link to={`/projects/${projectRef}`} className="hover:underline">{project.name}</Link> : <MonoValue value={workspace.projectId ?? "No project"} />}
               </DetailRow>
-              <DetailRow label="Project workspace">
+              <DetailRow label={uiT("ui:messages.m_ce016e7f0a41c4f3")}>
                 {project && linkedProjectWorkspace ? (
                   <WorkspaceLink project={project} workspace={linkedProjectWorkspace} />
                 ) : workspace.projectWorkspaceId ? (
                   <MonoValue value={workspace.projectWorkspaceId} />
                 ) : (
-                  "None"
+                  uiT("ui:messages.m_dc937b59892604f5")
                 )}
               </DetailRow>
-              <DetailRow label="Source task">
+              <DetailRow label={uiT("ui:messages.m_d0e467ea7a90eaf2")}>
                 {sourceIssue ? (
                   <Link to={issueUrl(sourceIssue)} className="hover:underline">
                     {sourceIssue.identifier ?? sourceIssue.id} · {sourceIssue.title}
@@ -1452,10 +1445,10 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.sourceIssueId ? (
                   <MonoValue value={workspace.sourceIssueId} />
                 ) : (
-                  "None"
+                  uiT("ui:messages.m_dc937b59892604f5")
                 )}
               </DetailRow>
-              <DetailRow label="Derived from">
+              <DetailRow label={uiT("ui:messages.m_fc15099d188bc145")}>
                 {derivedWorkspace ? (
                   <Link to={executionWorkspaceTabPath(derivedWorkspace.id, workspaceIsolationControlsVisible ? "configuration" : "issues")} className="hover:underline">
                     {derivedWorkspace.name}
@@ -1463,16 +1456,16 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.derivedFromExecutionWorkspaceId ? (
                   <MonoValue value={workspace.derivedFromExecutionWorkspaceId} />
                 ) : (
-                  "None"
+                  uiT("ui:messages.m_dc937b59892604f5")
                 )}
               </DetailRow>
-              <DetailRow label="Runtime provisioning">
+              <DetailRow label={uiT("ui:messages.m_09073717c9a9006e")}>
                 <RuntimeProvisionStatusValue
                   status={runtimeProvisionStatus}
                   onViewLogs={() => handleTabChange("runtime_logs")}
                 />
               </DetailRow>
-              <DetailRow label="Workspace ID">
+              <DetailRow label={uiT("ui:messages.m_889d892993c3e5f0")}>
                 <MonoValue value={workspace.id} />
               </DetailRow>
               </CardContent>
@@ -1484,13 +1477,13 @@ export function ExecutionWorkspaceDetail() {
                 <CardDescription>Paths and refs</CardDescription>
               </CardHeader>
               <CardContent>
-              <DetailRow label="Working dir">
-                {workspace.cwd ? <MonoValue value={workspace.cwd} copy /> : "None"}
+              <DetailRow label={uiT("ui:messages.m_33f4ce8558353a9c")}>
+                {workspace.cwd ? <MonoValue value={workspace.cwd} copy /> : uiT("ui:messages.m_dc937b59892604f5")}
               </DetailRow>
-              <DetailRow label="Provider ref">
-                {workspace.providerRef ? <MonoValue value={workspace.providerRef} copy /> : "None"}
+              <DetailRow label={uiT("ui:messages.m_c9a25d09eb036c87")}>
+                {workspace.providerRef ? <MonoValue value={workspace.providerRef} copy /> : uiT("ui:messages.m_dc937b59892604f5")}
               </DetailRow>
-              <DetailRow label="Repo URL">
+              <DetailRow label={uiT("ui:messages.m_de5c1d1e3353a331")}>
                 {workspace.repoUrl && isSafeExternalUrl(workspace.repoUrl) ? (
                   <div className="inline-flex max-w-full items-start gap-2">
                     <a href={workspace.repoUrl} target="_blank" rel="noreferrer" className="inline-flex min-w-0 items-center gap-1 break-all hover:underline">
@@ -1504,18 +1497,18 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.repoUrl ? (
                   <MonoValue value={workspace.repoUrl} copy />
                 ) : (
-                  "None"
+                  uiT("ui:messages.m_dc937b59892604f5")
                 )}
               </DetailRow>
-              <DetailRow label="Base ref">
-                {workspace.baseRef ? <MonoValue value={workspace.baseRef} copy /> : "None"}
+              <DetailRow label={uiT("ui:messages.m_9c6c10f9d4c60b53")}>
+                {workspace.baseRef ? <MonoValue value={workspace.baseRef} copy /> : uiT("ui:messages.m_dc937b59892604f5")}
               </DetailRow>
-              <DetailRow label="Branch">
-                {workspace.branchName ? <MonoValue value={workspace.branchName} copy /> : "None"}
+              <DetailRow label={uiT("ui:messages.m_52656e8104eef3fd")}>
+                {workspace.branchName ? <MonoValue value={workspace.branchName} copy /> : uiT("ui:messages.m_dc937b59892604f5")}
               </DetailRow>
-              <DetailRow label="Opened">{formatDateTime(workspace.openedAt)}</DetailRow>
-              <DetailRow label="Last used">{formatDateTime(workspace.lastUsedAt)}</DetailRow>
-              <DetailRow label="Cleanup">
+              <DetailRow label={uiT("ui:messages.m_b19fb8d1b395b333")}>{formatDateTime(workspace.openedAt)}</DetailRow>
+              <DetailRow label={uiT("ui:messages.m_830ec7f812f9d862")}>{formatDateTime(workspace.lastUsedAt)}</DetailRow>
+              <DetailRow label={uiT("ui:messages.m_9f1b237b5dc314ed")}>
                 {workspace.cleanupEligibleAt
                   ? `${formatDateTime(workspace.cleanupEligibleAt)}${workspace.cleanupReason ? ` · ${workspace.cleanupReason}` : ""}`
                   : "Not scheduled"}
@@ -1571,8 +1564,8 @@ export function ExecutionWorkspaceDetail() {
               companyId={workspace.companyId}
               scopeKind="execution_workspace"
               scopeId={workspace.id}
-              title="Workspace summary"
-              description="Summarizer keeps the latest workspace status, next step, and operator-needed items here."
+              title={uiT("ui:messages.m_970a90e91e265ab9")}
+              description={uiT("ui:messages.m_d76f8fee196bb581")}
             />
             <ExecutionWorkspaceIssuesList
               companyId={workspace.companyId}

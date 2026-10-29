@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect } from "react";
 import { Link2 } from "lucide-react";
 import { useCompany } from "../context/CompanyContext";
@@ -14,17 +15,15 @@ export function CompanyConnections() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Connections" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_dc273117482b4429") },
     ]);
   }, [setBreadcrumbs, selectedCompany?.name]);
 
   if (!selectedCompanyId) {
     return (
-      <div className="text-sm text-muted-foreground">
-        No organization selected. Select an organization from the switcher above.
-      </div>
+      <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_9133af154f20a9d0")}</div>
     );
   }
 
@@ -32,7 +31,7 @@ export function CompanyConnections() {
     <div className="max-w-6xl space-y-8">
       <div className="flex items-center gap-2">
         <Link2 className="h-5 w-5 text-muted-foreground" />
-        <h1 className="text-lg font-semibold">Connections</h1>
+        <h1 className="text-lg font-semibold">{uiT("ui:messages.m_dc273117482b4429")}</h1>
       </div>
       <DecisionModelSettingsSection key={selectedCompanyId} companyId={selectedCompanyId} />
       <div className="max-w-2xl border-t border-border pt-8">

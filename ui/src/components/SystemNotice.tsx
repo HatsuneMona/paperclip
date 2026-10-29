@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState, type ReactNode } from "react";
 import {
   ChevronDown,
@@ -326,7 +327,7 @@ export function SystemNotice({
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
             )}
           >
-            <span>{open ? "Hide details" : "Details"}</span>
+            <span>{open ? uiT("ui:messages.m_c9722a7a962a8435") : uiT("ui:messages.m_45989de49fb7f66d")}</span>
             <ChevronDown
               className={cn(
                 "h-3.5 w-3.5 transition-transform duration-150",

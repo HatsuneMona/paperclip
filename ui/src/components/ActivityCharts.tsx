@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { DashboardRunActivityDay, HeartbeatRun } from "@paperclipai/shared";
 
 /* ---- Utilities ---- */
@@ -127,13 +128,13 @@ export function RunActivityChart(props: RunChartProps) {
   const hasData = activity.some(v => v.total > 0);
   const hasRecovered = activity.some(v => v.recovered > 0);
 
-  if (!hasData) return <p className="text-xs text-muted-foreground">No runs yet</p>;
+  if (!hasData) return <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_306b45db20163464")}</p>;
 
   const legendItems = [
-    { color: runSegmentColors.succeeded, label: "Succeeded" },
-    ...(hasRecovered ? [{ color: runSegmentColors.recovered, label: "Recovered" }] : []),
-    { color: runSegmentColors.failed, label: "Failed" },
-    { color: runSegmentColors.other, label: "Other" },
+    { color: runSegmentColors.succeeded, label: uiT("ui:messages.m_6d9a6f97a5fdaf3b") },
+    ...(hasRecovered ? [{ color: runSegmentColors.recovered, label: uiT("ui:messages.m_37ce0a91ee27ce92") }] : []),
+    { color: runSegmentColors.failed, label: uiT("ui:messages.m_031a8f0f659df890") },
+    { color: runSegmentColors.other, label: uiT("ui:messages.m_f97e9da0e3b879f0") },
   ];
 
   return (
@@ -188,7 +189,7 @@ export function PriorityChart({ issues }: { issues: { priority: string; createdA
   const maxValue = Math.max(...Array.from(grouped.values()).map(v => Object.values(v).reduce((a, b) => a + b, 0)), 1);
   const hasData = Array.from(grouped.values()).some(v => Object.values(v).reduce((a, b) => a + b, 0) > 0);
 
-  if (!hasData) return <p className="text-xs text-muted-foreground">No tasks</p>;
+  if (!hasData) return <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_9c2f4744b6f0b056")}</p>;
 
   return (
     <div>
@@ -198,7 +199,7 @@ export function PriorityChart({ issues }: { issues: { priority: string; createdA
           const total = Object.values(entry).reduce((a, b) => a + b, 0);
           const heightPct = (total / maxValue) * 100;
           return (
-            <div key={day} className="flex-1 h-full flex flex-col justify-end" title={`${day}: ${total} issues`}>
+            <div key={day} className="flex-1 h-full flex flex-col justify-end" title={uiT("ui:messages.m_89d31012eb1d1c94", { v0: (day), v1: (total) })}>
               {total > 0 ? (
                 <div className="flex flex-col-reverse gap-px overflow-hidden" style={{ height: `${heightPct}%`, minHeight: 2 }}>
                   {priorityOrder.map(p => entry[p] > 0 ? (
@@ -263,7 +264,7 @@ export function IssueStatusChart({ issues }: { issues: { status: string; created
   const maxValue = Math.max(...Array.from(grouped.values()).map(v => Object.values(v).reduce((a, b) => a + b, 0)), 1);
   const hasData = allStatuses.size > 0;
 
-  if (!hasData) return <p className="text-xs text-muted-foreground">No tasks</p>;
+  if (!hasData) return <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_9c2f4744b6f0b056")}</p>;
 
   return (
     <div>
@@ -273,7 +274,7 @@ export function IssueStatusChart({ issues }: { issues: { status: string; created
           const total = Object.values(entry).reduce((a, b) => a + b, 0);
           const heightPct = (total / maxValue) * 100;
           return (
-            <div key={day} className="flex-1 h-full flex flex-col justify-end" title={`${day}: ${total} issues`}>
+            <div key={day} className="flex-1 h-full flex flex-col justify-end" title={uiT("ui:messages.m_89d31012eb1d1c94", { v0: (day), v1: (total) })}>
               {total > 0 ? (
                 <div className="flex flex-col-reverse gap-px overflow-hidden" style={{ height: `${heightPct}%`, minHeight: 2 }}>
                   {statusOrder.map(s => (entry[s] ?? 0) > 0 ? (
@@ -299,7 +300,7 @@ export function SuccessRateChart(props: RunChartProps) {
   const grouped = new Map(activity.map((day) => [day.date, day]));
 
   const hasData = activity.some(v => v.total > 0);
-  if (!hasData) return <p className="text-xs text-muted-foreground">No runs yet</p>;
+  if (!hasData) return <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_306b45db20163464")}</p>;
 
   return (
     <div>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ChevronDown, Download, ExternalLink, Maximize2, PanelRightOpen, Table2 } from "lucide-react";
 import type { LabArtifact } from "../../kit";
 import type { SolidAction } from "./actions";
@@ -29,13 +30,13 @@ export interface PanelActions {
 export function panelActions(a: LabArtifact): PanelActions {
   const download = (label: string): SolidAction => ({ id: "download", label, icon: Download, href: `#download-${a.id}` });
   const openFile: SolidAction = { id: "preview", label: "Open file", icon: ExternalLink, href: `#file-${a.id}`, external: true };
-  const openTab: SolidAction = { id: "tab", label: "Open in tab", icon: PanelRightOpen, href: `#attachment-${a.id}` };
+  const openTab: SolidAction = { id: "tab", label: uiT("ui:messages.m_0e5d95967de31cb2"), icon: PanelRightOpen, href: `#attachment-${a.id}` };
 
   if (isTaskDocument(a)) {
     return { primary: { id: "document", label: "Read document", icon: PanelRightOpen, href: `#document-${slug(a)}` }, more: [] };
   }
   if (a.kind === "link") {
-    return { primary: { id: "preview", label: "Open link", icon: ExternalLink, href: a.url ?? "#", external: true }, more: [] };
+    return { primary: { id: "preview", label: uiT("ui:messages.m_aab63f85c7f1cd14"), icon: ExternalLink, href: a.url ?? "#", external: true }, more: [] };
   }
   if (a.kind === "image") return { primary: { id: "gallery", label: "View image", icon: Maximize2 }, more: [] };
   if (a.kind === "video") return { primary: { id: "gallery", label: "Open video", icon: Maximize2 }, more: [] };
@@ -43,7 +44,7 @@ export function panelActions(a: LabArtifact): PanelActions {
     // A Markdown file an agent attached: reads in place, with the product's three ways out.
     return {
       primary: { id: "document", label: "Read document", icon: ChevronDown },
-      more: [openTab, { id: "preview", label: "Open raw", icon: ExternalLink, href: `#raw-${a.id}`, external: true }, download("Download")],
+      more: [openTab, { id: "preview", label: uiT("ui:messages.m_7f57bf8c34f6dda4"), icon: ExternalLink, href: `#raw-${a.id}`, external: true }, download("Download")],
     };
   }
   if (isTextLike(a)) {

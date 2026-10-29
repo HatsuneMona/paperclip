@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { AgentAppearance } from "@paperclipai/shared";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import type { ReactNode } from "react";
@@ -125,7 +126,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
             type="checkbox"
             className="h-4 w-4 rounded border-border"
             checked={selected}
-            aria-label={`Select ${routine.title}`}
+            aria-label={uiT("ui:messages.m_58661820dfdc4c9f", { v0: (routine.title) })}
             onChange={(event) => onSelectChange?.(routine, event.target.checked)}
           />
         </div>
@@ -135,7 +136,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
           <span className="truncate text-sm font-medium">{routine.title}</span>
           {(isArchived || routine.status === "paused" || isDraft) ? (
             <span className="text-xs text-muted-foreground">
-              {isArchived ? "archived" : isDraft ? "draft" : "paused"}
+              {isArchived ? uiT("ui:messages.m_dd9e881230ebf6e0") : isDraft ? "draft" : uiT("ui:messages.m_a7a9dc5bcf71adb2")}
             </span>
           ) : null}
           {managedByLabel ? (
@@ -148,11 +149,11 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
               className="h-2.5 w-2.5 shrink-0 rounded-sm"
               style={{ backgroundColor: project?.color ?? "var(--project-none)" }}
             />
-            <span>{routine.projectId ? (project?.name ?? "Unknown project") : "No project"}</span>
+            <span>{routine.projectId ? (project?.name ?? uiT("ui:messages.m_ed51cfeff0d96984")) : uiT("ui:messages.m_f34c2be0d1c5f562")}</span>
           </span>
           <span className="flex items-center gap-2">
             {routine.assigneeAgentId ? <AgentAvatar agent={{ ...agent, id: routine.assigneeAgentId }} size={16} className="h-3.5 w-3.5 shrink-0"/> : null}
-            <span>{routine.assigneeAgentId ? (agent?.name ?? "Unknown agent") : "No default agent"}</span>
+            <span>{routine.assigneeAgentId ? (agent?.name ?? uiT("ui:messages.m_342b4ab21e2eb31a")) : "No default agent"}</span>
           </span>
           <span>
             {formatLastRunTimestamp(routine.lastRun?.triggeredAt)}
@@ -173,7 +174,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
             onClick={() => onRunNow(routine)}
           >
             <Play className="h-3.5 w-3.5" />
-            {runningRoutineId === routine.id ? "Running..." : "Run now"}
+            {runningRoutineId === routine.id ? uiT("ui:messages.m_4977a7e5bb3675c4") : uiT("ui:messages.m_0991397702fabb40")}
           </Button>
         ) : null}
 
@@ -186,13 +187,13 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
             aria-label={enabled ? `Disable ${routine.title}` : `Enable ${routine.title}`}
           />
           <span className="w-12 text-xs text-muted-foreground">
-            {isArchived ? "Archived" : isDraft ? "Draft" : enabled ? "On" : "Off"}
+            {isArchived ? uiT("ui:messages.m_bdb86505f8062d15") : isDraft ? uiT("ui:messages.m_ebf12ef47cf575b3") : enabled ? uiT("ui:messages.m_130011756125313c") : uiT("ui:messages.m_ca7981b46ecf2c17")}
           </span>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={`More actions for ${routine.title}`}>
+            <Button variant="ghost" size="icon-sm" aria-label={uiT("ui:messages.m_5057a73d4a150414", { v0: (routine.title) })}>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -204,7 +205,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
               disabled={runDisabled}
               onClick={() => onRunNow(routine)}
             >
-              {runningRoutineId === routine.id ? "Running..." : "Run now"}
+              {runningRoutineId === routine.id ? uiT("ui:messages.m_4977a7e5bb3675c4") : uiT("ui:messages.m_0991397702fabb40")}
             </DropdownMenuItem>
             {extraMenuItems ? (
               <>
@@ -217,14 +218,14 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
               onClick={() => onToggleEnabled(routine, enabled)}
               disabled={isStatusPending || isArchived || disableToggle}
             >
-              {enabled ? "Pause" : "Enable"}
+              {enabled ? uiT("ui:messages.m_858e4ba7a29fd38b") : uiT("ui:messages.m_5342e09f2729fbc6")}
             </DropdownMenuItem>
             {!hideArchiveAction && onToggleArchived ? (
               <DropdownMenuItem
                 onClick={() => onToggleArchived(routine)}
                 disabled={isStatusPending}
               >
-                {routine.status === "archived" ? "Restore" : "Archive"}
+                {routine.status === "archived" ? uiT("ui:messages.m_a76e13b9839270eb") : uiT("ui:messages.m_66f4804ee23ddc09")}
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>

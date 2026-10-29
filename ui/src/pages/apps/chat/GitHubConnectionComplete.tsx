@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Copy } from "lucide-react";
 import { resolveAgentAppearance, type GitHubAppWizardState } from "@paperclipai/shared";
@@ -113,7 +114,7 @@ export function GitHubConnectionComplete({
             avatarUrl={agentAvatarUrl(resolveAgentAppearance(avatar.appearance, endpoint.assignedAgentId), 512, 1, "rest")}
           />
           <DialogFooter>
-            <Button onClick={onClose}>Done</Button>
+            <Button onClick={onClose}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
           </DialogFooter>
         </div>
       </DialogContent>

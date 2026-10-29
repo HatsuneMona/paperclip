@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -198,7 +199,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
         <div className="flex flex-wrap items-center gap-2">
           <FlaskConical className="h-5 w-5 text-muted-foreground" />
           <h1 className="text-xl font-bold text-foreground">Smoke Lab</h1>
-          <Badge variant="outline">Experimental</Badge>
+          <Badge variant="outline">{uiT("ui:messages.m_3dc9f569422dcfda")}</Badge>
           <a
             href="https://github.com/paperclipai/paperclip/blob/master/doc/connections/SMOKE-LAB-TUTORIAL.md"
             target="_blank"
@@ -245,9 +246,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
               variant="outline"
               onClick={() => stopMutation.mutate()}
               disabled={anyMutating}
-            >
-              Stop
-            </Button>
+            >{uiT("ui:messages.m_cae7d57bc067a514")}</Button>
             <Button
               size="sm"
               variant="outline"
@@ -333,7 +332,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1"><Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" /> pass</span>
             <span className="inline-flex items-center gap-1"><X className="h-3.5 w-3.5 text-destructive" /> fail</span>
-            <span className="inline-flex items-center gap-1"><Minus className="h-3.5 w-3.5 text-amber-500" /> skipped</span>
+            <span className="inline-flex items-center gap-1"><Minus className="h-3.5 w-3.5 text-amber-500" />{uiT("ui:messages.m_24c76fca20491429")}</span>
             <span className="inline-flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30" /> not run</span>
           </div>
         </div>
@@ -383,7 +382,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-semibold text-foreground">Runs</h2>
+            <h2 className="text-sm font-semibold text-foreground">{uiT("ui:messages.m_848f54e89660cea4")}</h2>
             <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className={cn("h-2 w-2 rounded-full", HEALTH_STYLES[health])} />
               {health === "unknown" ? "no runs yet" : health}
@@ -437,8 +436,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
             {activeRun && (
               <div className="flex flex-col">
                 <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-2.5">
-                  <span className="text-xs text-muted-foreground">
-                    Started {formatTime(activeRun.startedAt)} · finished {formatTime(activeRun.finishedAt)}
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_fdc85156a1e21f7b")}{formatTime(activeRun.startedAt)} · finished {formatTime(activeRun.finishedAt)}
                   </span>
                   <StatusBadge status={activeRun.status} />
                 </div>

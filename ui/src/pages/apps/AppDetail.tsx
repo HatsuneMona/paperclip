@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AiConnectionPoolConnector } from "@/components/ai-connections/AiConnectionPoolConnector";
 import { aiConnectionRouterPluginKey } from "@paperclipai/shared";
 import { ConnectionInstructionsSettings } from "@/features/connections/ConnectionInstructions";
@@ -243,7 +244,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
       ? consumeSkillSourceReturn(connection.companyId)
       : null;
     pushToast({
-      title: `${appName} connected`,
+      title: uiT("ui:messages.m_db4ed330c9ec2ce6", { v0: (appName) }),
       body: skillSourcePath ? "Choose a repository to import your skills." : "The connection is ready. Review permissions or test an action below.",
       tone: "success",
     });
@@ -253,7 +254,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
   useEffect(() => {
     if (!activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
       { label: appName, href: appTabHref(connectionId, "permissions") },
       { label: appTabLabel(activeTab) },
     ]);
@@ -354,7 +355,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
         navigateTopLevel(target.url);
       } catch (error) {
         pushToast({
-          title: "Couldn't start sign-in",
+          title: uiT("ui:messages.m_3f9bac4a050951dc"),
           body: error instanceof Error ? error.message : "Please try again.",
           tone: "error",
         });
@@ -362,7 +363,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
     },
     onError: (error) =>
       pushToast({
-        title: "Couldn't start sign-in",
+        title: uiT("ui:messages.m_3f9bac4a050951dc"),
         body: error instanceof Error ? error.message : "Please try again.",
         tone: "error",
       }),
@@ -396,7 +397,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
         navigateTopLevel(target.url);
       } catch (error) {
         pushToast({
-          title: "Couldn't start sign-in",
+          title: uiT("ui:messages.m_3f9bac4a050951dc"),
           body: error instanceof Error ? error.message : "Please try again.",
           tone: "error",
         });
@@ -404,7 +405,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
     },
     onError: (error) =>
       pushToast({
-        title: "Couldn't start sign-in",
+        title: uiT("ui:messages.m_3f9bac4a050951dc"),
         body: error instanceof Error ? error.message : "Please try again.",
         tone: "error",
       }),
@@ -801,18 +802,16 @@ export function AppDetailHeader({
               }}
             >
               <Input
-                aria-label="App name"
+                aria-label={uiT("ui:messages.m_e6ad399685374164")}
                 value={nameDraft}
                 onChange={(event) => onNameDraftChange(event.target.value)}
                 className="h-9 w-64 text-lg font-bold"
                 autoFocus
               />
               <Button type="submit" size="sm" disabled={renamePending || !nameDraft.trim()}>
-                {renamePending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Save"}
+                {renamePending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : uiT("ui:messages.m_1509f561f2416598")}
               </Button>
-              <Button type="button" size="sm" variant="ghost" onClick={onRenameCancel} disabled={renamePending}>
-                Cancel
-              </Button>
+              <Button type="button" size="sm" variant="ghost" onClick={onRenameCancel} disabled={renamePending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             </form>
           ) : (
             <div className="flex items-center gap-1.5">
@@ -833,7 +832,7 @@ export function AppDetailHeader({
             <StatusBadge status={status} />
             {connection.config?.provider !== "agentmail" && actionCount !== null && (
               <span className="text-xs text-muted-foreground">
-                {actionCount} {actionCount === 1 ? "action" : "actions"} available
+                {actionCount} {actionCount === 1 ? uiT("ui:messages.m_bd938c688f49b77c") : uiT("ui:messages.m_2b0dcdd40016096b")} available
               </span>
             )}
             {connectionDisplaySecondaryHint(connection) ? (
@@ -854,7 +853,7 @@ function ToolsLoading({ mcpActions = false }: { mcpActions?: boolean }) {
   return (
     <div className="flex items-center gap-2 py-8 text-sm text-muted-foreground" role="status">
       <Loader2 className="h-4 w-4 animate-spin" />
-      {mcpActions ? "Loading MCP actions, this may take a minute." : "Loading tools…"}
+      {mcpActions ? "Loading MCP actions, this may take a minute." : uiT("ui:messages.m_ff20973001c13ece")}
     </div>
   );
 }
@@ -863,7 +862,7 @@ function ToolsLoadError({ onRetry }: { onRetry: () => void }) {
   return (
     <div className="space-y-3 py-8">
       <p className="text-sm text-destructive">Couldn’t load tools for this app.</p>
-      <Button size="sm" variant="outline" onClick={onRetry}>Try again</Button>
+      <Button size="sm" variant="outline" onClick={onRetry}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
     </div>
   );
 }
@@ -899,7 +898,7 @@ function statusFor(connection: ToolConnection): StatusInfo {
   if (isAttentionHealthStatus(connection.healthStatus) || (connection.connectionPurpose === "ai" && (connection.healthStatus !== "ok" || aiSubscriptionNeedsIsolatedLogin(connection.config)))) {
     return { label: "Needs attention", tone: "attention" };
   }
-  return { label: "Connected", tone: "connected" };
+  return { label: uiT("ui:messages.m_22965568d22a14ee"), tone: "connected" };
 }
 
 function StatusBadge({ status }: { status: StatusInfo }) {

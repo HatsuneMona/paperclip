@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { memo, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -71,8 +72,8 @@ function tomorrowMorningIso(): string {
 
 /** Snooze presets, resolved to a future ISO timestamp at click time. */
 const SNOOZE_PRESETS: ReadonlyArray<{ label: string; resolve: () => string }> = [
-  { label: "1 hour", resolve: () => new Date(Date.now() + HOUR_MS).toISOString() },
-  { label: "4 hours", resolve: () => new Date(Date.now() + 4 * HOUR_MS).toISOString() },
+  { label: uiT("ui:messages.m_f8b8883f0c9d8d82"), resolve: () => new Date(Date.now() + HOUR_MS).toISOString() },
+  { label: uiT("ui:messages.m_e5bc99278849514d"), resolve: () => new Date(Date.now() + 4 * HOUR_MS).toISOString() },
   { label: "Tomorrow morning", resolve: tomorrowMorningIso },
   { label: "Next week", resolve: () => new Date(Date.now() + 7 * DAY_MS).toISOString() },
 ];
@@ -184,7 +185,7 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
       onClick={activate}
     >
       {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-      {expanded ? "See less" : "See more"}
+      {expanded ? uiT("ui:messages.m_d1cee48d0de28c45") : uiT("ui:messages.m_bab37d62472990c0")}
     </button>
   ) : null;
 
@@ -214,18 +215,14 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
 
           {showOpen && (
             <Button asChild variant="default" size="xs" className={ACTION_BTN}>
-              <Link to={href!}>
-                Open
-                <ExternalLink className="h-3 w-3" />
+              <Link to={href!}>{uiT("ui:messages.m_ed077f3d8125d60d")}<ExternalLink className="h-3 w-3" />
               </Link>
             </Button>
           )}
 
           {showRestore && (
             <Button type="button" variant="outline" size="xs" className={ACTION_BTN} onClick={() => onRestore(item)}>
-              <RotateCcw className="h-3 w-3" />
-              Restore
-            </Button>
+              <RotateCcw className="h-3 w-3" />{uiT("ui:messages.m_a76e13b9839270eb")}</Button>
           )}
         </div>
       </div>
@@ -315,9 +312,7 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
               <DropdownMenuContent align="end">
                 {onSnooze && <SnoozeSubmenu onSnooze={(iso) => onSnooze(item, iso)} />}
                 <DropdownMenuItem onClick={() => onDismiss(item)}>
-                  <X className="h-4 w-4" />
-                  Dismiss
-                </DropdownMenuItem>
+                  <X className="h-4 w-4" />{uiT("ui:messages.m_48845bff334a50a5")}</DropdownMenuItem>
                 {href && (
                   <>
                     <DropdownMenuSeparator />
@@ -656,7 +651,7 @@ function ExpandedImages({ images, issueHref }: { images: AttentionDetailImage[];
           onClick={(e) => e.stopPropagation()}
           className="flex h-32 w-24 flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/40 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-ring focus-visible:ring-(length:--rad-3) focus-visible:outline-none"
         >
-          <span className="text-base font-semibold">{extra} more</span>
+          <span className="text-base font-semibold">{extra}{uiT("ui:messages.m_226ba18bbcdb7518")}</span>
           <span className="mt-0.5 inline-flex items-center gap-1 text-(length:--text-nano)">
             View issue
             <ExternalLink className="h-3 w-3" />
@@ -664,8 +659,7 @@ function ExpandedImages({ images, issueHref }: { images: AttentionDetailImage[];
         </Link>
       ) : (
         <span className="flex h-32 w-24 items-center justify-center rounded-md border border-dashed border-border bg-muted/40 text-sm font-semibold text-muted-foreground">
-          {extra} more
-        </span>
+          {extra}{uiT("ui:messages.m_226ba18bbcdb7518")}</span>
       ))}
     </div>
   );
@@ -700,9 +694,7 @@ function SnoozeSubmenu({ onSnooze }: { onSnooze: (snoozedUntil: string) => void 
           onKeyDown={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >
-          <span className="text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-            Custom
-          </span>
+          <span className="text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_494ca78f7374e46f")}</span>
           <input
             type="datetime-local"
             value={customValue}
@@ -861,17 +853,11 @@ function ApprovalResolver({ item, companyId, toggle }: { item: AttentionItem; co
       />
       <ResolverFooter toggle={toggle}>
         <Button size="sm" variant="outline" onClick={() => revise.mutate()} disabled={pending}>
-          {revise.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          Request revision
-        </Button>
+          {revise.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}{uiT("ui:messages.m_0bf92c49028dd595")}</Button>
         <Button size="sm" variant="destructive" onClick={() => reject.mutate()} disabled={pending}>
-          {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          Reject
-        </Button>
+          {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}{uiT("ui:messages.m_ab604a360777735f")}</Button>
         <Button size="sm" onClick={() => approve.mutate()} disabled={pending}>
-          {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          Approve
-        </Button>
+          {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
       </ResolverFooter>
     </>
   );
@@ -896,13 +882,9 @@ function JoinRequestResolver({ item, companyId, toggle }: { item: AttentionItem;
   return (
     <ResolverFooter toggle={toggle}>
       <Button size="sm" variant="destructive" onClick={() => reject.mutate()} disabled={pending}>
-        {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-        Reject
-      </Button>
+        {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}{uiT("ui:messages.m_ab604a360777735f")}</Button>
       <Button size="sm" onClick={() => approve.mutate()} disabled={pending}>
-        {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-        Approve
-      </Button>
+        {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
     </ResolverFooter>
   );
 }

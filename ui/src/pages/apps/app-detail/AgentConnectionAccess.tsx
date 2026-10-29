@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import type { Agent, ToolCatalogEntry, ToolPolicy, ToolProfileWithDetails } from "@paperclipai/shared";
 import { AgentAvatar } from "@/components/AgentAvatar";
@@ -50,10 +51,10 @@ export function AgentConnectionAccess({ connectionId, profiles, policies, catalo
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <AgentAvatar agent={agent ?? { id: agentId, name: "Agent" }} size={32} />
-            <span className="text-sm font-medium">{agent?.name ?? "Agent"}</span>
+            <span className="text-sm font-medium">{agent?.name ?? uiT("ui:messages.m_11b39c93777e8f1f")}</span>
           </div>
           {canManage && <Button variant="outline" size="sm" disabled={pending !== null} onClick={() => void remove(profile.id)}>
-            {pending === profile.id ? "Removing…" : "Remove grant"}
+            {pending === profile.id ? uiT("ui:messages.m_d4b09919ec929f15") : "Remove grant"}
           </Button>}
         </div>
         <ul className="space-y-2">
@@ -64,7 +65,7 @@ export function AgentConnectionAccess({ connectionId, profiles, policies, catalo
               && policy.selectors?.catalogEntryId === tool.id);
             return <li key={tool.id} className="flex items-center justify-between gap-4 text-sm">
               <span className="min-w-0 break-all">{tool.title || tool.toolName}</span>
-              <span className="shrink-0 text-muted-foreground">{askFirst ? "Ask first" : "Allowed"}</span>
+              <span className="shrink-0 text-muted-foreground">{askFirst ? uiT("ui:messages.m_4a9e8cf39abb59f1") : uiT("ui:messages.m_1bb201d188352e9b")}</span>
             </li>;
           })}
         </ul>

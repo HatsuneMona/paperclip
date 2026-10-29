@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { AiConnectionPicker } from "./AiConnectionPicker";
 import { LocalProviderLoginInstructions, ProviderApiKeyCard } from "@/components/AdapterLoginChrome";
@@ -57,7 +58,7 @@ export function AiConnectionDesignExamples() {
         disabled
         onChange={() => {}}
         onSubmit={() => {}}
-        placeholder="Enter API key here"
+        placeholder={uiT("ui:messages.m_c80c3ac9799dc19b")}
       />
       <LocalProviderLoginInstructions
         adapterType="claude_local"

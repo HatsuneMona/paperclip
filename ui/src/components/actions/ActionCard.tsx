@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { Clock, Pencil, ShieldCheck } from "lucide-react";
 import type { ToolRiskLevel } from "@paperclipai/shared";
@@ -146,7 +147,7 @@ function bindingRows(binding: ActionCardBinding, isStale: boolean): BindingRow[]
 
   return [
     {
-      label: "Application",
+      label: uiT("ui:messages.m_e7ad522ea327e5ba"),
       value: (
         <span>
           {binding.application}
@@ -154,8 +155,8 @@ function bindingRows(binding: ActionCardBinding, isStale: boolean): BindingRow[]
         </span>
       ),
     },
-    { label: "Connection", value: binding.connection, mono: true },
-    { label: "Catalog", value: catalogValue, mono: !isStale },
+    { label: uiT("ui:messages.m_639a40e82b9a96f0"), value: binding.connection, mono: true },
+    { label: uiT("ui:messages.m_3877d14889a9909b"), value: catalogValue, mono: !isStale },
     {
       label: "Payload",
       value: (
@@ -202,14 +203,10 @@ export function ActionCard({
       disabled={isStale}
       className={mobile ? "w-full" : undefined}
       title={isStale ? "Re-issue the request before approving — the catalog hash changed." : undefined}
-    >
-      Approve
-    </Button>
+    >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
   );
   const denyButton = (
-    <Button size="sm" variant="outline" onClick={onDeny} className={mobile ? "w-full" : undefined}>
-      Deny
-    </Button>
+    <Button size="sm" variant="outline" onClick={onDeny} className={mobile ? "w-full" : undefined}>{uiT("ui:messages.m_05a2d7332eb9d8bf")}</Button>
   );
   const editButton = (
     <Button size="sm" variant="outline" onClick={onEditResign} className={mobile ? "w-full" : undefined}>
@@ -266,7 +263,7 @@ export function ActionCard({
 
         {/* JSON input */}
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">Input</p>
+          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">{uiT("ui:messages.m_36ecb4f8669133ce")}</p>
           <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-3 font-mono text-xs leading-relaxed text-foreground">
             {json}
           </pre>

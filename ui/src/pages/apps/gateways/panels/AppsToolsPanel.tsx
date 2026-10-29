@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ToolProfileWithDetails } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
 import { cn } from "@/lib/utils";
@@ -19,7 +20,7 @@ export function AppsToolsPanel({
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         These apps go through this gateway. The bound profile
-        {profile ? ` (${profile.name})` : ""} decides which tools are allowed
+        {profile ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (profile.name) }) : ""} decides which tools are allowed
         {profile ? ` — ${allowedToolsLabel(profile)}.` : "."} Change the profile under Advanced.
       </p>
 
@@ -32,9 +33,9 @@ export function AppsToolsPanel({
           <table className="w-full min-w-(--sz-32rem) text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                <th className="px-4 py-2.5">App</th>
-                <th className="px-4 py-2.5">Tools</th>
-                <th className="px-4 py-2.5">Status</th>
+                <th className="px-4 py-2.5">{uiT("ui:messages.m_0d04bfeb7d64b71c")}</th>
+                <th className="px-4 py-2.5">{uiT("ui:messages.m_ea93d6a262ecb87a")}</th>
+                <th className="px-4 py-2.5">{uiT("ui:messages.m_920e413c7d411b61")}</th>
                 <th className="px-4 py-2.5 text-right" />
               </tr>
             </thead>
@@ -54,7 +55,7 @@ export function AppsToolsPanel({
                       ) : null}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {app.toolCount} {app.toolCount === 1 ? "tool" : "tools"}
+                      {app.toolCount} {app.toolCount === 1 ? uiT("ui:messages.m_7c9bbe5ec9b3fb77") : uiT("ui:messages.m_f9d35d43770d3909")}
                     </td>
                     <td className="px-4 py-3">
                       <span
@@ -65,7 +66,7 @@ export function AppsToolsPanel({
                             : "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
                         )}
                       >
-                        {app.needsAttention ? "Needs attention" : "Healthy"}
+                        {app.needsAttention ? uiT("ui:messages.m_c1ebc7817870e5be") : uiT("ui:messages.m_7f1e323b6272c620")}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">

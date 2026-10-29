@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -137,9 +138,7 @@ export function ActionTestDialog({
 
         {testAgentsQuery.isLoading ? (
           <div className="flex items-center gap-2 py-6 text-sm text-muted-foreground" role="status">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Loading agents…
-          </div>
+            <Loader2 className="h-4 w-4 animate-spin" />{uiT("ui:messages.m_ae0c1414f42139ce")}</div>
         ) : testAgentsQuery.isError ? (
           <TestLoadError
             message="We couldn't load the agents available for testing."
@@ -191,15 +190,15 @@ export function ActionTestDialog({
 
 const DECISION_META: Record<ToolConnectionTestDecision, DecisionMeta> = {
   allowed: {
-    label: "Allowed",
+    label: uiT("ui:messages.m_1bb201d188352e9b"),
     className: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
   },
   ask_first: {
-    label: "Ask first",
+    label: uiT("ui:messages.m_4a9e8cf39abb59f1"),
     className: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300",
   },
   off: {
-    label: "Off",
+    label: uiT("ui:messages.m_ca7981b46ecf2c17"),
     className: "border-border bg-muted text-muted-foreground",
   },
 };
@@ -222,9 +221,7 @@ function TestLoadError({ message, onRetry }: { message: string; onRetry: () => v
   return (
     <div className="py-8 text-center">
       <p className="text-sm font-medium text-foreground">{message}</p>
-      <Button className="mt-3" size="sm" variant="outline" onClick={onRetry}>
-        Try again
-      </Button>
+      <Button className="mt-3" size="sm" variant="outline" onClick={onRetry}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
     </div>
   );
 }
@@ -271,7 +268,7 @@ function AgentPicker({
             <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
             <Input
               aria-label="Search agents"
-              placeholder="Search agents…"
+              placeholder={uiT("ui:messages.m_e05cb78e973da372")}
               className="h-8 pl-8 text-sm"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -321,13 +318,11 @@ function AgentPicker({
         <div className="border-t border-border p-3">
           <p className="text-xs font-semibold text-foreground">What the badges mean</p>
           <ul className="mt-1.5 space-y-1 text-xs text-muted-foreground">
-            <li><span className="font-medium text-foreground">Allowed</span> — runs immediately when you press Run.</li>
-            <li><span className="font-medium text-foreground">Ask first</span> — Run is parked in Review for your OK.</li>
+            <li><span className="font-medium text-foreground">{uiT("ui:messages.m_1bb201d188352e9b")}</span> — runs immediately when you press Run.</li>
+            <li><span className="font-medium text-foreground">{uiT("ui:messages.m_4a9e8cf39abb59f1")}</span> — Run is parked in Review for your OK.</li>
             <li>
-              <span className="font-medium text-foreground">Off</span> — won't run. Change it in{" "}
-              <Link className="text-primary hover:underline" to={appTabHref(connectionId, "permissions")}>
-                Permissions
-              </Link>.
+              <span className="font-medium text-foreground">{uiT("ui:messages.m_ca7981b46ecf2c17")}</span> — won't run. Change it in{" "}
+              <Link className="text-primary hover:underline" to={appTabHref(connectionId, "permissions")}>{uiT("ui:messages.m_abccc78cc93c0793")}</Link>.
             </li>
           </ul>
           <p className="mt-2 text-(length:--text-micro) text-muted-foreground">
@@ -553,13 +548,11 @@ function ActionTester({
             </>
           ) : (
             <>
-              <Play className="h-3.5 w-3.5" /> {outcome ? "Run again" : "Run"}
+              <Play className="h-3.5 w-3.5" /> {outcome ? uiT("ui:messages.m_3e310b75051c78a3") : uiT("ui:messages.m_00d60e31a4e6b834")}
             </>
           )}
         </Button>
-        <Button onClick={onReset} disabled={running} size="sm" variant="ghost">
-          Reset
-        </Button>
+        <Button onClick={onReset} disabled={running} size="sm" variant="ghost">{uiT("ui:messages.m_daee7606b339f3c3")}</Button>
       </div>
 
       {(outcome?.result.decision === "ask_first" || outcome?.result.upstreamPending?.resumeTool) && <p className="text-xs text-muted-foreground">Finish the existing request below. Use Reset only when you intend to start a new call.</p>}
@@ -570,7 +563,7 @@ function ActionTester({
 
       {run.isError && !running && (
         <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-          Couldn't reach {agent.name}. {run.error instanceof Error ? run.error.message : "Please try again."}
+          Couldn't reach {agent.name}. {run.error instanceof Error ? run.error.message : uiT("ui:messages.m_eea4fb33efd38283")}
         </div>
       )}
 
@@ -603,16 +596,14 @@ function RunningCard({
     <div className="rounded-md border border-border bg-muted/30 p-4">
       <div className="flex items-center gap-2">
         <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-        <span className="text-sm font-medium text-foreground">Running…</span>
+        <span className="text-sm font-medium text-foreground">{uiT("ui:messages.m_46c541363b0253b1")}</span>
       </div>
       <p className="mt-1 text-xs text-muted-foreground">
         {verb} {appName} as {agentName}.
       </p>
       <div className="mt-3 flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">Started {seconds(elapsedMs)} ago · Press cancel to stop</span>
-        <Button onClick={onCancel} size="sm" variant="outline">
-          Cancel
-        </Button>
+        <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_fdc85156a1e21f7b")}{seconds(elapsedMs)} ago · Press cancel to stop</span>
+        <Button onClick={onCancel} size="sm" variant="outline">{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
       </div>
     </div>
   );
@@ -664,7 +655,7 @@ function ProviderPendingResult({ pending, appName, connectionId, agent }: { pend
     ((resumed.action === "decline" && /request was declined by the user/i.test(resumeError.message)) ||
       (resumed.action === "cancel" && /request was cancelled by the user/i.test(resumeError.message)));
   if (stoppedByUser) return <div role="status" className="space-y-2 rounded-md border border-border bg-muted/40 p-4 text-sm">
-    <p className="font-medium">{resumed.action === "decline" ? "Request declined" : "Request cancelled"}</p>
+    <p className="font-medium">{resumed.action === "decline" ? "Request declined" : uiT("ui:messages.m_7108183f1888b7c9")}</p>
     <p>{resumeError.message}</p>
     <p className="text-muted-foreground">The original call was not repeated.</p>
     {pending.executionId && <p>Execution: <code className="break-all">{pending.executionId}</code></p>}
@@ -672,7 +663,7 @@ function ProviderPendingResult({ pending, appName, connectionId, agent }: { pend
   if (resumed) return <ResultPanel outcome={resumed.outcome} entry={resumed.entry} appName={appName} connectionId={connectionId} agent={agent} />;
   return (
     <div role="status" className="space-y-3 rounded-md border border-border bg-muted/40 p-4 text-sm">
-      <p className="font-medium">{pending.kind === "approval" ? "Approval needed" : "Authorization needed"} in {appName}</p>
+      <p className="font-medium">{pending.kind === "approval" ? "Approval needed" : "Authorization needed"}{uiT("ui:messages.m_2eb9d0d30d4ceaac")}{appName}</p>
       <p className="text-muted-foreground">Paperclip allowed this call. The provider needs your input before it can continue.</p>
       {pending.links.map((link) => {
         const checked = checkOAuthEndpointUrl(link.url);
@@ -720,9 +711,9 @@ function ProviderResumeControls({ pending, connectionId, agent, onResult }: {
     <div className="flex items-center gap-2"><span>Resume permission</span><DecisionBadge decision={permission} /></div>
     {Object.keys(schema.properties ?? {}).length > 0 && <JsonSchemaForm schema={schema} values={content} onChange={setContent} errors={errors} disabled={resume.isPending} />}
     <div className="flex flex-wrap gap-2">
-      <Button disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("accept")}>{resume.isPending ? "Resuming…" : "Approve and resume"}</Button>
-      <Button variant="outline" disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("decline")}>Decline</Button>
-      <Button variant="ghost" disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("cancel")}>Cancel request</Button>
+      <Button disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("accept")}>{resume.isPending ? uiT("ui:messages.m_c494e3ca3e3b04a3") : "Approve and resume"}</Button>
+      <Button variant="outline" disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("decline")}>{uiT("ui:messages.m_a2d285b352873457")}</Button>
+      <Button variant="ghost" disabled={!entry || expired || permission === "off" || resume.isPending} onClick={() => submit("cancel")}>{uiT("ui:messages.m_56196683592dab4d")}</Button>
     </div>
     {expired && <p>This provider approval expired. Check the provider before starting a new action.</p>}
     {permission === "off" && <p>Allow the resume action in Permissions before continuing.</p>}
@@ -810,10 +801,10 @@ function resultPreview(value: unknown): { items: Array<{ label: string | null; v
     if (content.type === "text" && typeof content.text === "string") {
       const parsed = parseText(content.text);
       if (structured === null || structured === undefined || safeStringify(parsed) !== safeStringify(structuredValue)) {
-        items.push({ label: (blocks?.length ?? 0) > 1 || (structured !== null && structured !== undefined) ? "Text" : null, value: parsed });
+        items.push({ label: (blocks?.length ?? 0) > 1 || (structured !== null && structured !== undefined) ? uiT("ui:messages.m_71988c4d8e0803ba") : null, value: parsed });
       }
     } else if (content.type === "image" || content.type === "audio") {
-      items.push({ label: content.type === "image" ? "Image" : "Audio", value: typeof content.mimeType === "string" ? content.mimeType : "Media attachment" });
+      items.push({ label: content.type === "image" ? uiT("ui:messages.m_1aa4cb0bcca76e92") : uiT("ui:messages.m_bc1b88907d3b748a"), value: typeof content.mimeType === "string" ? content.mimeType : "Media attachment" });
     } else if (content.type === "resource_link") {
       items.push({ label: "Resource", value: content.title ?? content.name ?? content.uri ?? "Resource link" });
     } else if (content.type === "resource" && content.resource && typeof content.resource === "object") {
@@ -872,7 +863,7 @@ function AllowedResult({
 
       {preview.items.some((item) => !isEmptyResult(item.value)) && (
         <div className="mt-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preview</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_324b134f57c70c72")}</p>
           <div className="mt-1.5">
             <div className="space-y-2">
               {preview.items.map((item, index) => (
@@ -890,9 +881,7 @@ function AllowedResult({
 
       <p className="mt-3 text-xs text-muted-foreground">
         This call is in the{" "}
-        <Link className="text-primary hover:underline" to="/activity?mode=agents&action=tool_">
-          Audit log
-        </Link>
+        <Link className="text-primary hover:underline" to="/activity?mode=agents&action=tool_">{uiT("ui:messages.m_e4d36f9a4e22d3a2")}</Link>
         .
       </p>
       <p className="mt-1 text-xs text-muted-foreground">Last run finished in {seconds(outcome.durationMs)}.</p>
@@ -985,7 +974,7 @@ function PreviewRowCard({ row, index }: { row: Record<string, unknown>; index: n
         <p className="min-w-0 break-words text-sm font-medium text-foreground">
           {titleKey ? cellText(row[titleKey]) : `Result ${index + 1}`}
         </p>
-        {url && <a className="shrink-0 text-primary hover:underline" href={url} target="_blank" rel="noopener noreferrer">Open link</a>}
+        {url && <a className="shrink-0 text-primary hover:underline" href={url} target="_blank" rel="noopener noreferrer">{uiT("ui:messages.m_aab63f85c7f1cd14")}</a>}
       </div>
       {summaryKey && <p className="mt-1 line-clamp-2 break-words text-muted-foreground">{cellText(row[summaryKey]).replace(/\*\*(.*?)\*\*/g, "$1")}</p>}
       {details.length > 0 && (
@@ -1086,9 +1075,7 @@ function ErrorResult({
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
         Also visible in the{" "}
-        <Link className="text-primary hover:underline" to="/activity?mode=agents&action=tool_">
-          Audit log
-        </Link>
+        <Link className="text-primary hover:underline" to="/activity?mode=agents&action=tool_">{uiT("ui:messages.m_e4d36f9a4e22d3a2")}</Link>
         .
       </p>
     </div>
@@ -1208,7 +1195,7 @@ function AskFirstResult({
 
       <dl className="mt-3 space-y-1.5 text-sm">
         <div className="flex gap-3">
-          <dt className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Action</dt>
+          <dt className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_64cff1319d2fd2cb")}</dt>
           <dd className="text-foreground">{entry.title ?? entry.toolName}</dd>
         </div>
         {where && (
@@ -1218,7 +1205,7 @@ function AskFirstResult({
           </div>
         )}
         <div className="flex gap-3">
-          <dt className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Status</dt>
+          <dt className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_920e413c7d411b61")}</dt>
           <dd className={cn("flex items-center gap-1.5 text-foreground", settled && "text-muted-foreground")}>
             {phase === "running" && <Loader2 className="h-3 w-3 animate-spin" />}
             {statusLabel}
@@ -1242,7 +1229,7 @@ function AskFirstResult({
         </Button>
         {phase === "waiting" && actionRequestId && selectedCompanyId && (
           <Button size="sm" variant="ghost" onClick={() => cancel.mutate()} disabled={cancel.isPending}>
-            {cancel.isPending ? "Cancelling…" : "Cancel this request"}
+            {cancel.isPending ? uiT("ui:messages.m_91b104db05da1b2d") : "Cancel this request"}
           </Button>
         )}
       </div>
@@ -1296,10 +1283,8 @@ function OffExplanation({
             <p className="font-medium text-foreground">{title} is off for {agent.name}.</p>
             <p className="mt-0.5">It won't run here, and it won't run from a task either.</p>
             <p className="mt-2">
-              Want to test it? Turn it on for {agent.name} in{" "}
-              <Link className="font-medium text-primary hover:underline" to={appTabHref(connectionId, "permissions")}>
-                Permissions
-              </Link>{" "}
+              Want to test it? Turn it on for {agent.name}{uiT("ui:messages.m_8f6b9ac6b27608e8")}{" "}
+              <Link className="font-medium text-primary hover:underline" to={appTabHref(connectionId, "permissions")}>{uiT("ui:messages.m_abccc78cc93c0793")}</Link>{" "}
               — set it to Allowed or Ask first.
             </p>
           </div>

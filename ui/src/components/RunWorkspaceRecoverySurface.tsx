@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { HeartbeatRun } from "@paperclipai/shared";
@@ -113,12 +114,12 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
       pushToast(
         variables.mode === "quarantine_restore"
           ? {
-              title: "Workspace repaired",
+              title: uiT("ui:messages.m_22f46fd2c10aa2cb"),
               body: "Dirty changes were quarantined onto a rescue branch and the recorded branch restored; the task will resume.",
               tone: "success",
             }
           : {
-              title: "Workspace branch reconciled",
+              title: uiT("ui:messages.m_a01d3ef71b57c6fb"),
               body: "The recorded branch now matches the live branch; the task will resume.",
               tone: "success",
             },
@@ -126,7 +127,7 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
     },
     onError: (err) => {
       pushToast({
-        title: "Reconcile failed",
+        title: uiT("ui:messages.m_45e781836d87377c"),
         body: err instanceof Error ? err.message : "Unable to reconcile the workspace branch.",
         tone: "error",
       });
@@ -148,7 +149,7 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
         issue.description ?? "",
       ];
       return issuesApi.create(issue.companyId, {
-        title: `Re-issue (isolated): ${issue.title ?? sourceLabel}`,
+        title: uiT("ui:messages.m_1252753240ea3ad1", { v0: (issue.title ?? sourceLabel) }),
         description: descriptionLines.join("\n"),
         priority: issue.priority,
         projectId: issue.projectId ?? null,
@@ -168,7 +169,7 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
     onSuccess: (created) => {
       invalidate();
       pushToast({
-        title: "Isolated re-issue created",
+        title: uiT("ui:messages.m_6d11286299c74513"),
         body: created.identifier
           ? `${created.identifier} will run on a fresh isolated workspace.`
           : "A fresh isolated re-issue was created.",
@@ -180,7 +181,7 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
     },
     onError: (err) => {
       pushToast({
-        title: "Re-issue failed",
+        title: uiT("ui:messages.m_d2f4dc96997e51d4"),
         body: err instanceof Error ? err.message : "Unable to create an isolated re-issue.",
         tone: "error",
       });
@@ -204,7 +205,7 @@ function WorkspaceValidationRecoverySurface({ run }: { run: HeartbeatRun }) {
     },
     onError: (err) => {
       pushToast({
-        title: "Recovery resolution failed",
+        title: uiT("ui:messages.m_f9244c725b820bdb"),
         body: err instanceof Error ? err.message : "Unable to resolve recovery action",
         tone: "error",
       });

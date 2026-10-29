@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/lib/router";
@@ -91,10 +92,10 @@ function CaseDocumentDiffModal({
           </DialogHeader>
           <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:gap-4">
             <div className="flex min-w-0 items-center gap-2">
-              <span className="shrink-0 rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-red-400">Old</span>
+              <span className="shrink-0 rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-red-400">{uiT("ui:messages.m_bca97160f4e1211f")}</span>
               <Select value={effectiveLeftId ?? ""} onValueChange={setLeftRevisionId}>
                 <SelectTrigger aria-label="Old revision" className="min-w-0 w-full border-border/60 data-[size=default]:h-11 md:w-60 md:text-xs md:data-[size=default]:h-9">
-                  <SelectValue className="min-w-0 truncate" placeholder="Select revision" />
+                  <SelectValue className="min-w-0 truncate" placeholder={uiT("ui:messages.m_4c84315133f7f48d")} />
                 </SelectTrigger>
                 <SelectContent>
                   {revisions.map((revision) => (
@@ -106,10 +107,10 @@ function CaseDocumentDiffModal({
               </Select>
             </div>
             <div className="flex min-w-0 items-center gap-2">
-              <span className="shrink-0 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-green-400">New</span>
+              <span className="shrink-0 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-green-400">{uiT("ui:messages.m_18fdd549b2ed367a")}</span>
               <Select value={effectiveRightId ?? ""} onValueChange={setRightRevisionId}>
                 <SelectTrigger aria-label="New revision" className="min-w-0 w-full border-border/60 data-[size=default]:h-11 md:w-60 md:text-xs md:data-[size=default]:h-9">
-                  <SelectValue className="min-w-0 truncate" placeholder="Select revision" />
+                  <SelectValue className="min-w-0 truncate" placeholder={uiT("ui:messages.m_4c84315133f7f48d")} />
                 </SelectTrigger>
                 <SelectContent>
                   {revisions.map((revision) => (
@@ -131,10 +132,10 @@ function CaseDocumentDiffModal({
           ) : (
             <div className="font-mono text-xs leading-6">
               <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">
-                <span>Old</span>
-                <span>New</span>
+                <span>{uiT("ui:messages.m_bca97160f4e1211f")}</span>
+                <span>{uiT("ui:messages.m_18fdd549b2ed367a")}</span>
                 <span />
-                <span>Content</span>
+                <span>{uiT("ui:messages.m_47bd29075f8b8019")}</span>
               </div>
               {diffRows.map((row, index) => (
                 <div
@@ -216,7 +217,7 @@ export function CaseRevisionRail({
     );
   }
   if (revisions.length === 0) {
-    return <p className="py-6 text-center text-sm text-muted-foreground">No revisions yet.</p>;
+    return <p className="py-6 text-center text-sm text-muted-foreground">{uiT("ui:messages.m_db4f9639355981b2")}</p>;
   }
 
   const selected = revisions.find((r) => r.id === selectedId) ?? revisions[0]!;
@@ -226,9 +227,7 @@ export function CaseRevisionRail({
     <div className="grid gap-4 md:grid-cols-(--gtc-case-revisions)">
       <aside className="min-w-0 space-y-1">
         <div className="flex items-center justify-between gap-2 px-1">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Revisions
-          </h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_da80b1d5740caaef")}</h3>
           {revisions.length > 1 ? (
             <Button
               type="button"
@@ -237,9 +236,7 @@ export function CaseRevisionRail({
               className="h-7 gap-1 px-2 text-xs"
               onClick={() => setDiffOpen(true)}
             >
-              <Diff className="h-3.5 w-3.5" />
-              Diff
-            </Button>
+              <Diff className="h-3.5 w-3.5" />{uiT("ui:messages.m_7ecf46284588f3fa")}</Button>
           ) : null}
         </div>
         <ol className="space-y-1">
@@ -257,12 +254,9 @@ export function CaseRevisionRail({
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-medium">
-                    rev {rev.revisionNumber}
+                  <span className="text-xs font-medium">{uiT("ui:messages.m_efd46cd7c40429d4")}{rev.revisionNumber}
                     {index === 0 && (
-                      <span className="ml-1.5 rounded bg-muted px-1 py-0.5 text-(length:--text-nano) text-muted-foreground">
-                        latest
-                      </span>
+                      <span className="ml-1.5 rounded bg-muted px-1 py-0.5 text-(length:--text-nano) text-muted-foreground">{uiT("ui:messages.m_5e1e2bcac305958b")}</span>
                     )}
                   </span>
                   <span className="text-(length:--text-micro) text-muted-foreground">{relativeTime(rev.createdAt)}</span>
@@ -281,7 +275,7 @@ export function CaseRevisionRail({
 
       <Card className="min-w-0 px-4 py-3">
         <div className="mb-2 flex items-baseline justify-between border-b border-border pb-2">
-          <span className="text-sm font-medium">rev {selected.revisionNumber}</span>
+          <span className="text-sm font-medium">{uiT("ui:messages.m_efd46cd7c40429d4")}{selected.revisionNumber}</span>
           <RevisionByline revision={selected} />
         </div>
         {selected.body ? (

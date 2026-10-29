@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { Agent } from "@paperclipai/shared";
 import type { CompanyUserProfile } from "./company-members";
 import { formatReviewPolicyValue } from "./review-policy";
@@ -557,7 +558,7 @@ export function formatIssueActivityAction(
     details
   ) {
     const key = typeof details.key === "string" ? details.key : "document";
-    const title = typeof details.title === "string" && details.title ? ` (${details.title})` : "";
+    const title = typeof details.title === "string" && details.title ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (details.title) }) : "";
     return `${ISSUE_ACTIVITY_LABELS[action] ?? action} ${key}${title}`;
   }
 

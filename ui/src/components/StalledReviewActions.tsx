@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Loader2, RotateCcw, Undo2 } from "lucide-react";
@@ -145,9 +146,7 @@ export function StalledReviewActions({
               <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
             ) : (
               <RotateCcw className="h-3.5 w-3.5" aria-hidden />
-            )}
-            Request changes
-          </Button>
+            )}{uiT("ui:messages.m_cb5d9f9878037cd9")}</Button>
           <Button
             type="button"
             size="sm"

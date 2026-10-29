@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { usePrimaryAgentPresentation } from "@/components/primary-agent/PrimaryAgentPresentation";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -68,9 +69,9 @@ const RECENT_AGENT_LIMIT = 3;
 const LIVE_AGENT_LINGER_MS = 120_000;
 
 const AGENT_SORT_CHOICES: SidebarSectionRadioChoice[] = [
-  { value: "top", label: "Top" },
-  { value: "alphabetical", label: "Alphabetical" },
-  { value: "recent", label: "Recent" },
+  { value: "top", label: uiT("ui:messages.m_d5cdfcf7ff75338f") },
+  { value: "alphabetical", label: uiT("ui:messages.m_a49d631f8c6cf6fb") },
+  { value: "recent", label: uiT("ui:messages.m_690dbe9dc0993c42") },
 ];
 
 function agentTimestamp(agent: Agent, field: "lastHeartbeatAt" | "updatedAt" | "createdAt"): number {
@@ -182,14 +183,14 @@ function SidebarAgentItem({
           <span className="ml-1 flex shrink-0 items-center gap-1">
             {showBuiltInLifecycle ? <BuiltInLifecycleChip status={builtInStatus} compact /> : null}
             {hasInvalidOrgChain ? (
-              <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label="Invalid reporting chain" />
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label={uiT("ui:messages.m_bf9c6d9dc8a902fc")} />
             ) : null}
           </span>
         ) : undefined
       }
       trailingLabel={trailingLabel}
       liveAccessory={
-        agent.pauseReason === "budget" ? <BudgetSidebarMarker title="Agent paused by budget" /> : undefined
+        agent.pauseReason === "budget" ? <BudgetSidebarMarker title={uiT("ui:messages.m_2a32d0ef07d1c0c2")} /> : undefined
       }
     />
   );
@@ -229,7 +230,7 @@ function SidebarAgentItem({
                 ? "opacity-100"
                 : "pointer-events-none opacity-0 group-hover/agent:pointer-events-auto group-hover/agent:opacity-100 group-focus-within/agent:pointer-events-auto group-focus-within/agent:opacity-100",
             )}
-            aria-label={`Open actions for ${agent.name}`}
+            aria-label={uiT("ui:messages.m_45ad2792453510ba", { v0: (agent.name) })}
           >
             <MoreHorizontal className="h-3.5 w-3.5" />
           </Button>
@@ -249,7 +250,7 @@ function SidebarAgentItem({
                 ) : (
                   <Star className={cn("size-4", starred && "fill-amber-500 text-amber-500")} />
                 )}
-                <span>{starred ? "Remove from starred" : "Star agent"}</span>
+                <span>{starred ? uiT("ui:messages.m_f1133f6566cd1093") : uiT("ui:messages.m_97bfe49d7bf2e92e")}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
             </>
@@ -262,7 +263,7 @@ function SidebarAgentItem({
               }}
             >
               <Pencil className="size-4" />
-              <span>Edit agent</span>
+              <span>{uiT("ui:messages.m_6ff5e7a9477a6ea4")}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -272,7 +273,7 @@ function SidebarAgentItem({
               onPauseResume(agent, isPaused ? "resume" : "pause");
             }}
             disabled={pauseResumeDisabled}
-            title={isBudgetPaused ? "Agent was paused by budget limits" : undefined}
+            title={isBudgetPaused ? uiT("ui:messages.m_242f981a77985656") : undefined}
           >
             {isPaused ? <PlayCircle className="size-4" /> : <PauseCircle className="size-4" />}
             <span>{pauseResumeDisabledLabel}</span>
@@ -286,7 +287,7 @@ function SidebarAgentItem({
             disabled={leaving}
           >
             {leaving ? <Loader2 className="size-4 motion-safe:animate-spin" /> : <LogOut className="size-4" />}
-            <span>{leaving ? "Leaving..." : "Leave agent"}</span>
+            <span>{leaving ? uiT("ui:messages.m_9b6b4fb63c666d77") : uiT("ui:messages.m_a6befc7af0c086b7")}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -539,14 +540,14 @@ export function SidebarAgents({ streamlined = false }: { streamlined?: boolean }
         queryClient.invalidateQueries({ queryKey: queryKeys.agents.detail(agentRouteRef(agent)) }),
       ]);
       pushToast({
-        title: action === "pause" ? "Agent paused" : "Agent resumed",
+        title: action === "pause" ? uiT("ui:messages.m_ce663b910032c9f5") : uiT("ui:messages.m_921b327661b3813e"),
         body: agent.name,
         tone: "success",
       });
     },
     onError: (error, { agent, action }) => {
       pushToast({
-        title: action === "pause" ? "Could not pause agent" : "Could not resume agent",
+        title: action === "pause" ? uiT("ui:messages.m_b9e9ce1aeb50b2d9") : uiT("ui:messages.m_aa66c83368cdaf50"),
         body: error instanceof Error ? error.message : agent.name,
         tone: "error",
       });
@@ -637,7 +638,7 @@ export function SidebarAgents({ streamlined = false }: { streamlined?: boolean }
 
   return (
     <SidebarSection
-      label="Agents"
+      label={uiT("ui:messages.m_279b44d2ab4b40c0")}
       collapsible={{ open, onOpenChange: setOpen }}
       headerAction={{
         ariaLabel: "New agent",
@@ -647,7 +648,7 @@ export function SidebarAgents({ streamlined = false }: { streamlined?: boolean }
       menu={{
         ariaLabel: "Agents section actions",
         actions: [
-          { type: "item", label: "Browse agents", icon: Users, href: "/agents/all" },
+          { type: "item", label: uiT("ui:messages.m_9c6a7d961b50eb41"), icon: Users, href: "/agents/all" },
           { type: "separator" },
         ],
         radioLabel: "Agent sort",
@@ -668,20 +669,20 @@ export function SidebarAgents({ streamlined = false }: { streamlined?: boolean }
           <Link
             to="/agents/all"
             state={SIDEBAR_SCROLL_RESET_STATE}
-            aria-label={rail ? "See all agents" : undefined}
+            aria-label={rail ? uiT("ui:messages.m_f632e9d4173abe27") : undefined}
             onClick={() => {
               if (isMobile) setSidebarOpen(false);
             }}
             className="flex items-center gap-2.5 mx-2 rounded-lg px-2 py-1.5 pointer-coarse:py-1 text-(length:--text-compact) font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
           >
             <Users className="shrink-0 h-4 w-4" />
-            <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>See all agents</span>
+            <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>{uiT("ui:messages.m_f632e9d4173abe27")}</span>
           </Link>
         );
         return rail ? (
           <Tooltip>
             <TooltipTrigger asChild>{seeAllLink}</TooltipTrigger>
-            <TooltipContent side="right">See all agents</TooltipContent>
+            <TooltipContent side="right">{uiT("ui:messages.m_f632e9d4173abe27")}</TooltipContent>
           </Tooltip>
         ) : (
           seeAllLink

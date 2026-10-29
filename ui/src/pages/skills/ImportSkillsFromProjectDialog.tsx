@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -367,7 +368,7 @@ export function ImportSkillsFromProjectDialog({
       const importedCount = result.imported.length;
       toast.pushToast({
         tone: importedCount > 0 ? "success" : "warn",
-        title: importedCount > 0 ? "Skills imported" : "Nothing imported",
+        title: importedCount > 0 ? uiT("ui:messages.m_9894287afa0ffe79") : "Nothing imported",
         body:
           importedCount > 0
             ? `${importedCount} skill${importedCount === 1 ? "" : "s"} imported as references from ${selectedProject?.name ?? "the project"}.`
@@ -377,7 +378,7 @@ export function ImportSkillsFromProjectDialog({
     onError: (error) => {
       toast.pushToast({
         tone: "error",
-        title: "Import failed",
+        title: uiT("ui:messages.m_0a26f41abd00f95e"),
         body: readableErrorMessage(error),
       });
     },
@@ -512,9 +513,7 @@ export function ImportSkillsFromProjectDialog({
       >
         <header className="flex shrink-0 items-start justify-between gap-3 border-b border-border/60 px-5 py-4">
           <div className="flex flex-col gap-1">
-            <DialogTitle className="text-base font-semibold">
-              Import skills from project
-            </DialogTitle>
+            <DialogTitle className="text-base font-semibold">{uiT("ui:messages.m_364c89b0f1b44de1")}</DialogTitle>
             <DialogDescription className="text-xs text-muted-foreground">
               Pick a project, scan its workspaces for skills, and import them as references.
             </DialogDescription>
@@ -523,7 +522,7 @@ export function ImportSkillsFromProjectDialog({
             type="button"
             className="rounded-sm text-muted-foreground opacity-70 transition-opacity hover:opacity-100"
             onClick={handleClose}
-            aria-label="Close import dialog"
+            aria-label={uiT("ui:messages.m_0dbadc41afe7ec1a")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -587,9 +586,7 @@ export function ImportSkillsFromProjectDialog({
                       onClick={selectAll}
                       disabled={selectableCandidates.length === 0}
                       data-testid="select-all"
-                    >
-                      Select all
-                    </Button>
+                    >{uiT("ui:messages.m_1fc9a387654d410f")}</Button>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -623,14 +620,10 @@ export function ImportSkillsFromProjectDialog({
               </>
             )}
             {step === "pick" && (
-              <Button variant="ghost" size="sm" onClick={handleClose}>
-                Cancel
-              </Button>
+              <Button variant="ghost" size="sm" onClick={handleClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             )}
             {step === "result" && (
-              <Button size="sm" onClick={handleClose}>
-                Done
-              </Button>
+              <Button size="sm" onClick={handleClose}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
             )}
           </div>
         </footer>
@@ -666,9 +659,9 @@ function PickProjectStep({
           <Input
             value={filter}
             onChange={(event) => onFilterChange(event.target.value)}
-            placeholder="Filter projects"
+            placeholder={uiT("ui:messages.m_8fd82c567aa71d52")}
             className="pl-7 text-xs"
-            aria-label="Filter projects"
+            aria-label={uiT("ui:messages.m_8fd82c567aa71d52")}
             data-testid="project-filter"
           />
         </div>
@@ -713,8 +706,7 @@ function PickProjectStep({
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-sm font-medium">{project.name}</div>
                       <div className="mt-0.5 text-xs text-muted-foreground">
-                        {project.workspaces.length} workspace
-                        {project.workspaces.length === 1 ? "" : "s"}
+                        {project.workspaces.length}{uiT("ui:messages.m_4be0369b18383e64")}{project.workspaces.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                         {kinds ? ` · ${kinds}` : ""}
                       </div>
                       {disabled && (
@@ -750,7 +742,7 @@ function ScanningStep({ projectName }: { projectName: string }) {
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
       </div>
       <div>
-        <p className="text-sm font-medium">Scanning {projectName || "project"} for skills…</p>
+        <p className="text-sm font-medium">Scanning {projectName || uiT("ui:messages.m_244210e48437b655")} for skills…</p>
         <p className="mt-1 text-xs text-muted-foreground">
           Looking in well-known skill folders across each workspace.
         </p>
@@ -769,8 +761,7 @@ function ScanningStep({ projectName }: { projectName: string }) {
           variant="outline"
           className="px-1.5 py-0 text-(length:--text-micro) font-normal text-muted-foreground"
         >
-          +{APPROX_TOTAL_SCAN_FOLDERS - HIGHLIGHTED_SCAN_FOLDERS.length} more
-        </Badge>
+          +{APPROX_TOTAL_SCAN_FOLDERS - HIGHLIGHTED_SCAN_FOLDERS.length}{uiT("ui:messages.m_226ba18bbcdb7518")}</Badge>
       </div>
     </div>
   );
@@ -823,7 +814,7 @@ function ProjectSkillBrowser({
           </Button>
         </div>
         {workspaces.length > 1 && (
-          <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Project workspace">
+          <div className="mt-3 flex flex-wrap gap-1.5" aria-label={uiT("ui:messages.m_ce016e7f0a41c4f3")}>
             {workspaces.map((workspace) => (
               <Button
                 key={workspace.id}
@@ -844,7 +835,7 @@ function ProjectSkillBrowser({
           size="sm"
           onClick={() => result?.parentPath && setFolderPath(result.parentPath)}
           disabled={!result?.parentPath}
-          aria-label="Open parent folder"
+          aria-label={uiT("ui:messages.m_a00d48483e7b4dbb")}
         >
           <ArrowLeft className="h-3.5 w-3.5" />
         </Button>
@@ -881,7 +872,7 @@ function ProjectSkillBrowser({
                   </button>
                   {entry.isSkill ? (
                     <Button size="sm" onClick={() => onAddSkill(workspaceId, entry.path)} disabled={addingKey === key}>
-                      {addingKey === key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Add skill"}
+                      {addingKey === key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : uiT("ui:messages.m_bc4db5d337610b5b")}
                     </Button>
                   ) : entry.kind === "directory" ? (
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
@@ -959,9 +950,7 @@ function SelectStep({
               : readableErrorMessage(scanError)}
           </p>
           {!grant && (
-            <Button variant="outline" size="sm" className="mt-4" onClick={onRetry}>
-              Try again
-            </Button>
+            <Button variant="outline" size="sm" className="mt-4" onClick={onRetry}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
           )}
         </div>
       </div>
@@ -1014,9 +1003,7 @@ function SelectStep({
                 type="button"
                 className="font-medium text-foreground underline underline-offset-2"
                 onClick={onImportFromPath}
-              >
-                Import from path or URL
-              </button>
+              >{uiT("ui:messages.m_abed2dfba3bf7b4b")}</button>
               .
             </p>
           )}
@@ -1039,9 +1026,9 @@ function SelectStep({
           <Input
             value={filter}
             onChange={(event) => onFilterChange(event.target.value)}
-            placeholder="Search discovered skills…"
+            placeholder={uiT("ui:messages.m_f2e858d5bfed8110")}
             className="h-8 pl-8 text-xs"
-            aria-label="Search discovered skills"
+            aria-label={uiT("ui:messages.m_5777aeadd74cac19")}
           />
         </div>
       </div>
@@ -1090,7 +1077,7 @@ function SelectStep({
                               checked={isSelected}
                               onCheckedChange={() => toggleCandidate(candidate)}
                               disabled={!selectable}
-                              aria-label={`Select ${candidate.name}`}
+                              aria-label={uiT("ui:messages.m_58661820dfdc4c9f", { v0: (candidate.name) })}
                             />
                           </div>
                           <div className="min-w-0 flex-1">
@@ -1138,7 +1125,7 @@ function SelectStep({
                                     renameCandidate(candidate, event.target.value)
                                   }
                                   className="h-7 max-w-xs font-mono text-xs"
-                                  aria-label={`Rename ${candidate.name}`}
+                                  aria-label={uiT("ui:messages.m_089ce7b7dfb01778", { v0: (candidate.name) })}
                                   aria-invalid={
                                     selectedValue
                                       ? !isValidSelectionSlug(selectedValue)
@@ -1193,7 +1180,7 @@ function ResultStep({ result }: ResultStepProps) {
             ✓ {result.imported.length} imported
           </span>
           {result.updated.length > 0 && <span>↻ {result.updated.length} updated</span>}
-          {result.skipped.length > 0 && <span>⊘ {result.skipped.length} skipped</span>}
+          {result.skipped.length > 0 && <span>⊘ {result.skipped.length}{uiT("ui:messages.m_24c76fca20491429")}</span>}
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
@@ -1219,8 +1206,7 @@ function ResultStep({ result }: ResultStepProps) {
                   <Link
                     to={skillStudioRoute(skill.id)}
                     className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-foreground no-underline hover:underline"
-                  >
-                    Open <ExternalLink className="h-3 w-3" />
+                  >{uiT("ui:messages.m_b8039d1d54bf9e3b")}<ExternalLink className="h-3 w-3" />
                   </Link>
                 </li>
               ))}

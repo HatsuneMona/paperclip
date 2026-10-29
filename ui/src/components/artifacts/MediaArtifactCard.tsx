@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useContext, useState, type ReactNode } from "react";
 import { IssueGalleryContext } from "@/context/IssueGalleryContext";
 import { ImageGalleryModal } from "@/components/ImageGalleryModal";
@@ -30,7 +31,7 @@ export function MediaArtifactCard({ id, title, contentPath, contentType, origina
         <span className="flex w-full flex-1 flex-col gap-1 p-2.5">
           <span className="line-clamp-2 break-words text-sm font-medium" title={title}>{title}</span>
           <span className="flex flex-wrap items-center justify-between gap-1.5">
-            <span className="text-xs text-muted-foreground">{detail ?? (mediaKind === "video" ? "Video" : "Image")}</span>
+            <span className="text-xs text-muted-foreground">{detail ?? (mediaKind === "video" ? uiT("ui:messages.m_d534be829e32196b") : uiT("ui:messages.m_1aa4cb0bcca76e92"))}</span>
             {badge}
           </span>
         </span>

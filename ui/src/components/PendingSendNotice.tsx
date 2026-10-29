@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,7 +33,7 @@ export function PendingSendNotice({
   const title = !replayable
     ? `We couldn’t confirm whether this ${noun} was sent.`
     : resending
-      ? "Sending…"
+      ? uiT("ui:messages.m_b8ed5279e897be5d")
       : stalled
         ? `Couldn’t send this ${noun} yet.`
         : "Sending when reconnected…";
@@ -58,9 +59,7 @@ export function PendingSendNotice({
             Resend now
           </Button>
         ) : null}
-        <Button type="button" size="sm" variant="ghost" disabled={resending} onClick={onCancel}>
-          Cancel
-        </Button>
+        <Button type="button" size="sm" variant="ghost" disabled={resending} onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
       </div>
     </div>
   );

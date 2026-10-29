@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Fragment, useState, type ReactNode } from "react";
 import type { Issue } from "@paperclipai/shared";
 import { ChevronDown, ChevronRight, GitBranch } from "lucide-react";
@@ -110,7 +111,7 @@ export function TaskList({ items, allItems = items, initialColumns = defaultTask
   };
   const groups = new Map<string, Issue[]>();
   for (const root of roots) {
-    const label = groupBy === "status" ? issueFilterLabel(root.status) : groupBy === "project" ? root.project?.name ?? "No project" : "";
+    const label = groupBy === "status" ? issueFilterLabel(root.status) : groupBy === "project" ? root.project?.name ?? uiT("ui:messages.m_f34c2be0d1c5f562") : "";
     groups.set(label, [...(groups.get(label) ?? []), root]);
   }
   return (

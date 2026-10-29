@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { MessageSquare } from "lucide-react";
 import type { ChatConversation, ChatProvider } from "@/api/chatEndpoints";
 import { EmptyState } from "@/components/EmptyState";
@@ -50,7 +51,7 @@ export function ChatConversationList({
     );
   return (
     <ul
-      aria-label="Conversations"
+      aria-label={uiT("ui:messages.m_1d432f58690c2b4a")}
       className="divide-y divide-border border-y border-border"
     >
       {rows.map((row) => (
@@ -99,7 +100,7 @@ export function ChatConversationList({
                   {formatDateTime(row.updatedAt)}
                 </time>
               )}
-              {row.state === "completed" && <span>Completed</span>}
+              {row.state === "completed" && <span>{uiT("ui:messages.m_22a970d2e5b1cc23")}</span>}
             </div>
           </div>
           {row.state !== "active" && row.state !== "completed" && (

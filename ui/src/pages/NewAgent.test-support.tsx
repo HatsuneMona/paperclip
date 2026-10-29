@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -75,7 +76,7 @@ vi.mock("@/components/AgentConfigForm", () => ({
     onChange: (value: string) => void;
   }) => (
     <input
-      aria-label="Model"
+      aria-label={uiT("ui:messages.m_5e2c614c23f02239")}
       value={value}
       onChange={(e) => onChange(e.target.value)}
     />

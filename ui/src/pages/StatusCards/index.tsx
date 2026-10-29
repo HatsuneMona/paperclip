@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FlaskConical, Loader2, Plus } from "lucide-react";
@@ -33,7 +34,7 @@ export function StatusCards() {
   const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Status" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_920e413c7d411b61") }]);
   }, [setBreadcrumbs]);
 
   const activeQuery = useQuery({
@@ -116,11 +117,9 @@ export function StatusCards() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <h1 className="text-xl font-bold">Status</h1>
+          <h1 className="text-xl font-bold">{uiT("ui:messages.m_920e413c7d411b61")}</h1>
           <Badge variant="secondary" className="gap-1">
-            <FlaskConical className="h-3 w-3" />
-            Experimental
-          </Badge>
+            <FlaskConical className="h-3 w-3" />{uiT("ui:messages.m_3dc9f569422dcfda")}</Badge>
         </div>
         <div className="flex items-center gap-4">
           {showCostMeter ? (
@@ -129,9 +128,7 @@ export function StatusCards() {
             </span>
           ) : null}
           <Button onClick={() => setCreateOpen(true)} disabled={!selectedCompanyId}>
-            <Plus className="h-4 w-4" />
-            New card
-          </Button>
+            <Plus className="h-4 w-4" />{uiT("ui:messages.m_8d3efc397417cfd0")}</Button>
         </div>
       </div>
 
@@ -143,7 +140,7 @@ export function StatusCards() {
         </div>
       ) : activeQuery.isError ? (
         <InlineBanner tone="danger" title="Could not load status cards">
-          {activeQuery.error instanceof Error ? activeQuery.error.message : "Try again."}
+          {activeQuery.error instanceof Error ? activeQuery.error.message : uiT("ui:messages.m_a0c2cc1374d94994")}
         </InlineBanner>
       ) : activeCards.length === 0 ? (
         <EmptyState
@@ -180,7 +177,7 @@ export function StatusCards() {
             onClick={() => setShowArchived((prev) => !prev)}
             className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
           >
-            {showArchived ? "Hide archived" : `Show archived (${archivedCards.length})`}
+            {showArchived ? uiT("ui:messages.m_dd1c79324e411c47") : `Show archived (${archivedCards.length})`}
           </button>
           {showArchived
             ? archivedCards.map((card) => (

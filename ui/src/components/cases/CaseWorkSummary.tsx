@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Clock3 } from "lucide-react";
 import type { CaseDetail, CaseHandoffView } from "@/api/cases";
 import { AgentIdentity } from "@/components/AgentIdentity";
@@ -27,13 +28,13 @@ export function CaseWorkSummary({ caseData, pendingHandoff, agents }: {
       : destination?.status === "paused" ? `${to} is paused.` : `Waiting for ${to} to start.`);
 
   return <section className="space-y-3" aria-label="Case work">
-    <h2 className="text-sm font-semibold">Work</h2>
+    <h2 className="text-sm font-semibold">{uiT("ui:messages.m_104ab9213e28e4ff")}</h2>
     {caseData.workIssueId ? <div className="space-y-3">
       {task ? <div>
-        <PropertyRow label="Task"><IssueReferencePill issue={task} className="min-h-11 md:min-h-0" /></PropertyRow>
+        <PropertyRow label={uiT("ui:messages.m_4bc74b21357c6cf5")}><IssueReferencePill issue={task} className="min-h-11 md:min-h-0" /></PropertyRow>
         <PropertyRow label="Workflow"><span className="text-sm">{caseData.workflow?.name ?? "Case instructions"}</span></PropertyRow>
         {caseData.phase && <PropertyRow label="Phase"><span className="text-sm">{caseData.phase}</span></PropertyRow>}
-        <PropertyRow label="Agent">{assignee ? <AgentIdentity agent={assignee} size="xs" /> : <span className="text-sm text-muted-foreground">Unassigned</span>}</PropertyRow>
+        <PropertyRow label={uiT("ui:messages.m_11b39c93777e8f1f")}>{assignee ? <AgentIdentity agent={assignee} size="xs" /> : <span className="text-sm text-muted-foreground">{uiT("ui:messages.m_14d33bd014e6b4e7")}</span>}</PropertyRow>
         <PropertyRow label="Task status"><IssueStatusBadge status={task.status} /></PropertyRow>
       </div> : <p className="text-sm text-muted-foreground">The primary task is unavailable.</p>}
       {pending && pending.state !== "delivered" && pending.state !== "completed" && pending.state !== "cancelled" && <div className="flex items-start gap-2 text-sm">

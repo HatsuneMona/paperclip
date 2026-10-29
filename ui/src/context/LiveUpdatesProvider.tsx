@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { LiveTranscriptInterests, DISCONNECTED_TRANSCRIPT_STREAM } from "../lib/live-transcript-interests";
 import { resolveAgentAppearance } from "@paperclipai/shared";
 import { getPageVisibility, usePageVisibility } from "../lib/page-visibility";
@@ -1139,7 +1140,7 @@ function buildJoinRequestToast(
     return null;
 
   const requestType = readString(details?.requestType);
-  const label = requestType === "agent" ? "Agent" : "Someone";
+  const label = requestType === "agent" ? uiT("ui:messages.m_11b39c93777e8f1f") : "Someone";
 
   return {
     title: `${label} wants to join`,
@@ -1162,7 +1163,7 @@ function buildAgentStatusToast(
 
   const tone = status === "error" ? "error" : "info";
   const name = nameOf(agentId) ?? `Agent ${shortId(agentId)}`;
-  const title = status === "running" ? `${name} started` : `${name} errored`;
+  const title = status === "running" ? uiT("ui:messages.m_d83eb38a29339117", { v0: (name) }) : `${name} errored`;
 
   const agents = queryClient.getQueryData<Agent[]>(
     queryKeys.agents.list(companyId),
@@ -1174,7 +1175,7 @@ function buildAgentStatusToast(
     title,
     body,
     tone,
-    action: { label: "View agent", href: `/agents/${agentId}` },
+    action: { label: uiT("ui:messages.m_7ce7832e35e85d35"), href: `/agents/${agentId}` },
     dedupeKey: `agent-status:${agentId}:${status}`,
   };
 }
@@ -1241,7 +1242,7 @@ function buildRunStatusToast(
     body,
     tone,
     ttlMs: status === "succeeded" ? 5000 : 7000,
-    action: { label: "View run", href: `/agents/${agentId}/runs/${runId}` },
+    action: { label: uiT("ui:messages.m_aaf7fccc7d1315f2"), href: `/agents/${agentId}/runs/${runId}` },
     dedupeKey: `run-status:${runId}:${status}`,
   };
 }

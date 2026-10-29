@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   useCallback,
   useEffect,
@@ -429,7 +430,7 @@ function JsonNode({
             type="button"
             className="mt-1 rounded p-0.5 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={() => setExpanded(!isOpen)}
-            aria-label={isOpen ? "Collapse JSON value" : "Expand JSON value"}
+            aria-label={isOpen ? uiT("ui:messages.m_e5d6149eea9403b6") : uiT("ui:messages.m_dee3e421d4d443ff")}
           >
             {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
           </button>
@@ -447,7 +448,7 @@ function JsonNode({
         <span className="ml-auto hidden items-center gap-0.5 group-hover:flex">
           <button
             type="button"
-            title={pathCopy.copied ? "JSON path copied" : pathCopy.failed ? "Copy failed" : "Copy JSON path"}
+            title={pathCopy.copied ? uiT("ui:messages.m_67178a67a60c8129") : pathCopy.failed ? uiT("ui:messages.m_5b50e7a693fee952") : uiT("ui:messages.m_5fe87335fe46a19f")}
             className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={() => void pathCopy.copy(path)}
           >
@@ -455,7 +456,7 @@ function JsonNode({
           </button>
           <button
             type="button"
-            title={valueCopy.copied ? "Value copied" : valueCopy.failed ? "Copy failed" : "Copy value"}
+            title={valueCopy.copied ? uiT("ui:messages.m_7a764ef31463caaf") : valueCopy.failed ? uiT("ui:messages.m_5b50e7a693fee952") : uiT("ui:messages.m_c019c0f81132cb82")}
             className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={copyValue}
           >
@@ -559,10 +560,10 @@ function InterpretationStage({ entry, last }: { entry: TraceEntry; last: boolean
             <table className="w-full min-w-(--sz-36rem) text-left text-xs">
               <thead className="bg-muted/30 text-muted-foreground">
                 <tr>
-                  <th className="px-3 py-1.5 font-medium">Action</th>
+                  <th className="px-3 py-1.5 font-medium">{uiT("ui:messages.m_64cff1319d2fd2cb")}</th>
                   <th className="px-3 py-1.5 font-medium">Provider path</th>
                   <th className="px-3 py-1.5 font-medium">Output path</th>
-                  <th className="px-3 py-1.5 font-medium">Reason</th>
+                  <th className="px-3 py-1.5 font-medium">{uiT("ui:messages.m_f81ab834de5f8491")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -623,7 +624,7 @@ function ProductionSurfacePreview({ event, runId }: { event: HeartbeatRunEvent; 
         <div className="min-w-0">
           <p className="text-sm font-medium">{event.eventType}</p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Production surface: {decision.surface} · {decision.action} in {decision.container}
+            Production surface: {decision.surface} · {decision.action}{uiT("ui:messages.m_2eb9d0d30d4ceaac")}{decision.container}
           </p>
         </div>
       </div>
@@ -1040,7 +1041,7 @@ export function RunnerInspector({
           <SheetDescription id="runner-inspector-description">
             Correlate exact provider traffic with every interpretation stage, canonical PRP event, and production surface.
           </SheetDescription>
-          <div className="flex gap-1 pt-1" role="tablist" aria-label="Runner inspector views">
+          <div className="flex gap-1 pt-1" role="tablist" aria-label={uiT("ui:messages.m_fb8d8dd6496b9ae0")}>
             {VIEW_OPTIONS.map((option) => {
               const Icon = option.icon;
               return (
@@ -1077,7 +1078,7 @@ export function RunnerInspector({
                 <p className="mt-1 text-sm text-muted-foreground">Canonical PRP events and persisted presentation decisions remain available below.</p>
               </div>
               {onRerunWithTrace && canInspectRaw === true ? (
-                <Button size="sm" onClick={onRerunWithTrace}><RefreshCw className="mr-1.5 h-4 w-4" />Re-run with provider trace</Button>
+                <Button size="sm" onClick={onRerunWithTrace}><RefreshCw className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_296d058ec7a02ee7")}</Button>
               ) : null}
             </div>
           ) : null}
@@ -1130,12 +1131,12 @@ export function RunnerInspector({
           {view === "pipeline" ? (
             <>
               <div className="grid gap-2 border-b border-border p-3 sm:grid-cols-2 xl:grid-cols-(--gtc-runner-inspector-filters)">
-                <div className="relative"><Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /><Input className="pl-8" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search operations, fields, and events" /></div>
-                <Select value={direction} onValueChange={setDirection}><SelectTrigger><SelectValue placeholder="Direction" /></SelectTrigger><SelectContent><SelectItem value="all">All directions</SelectItem><SelectItem value="client_to_provider">Client → provider</SelectItem><SelectItem value="provider_to_client">Provider → client</SelectItem><SelectItem value="provider_stderr">Provider stderr</SelectItem></SelectContent></Select>
-                <Select value={nativeMethod} onValueChange={setNativeMethod}><SelectTrigger><SelectValue placeholder="Native method" /></SelectTrigger><SelectContent><SelectItem value="all">All native methods</SelectItem>{unique(frames.map(frameMethod)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
-                <Select value={disposition} onValueChange={setDisposition}><SelectTrigger><SelectValue placeholder="Mapping" /></SelectTrigger><SelectContent><SelectItem value="all">All mappings</SelectItem>{["mapped", "generic", "ignored", "rejected", "operator_only"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
-                <Select value={prpType} onValueChange={setPrpType}><SelectTrigger><SelectValue placeholder="PRP type" /></SelectTrigger><SelectContent><SelectItem value="all">All PRP types</SelectItem>{unique(events.map((event) => event.eventType)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
-                <Select value={visibility} onValueChange={setVisibility}><SelectTrigger><SelectValue placeholder="Visibility" /></SelectTrigger><SelectContent><SelectItem value="all">Visible + hidden</SelectItem><SelectItem value="visible">Visible</SelectItem><SelectItem value="hidden">Hidden</SelectItem></SelectContent></Select>
+                <div className="relative"><Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /><Input className="pl-8" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={uiT("ui:messages.m_535b98e7a6abca2c")} /></div>
+                <Select value={direction} onValueChange={setDirection}><SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_9c8a9579abe55bdc")} /></SelectTrigger><SelectContent><SelectItem value="all">All directions</SelectItem><SelectItem value="client_to_provider">Client → provider</SelectItem><SelectItem value="provider_to_client">Provider → client</SelectItem><SelectItem value="provider_stderr">Provider stderr</SelectItem></SelectContent></Select>
+                <Select value={nativeMethod} onValueChange={setNativeMethod}><SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_604030e94e276142")} /></SelectTrigger><SelectContent><SelectItem value="all">All native methods</SelectItem>{unique(frames.map(frameMethod)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                <Select value={disposition} onValueChange={setDisposition}><SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_1ff9a5f8b4bd530e")} /></SelectTrigger><SelectContent><SelectItem value="all">All mappings</SelectItem>{["mapped", "generic", "ignored", "rejected", "operator_only"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                <Select value={prpType} onValueChange={setPrpType}><SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_7b084b20988df288")} /></SelectTrigger><SelectContent><SelectItem value="all">All PRP types</SelectItem>{unique(events.map((event) => event.eventType)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                <Select value={visibility} onValueChange={setVisibility}><SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_7448611d5f93aa8a")} /></SelectTrigger><SelectContent><SelectItem value="all">Visible + hidden</SelectItem><SelectItem value="visible">Visible</SelectItem><SelectItem value="hidden">Hidden</SelectItem></SelectContent></Select>
               </div>
               <div className="grid min-h-0 flex-1 lg:grid-cols-(--gtc-runner-inspector-pipeline)">
                 <ScrollArea className="border-r border-border">
@@ -1144,7 +1145,7 @@ export function RunnerInspector({
                     {!loading && filteredOperations.length === 0 ? <p className="p-3 text-sm text-muted-foreground">No operations match these filters.</p> : null}
                     {filteredOperations.map((operation) => (
                       <button key={operation.key} type="button" onClick={() => setSelectedKey(operation.key)} className="mb-1 w-full rounded-lg border border-transparent px-3 py-2.5 text-left hover:bg-muted/50 data-[selected=true]:border-border data-[selected=true]:bg-muted" data-selected={selectedOperation?.key === operation.key}>
-                        <span className="flex items-center gap-2"><span className={cn("h-2 w-2 shrink-0 rounded-full", operation.events.length ? operation.visible ? "bg-primary" : "bg-secondary-foreground" : "bg-muted-foreground")} role="img" aria-label={operation.events.length ? operation.visible ? "Visible production event" : "Hidden production event" : "No production event"} /><span className="min-w-0 flex-1 truncate text-sm font-medium">{operation.title}</span>{operation.frames.length > 1 ? <Badge variant="outline" className="px-1.5 text-(length:--text-nano)">{operation.frames.length} frames</Badge> : null}</span>
+                        <span className="flex items-center gap-2"><span className={cn("h-2 w-2 shrink-0 rounded-full", operation.events.length ? operation.visible ? "bg-primary" : "bg-secondary-foreground" : "bg-muted-foreground")} role="img" aria-label={operation.events.length ? operation.visible ? uiT("ui:messages.m_135026a8040c1350") : uiT("ui:messages.m_534ae319743b098e") : uiT("ui:messages.m_36bc0480e0fe7e2f")} /><span className="min-w-0 flex-1 truncate text-sm font-medium">{operation.title}</span>{operation.frames.length > 1 ? <Badge variant="outline" className="px-1.5 text-(length:--text-nano)">{operation.frames.length} frames</Badge> : null}</span>
                         <span className="mt-1 block truncate pl-4 text-(length:--text-nano) text-muted-foreground">{operation.subtitle}</span>
                         <span className="mt-1.5 flex flex-wrap gap-1 pl-4">{operation.prpTypes.slice(0, 3).map((type) => <span key={type} className="rounded bg-background px-1.5 py-0.5 font-mono text-(length:--text-nano) text-muted-foreground">{type}</span>)}</span>
                       </button>
@@ -1155,7 +1156,7 @@ export function RunnerInspector({
                   {selectedOperation ? (
                     <div className="space-y-6 p-5">
                       <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-muted/20 px-4 py-3">
-                        <strong className="text-sm">{selectedOperation.title}</strong><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedOperation.frames.length} raw frame{selectedOperation.frames.length === 1 ? "" : "s"}</span><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedOperation.interpretations.length} mapping stage{selectedOperation.interpretations.length === 1 ? "" : "s"}</span><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedEvents.length} PRP event{selectedEvents.length === 1 ? "" : "s"}</span>
+                        <strong className="text-sm">{selectedOperation.title}</strong><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedOperation.frames.length} raw frame{selectedOperation.frames.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}</span><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedOperation.interpretations.length} mapping stage{selectedOperation.interpretations.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}</span><ArrowRight className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-xs text-muted-foreground">{selectedEvents.length} PRP event{selectedEvents.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}</span>
                       </div>
                       <section>
                         <div className="mb-2 flex flex-wrap items-center gap-2"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-xs font-semibold text-accent-foreground">1</span><h3 className="text-sm font-semibold">Provider frames</h3><span className="text-xs text-muted-foreground">server-redacted by default</span></div>
@@ -1188,7 +1189,7 @@ export function RunnerInspector({
                         <div className="mb-3 flex items-center gap-2"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-xs font-semibold text-foreground">4</span><h3 className="text-sm font-semibold">Production presentation</h3></div>
                         {selectedEvents.length ? selectedEvents.map((event) => {
                           const decision = visibilityDecision(event);
-                          return <div key={event.id} className="mb-4 grid gap-3 xl:grid-cols-(--gtc-runner-inspector-presentation)"><dl className="grid grid-cols-(--gtc-runner-inspector-fields) gap-x-3 gap-y-1 rounded-lg border border-border p-3 text-sm"><dt className="text-muted-foreground">Visible</dt><dd className="flex items-center gap-1.5">{decision.visible ? <Check className="h-3.5 w-3.5 text-primary" /> : <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />}{decision.visible ? "yes" : "no"}</dd><dt className="text-muted-foreground">Surface</dt><dd>{decision.surface}</dd><dt className="text-muted-foreground">Container</dt><dd>{decision.container}</dd><dt className="text-muted-foreground">State</dt><dd>{decision.state}</dd><dt className="text-muted-foreground">Action</dt><dd>{decision.action}</dd><dt className="text-muted-foreground">Reason</dt><dd>{decision.reason}</dd><dt className="text-muted-foreground">Reason code</dt><dd><code className="text-xs">{decision.reasonCode}</code></dd></dl><div><p className="mb-2 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">Production surface preview</p><ProductionSurfacePreview event={event} runId={runId} /></div></div>;
+                          return <div key={event.id} className="mb-4 grid gap-3 xl:grid-cols-(--gtc-runner-inspector-presentation)"><dl className="grid grid-cols-(--gtc-runner-inspector-fields) gap-x-3 gap-y-1 rounded-lg border border-border p-3 text-sm"><dt className="text-muted-foreground">Visible</dt><dd className="flex items-center gap-1.5">{decision.visible ? <Check className="h-3.5 w-3.5 text-primary" /> : <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />}{decision.visible ? uiT("ui:messages.m_8a798890fe938171") : uiT("ui:messages.m_9390298f3fb0c5b1")}</dd><dt className="text-muted-foreground">Surface</dt><dd>{decision.surface}</dd><dt className="text-muted-foreground">Container</dt><dd>{decision.container}</dd><dt className="text-muted-foreground">{uiT("ui:messages.m_a3b50c476732c740")}</dt><dd>{decision.state}</dd><dt className="text-muted-foreground">{uiT("ui:messages.m_64cff1319d2fd2cb")}</dt><dd>{decision.action}</dd><dt className="text-muted-foreground">{uiT("ui:messages.m_f81ab834de5f8491")}</dt><dd>{decision.reason}</dd><dt className="text-muted-foreground">{uiT("ui:messages.m_9e13ec9ee6a95a38")}</dt><dd><code className="text-xs">{decision.reasonCode}</code></dd></dl><div><p className="mb-2 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">Production surface preview</p><ProductionSurfacePreview event={event} runId={runId} /></div></div>;
                         }) : <p className="text-sm text-muted-foreground">No presentation surface was emitted for this operation.</p>}
                         {Object.keys(presentationDecision).length > 0 ? <details className="rounded-lg border border-border"><summary className="cursor-pointer px-3 py-2 text-xs font-medium text-muted-foreground">Resolved final response decision</summary><div className="p-3 pt-0"><JsonExplorer value={presentationDecision} /></div></details> : null}
                         {verificationCaveats.length > 0 || ignoredAttentionRequests.length > 0 ? (

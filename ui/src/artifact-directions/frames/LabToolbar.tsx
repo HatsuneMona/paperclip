@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { DIRECTION_IDS, KIT_KEYS, KIT_META, type DirectionId } from "../kit";
 import { LAB_VIEWS, type LabState, type LabTheme, type LabView } from "../lab-state";
@@ -51,11 +52,11 @@ function Segmented<T extends string>({
 const KIT_OPTIONS: Option<DirectionId | "all">[] = DIRECTION_IDS.map((id) => ({
   value: id,
   label: KIT_META[id].name,
-  hint: `${KIT_META[id].tagline} (${KIT_KEYS[id]})`,
+  hint: uiT("ui:messages.m_43cdd46200eb5db2", { v0: (KIT_META[id].tagline), v1: (KIT_KEYS[id]) }),
 }));
 // Overview first; the vocabulary sheet (`s=kinds`) is URL-only.
 const VIEW_OPTIONS: Option<LabView>[] = [
-  { value: "board", label: "Overview", hint: "The kit's four surfaces on one sheet" },
+  { value: "board", label: uiT("ui:messages.m_d4b1ea5708dd5329"), hint: "The kit's four surfaces on one sheet" },
   { value: "thread", label: "Task-thread" },
   { value: "panel", label: "Right-panel" },
   { value: "gallery", label: "Tab-gallery" },
@@ -66,8 +67,8 @@ const THEME_OPTIONS: Option<LabTheme>[] = [
   { value: "light", label: "light", hint: "Toggle with t" },
 ];
 const ANIM_OPTIONS: Option<"off" | "on">[] = [
-  { value: "off", label: "off", hint: "Hover animations off (toggle with a)" },
-  { value: "on", label: "on", hint: "Hover animations on: MVP V1 artwork rises, stack pages turn (toggle with a)" },
+  { value: "off", label: uiT("ui:messages.m_b4dc66dde806261b"), hint: "Hover animations off (toggle with a)" },
+  { value: "on", label: uiT("ui:messages.m_b8d31e852725afb1"), hint: "Hover animations on: MVP V1 artwork rises, stack pages turn (toggle with a)" },
 ];
 
 const TITLE = "font-medium uppercase tracking-(--tracking-label) text-foreground";

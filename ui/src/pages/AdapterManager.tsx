@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 /**
  * @fileoverview Adapter Manager page — install, view, and manage external adapters.
  *
@@ -77,7 +78,7 @@ function AdapterRow({
                   external adapter ever provides one. */}
               {adapter.label && adapter.label !== adapter.type ? adapter.label : getAdapterLabel(adapter.type)}
             </span>
-            <Badge variant="outline">{adapter.source === "external" ? "External" : "Built-in"}</Badge>
+            <Badge variant="outline">{adapter.source === "external" ? uiT("ui:messages.m_68c114ea9c8c6604") : uiT("ui:messages.m_1f43948106d1d47f")}</Badge>
             {adapter.source === "external" && (
               adapter.isLocalPath
                 ? <span title="Installed from local path"><FolderOpen className="h-4 w-4 text-amber-500" /></span>
@@ -219,9 +220,9 @@ function ReinstallDialog({
             <span className="font-mono">{adapter?.packageName}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Current</span>
+            <span className="text-muted-foreground">{uiT("ui:messages.m_e0d1b68224bf0b31")}</span>
             <span className="font-mono">
-              {adapter?.version ? `v${adapter.version}` : "unknown"}
+              {adapter?.version ? `v${adapter.version}` : uiT("ui:messages.m_b23a6a8439c0dde5")}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -231,7 +232,7 @@ function ReinstallDialog({
                 ? "checking..."
                 : latestVersion
                   ? `v${latestVersion}`
-                  : "unavailable"}
+                  : uiT("ui:messages.m_ba691ba042bcedd9")}
             </span>
           </div>
           {isUpToDate && (
@@ -242,9 +243,7 @@ function ReinstallDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onCancel} disabled={isReinstalling}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={onCancel} disabled={isReinstalling}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button disabled={isReinstalling} onClick={onConfirm}>
             {isReinstalling ? "Reinstalling..." : "Reinstall"}
           </Button>
@@ -269,9 +268,9 @@ export function AdapterManager() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Organization", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Adapters" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_d764d42592fc9687"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_d20547a8145f719f") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -401,7 +400,7 @@ export function AdapterManager() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Cpu className="h-6 w-6 text-muted-foreground" />
-          <h1 className="text-xl font-semibold">Adapters</h1>
+          <h1 className="text-xl font-semibold">{uiT("ui:messages.m_d20547a8145f719f")}</h1>
           <Badge variant="outline" className="text-amber-600 border-amber-400">
             Alpha
           </Badge>
@@ -447,9 +446,7 @@ export function AdapterManager() {
                   )}
                   onClick={() => setIsLocalPath(true)}
                 >
-                  <FolderOpen className="h-3.5 w-3.5" />
-                  Local path
-                </button>
+                  <FolderOpen className="h-3.5 w-3.5" />{uiT("ui:messages.m_e335847f885ededb")}</button>
               </div>
 
               {isLocalPath ? (
@@ -486,7 +483,7 @@ export function AdapterManager() {
                     <Label htmlFor="adapterVersion">Version (optional)</Label>
                     <Input
                       id="adapterVersion"
-                      placeholder="latest"
+                      placeholder={uiT("ui:messages.m_5e1e2bcac305958b")}
                       value={installVersion}
                       onChange={(e) => setInstallVersion(e.target.value)}
                     />
@@ -495,7 +492,7 @@ export function AdapterManager() {
               )}
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setInstallDialogOpen(false)}>Cancel</Button>
+              <Button variant="outline" onClick={() => setInstallDialogOpen(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button
                 onClick={() =>
                   installMutation.mutate({
@@ -506,7 +503,7 @@ export function AdapterManager() {
                 }
                 disabled={!installPackage || installMutation.isPending}
               >
-                {installMutation.isPending ? "Installing..." : "Install"}
+                {installMutation.isPending ? uiT("ui:messages.m_07ae7fd684564e68") : uiT("ui:messages.m_569ca49f4aaf7846")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -650,11 +647,10 @@ export function AdapterManager() {
               {removeType && adapters?.find((a) => a.type === removeType)?.packageName && (
                 <> npm packages will be cleaned up from disk.</>
               )}
-              {" "}This action cannot be undone.
-            </DialogDescription>
+              {" "}{uiT("ui:messages.m_3d6a45267218977e")}</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setRemoveType(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setRemoveType(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               variant="destructive"
               disabled={removeMutation.isPending}
@@ -666,7 +662,7 @@ export function AdapterManager() {
                 }
               }}
             >
-              {removeMutation.isPending ? "Removing..." : "Remove"}
+              {removeMutation.isPending ? uiT("ui:messages.m_60d18e42fd5a5b25") : uiT("ui:messages.m_c3812fc4acb861d5")}
             </Button>
           </DialogFooter>
         </DialogContent>

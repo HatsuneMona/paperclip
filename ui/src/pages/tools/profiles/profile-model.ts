@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   ToolCatalogEntry,
   ToolProfileDefaultAction,
@@ -368,7 +369,7 @@ export interface TemplateDef {
 }
 
 export const TEMPLATES: TemplateDef[] = [
-  { key: "read_only", title: "Read-only", description: "See and fetch, but never change anything." },
+  { key: "read_only", title: uiT("ui:messages.m_72bb90897ab1eadc"), description: "See and fetch, but never change anything." },
   { key: "everyday", title: "Everyday work", description: "Read and make routine changes — no destructive tools." },
   { key: "full_access", title: "Full access", description: "Everything every connected app offers." },
   { key: "scratch", title: "Start from scratch", description: "An empty profile you build up tool by tool." },

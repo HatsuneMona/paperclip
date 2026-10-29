@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Copy } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 import { copyTextToClipboard } from "@/lib/clipboard";
@@ -28,7 +29,7 @@ export function CopyableGatewayUrl({
       pushToast({ title: "Gateway URL copied", tone: "success" });
     } catch {
       pushToast({
-        title: "Copy failed",
+        title: uiT("ui:messages.m_5b50e7a693fee952"),
         body: "Clipboard access is unavailable.",
         tone: "error",
       });

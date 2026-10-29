@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ToolbarSearch } from "@/components/ToolbarSearch";
 import { CatalogSourceFilters, type CatalogSource } from "./CatalogSourceFilters";
 
@@ -10,7 +11,7 @@ export function ConnectorsToolbar({ query, onQueryChange, source, onSourceChange
 }) {
   return <header data-canonical-toolbar="connectors" role="toolbar" aria-label="Connectors controls" className="flex flex-wrap items-center gap-3">
     <div className="w-full">
-      <ToolbarSearch query={query} onQueryChange={onQueryChange} label="Search connectors" placeholder="Search connectors…" inputType="search" />
+      <ToolbarSearch query={query} onQueryChange={onQueryChange} label={uiT("ui:messages.m_706a6068c6a0dcbe")} placeholder={uiT("ui:messages.m_fad7e42dfd243a0f")} inputType="search" />
     </div>
     <CatalogSourceFilters source={source} onChange={onSourceChange} />
   </header>;

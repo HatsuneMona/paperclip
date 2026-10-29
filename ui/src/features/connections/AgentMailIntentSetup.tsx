@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { isUuidLike } from "@paperclipai/shared";
@@ -106,9 +107,9 @@ export function AgentMailIntentSetup({ companyId, agentId, requestId, savedCrede
     {changeKey.error && <p className="text-sm text-destructive" role="alert">{changeKey.error.message}</p>}
     {setup.error && <p className="text-sm text-destructive" role="alert">{setup.error.message}</p>}
     <div className="flex items-center justify-between gap-2">
-      <Button type="button" variant="ghost" disabled={setup.isPending || changeKey.isPending || declining} onClick={onDecline}>Not now</Button>
+      <Button type="button" variant="ghost" disabled={setup.isPending || changeKey.isPending || declining} onClick={onDecline}>{uiT("ui:messages.m_a0e63d7c7125d29a")}</Button>
       <Button type="submit" disabled={setup.isPending || changeKey.isPending || declining || (!credentialId && !selectedCredentialId && !inboxConnectionId && !apiKey.trim())}>
-        {setup.isPending ? "Connecting…" : inboxConnectionId ? "Continue" : credentialId ? "Finish setup" : "Connect AgentMail"}
+        {setup.isPending ? uiT("ui:messages.m_72021eb70e91b4d5") : inboxConnectionId ? uiT("ui:messages.m_31fbef162594de01") : credentialId ? uiT("ui:messages.m_bc01ae77f37cf304") : "Connect AgentMail"}
       </Button>
     </div>
   </form>;

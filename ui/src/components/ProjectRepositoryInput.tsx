@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import type { ProjectRepository } from "@paperclipai/shared";
 import { projectsApi } from "@/api/projects";
@@ -23,7 +24,7 @@ export function ProjectRepositoryInput({ companyId, selected, onChange, onConnec
       onRetry={() => void query.refetch()} onConnect={onConnect} disabled={disabled} />
     {!!query.data?.failedConnectionCount && query.data.repositories.length > 0 && <div role="alert" className="flex flex-wrap items-center gap-2 text-xs text-destructive">
       Some GitHub connections could not load. Reconnect them in Apps or try again.
-      <Button type="button" variant="ghost" size="sm" disabled={query.isFetching} onClick={() => void query.refetch()}>Try again</Button>
+      <Button type="button" variant="ghost" size="sm" disabled={query.isFetching} onClick={() => void query.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
     </div>}
   </div>;
 }

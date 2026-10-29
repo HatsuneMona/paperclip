@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -92,7 +93,7 @@ export function RoutineSaveBar({
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                 <span className="font-medium">
-                  {dirtyCount} unsaved {dirtyCount === 1 ? "change" : "changes"}
+                  {dirtyCount} unsaved {dirtyCount === 1 ? uiT("ui:messages.m_12ea12eace7d655f") : uiT("ui:messages.m_d0b4ba2311b3e849")}
                 </span>
               </button>
             </PopoverTrigger>
@@ -144,17 +145,13 @@ export function RoutineSaveBar({
                 size="sm"
                 disabled={isSaving || disabled}
                 onClick={() => setConfirmDiscardOpen(true)}
-              >
-                Discard
-              </Button>
+              >{uiT("ui:messages.m_eb1a70e39274bb76")}</Button>
               <Button
                 size="sm"
                 disabled={isSaving || disabled}
                 onClick={onSave}
               >
-                {isSaving ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-                Save changes
-                <kbd className="ml-2 hidden rounded bg-foreground/10 px-1 text-(length:--text-nano) font-medium sm:inline">
+                {isSaving ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}{uiT("ui:messages.m_dd0ae7a5cbcf2339")}<kbd className="ml-2 hidden rounded bg-foreground/10 px-1 text-(length:--text-nano) font-medium sm:inline">
                   ⌘S
                 </kbd>
               </Button>
@@ -169,7 +166,7 @@ export function RoutineSaveBar({
             <DialogTitle>Discard changes?</DialogTitle>
             <DialogDescription>
               This will revert {dirtyCount} unsaved{" "}
-              {dirtyCount === 1 ? "change" : "changes"} in this section.
+              {dirtyCount === 1 ? uiT("ui:messages.m_12ea12eace7d655f") : uiT("ui:messages.m_d0b4ba2311b3e849")} in this section.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -183,9 +180,7 @@ export function RoutineSaveBar({
                 onDiscard();
                 setConfirmDiscardOpen(false);
               }}
-            >
-              Discard changes
-            </Button>
+            >{uiT("ui:messages.m_f9bfa3dc7c8fcdea")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

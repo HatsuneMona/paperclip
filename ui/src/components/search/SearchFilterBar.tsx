@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { User, UserX } from "lucide-react";
 import {
@@ -90,7 +91,7 @@ export function buildSearchFilterOptions({
   if (currentUserId) {
     assignee.push({
       value: "me",
-      label: "Me",
+      label: uiT("ui:messages.m_d30af076b0dc85cc"),
       icon: <User className="h-3.5 w-3.5 text-muted-foreground" />,
       count: count(counts?.assigneeUserId, currentUserId),
       searchText: "me mine",
@@ -98,7 +99,7 @@ export function buildSearchFilterOptions({
   }
   assignee.push({
     value: "none",
-    label: "Unassigned",
+    label: uiT("ui:messages.m_14d33bd014e6b4e7"),
     icon: <UserX className="h-3.5 w-3.5 text-muted-foreground" />,
     searchText: "unassigned none nobody",
   });
@@ -163,7 +164,7 @@ export function SearchFilterBar({
   return (
     <div className="flex flex-wrap items-center gap-1.5" data-testid="search-filter-bar">
       <SearchFilterMenu
-        label="Status"
+        label={uiT("ui:messages.m_920e413c7d411b61")}
         multi
         options={options.status}
         selected={filters.status ?? []}
@@ -177,11 +178,11 @@ export function SearchFilterBar({
         selected={selectedAssignee ? [selectedAssignee] : []}
         onSelect={(value) => onChange(applyAssigneeToken(filters, value, data.currentUserId))}
         searchable
-        searchPlaceholder="Search assignees…"
+        searchPlaceholder={uiT("ui:messages.m_12019555b7b48d70")}
         emptyMessage="No assignees"
       />
       <SearchFilterMenu
-        label="Project"
+        label={uiT("ui:messages.m_9859597853197476")}
         options={options.project}
         selected={filters.projectId ? [filters.projectId] : []}
         onSelect={(value) => onChange({ ...filters, projectId: value })}
@@ -190,7 +191,7 @@ export function SearchFilterBar({
         emptyMessage="No projects"
       />
       <SearchFilterMenu
-        label="Label"
+        label={uiT("ui:messages.m_0e66373f45dcf3dd")}
         options={options.label}
         selected={filters.labelId ? [filters.labelId] : []}
         onSelect={(value) => onChange({ ...filters, labelId: value })}
@@ -201,7 +202,7 @@ export function SearchFilterBar({
       {/* PAP-411: Priority filter menu hidden behind SHOW_TASK_PRIORITY_UI (search DSL stays intact). */}
       {SHOW_TASK_PRIORITY_UI && (
       <SearchFilterMenu
-        label="Priority"
+        label={uiT("ui:messages.m_d60dbba079223254")}
         multi
         options={options.priority}
         selected={filters.priority ?? []}
@@ -210,7 +211,7 @@ export function SearchFilterBar({
       />
       )}
       <SearchFilterMenu
-        label="Updated"
+        label={uiT("ui:messages.m_3a5ecca188c0579c")}
         options={options.updated}
         selected={filters.updatedWithin ? [filters.updatedWithin] : []}
         onSelect={(value) => onChange({ ...filters, updatedWithin: value })}

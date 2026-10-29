@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -34,29 +35,29 @@ const ALL = "__all";
 const ACTION_DOMAINS: { value: string; label: string }[] = [
   { value: ALL, label: "All actions" },
   { value: "issue.", label: "Tasks" },
-  { value: "case.", label: "Cases" },
-  { value: "agent.", label: "Agents" },
-  { value: "heartbeat.", label: "Runs" },
-  { value: "approval.", label: "Approvals" },
-  { value: "project.", label: "Projects" },
-  { value: "goal.", label: "Goals" },
+  { value: "case.", label: uiT("ui:messages.m_2249bd503ec47d72") },
+  { value: "agent.", label: uiT("ui:messages.m_279b44d2ab4b40c0") },
+  { value: "heartbeat.", label: uiT("ui:messages.m_848f54e89660cea4") },
+  { value: "approval.", label: uiT("ui:messages.m_2bfc3471571e5c00") },
+  { value: "project.", label: uiT("ui:messages.m_04e2a9728af75840") },
+  { value: "goal.", label: uiT("ui:messages.m_116cd3982a9bc435") },
   { value: "tool_", label: "Apps & tools" },
-  { value: "cost.", label: "Costs" },
-  { value: "company.", label: "Organization" },
+  { value: "cost.", label: uiT("ui:messages.m_b88fc5fc4765148e") },
+  { value: "company.", label: uiT("ui:messages.m_d764d42592fc9687") },
 ];
 
 /** Entity types offered in the filter (server does an exact match). */
 const ENTITY_TYPES: { value: string; label: string }[] = [
   { value: ALL, label: "All entities" },
-  { value: "issue", label: "Task" },
-  { value: "case", label: "Case" },
-  { value: "agent", label: "Agent" },
-  { value: "heartbeat_run", label: "Run" },
-  { value: "routine", label: "Routine" },
-  { value: "project", label: "Project" },
-  { value: "goal", label: "Goal" },
-  { value: "company", label: "Organization" },
-  { value: "tool_connection", label: "Connection" },
+  { value: "issue", label: uiT("ui:messages.m_4bc74b21357c6cf5") },
+  { value: "case", label: uiT("ui:messages.m_15f86e24ed25aed1") },
+  { value: "agent", label: uiT("ui:messages.m_11b39c93777e8f1f") },
+  { value: "heartbeat_run", label: uiT("ui:messages.m_00d60e31a4e6b834") },
+  { value: "routine", label: uiT("ui:messages.m_0b5baf309897ec7e") },
+  { value: "project", label: uiT("ui:messages.m_9859597853197476") },
+  { value: "goal", label: uiT("ui:messages.m_cdbf6975e8a35b0d") },
+  { value: "company", label: uiT("ui:messages.m_d764d42592fc9687") },
+  { value: "tool_connection", label: uiT("ui:messages.m_639a40e82b9a96f0") },
 ];
 
 /**
@@ -151,12 +152,12 @@ function AuditActor({
   // deleted or authorization-filtered agents that are absent from the directory.
   const label =
     record.actorType === "plugin"
-      ? "Plugin"
+      ? uiT("ui:messages.m_ab1173eed1d477d9")
       : record.actorType === "agent"
-        ? "Agent"
+        ? uiT("ui:messages.m_11b39c93777e8f1f")
         : record.actorType === "user"
-          ? "User"
-          : "System";
+          ? uiT("ui:messages.m_b512d97e7cbf97c2")
+          : uiT("ui:messages.m_6725e7bbcd28f3a8");
   return <Identity name={label} size="sm" className="font-medium text-foreground" />;
 }
 
@@ -264,9 +265,7 @@ function AuditRow({
               <Link
                 to={`/agents/${record.agentId}/runs/${record.runId}`}
                 className="text-primary hover:underline"
-              >
-                View run
-              </Link>
+              >{uiT("ui:messages.m_aaf7fccc7d1315f2")}</Link>
             ) : null}
             <span className="font-mono text-(length:--text-micro) opacity-70">{record.action}</span>
           </div>
@@ -542,7 +541,7 @@ export function AuditFeed({
       pushToast({ title: "Audit exported", body: "Your CSV download has started.", tone: "success" });
     } catch (error) {
       pushToast({
-        title: "Export failed",
+        title: uiT("ui:messages.m_e94d3ee06ecf6aac"),
         body: error instanceof Error ? error.message : "Could not export the audit log.",
         tone: "error",
       });
@@ -560,7 +559,7 @@ export function AuditFeed({
       {!hideHeader ? (
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Activity</h2>
+            <h2 className="text-lg font-semibold text-foreground">{uiT("ui:messages.m_38da1505ca837328")}</h2>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
               {resolvedMode === "agents"
                 ? "Every recorded agent action, newest first — with the responsible person and run behind each one."
@@ -572,8 +571,8 @@ export function AuditFeed({
 
       {showModeToggle ? (
         <Tabs value={resolvedMode} onValueChange={(value) => onModeChange?.(value as AuditFeedMode)}>
-          <TabsList aria-label="Activity scope">
-            <TabsTrigger value="all">Activity</TabsTrigger>
+          <TabsList aria-label={uiT("ui:messages.m_98a37b44fa795fa6")}>
+            <TabsTrigger value="all">{uiT("ui:messages.m_38da1505ca837328")}</TabsTrigger>
             <TabsTrigger
               value="agents"
               disabled={accessTier === "basic"}
@@ -600,13 +599,13 @@ export function AuditFeed({
       <div className="flex flex-wrap items-end gap-3 border-y border-border py-3">
         {canUseAdvancedControls && !lockedAgentId && !lockedRunId ? (
           <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-            <span>Agent</span>
+            <span>{uiT("ui:messages.m_11b39c93777e8f1f")}</span>
             <Select value={agent} onValueChange={setAgent}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Agent" />
+                <SelectValue placeholder={uiT("ui:messages.m_11b39c93777e8f1f")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={ALL}>All agents</SelectItem>
+                <SelectItem value={ALL}>{uiT("ui:messages.m_54c32d3e2cfa1cc8")}</SelectItem>
                 {(agents.data ?? []).map((a) => (
                   <SelectItem key={a.id} value={a.id}>
                     {a.name}
@@ -636,10 +635,10 @@ export function AuditFeed({
           </label>
         ) : null}
         <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-          <span>Action</span>
+          <span>{uiT("ui:messages.m_64cff1319d2fd2cb")}</span>
           <Select value={actionDomain} onValueChange={setActionDomain}>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="Action" />
+              <SelectValue placeholder={uiT("ui:messages.m_64cff1319d2fd2cb")} />
             </SelectTrigger>
             <SelectContent>
               {ACTION_DOMAINS.map((d) => (
@@ -652,10 +651,10 @@ export function AuditFeed({
         </label>
         {!lockedEntity ? (
           <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-            <span>Entity</span>
+            <span>{uiT("ui:messages.m_2ed3bb60c9af0477")}</span>
             <Select value={entityType} onValueChange={setEntityType}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Entity" />
+                <SelectValue placeholder={uiT("ui:messages.m_2ed3bb60c9af0477")} />
               </SelectTrigger>
               <SelectContent>
                 {ENTITY_TYPES.map((e) => (
@@ -669,7 +668,7 @@ export function AuditFeed({
         ) : null}
         {!lockedEntity && entityType === "case" ? (
           <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-            <span>Case</span>
+            <span>{uiT("ui:messages.m_15f86e24ed25aed1")}</span>
             <Input
               type="search"
               aria-label="Case ID or identifier"
@@ -694,7 +693,7 @@ export function AuditFeed({
           <span>From</span>
           <Input
             type="date"
-            aria-label="From date"
+            aria-label={uiT("ui:messages.m_3813fd079009b900")}
             value={dateFrom}
             max={dateTo || undefined}
             onChange={(e) => setDateFrom(e.target.value)}
@@ -705,7 +704,7 @@ export function AuditFeed({
           <span>To</span>
           <Input
             type="date"
-            aria-label="To date"
+            aria-label={uiT("ui:messages.m_485348889fedcc4b")}
             value={dateTo}
             min={dateFrom || undefined}
             onChange={(e) => setDateTo(e.target.value)}
@@ -713,9 +712,7 @@ export function AuditFeed({
           />
         </label>
         {hasActiveFilters ? (
-          <Button variant="ghost" size="sm" onClick={clearFilters}>
-            Clear filters
-          </Button>
+          <Button variant="ghost" size="sm" onClick={clearFilters}>{uiT("ui:messages.m_7179ea0035fca783")}</Button>
         ) : null}
         {canUseAdvancedControls ? (
           <Button
@@ -739,7 +736,7 @@ export function AuditFeed({
         </Card>
       ) : feed.isLoading ? (
         <Card>
-          <CardContent className="py-14 text-center text-sm text-muted-foreground">Loading…</CardContent>
+          <CardContent className="py-14 text-center text-sm text-muted-foreground">{uiT("ui:messages.m_ba3bbbe10d8bef66")}</CardContent>
         </Card>
       ) : feed.error ? (
         <Card>
@@ -747,9 +744,7 @@ export function AuditFeed({
             <p className="text-sm text-muted-foreground">
               {feed.error instanceof Error ? feed.error.message : "Failed to load the audit log."}
             </p>
-            <Button variant="outline" size="sm" onClick={() => feed.refetch()}>
-              Try again
-            </Button>
+            <Button variant="outline" size="sm" onClick={() => feed.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
           </CardContent>
         </Card>
       ) : items.length === 0 ? (
@@ -769,9 +764,7 @@ export function AuditFeed({
               </p>
             </div>
             {hasActiveFilters ? (
-              <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear filters
-              </Button>
+              <Button variant="outline" size="sm" onClick={clearFilters}>{uiT("ui:messages.m_7179ea0035fca783")}</Button>
             ) : null}
           </CardContent>
         </Card>
@@ -799,7 +792,7 @@ export function AuditFeed({
             onClick={() => feed.fetchNextPage()}
             disabled={feed.isFetchingNextPage}
           >
-            {feed.isFetchingNextPage ? "Loading…" : "Load more"}
+            {feed.isFetchingNextPage ? uiT("ui:messages.m_ba3bbbe10d8bef66") : uiT("ui:messages.m_ac8991ef01019cf5")}
           </Button>
         </div>
       ) : null}

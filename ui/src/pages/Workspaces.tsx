@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { Link, Navigate } from "@/lib/router";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -99,7 +100,7 @@ export function Workspaces() {
   const overviewView = useQueryView(overviewQuery);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Workspaces" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_1377264ba3b0a717") }]);
   }, [setBreadcrumbs]);
 
   const overviewPages = overviewQuery.data?.pages ?? [];
@@ -138,18 +139,18 @@ export function Workspaces() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold">Workspaces</h2>
+        <h2 className="text-xl font-bold">{uiT("ui:messages.m_1377264ba3b0a717")}</h2>
       </div>
 
       <SummarySlotCard
         companyId={selectedCompanyId}
         scopeKind="workspaces_overview"
-        title="Workspace summary"
-        description="Summarizer tracks workspace activity, live services, and follow-up needs across projects."
+        title={uiT("ui:messages.m_970a90e91e265ab9")}
+        description={uiT("ui:messages.m_e12879046be5553c")}
       />
 
       {groups.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No workspace activity yet.</p>
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_f7bf9843700ea80f")}</p>
       ) : (
         <div className="space-y-8">
           {groups.map((group) => (
@@ -164,7 +165,7 @@ export function Workspaces() {
                   </Link> : <h3 className="text-base font-semibold">{group.projectName}</h3>}
                 </div>
                 <span className="text-xs text-muted-foreground">
-                  {group.summaries.length} workspace{group.summaries.length === 1 ? "" : "s"}
+                  {group.summaries.length}{uiT("ui:messages.m_4be0369b18383e64")}{group.summaries.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                 </span>
               </div>
               <ProjectWorkspacesContent
@@ -177,9 +178,7 @@ export function Workspaces() {
           ))}
           {overviewQuery.hasNextPage ? (
             <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-              <p className="text-sm text-muted-foreground">
-                Showing {overviewItems.length} of {totalWorkspaceCount} workspaces.
-              </p>
+              <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_7282e1fbb2c6d34c")}{overviewItems.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{totalWorkspaceCount}{uiT("ui:messages.m_fa147e43c4b6171e")}</p>
               <Button
                 type="button"
                 variant="outline"
@@ -187,7 +186,7 @@ export function Workspaces() {
                 onClick={() => void overviewQuery.fetchNextPage()}
                 disabled={overviewQuery.isFetchingNextPage}
               >
-                {overviewQuery.isFetchingNextPage ? "Loading..." : "Load more"}
+                {overviewQuery.isFetchingNextPage ? uiT("ui:messages.m_47d2a515ef2f05b8") : uiT("ui:messages.m_ac8991ef01019cf5")}
               </Button>
             </div>
           ) : null}

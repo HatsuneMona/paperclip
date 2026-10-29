@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   SystemNoticeMetadataSection,
   SystemNoticeProps,
@@ -10,7 +11,7 @@ export type SystemNoticeFixture = {
 
 const HANDOFF_METADATA: SystemNoticeMetadataSection[] = [
   {
-    title: "Recovery owner",
+    title: uiT("ui:messages.m_27c6c04ca0373d41"),
     rows: [
       {
         kind: "issue",
@@ -21,7 +22,7 @@ const HANDOFF_METADATA: SystemNoticeMetadataSection[] = [
       },
       {
         kind: "agent",
-        label: "Owner",
+        label: uiT("ui:messages.m_4b1b8aa3608a26da"),
         name: "CTO",
         href: "/PAP/agents/cto",
       },
@@ -37,7 +38,7 @@ const HANDOFF_METADATA: SystemNoticeMetadataSection[] = [
     rows: [
       {
         kind: "run",
-        label: "Source run",
+        label: uiT("ui:messages.m_bb84312ee41d3ebc"),
         runId: "9cdba892-c7ca-4d93-8604-4843873b127c",
         href: "/PAP/agents/codexcoder/runs/9cdba892-c7ca-4d93-8604-4843873b127c",
         status: "succeeded",
@@ -71,7 +72,7 @@ const REQUIRED_METADATA: SystemNoticeMetadataSection[] = [
       },
       {
         kind: "agent",
-        label: "Responsible",
+        label: uiT("ui:messages.m_bc110a6d0722098a"),
         name: "CodexCoder",
         href: "/PAP/agents/codexcoder",
       },
@@ -118,7 +119,7 @@ const NEUTRAL_METADATA: SystemNoticeMetadataSection[] = [
       },
       {
         kind: "text",
-        label: "Reason",
+        label: uiT("ui:messages.m_f81ab834de5f8491"),
         value: "Manual reassignment requested by Board.",
       },
     ],
@@ -131,7 +132,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Warning · collapsed (default)",
     tone: "warning",
     label: "System warning",
-    source: { label: "Paperclip", href: "/PAP/agents" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659"), href: "/PAP/agents" },
     timestamp: "2026-05-04T16:32:00.000Z",
     body: "Paperclip needs a disposition before this issue can continue.",
     metadata: REQUIRED_METADATA,
@@ -142,7 +143,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Warning · expanded",
     tone: "warning",
     label: "System warning",
-    source: { label: "Paperclip", href: "/PAP/agents" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659"), href: "/PAP/agents" },
     timestamp: "2026-05-04T16:32:00.000Z",
     body: "Paperclip needs a disposition before this issue can continue.",
     metadata: REQUIRED_METADATA,
@@ -153,7 +154,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Danger · collapsed (default)",
     tone: "danger",
     label: "System alert",
-    source: { label: "Paperclip", href: "/PAP/agents" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659"), href: "/PAP/agents" },
     timestamp: "2026-05-04T16:48:00.000Z",
     body: "Paperclip could not resolve this issue's missing disposition automatically. The source assignment is unchanged and a board decision is required.",
     metadata: HANDOFF_METADATA,
@@ -164,7 +165,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Danger · expanded",
     tone: "danger",
     label: "System alert",
-    source: { label: "Paperclip", href: "/PAP/agents" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659"), href: "/PAP/agents" },
     timestamp: "2026-05-04T16:48:00.000Z",
     body: "Paperclip could not resolve this issue's missing disposition automatically. The source assignment is unchanged and a board decision is required.",
     metadata: HANDOFF_METADATA,
@@ -175,7 +176,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Neutral · collapsed (default)",
     tone: "neutral",
     label: "System notice",
-    source: { label: "Paperclip" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659") },
     timestamp: "2026-05-04T15:10:00.000Z",
     body: "Reassigned to ClaudeFixer.",
     metadata: NEUTRAL_METADATA,
@@ -186,7 +187,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Neutral · expanded",
     tone: "neutral",
     label: "System notice",
-    source: { label: "Paperclip" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659") },
     timestamp: "2026-05-04T15:10:00.000Z",
     body: "Reassigned to ClaudeFixer.",
     metadata: NEUTRAL_METADATA,
@@ -197,7 +198,7 @@ export const systemNoticeFixtures: readonly SystemNoticeFixture[] = [
     caption: "Warning · no metadata (Details affordance hidden)",
     tone: "warning",
     label: "System warning",
-    source: { label: "Paperclip" },
+    source: { label: uiT("ui:messages.m_c34c3f7368649659") },
     timestamp: "2026-05-04T17:02:00.000Z",
     body: "This run paused while waiting on board approval.",
   },

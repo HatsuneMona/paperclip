@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { basicSetup } from "codemirror";
@@ -42,7 +43,7 @@ export function AgentAdvancedTab(props: AgentAdvancedTabProps) {
   if (!initial) {
     if (query.error) return <div role="alert" className="space-y-3 text-sm">
       <p>{query.error.message}</p>
-      <Button variant="outline" onClick={() => query.refetch()}>Retry</Button>
+      <Button variant="outline" onClick={() => query.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
     </div>;
     return <p role="status" className="text-sm text-muted-foreground">Loading configuration…</p>;
   }
@@ -94,7 +95,7 @@ function ConfigurationEditor({ agent, initial, onDirtyChange, onSaved, onSavingC
       setReloadRequired(false);
       onSaved(configuration.agent);
       const warnings = configuration.agent.configurationWarnings;
-      pushToast({ title: "Agent saved", tone: warnings?.length ? "warn" : "success", body: warnings?.map(warning => warning.message).join("\n") });
+      pushToast({ title: uiT("ui:messages.m_8ed40b78471d95dc"), tone: warnings?.length ? "warn" : "success", body: warnings?.map(warning => warning.message).join("\n") });
     },
     onSettled: () => {
       operationPending.current = false;
@@ -133,7 +134,7 @@ function ConfigurationEditor({ agent, initial, onDirtyChange, onSaved, onSavingC
     </div>}
     <AgentYamlEditor value={source} onChange={value => { setSource(value); if (!reloadRequired) setError(null); }} readOnly={busy} />
     {dirty && validation.changes.length > 0 && <details className="rounded-md border border-border p-3 text-sm">
-      <summary className="cursor-pointer font-medium">{validation.changes.length} {validation.changes.length === 1 ? "change" : "changes"} to apply</summary>
+      <summary className="cursor-pointer font-medium">{validation.changes.length} {validation.changes.length === 1 ? uiT("ui:messages.m_12ea12eace7d655f") : uiT("ui:messages.m_d0b4ba2311b3e849")} to apply</summary>
       <ul className="mt-2 list-inside list-disc space-y-1">{validation.changes.map((label, index) => <li key={index}>{label}</li>)}</ul>
       <p className="mt-2 text-muted-foreground">Changes save in this order. If one fails, earlier changes remain saved.</p>
     </details>}
@@ -141,8 +142,8 @@ function ConfigurationEditor({ agent, initial, onDirtyChange, onSaved, onSavingC
     <footer className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-border bg-background py-4">
       <Button variant="ghost" disabled={busy} onClick={() => { if (!operationPending.current) { operationPending.current = true; reload.mutate(); } }}>Reload saved</Button>
       <div className="flex items-center gap-3">
-        <span role="status" className="text-xs text-muted-foreground">{save.isPending ? `Saving: ${progress || "configuration"}…` : reload.isPending ? "Loading configuration…" : dirty ? validation.document && !validation.changes.length ? "No configuration changes" : "Unsaved changes" : ""}</span>
-        <Button disabled={!dirty || busy || reloadRequired || !validation.document || !validation.changes.length} onClick={() => { if (!operationPending.current) { operationPending.current = true; save.mutate(); } }}>{save.isPending ? "Saving…" : "Save changes"}</Button>
+        <span role="status" className="text-xs text-muted-foreground">{save.isPending ? `Saving: ${progress || "configuration"}…` : reload.isPending ? "Loading configuration…" : dirty ? validation.document && !validation.changes.length ? "No configuration changes" : uiT("ui:messages.m_a710c2b90913b537") : ""}</span>
+        <Button disabled={!dirty || busy || reloadRequired || !validation.document || !validation.changes.length} onClick={() => { if (!operationPending.current) { operationPending.current = true; save.mutate(); } }}>{save.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}</Button>
       </div>
     </footer>
   </div>;

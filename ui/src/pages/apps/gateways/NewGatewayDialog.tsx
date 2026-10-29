@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type FormEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ToolMcpGatewayContextScopeType, ToolProfileWithDetails } from "@paperclipai/shared";
@@ -100,7 +101,7 @@ export function NewGatewayDialog({
         </DialogHeader>
         <form className="space-y-4" onSubmit={submit}>
           <label className="block space-y-1.5">
-            <span className="text-xs font-medium text-muted-foreground">Name</span>
+            <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</span>
             <Input
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -132,12 +133,12 @@ export function NewGatewayDialog({
             </span>
           </label>
           <label className="block space-y-1.5">
-            <span className="text-xs font-medium text-muted-foreground">Description (optional)</span>
+            <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_f6cbe2f0c1f8a38b")}</span>
             <textarea
               className="min-h-16 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              placeholder="Who this endpoint is for and when it should be rotated."
+              placeholder={uiT("ui:messages.m_1f1384e32cfac376")}
             />
           </label>
           {noProfiles ? (
@@ -146,14 +147,12 @@ export function NewGatewayDialog({
             </p>
           ) : null}
           <DialogFooter>
-            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               type="submit"
               disabled={createMutation.isPending || noProfiles || !name.trim() || !profileId}
             >
-              {createMutation.isPending ? "Creating…" : "Create gateway"}
+              {createMutation.isPending ? uiT("ui:messages.m_c79ed9492e3c1719") : "Create gateway"}
             </Button>
           </DialogFooter>
         </form>

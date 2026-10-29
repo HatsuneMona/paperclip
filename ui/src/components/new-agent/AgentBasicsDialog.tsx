@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCompany } from "@/context/CompanyContext";
 import { PAPERCLIP_RUNNER_ACPX_PROFILES } from "@paperclipai/adapter-utils";
 import { useAgentAppearanceDraft } from "@/hooks/useAgentAppearanceDraft";
@@ -180,19 +181,15 @@ export function AgentBasicsDialog({
       >
         <div
           className="flex items-center gap-2 px-6 py-5 text-xs text-muted-foreground"
-          aria-label="New agent progress"
+          aria-label={uiT("ui:messages.m_260193aa8a064dab")}
         >
           <span
             className={cn(step === "name" && "font-medium text-foreground")}
-          >
-            1. Name
-          </span>
+          >{uiT("ui:messages.m_6dce9cbb76b5bf6c")}</span>
           <ChevronRight className="size-3" />
           <span
             className={cn(step === "adapter" && "font-medium text-foreground")}
-          >
-            2. Adapter
-          </span>
+          >{uiT("ui:messages.m_f692efe7c246d24c")}</span>
         </div>
         <form
           className="flex min-h-0 flex-col"
@@ -207,27 +204,25 @@ export function AgentBasicsDialog({
               <div className="space-y-2">
                 <DialogTitle className="text-3xl font-semibold tracking-tight">
                   {step === "name"
-                    ? "Meet your next agent"
-                    : "Choose an adapter"}
+                    ? uiT("ui:messages.m_945b95776ed6e210")
+                    : uiT("ui:messages.m_ea43ab7d464433ea")}
                 </DialogTitle>
                 <DialogDescription className="text-base">
                   {step === "name"
-                    ? "Start with a name. Make them your own."
-                    : `How should ${name.trim()} work?`}
+                    ? uiT("ui:messages.m_8d8fc9f2333c03eb")
+                    : uiT("ui:messages.m_e6568aeefe54eb93", { v0: (name.trim()) })}
                 </DialogDescription>
               </div>
             </div>
             {step === "name" ? (
               <div className="space-y-2">
-                <label htmlFor={id} className="text-sm font-medium">
-                  Agent name
-                </label>
+                <label htmlFor={id} className="text-sm font-medium">{uiT("ui:messages.m_1cfb21871a035769")}</label>
                 <Input
                   id={id}
                   autoFocus
                   disabled={saving}
                   maxLength={100}
-                  placeholder="e.g. Darnold"
+                  placeholder={uiT("ui:messages.m_4c64e4feedf5facc")}
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   className="h-12 text-base"
@@ -238,18 +233,14 @@ export function AgentBasicsDialog({
                     variant="link"
                     className="px-0 text-muted-foreground"
                     onClick={onInvite}
-                  >
-                    Invite an external agent
-                  </Button>
+                  >{uiT("ui:messages.m_0c21d4548b1504b5")}</Button>
                 )}
               </div>
             ) : (
               <fieldset className="space-y-4">
-                <legend className="sr-only">Adapter</legend>
+                <legend className="sr-only">{uiT("ui:messages.m_0252b84901033771")}</legend>
                 {isPending && (
-                  <p role="status" className="text-sm text-muted-foreground">
-                    Loading adapters…
-                  </p>
+                  <p role="status" className="text-sm text-muted-foreground">{uiT("ui:messages.m_89e30959db8cec48")}</p>
                 )}
                 {error && (
                   <p role="alert" className="text-sm text-destructive">
@@ -294,7 +285,7 @@ export function AgentBasicsDialog({
                   })}
                 </div>
                 {experimentalRunnerAvailable && <details className="space-y-3">
-                  <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                  <summary className="cursor-pointer text-sm text-muted-foreground">{uiT("ui:messages.m_9f088dbebd6c3c70")}</summary>
                   <div className="space-y-2">
                     <label className="text-sm text-muted-foreground">Experimental harness</label>
                     <SelectPopover aria-label="Experimental harness"
@@ -319,19 +310,17 @@ export function AgentBasicsDialog({
               onClick={() => (step === "name" ? onClose() : setStep("name"))}
             >
               {step === "name" ? (
-                "Cancel"
+                uiT("ui:messages.m_19766ed6ccb2f4a3")
               ) : (
                 <>
-                  <ArrowLeft className="size-4" />
-                  Back
-                </>
+                  <ArrowLeft className="size-4" />{uiT("ui:messages.m_76900f1bfd16c8d4")}</>
               )}
             </Button>
             <Button
               type="submit"
               disabled={saving || !name.trim() || (step === "adapter" && !validAdapter)}
             >
-              {saving ? "Saving…" : step === "name" ? "Choose adapter" : "Configure agent"}
+              {saving ? uiT("ui:messages.m_23e39291d6135814") : step === "name" ? uiT("ui:messages.m_83a3d0a902c86b70") : uiT("ui:messages.m_14c603bd68de7530")}
               <ArrowRight className="size-4" />
             </Button>
           </div>

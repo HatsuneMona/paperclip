@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { agentAvatarUrl } from "@/lib/agent-avatar-url";
 import { resolveAgentAppearance } from "@paperclipai/shared";
 /**
@@ -782,7 +783,7 @@ function Tooltip({ tooltip, now }: { tooltip: TooltipState; now: number }) {
   const { bar } = tooltip;
   const startMs = new Date(bar.span.start).getTime();
   const endMs = bar.span.end ? new Date(bar.span.end).getTime() : now;
-  const title = bar.span.issueTitle ?? bar.span.issueIdentifier ?? "run";
+  const title = bar.span.issueTitle ?? bar.span.issueIdentifier ?? uiT("ui:messages.m_acba25512100f80b");
   const left = Math.min(tooltip.x + 14, (typeof window !== "undefined" ? window.innerWidth : 1200) - 300);
   return (
     <div

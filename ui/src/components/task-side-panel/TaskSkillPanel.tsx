@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, FileText, Loader2, Wrench } from "lucide-react";
 import { companySkillsApi } from "@/api/companySkills";
@@ -61,7 +62,7 @@ export function TaskSkillPanel({ companyId, skillId }: { companyId: string; skil
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          {skill.slug} · {skill.currentVersion ? `Revision ${skill.currentVersion.revisionNumber}` : "Current version"}
+          {skill.slug} · {skill.currentVersion ? uiT("ui:messages.m_ab8ccd29bfdbcd62", { v0: (skill.currentVersion.revisionNumber) }) : uiT("ui:messages.m_a74487de8969b1f1")}
         </p>
       </header>
       {skill.description ? <p className="text-sm text-muted-foreground">{skill.description}</p> : null}

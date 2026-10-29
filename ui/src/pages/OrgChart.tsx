@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "@/lib/router";
@@ -238,7 +239,7 @@ export function OrgChart({ orgTree: providedOrgTree, agents: providedAgents, emb
   }, [agents]);
 
   useEffect(() => {
-    if (!embedded) setBreadcrumbs([{ label: "Org Chart" }]);
+    if (!embedded) setBreadcrumbs([{ label: uiT("ui:messages.m_aab3e6c8a0d87c7d") }]);
   }, [embedded, setBreadcrumbs]);
 
   // Layout computation
@@ -487,17 +488,13 @@ export function OrgChart({ orgTree: providedOrgTree, agents: providedAgents, emb
         {showImport ? (
           <Link to="/company/import">
             <Button variant="outline" size="sm">
-              <Upload className="mr-1.5 h-3.5 w-3.5" />
-              Import organization
-            </Button>
+              <Upload className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_837ee932677d818e")}</Button>
           </Link>
         ) : null}
         {showExport ? (
           <Link to="/company/export">
             <Button variant="outline" size="sm">
-              <Download className="mr-1.5 h-3.5 w-3.5" />
-              Export organization
-            </Button>
+              <Download className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_38a8481ada8cca1b")}</Button>
           </Link>
         ) : null}
         </div>
@@ -534,8 +531,8 @@ export function OrgChart({ orgTree: providedOrgTree, agents: providedAgents, emb
                 });
               }
             }}
-            title="Zoom in"
-            aria-label="Zoom in"
+            title={uiT("ui:messages.m_0e47f09a748fa132")}
+            aria-label={uiT("ui:messages.m_0e47f09a748fa132")}
           >
             <Plus className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </button>
@@ -550,16 +547,16 @@ export function OrgChart({ orgTree: providedOrgTree, agents: providedAgents, emb
                 });
               }
             }}
-            title="Zoom out"
-            aria-label="Zoom out"
+            title={uiT("ui:messages.m_bc7b631a689b45ca")}
+            aria-label={uiT("ui:messages.m_bc7b631a689b45ca")}
           >
             <Minus className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </button>
           <button
             className="flex size-9 items-center justify-center rounded border border-border bg-background text-(length:--text-nano) transition-colors hover:bg-accent sm:size-7"
             onClick={fitToScreen}
-            title="Fit to screen"
-            aria-label="Fit chart to screen"
+            title={uiT("ui:messages.m_32bb0d298ca1545c")}
+            aria-label={uiT("ui:messages.m_3dc2e33313f5cf3c")}
           >
             <Maximize2 className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
           </button>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   Tooltip,
@@ -389,9 +390,7 @@ export function ChoosePathButton() {
         type="button"
         className="inline-flex items-center rounded-md border border-border px-2 py-0.5 text-xs text-muted-foreground hover:bg-accent/50 transition-colors shrink-0"
         onClick={() => setOpen(true)}
-      >
-        Choose
-      </button>
+      >{uiT("ui:messages.m_c7f937836f5d82d5")}</button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
@@ -436,9 +435,7 @@ export function ChoosePathButton() {
             </section>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              OK
-            </Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{uiT("ui:messages.m_565339bc4d33d728")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

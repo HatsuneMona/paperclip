@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { casesApi, type CaseHandoffView, type CaseWorkIssue } from "@/api/cases";
@@ -50,7 +51,7 @@ function HandoffRow({ handoff, task, agents }: { handoff: CaseHandoffView; task?
         <ChevronRight aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform duration-(--motion-duration-fast) group-open:rotate-90 motion-reduce:transition-none" />
         <span className="min-w-0 flex-1 space-y-1">
           <span className="flex flex-wrap items-baseline justify-between gap-2">
-            <span className="text-sm font-medium">{terminal ? "Done" : handoff.phase}{stateLabel && <span className="ml-2 text-xs font-normal text-muted-foreground">{stateLabel}</span>}</span>
+            <span className="text-sm font-medium">{terminal ? uiT("ui:messages.m_11a6767d5674c7e4") : handoff.phase}{stateLabel && <span className="ml-2 text-xs font-normal text-muted-foreground">{stateLabel}</span>}</span>
             <span className="flex items-center gap-3">
               {handoffTask && <IssueReferencePill issue={handoffTask} variant="property" />}
               <time dateTime={createdAt} title={formatDateTime(createdAt)} className="font-mono text-xs text-muted-foreground">{relativeTime(createdAt)}</time>
@@ -59,7 +60,7 @@ function HandoffRow({ handoff, task, agents }: { handoff: CaseHandoffView; task?
           <span className="flex flex-wrap items-center gap-2 text-muted-foreground">
             <HandoffActor id={handoff.fromAgentId} name={handoff.fromAgentName} fallback={handoff.actorType === "user" ? "User" : "System"} agents={agents} />
             <ArrowRight aria-hidden className="size-3" />
-            {terminal ? <span className="text-xs">Done</span>
+            {terminal ? <span className="text-xs">{uiT("ui:messages.m_11a6767d5674c7e4")}</span>
               : <HandoffActor id={handoff.toAgentId} name={handoff.toAgentName} fallback="Agent" agents={agents} />}
           </span>
         </span>

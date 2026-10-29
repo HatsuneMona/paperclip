@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -175,7 +176,7 @@ export function BlockedInboxView({
             onClick={() => void refetch()}
             disabled={isFetching}
           >
-            {isFetching ? "Trying…" : "Try again"}
+            {isFetching ? "Trying…" : uiT("ui:messages.m_d8b8392e2c542950")}
           </Button>
         </div>
       </div>

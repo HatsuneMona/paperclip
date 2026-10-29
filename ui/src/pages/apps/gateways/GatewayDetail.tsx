@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Send } from "lucide-react";
@@ -103,8 +104,8 @@ export function GatewayDetail() {
   useEffect(() => {
     if (!gateway) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
-      { label: "Gateways", href: "/apps/gateways" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
+      { label: uiT("ui:messages.m_9e4635769f0aaf0d"), href: "/apps/gateways" },
       { label: gateway.name },
     ]);
     return () => setBreadcrumbs([]);
@@ -177,9 +178,7 @@ export function GatewayDetail() {
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={() => setEditing(true)}>
-            <Pencil className="mr-1.5 h-4 w-4" />
-            Edit
-          </Button>
+            <Pencil className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_464c4ffd019e1e96")}</Button>
           <Button onClick={() => setSnippetOpen(true)}>
             <Send className="mr-1.5 h-4 w-4" />
             Client snippets

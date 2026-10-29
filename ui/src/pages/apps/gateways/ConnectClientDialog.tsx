@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type ComponentType, useEffect, useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -145,10 +146,10 @@ export function ConnectClientDialog({
   async function copyText(value: string, label: string) {
     try {
       await copyTextToClipboard(value);
-      pushToast({ title: "Copied", body: label, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_8d525e5f158b9afe"), body: label, tone: "success" });
     } catch (error) {
       pushToast({
-        title: "Copy failed",
+        title: uiT("ui:messages.m_5b50e7a693fee952"),
         body: error instanceof Error ? error.message : "Clipboard access is unavailable.",
         tone: "error",
       });
@@ -199,7 +200,7 @@ export function ConnectClientDialog({
         </DialogHeader>
 
         <div className="flex flex-wrap items-center gap-2 border-b border-border pb-3">
-          <span className="text-xs font-medium text-muted-foreground">Authorization</span>
+          <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_ca5839e38a15433e")}</span>
           {availableTokens.length > 0 ? (
             <SearchableSelect<string, TokenOption>
               value={selectedTokenId}
@@ -303,9 +304,7 @@ export function ConnectClientDialog({
                       {endpoint}
                     </code>
                     <Button variant="outline" size="sm" onClick={() => void copyText(endpoint, "Endpoint URL")}>
-                      <Copy className="mr-1 h-3.5 w-3.5" />
-                      Copy
-                    </Button>
+                      <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
                   </div>
                 </div>
                 <div className="space-y-1.5">
@@ -325,9 +324,7 @@ export function ConnectClientDialog({
                     disabled={!copyConfigText}
                     onClick={() => copyConfigText && void copyText(copyConfigText, `${activeSnippet.label} config`)}
                   >
-                    <Copy className="mr-1 h-3.5 w-3.5" />
-                    Copy
-                  </Button>
+                    <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
                 </div>
                 <pre className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-md bg-muted p-3 font-mono text-xs text-muted-foreground">
                   {displayConfigText}
@@ -351,9 +348,7 @@ export function ConnectClientDialog({
 
         <DialogFooter>
           <Button onClick={() => onOpenChange(false)}>
-            <Check className="mr-1.5 h-4 w-4" />
-            Done
-          </Button>
+            <Check className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

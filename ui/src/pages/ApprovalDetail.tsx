@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { describeError } from "../api/errors";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useEffect, useMemo, useState } from "react";
@@ -67,8 +68,8 @@ export function ApprovalDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Approvals", href: "/approvals" },
-      { label: approval?.id?.slice(0, 8) ?? approvalId ?? "Approval" },
+      { label: uiT("ui:messages.m_2bfc3471571e5c00"), href: "/approvals" },
+      { label: approval?.id?.slice(0, 8) ?? approvalId ?? uiT("ui:messages.m_147fb813a2515718") },
     ]);
   }, [setBreadcrumbs, approval, approvalId]);
 
@@ -130,7 +131,7 @@ export function ApprovalDetail() {
       setError(null);
       refresh();
     },
-    onError: (err) => setError(err instanceof Error ? err.message : "Comment failed"),
+    onError: (err) => setError(err instanceof Error ? err.message : uiT("ui:messages.m_728785e9414cdc58")),
   });
 
   const deleteAgentMutation = useMutation({
@@ -140,11 +141,11 @@ export function ApprovalDetail() {
       refresh();
       navigate("/approvals");
     },
-    onError: (err) => setError(err instanceof Error ? err.message : "Delete failed"),
+    onError: (err) => setError(err instanceof Error ? err.message : uiT("ui:messages.m_8727e2ba364c2c46")),
   });
 
   if (isLoading) return <PageSkeleton variant="detail" />;
-  if (!approval) return <p className="text-sm text-muted-foreground">Approval not found.</p>;
+  if (!approval) return <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_4b9044f660343a80")}</p>;
 
   const payload = approval.payload as Record<string, unknown>;
   const linkedAgentId = typeof payload.agentId === "string" ? payload.agentId : null;
@@ -158,17 +159,17 @@ export function ApprovalDetail() {
       ? {
           label:
             (linkedIssues?.length ?? 0) > 1
-              ? "Review linked tasks"
-              : "Review linked task",
+              ? uiT("ui:messages.m_5a3a4dcb4ea52020")
+              : uiT("ui:messages.m_c29a3b99f794f72a"),
           to: `/issues/${primaryLinkedIssue.identifier ?? primaryLinkedIssue.id}`,
         }
       : linkedAgentId
         ? {
-            label: "Open hired agent",
+            label: uiT("ui:messages.m_96f0747f7b06e651"),
             to: `/agents/${linkedAgentId}`,
           }
         : {
-            label: "Back to approvals",
+            label: uiT("ui:messages.m_822a55b5517bfaaf"),
             to: "/approvals",
           };
 
@@ -183,10 +184,8 @@ export function ApprovalDetail() {
                 <Sparkles className="h-3 w-3 text-green-500 dark:text-green-200 absolute -right-2 -top-1 animate-pulse" />
               </div>
               <div>
-                <p className="text-sm text-green-800 dark:text-green-100 font-medium">Approval confirmed</p>
-                <p className="text-xs text-green-700 dark:text-green-200/90">
-                  Requesting agent was notified to review this approval and linked tasks.
-                </p>
+                <p className="text-sm text-green-800 dark:text-green-100 font-medium">{uiT("ui:messages.m_711153b2f78f2db5")}</p>
+                <p className="text-xs text-green-700 dark:text-green-200/90">{uiT("ui:messages.m_424b904d256fa5c5")}</p>
               </div>
             </div>
             <Button
@@ -214,7 +213,7 @@ export function ApprovalDetail() {
         <div className="text-sm space-y-1">
           {approval.requestedByAgentId && (
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-xs">Requested by</span>
+              <span className="text-muted-foreground text-xs">{uiT("ui:messages.m_9199a054972b1489")}</span>
               <AgentIdentity
                 agent={agents?.find((agent) => agent.id === approval.requestedByAgentId) ?? { id: approval.requestedByAgentId, name: "Agent" }}
                 size="sm"
@@ -227,22 +226,20 @@ export function ApprovalDetail() {
             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors mt-2"
             onClick={() => setShowRawPayload((v) => !v)}
           >
-            <ChevronRight className={`h-3 w-3 transition-transform ${showRawPayload ? "rotate-90" : ""}`} />
-            See full request
-          </button>
+            <ChevronRight className={`h-3 w-3 transition-transform ${showRawPayload ? "rotate-90" : ""}`} />{uiT("ui:messages.m_f19dd6920d8786ca")}</button>
           {showRawPayload && (
             <pre className="text-xs bg-muted/40 rounded-md p-3 overflow-x-auto">
               {JSON.stringify(payload, null, 2)}
             </pre>
           )}
           {approval.decisionNote && (
-            <p className="text-xs text-muted-foreground">Decision note: {approval.decisionNote}</p>
+            <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_e9543bf1f8ddda73")}{approval.decisionNote}</p>
           )}
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
         {linkedIssues && linkedIssues.length > 0 && (
           <div className="pt-2 border-t border-border/60">
-            <p className="text-xs text-muted-foreground mb-1.5">Linked Tasks</p>
+            <p className="text-xs text-muted-foreground mb-1.5">{uiT("ui:messages.m_d49080ee057dc832")}</p>
             <div className="space-y-1.5">
               {linkedIssues.map((issue) => (
                 <Link
@@ -257,9 +254,7 @@ export function ApprovalDetail() {
                 </Link>
               ))}
             </div>
-            <p className="text-(length:--text-micro) text-muted-foreground mt-2">
-              Linked tasks remain open until the requesting agent follows up and closes them.
-            </p>
+            <p className="text-(length:--text-micro) text-muted-foreground mt-2">{uiT("ui:messages.m_3d5aafd0a21bf802")}</p>
           </div>
         )}
         <div className="flex flex-wrap items-center gap-2">
@@ -270,22 +265,17 @@ export function ApprovalDetail() {
                 className="bg-green-700 hover:bg-green-600 text-white"
                 onClick={() => approveMutation.mutate()}
                 disabled={approveMutation.isPending}
-              >
-                Approve
-              </Button>
+              >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
               <Button
                 variant="destructive"
                 size="sm"
                 onClick={() => rejectMutation.mutate()}
                 disabled={rejectMutation.isPending}
-              >
-                Reject
-              </Button>
+              >{uiT("ui:messages.m_ab604a360777735f")}</Button>
             </>
           )}
           {isBudgetApproval && approval.status === "pending" && (
-            <p className="text-sm text-muted-foreground">
-              Resolve this budget stop from the budget controls on <Link to="/costs" className="underline underline-offset-2">/costs</Link>.
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_a8acd3547d0ed26b")}<Link to="/costs" className="underline underline-offset-2">/costs</Link>.
             </p>
           )}
           {approval.status === "pending" && (
@@ -294,9 +284,7 @@ export function ApprovalDetail() {
               variant="outline"
               onClick={() => revisionMutation.mutate()}
               disabled={revisionMutation.isPending}
-            >
-              Request revision
-            </Button>
+            >{uiT("ui:messages.m_0bf92c49028dd595")}</Button>
           )}
           {approval.status === "revision_requested" && (
             <Button
@@ -304,9 +292,7 @@ export function ApprovalDetail() {
               variant="outline"
               onClick={() => resubmitMutation.mutate()}
               disabled={resubmitMutation.isPending}
-            >
-              Mark resubmitted
-            </Button>
+            >{uiT("ui:messages.m_91f0175144a60ba1")}</Button>
           )}
           {approval.status === "rejected" && approval.type === "hire_agent" && linkedAgentId && (
             <Button
@@ -314,19 +300,17 @@ export function ApprovalDetail() {
               variant="outline"
               className="text-destructive border-destructive/40"
               onClick={() => {
-                if (!window.confirm("Delete this disapproved agent? This cannot be undone.")) return;
+                if (!window.confirm(uiT("ui:messages.m_272afb7640dbb73a"))) return;
                 deleteAgentMutation.mutate(linkedAgentId);
               }}
               disabled={deleteAgentMutation.isPending}
-            >
-              Delete disapproved agent
-            </Button>
+            >{uiT("ui:messages.m_1d504472e8737e86")}</Button>
           )}
         </div>
       </div>
 
       <div className="border border-border rounded-lg p-4 space-y-3">
-        <h3 className="text-sm font-medium">Comments ({comments?.length ?? 0})</h3>
+        <h3 className="text-sm font-medium">{uiT("ui:messages.m_618c191eed4636cc")}{comments?.length ?? 0})</h3>
         <div className="space-y-2">
           {(comments ?? []).map((comment: ApprovalComment) => (
             <div key={comment.id} className="border border-border/60 rounded-md p-3">
@@ -352,7 +336,7 @@ export function ApprovalDetail() {
         <Textarea
           value={commentBody}
           onChange={(e) => setCommentBody(e.target.value)}
-          placeholder="Add a comment..."
+          placeholder={uiT("ui:messages.m_23c5f33170dc49e4")}
           rows={3}
         />
         <div className="flex justify-end">
@@ -361,7 +345,7 @@ export function ApprovalDetail() {
             onClick={() => addCommentMutation.mutate()}
             disabled={!commentBody.trim() || addCommentMutation.isPending}
           >
-            {addCommentMutation.isPending ? "Posting…" : "Post comment"}
+            {addCommentMutation.isPending ? uiT("ui:messages.m_648a2ef491ba918c") : uiT("ui:messages.m_153dc13a3e4c64eb")}
           </Button>
         </div>
       </div>

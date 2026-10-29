@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 
 import { Link } from "@/lib/router";
@@ -77,7 +78,7 @@ function resourceActionCopy(
     return {
       title: `Update ${label} to the newest default?`,
       body: `You haven't edited this, so Paperclip will replace it with the newer shipped version. Nothing you customized is affected, and your adapter credentials and settings are not touched.`,
-      confirmLabel: "Update",
+      confirmLabel: uiT("ui:messages.m_c1c1009d3f37ec05"),
       triggerLabel: "Update",
     };
   }
@@ -117,7 +118,7 @@ function ResourceActionButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline" size="sm" disabled={pending}>
-          {pending ? "Working…" : copy.triggerLabel}
+          {pending ? uiT("ui:messages.m_5474eef8d0f179c7") : copy.triggerLabel}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -126,7 +127,7 @@ function ResourceActionButton({
           <AlertDialogDescription>{copy.body}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>{copy.confirmLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -153,7 +154,7 @@ function ConfirmActionButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline" size="sm" disabled={pending}>
-          {pending ? "Working…" : triggerLabel}
+          {pending ? uiT("ui:messages.m_5474eef8d0f179c7") : triggerLabel}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -162,7 +163,7 @@ function ConfirmActionButton({
           <AlertDialogDescription>{body}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>{confirmLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -302,7 +303,7 @@ export function BuiltInBundlePanel({
         actions={
           <>
             <Button asChild variant="link" size="sm">
-              <Link to={viewHref}>View</Link>
+              <Link to={viewHref}>{uiT("ui:messages.m_dcc839a4015c4b7d")}</Link>
             </Button>
             <ResourceActionButton
               resource={resource}
@@ -323,13 +324,11 @@ export function BuiltInBundlePanel({
       <div className="divide-y rounded-lg border px-4">
         {/* Adapter — no resource entry; readiness is the agent lifecycle. */}
         <BundleRow
-          label="Adapter"
+          label={uiT("ui:messages.m_0252b84901033771")}
           chips={<ResourceStatusChip variant={adapterChip} />}
           detail={adapterDetail}
           actions={
-            <Button variant="outline" size="sm" onClick={onConfigure}>
-              Configure
-            </Button>
+            <Button variant="outline" size="sm" onClick={onConfigure}>{uiT("ui:messages.m_6defafa2caa65304")}</Button>
           }
         />
 
@@ -353,7 +352,7 @@ export function BuiltInBundlePanel({
 
         {/* Routine — zero-token-by-default; the weekly schedule ships off. */}
         <BundleRow
-          label="Routine"
+          label={uiT("ui:messages.m_0b5baf309897ec7e")}
           secondary={bundle.routine.title}
           chips={
             <>
@@ -379,7 +378,7 @@ export function BuiltInBundlePanel({
                     title="Run Reflection Coach once?"
                     body="Paperclip will create one routine task now. This does not enable the weekly schedule or turn on background work."
                     triggerLabel="Run once"
-                    confirmLabel="Run once"
+                    confirmLabel={uiT("ui:messages.m_5f041f4be2d3becd")}
                     pending={routineActionPending === "run"}
                     onConfirm={() => onRunRoutine(routineKey)}
                   />
@@ -408,7 +407,7 @@ export function BuiltInBundlePanel({
                 {driftVariant(routine) && (
                   <ResourceActionButton
                     resource={routine}
-                    label="routine"
+                    label={uiT("ui:messages.m_fde55b36ec36cbcd")}
                     onConfirm={() => onResetResource("routine")}
                     pending={resettingResource === "routine"}
                   />

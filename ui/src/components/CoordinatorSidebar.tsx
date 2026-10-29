@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { coordinatorAttentionQueryKey } from "@/lib/coordinator-attention";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -23,17 +24,17 @@ import { Flyout, FlyoutContent, FlyoutTrigger, FlyoutAppearanceProvider } from "
 import { StatusIcon } from "./StatusIcon";
 
 const moreDestinations = [
-  { label: "Search", to: "/search", icon: Search },
+  { label: uiT("ui:messages.m_49c266baaaa70981"), to: "/search", icon: Search },
   { label: "Inbox", to: "/inbox", icon: Inbox },
-  { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
-  { label: "Projects", to: "/projects", icon: FolderOpen },
-  { label: "Routines", to: "/routines", icon: Repeat },
-  { label: "Artifacts", to: "/artifacts", icon: Boxes },
-  { label: "Agents", to: "/agents/all", icon: Network },
-  { label: "Skills", to: "/skills", icon: Boxes },
-  { label: "Connectors", to: "/apps", icon: Unplug },
-  { label: "Audit", to: "/activity", icon: History },
-  { label: "Settings", to: "/settings", icon: Settings },
+  { label: uiT("ui:messages.m_67b696468610b879"), to: "/dashboard", icon: LayoutDashboard },
+  { label: uiT("ui:messages.m_04e2a9728af75840"), to: "/projects", icon: FolderOpen },
+  { label: uiT("ui:messages.m_61b7bb44e2b47b7c"), to: "/routines", icon: Repeat },
+  { label: uiT("ui:messages.m_314ae71b8c8dc9c9"), to: "/artifacts", icon: Boxes },
+  { label: uiT("ui:messages.m_279b44d2ab4b40c0"), to: "/agents/all", icon: Network },
+  { label: uiT("ui:messages.m_66d0f523a379b2de"), to: "/skills", icon: Boxes },
+  { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), to: "/apps", icon: Unplug },
+  { label: uiT("ui:messages.m_bb6aea28739637ea"), to: "/activity", icon: History },
+  { label: uiT("ui:messages.m_74a883a037bc227f"), to: "/settings", icon: Settings },
 ] as const;
 
 function ProjectRecent({ project }: { project: Project }) {
@@ -54,7 +55,7 @@ function ProjectRecent({ project }: { project: Project }) {
     {expanded && <div className="ml-5 border-l border-border pl-1">
       {isPending ? <p className="px-3 py-2 text-xs text-muted-foreground" role="status">Loading tasks…</p> : error ? <p className="px-3 py-2 text-xs text-muted-foreground">Couldn’t load tasks.</p> : tasks?.length ? tasks.map(task =>
         <SidebarNavItem className="design-sidebar-item" key={task.id} to={`/issues/${task.identifier ?? task.id}`} label={task.title} iconNode={<StatusIcon status={task.status} />} />)
-        : <p className="px-3 py-2 text-xs text-muted-foreground">No tasks yet.</p>}
+        : <p className="px-3 py-2 text-xs text-muted-foreground">{uiT("ui:messages.m_5a889457d27958e3")}</p>}
     </div>}
   </div>;
 }
@@ -100,15 +101,15 @@ export function CoordinatorSidebar({ children }: { children?: ReactNode }) {
     <div className="design-sidebar-brand"><SidebarCompanyMenu showChevron={false} /></div>
     <nav className="design-sidebar-navigation" aria-label="Workspace navigation">
       <div className="design-sidebar-primary">
-        <SidebarNavItem className="design-sidebar-item" to="/chats" label="Chat" icon={MessageCircle} />
+        <SidebarNavItem className="design-sidebar-item" to="/chats" label={uiT("ui:messages.m_460b3a7da007b7af")} icon={MessageCircle} />
         <div className="group/coordinator-new relative">
           <SidebarNavItem to="/issues" label="Tasks" icon={CircleCheck} className={cn("design-sidebar-item", !rail && "pr-9")} />
-          {!rail && <button type="button" aria-label="New task" title="New task" onClick={() => openNewIssue()}
+          {!rail && <button type="button" aria-label={uiT("ui:messages.m_3e992276b2298a1f")} title={uiT("ui:messages.m_3e992276b2298a1f")} onClick={() => openNewIssue()}
             className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground opacity-0 transition-opacity group-hover/coordinator-new:opacity-100 group-focus-within/coordinator-new:opacity-100 pointer-coarse:opacity-100 hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-ring"><Plus className="size-4" /></button>}
         </div>
         <SidebarNavItem className="design-sidebar-item" to="/decisions" label="Needs You" icon={Bell} badge={attention?.totalCount ?? 0} badgeLabel="decisions" />
         <Flyout open={moreOpen} onOpenChange={setMoreOpen}>
-          <FlyoutTrigger asChild><button type="button" aria-label="More workspace pages" className="design-sidebar-item flex w-auto items-center gap-2.5 rounded-lg py-1.5 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring"><MoreHorizontal className="size-4 shrink-0" /><span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>More</span></button></FlyoutTrigger>
+          <FlyoutTrigger asChild><button type="button" aria-label="More workspace pages" className="design-sidebar-item flex w-auto items-center gap-2.5 rounded-lg py-1.5 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring"><MoreHorizontal className="size-4 shrink-0" /><span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>{uiT("ui:messages.m_d47d7cb0e4f8fd2b")}</span></button></FlyoutTrigger>
           <FlyoutContent ref={moreContentRef} tabIndex={-1} onOpenAutoFocus={(event) => { event.preventDefault(); moreContentRef.current?.focus(); }} side={isMobile ? "bottom" : "right"} align="start" className="w-56 p-1" aria-label="More workspace pages">
             {moreDestinations.map(({ label, to, icon: Icon }, index) => {
               const pinned = pinnedNavigation.pins.includes(to);
@@ -129,7 +130,7 @@ export function CoordinatorSidebar({ children }: { children?: ReactNode }) {
         </Flyout>
       </div>
       {pinnedDestinations.length > 0 && <section className="space-y-1 pt-4" aria-label="Pinned pages">
-        {!rail && <div data-slot="sidebar-group-label" className="px-4 pb-1 text-xs text-muted-foreground">Pinned</div>}
+        {!rail && <div data-slot="sidebar-group-label" className="px-4 pb-1 text-xs text-muted-foreground">{uiT("ui:messages.m_f20c879465551f0d")}</div>}
         {pinnedDestinations.map(({ label, to, icon }) => <div key={to} className="group/coordinator-pin relative">
           <SidebarNavItem to={to} label={label} icon={icon} className={cn("design-sidebar-item", !rail && "pr-9")} />
           {!rail && <button type="button" aria-label={`Unpin ${label}`} title={`Unpin ${label}`} onClick={() => pinnedNavigation.toggle(to)} className="absolute right-3 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity hover:bg-sidebar-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring group-hover/coordinator-pin:opacity-100 group-focus-within/coordinator-pin:opacity-100 pointer-coarse:opacity-100"><PinOff className="size-3.5" /></button>}

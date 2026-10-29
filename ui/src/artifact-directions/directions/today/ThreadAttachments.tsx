@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   Attachment,
   AttachmentContent,
@@ -36,7 +37,7 @@ export function ThreadAttachments({ artifacts }: { artifacts: LabArtifact[] }) {
                 key={ref.url}
                 type="button"
                 className="group aspect-video min-w-0 overflow-hidden rounded-md bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={`Open ${ref.name || `image ${index + 1}`}`}
+                aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (ref.name || `image ${index + 1}`) })}
               >
                 <img
                   src={ref.openPath ?? ref.url}
@@ -50,7 +51,7 @@ export function ThreadAttachments({ artifacts }: { artifacts: LabArtifact[] }) {
               <button
                 type="button"
                 className="aspect-video min-w-0 rounded-md bg-muted text-sm font-semibold text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={`Open ${imageRefs.length - 3} more screenshots`}
+                aria-label={uiT("ui:messages.m_491fd0d0d0dbbc44", { v0: (imageRefs.length - 3) })}
               >
                 +{imageRefs.length - 3}
               </button>
@@ -82,7 +83,7 @@ export function ThreadAttachments({ artifacts }: { artifacts: LabArtifact[] }) {
                     </AttachmentDescription>
                   </AttachmentContent>
                   <AttachmentTrigger
-                    aria-label={`Open ${ref.name}`}
+                    aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (ref.name) })}
                     render={video ? <button type="button" /> : <a href={ref.openPath ?? ref.url} target="_blank" rel="noreferrer" />}
                   />
                 </Attachment>

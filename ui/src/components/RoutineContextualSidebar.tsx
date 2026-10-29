@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import {
   Activity,
@@ -36,11 +37,11 @@ export type RoutineContextualNavItem = {
 };
 
 export const ROUTINE_CONTEXTUAL_NAV_ITEMS: readonly RoutineContextualNavItem[] = [
-  { view: "overview", label: "Overview", icon: LayoutDashboard },
-  { view: "triggers", label: "Triggers", icon: CalendarClock },
-  { view: "variables", label: "Variables", icon: Braces },
-  { view: "delivery", label: "Delivery", icon: Send },
-  { view: "secrets", label: "Secrets", icon: KeyRound },
+  { view: "overview", label: uiT("ui:messages.m_d4b1ea5708dd5329"), icon: LayoutDashboard },
+  { view: "triggers", label: uiT("ui:messages.m_e62f2148a64d96bb"), icon: CalendarClock },
+  { view: "variables", label: uiT("ui:messages.m_02db55bac5e3f7ce"), icon: Braces },
+  { view: "delivery", label: uiT("ui:messages.m_52bfe584a5fc4505"), icon: Send },
+  { view: "secrets", label: uiT("ui:messages.m_d8707d411d997657"), icon: KeyRound },
 ];
 
 export function isRoutineDetailView(value: string | null | undefined): value is RoutineDetailView {
@@ -100,18 +101,16 @@ export function RoutineContextualSidebar({
           ))}
         </div>
 
-        <p className="px-4 pb-1 pt-5 text-(length:--text-nano) font-mono font-medium uppercase tracking-widest text-muted-foreground/60">
-          Operate
-        </p>
+        <p className="px-4 pb-1 pt-5 text-(length:--text-nano) font-mono font-medium uppercase tracking-widest text-muted-foreground/60">{uiT("ui:messages.m_58c3939c4ce986c8")}</p>
         <div className="flex flex-col gap-0.5">
           <SidebarNavItem
             to={routineDetailHref(routineId, "runs")}
-            label="Runs"
+            label={uiT("ui:messages.m_848f54e89660cea4")}
             icon={Play}
           />
           <SidebarNavItem
             to={routineDetailHref(routineId, "activity")}
-            label="Activity"
+            label={uiT("ui:messages.m_38da1505ca837328")}
             icon={Activity}
           />
         </div>

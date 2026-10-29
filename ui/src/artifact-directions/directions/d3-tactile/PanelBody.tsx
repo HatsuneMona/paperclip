@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -47,7 +48,7 @@ function Empty() {
   return (
     <div className="flex items-center gap-4 px-1 py-6">
       <ArtifactObject artifact={BLANK} size="sm" flag="none" repose={2} />
-      <p className="text-sm text-(--tac-meta)">No artifacts yet. Work products, documents, and agent-produced files will appear here.</p>
+      <p className="text-sm text-(--tac-meta)">{uiT("ui:messages.m_b032412c097b00bd")}</p>
     </div>
   );
 }
@@ -62,10 +63,8 @@ export function PanelBody({ artifacts }: { artifacts: LabArtifact[] }) {
   return (
     <div data-tac-desk className="-m-4 flex flex-col gap-7 bg-(--tac-desk) bg-(image:--tac-ground-grain) p-4 pb-6 shadow-(--tac-desk-rim)">
       {toReview > 0 ? (
-        <div role="group" aria-label="Show" className="-mb-2 flex items-center gap-1">
-          <FilterButton pressed={filter === "all"} onPress={() => setFilter("all")} count={artifacts.length}>
-            All
-          </FilterButton>
+        <div role="group" aria-label={uiT("ui:messages.m_0df6f1cad36c49da")} className="-mb-2 flex items-center gap-1">
+          <FilterButton pressed={filter === "all"} onPress={() => setFilter("all")} count={artifacts.length}>{uiT("ui:messages.m_a52ace420f2175d0")}</FilterButton>
           <FilterButton pressed={filter === "review"} onPress={() => setFilter("review")} count={toReview}>
             <span aria-hidden className="block h-2.5 w-3.5 bg-(--tac-flag)" style={FLAG} />
             To review

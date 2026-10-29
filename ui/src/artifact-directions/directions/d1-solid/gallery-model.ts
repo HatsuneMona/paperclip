@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import type { LabArtifact, LabGroup } from "../../kit";
 import type { SolidAction } from "./actions";
@@ -101,7 +102,7 @@ export function galleryActions(a: LabArtifact): GalleryActions {
     primary,
     secondary: [
       { id: "preview", label: "Open file in new tab", icon: ExternalLink, href: `#file-${a.id}`, external: true },
-      { id: "download", label: "Download file", icon: Download, href: `#download-${a.id}` },
+      { id: "download", label: uiT("ui:messages.m_9de4149fb9716cfc"), icon: Download, href: `#download-${a.id}` },
     ],
   };
 }

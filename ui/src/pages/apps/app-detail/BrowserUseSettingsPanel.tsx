@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
@@ -60,10 +61,7 @@ function CredentialSettings({
           placeholder="Use the remaining Paperclip budget"
           onChange={(e) => setLimit(e.target.value)}
         />
-        <p className="text-sm text-muted-foreground">
-          The agent can choose a lower limit. Paperclip also applies any
-          remaining hard budget limit.
-        </p>
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_9063e2474b9ed603")}</p>
       </div>
       <fieldset className="space-y-2">
         <legend className="text-sm font-medium">Allowed saved profiles</legend>
@@ -108,9 +106,7 @@ function CredentialSettings({
               size="sm"
               variant="ghost"
               onClick={() => void profiles.refetch()}
-            >
-              Retry
-            </Button>
+            >{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           </p>
         )}
       </fieldset>
@@ -162,7 +158,7 @@ export function BrowserUseSettingsPanel({
   const grantId = selected || eligible[0]?.id;
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold">Browser settings</h2>
+      <h2 className="text-lg font-semibold">{uiT("ui:messages.m_29435093ce3d3b5a")}</h2>
       {eligible.length > 1 && (
         <Label className="flex flex-col gap-2">
           Credential
@@ -173,7 +169,7 @@ export function BrowserUseSettingsPanel({
           >
             {eligible.map((g, i) => (
               <option key={g.id} value={g.id}>
-                {g.kind === "user" ? "Personal" : "Shared"} credential {i + 1}
+                {g.kind === "user" ? uiT("ui:messages.m_845f9286400f4269") : uiT("ui:messages.m_e3c4b39d6d501347")} credential {i + 1}
               </option>
             ))}
           </select>

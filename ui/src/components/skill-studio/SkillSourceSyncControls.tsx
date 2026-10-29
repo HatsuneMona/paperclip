@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ToggleSwitch } from '@/components/ui/toggle-switch';
@@ -17,7 +18,7 @@ export function SkillSourceSyncControls({ automaticUpdates, refreshing, disabled
     </label>}
     <Button size="sm" variant="outline" disabled={disabled || refreshing} onClick={onRefresh}>
       <RefreshCw className={refreshing ? 'size-3.5 animate-spin motion-reduce:animate-none' : 'size-3.5'} />
-      {refreshing ? 'Refreshing…' : 'Refresh'}
+      {refreshing ? uiT("ui:messages.m_1c0def7be0607b96") : uiT("ui:messages.m_0e91610117029a62")}
     </Button>
   </div>;
 }

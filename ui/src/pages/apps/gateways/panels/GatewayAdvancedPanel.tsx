@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy } from "lucide-react";
@@ -66,19 +67,19 @@ export function GatewayAdvancedPanel({
   async function copy(value: string, label: string) {
     try {
       await copyTextToClipboard(value);
-      pushToast({ title: "Copied", body: label, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_8d525e5f158b9afe"), body: label, tone: "success" });
     } catch {
-      pushToast({ title: "Copy failed", body: "Clipboard access is unavailable.", tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_5b50e7a693fee952"), body: "Clipboard access is unavailable.", tone: "error" });
     }
   }
 
   return (
     <div className="space-y-5">
       <section className="space-y-2">
-        <h3 className="text-sm font-semibold text-foreground">Transport</h3>
+        <h3 className="text-sm font-semibold text-foreground">{uiT("ui:messages.m_aaead4abf5d0fd5e")}</h3>
         <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
-          <Row label="Transport" value="streamable_http" />
-          <Row label="Authentication" value="bearer" />
+          <Row label={uiT("ui:messages.m_aaead4abf5d0fd5e")} value="streamable_http" />
+          <Row label={uiT("ui:messages.m_66880d2d8216260d")} value="bearer" />
           <Row label="Protocol version" value="2025-03-26" />
           <Row label="Public ID" value={gateway.gatewayPublicId} mono />
         </dl>
@@ -87,9 +88,7 @@ export function GatewayAdvancedPanel({
             {endpoint}
           </code>
           <Button variant="outline" size="sm" onClick={() => void copy(endpoint, "Endpoint URL")}>
-            <Copy className="mr-1 h-3.5 w-3.5" />
-            Copy
-          </Button>
+            <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
         </div>
       </section>
 
@@ -107,7 +106,7 @@ export function GatewayAdvancedPanel({
       </section>
 
       <section className="space-y-2 rounded-lg border border-destructive/40 p-4">
-        <h3 className="text-sm font-semibold text-destructive">Danger zone</h3>
+        <h3 className="text-sm font-semibold text-destructive">{uiT("ui:messages.m_fd8b8dae44216610")}</h3>
         <p className="text-sm text-muted-foreground">
           Archiving takes the gateway offline for every client. Existing tokens stop working. Type the
           gateway name to confirm.
@@ -129,9 +128,7 @@ export function GatewayAdvancedPanel({
               >
                 {archiveMutation.isPending ? "Archiving…" : "Archive gateway"}
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => { setConfirming(false); setConfirmName(""); }}>
-                Cancel
-              </Button>
+              <Button variant="ghost" size="sm" onClick={() => { setConfirming(false); setConfirmName(""); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             </div>
           </div>
         ) : (

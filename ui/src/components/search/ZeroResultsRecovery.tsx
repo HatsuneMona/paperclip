@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { FilterX, RotateCcw } from "lucide-react";
 import type { CompanySearchZeroResults } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -58,14 +59,13 @@ export function ZeroResultsRecovery({
               className="flex items-center justify-between gap-3 rounded-md border border-border px-3 py-2 text-left text-sm hover:border-foreground/30 hover:bg-accent/40"
               onClick={() => onChange(clearFilterDimension(filters, suggestion.filter))}
             >
-              <span className="min-w-0 truncate">
-                Remove{" "}
+              <span className="min-w-0 truncate">{uiT("ui:messages.m_c3812fc4acb861d5")}{" "}
                 <span className="font-medium">
                   {describeLoosenSuggestion(suggestion.filter, suggestion.values, lookups)}
                 </span>
               </span>
               <span className="shrink-0 tabular-nums text-emerald-600 dark:text-emerald-400">
-                +{suggestion.additionalCount} {suggestion.additionalCount === 1 ? "result" : "results"}
+                +{suggestion.additionalCount} {suggestion.additionalCount === 1 ? uiT("ui:messages.m_f6a214f7a5fcda0c") : uiT("ui:messages.m_c099142bc3186ded")}
               </span>
             </button>
           ))}

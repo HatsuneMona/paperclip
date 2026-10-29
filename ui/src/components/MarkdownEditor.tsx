@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import {
   Component,
@@ -1679,29 +1680,19 @@ export const MarkdownEditor = forwardRef<MarkdownEditorRef, MarkdownEditorProps>
                   </span>
                 )}
                 {option.kind === "issue" && (
-                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Task
-                  </span>
+                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_4bc74b21357c6cf5")}</span>
                 )}
                 {option.kind === "project" && option.projectId && (
-                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Project
-                  </span>
+                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_9859597853197476")}</span>
                 )}
                 {option.kind === "user" && (
-                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    User
-                  </span>
+                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_b512d97e7cbf97c2")}</span>
                 )}
                 {option.kind === "skill" && (
-                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Skill
-                  </span>
+                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_6df1bb18a59ab97d")}</span>
                 )}
                 {option.kind === "routine" && (
-                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Routine
-                  </span>
+                  <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_0b5baf309897ec7e")}</span>
                 )}
                 {option.kind === "action" && (
                   <span className="ml-auto max-w-28 truncate text-(length:--text-nano) text-muted-foreground">
@@ -1721,7 +1712,7 @@ export const MarkdownEditor = forwardRef<MarkdownEditorRef, MarkdownEditorProps>
             !bordered && "inset-0 rounded-sm",
           )}
         >
-          Drop {onDropFile ? "file" : "image"} to upload
+          Drop {onDropFile ? uiT("ui:messages.m_3b9c358f36f0a31b") : uiT("ui:messages.m_6105d6cc76af4003")} to upload
         </div>
       )}
       {uploadError && (

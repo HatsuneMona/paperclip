@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   CheckCircle2,
@@ -130,8 +131,7 @@ function IslandBody({ model }: { model: TaskChatTurnStatusModel }) {
       {plan ? (
         <span className="flex shrink-0 items-center gap-2">
           {planIcon(plan)}
-          <span className="font-mono text-sm tabular-nums" aria-live="polite" aria-atomic="true">
-            Step {plan.currentStepIndex + 1} / {plan.steps.length}
+          <span className="font-mono text-sm tabular-nums" aria-live="polite" aria-atomic="true">{uiT("ui:messages.m_474a987f3bbe57fe")}{plan.currentStepIndex + 1} / {plan.steps.length}
             <span className="sr-only">: {plan.steps[plan.currentStepIndex]?.label}</span>
           </span>
         </span>

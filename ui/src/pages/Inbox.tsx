@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { describeError } from "../api/errors";
 import { useIssueRowDetails } from "../hooks/useIssueRowDetails";
 import { IssueRowDetailsNotice } from "../components/IssueRowDetailsNotice";
@@ -419,7 +420,7 @@ export function FailedRunInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={uiT("ui:messages.m_50c8b81faf51e7d1")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -454,7 +455,7 @@ export function FailedRunInboxRow({
                   {issue.title}
                 </>
               ) : (
-                <>Failed run{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
+                <>{uiT("ui:messages.m_3f23cd69ecb80fe4")}{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
               )}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
@@ -478,14 +479,14 @@ export function FailedRunInboxRow({
             disabled={isRetrying}
           >
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-            {isRetrying ? "Thinking" : "Retry"}
+            {isRetrying ? uiT("ui:messages.m_a20d12c5e9c428c3") : uiT("ui:messages.m_942087cc2d41e013")}
           </Button>}
           {!showUnreadSlot && (
             <button
               type="button"
               onClick={onDismiss}
               className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover:opacity-100"
-              aria-label="Dismiss"
+              aria-label={uiT("ui:messages.m_48845bff334a50a5")}
             >
               <X className="h-4 w-4" />
             </button>
@@ -502,14 +503,14 @@ export function FailedRunInboxRow({
           disabled={isRetrying}
         >
           <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-          {isRetrying ? "Thinking" : "Retry"}
+          {isRetrying ? uiT("ui:messages.m_a20d12c5e9c428c3") : uiT("ui:messages.m_942087cc2d41e013")}
         </Button>}
         {!showUnreadSlot && (
           <button
             type="button"
             onClick={onDismiss}
             className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
-            aria-label="Dismiss"
+            aria-label={uiT("ui:messages.m_48845bff334a50a5")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -568,7 +569,7 @@ function ApprovalInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={uiT("ui:messages.m_50c8b81faf51e7d1")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -599,8 +600,8 @@ function ApprovalInboxRow({
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span className="capitalize">{approvalStatusLabel(approval.status)}</span>
-              {requesterName ? <span>requested by {requesterName}</span> : null}
-              <span>updated {timeAgo(approval.updatedAt)}</span>
+              {requesterName ? <span>{uiT("ui:messages.m_0d6dc5bf61f1ff02")}{requesterName}</span> : null}
+              <span>{uiT("ui:messages.m_53961930ab4482d8")}{timeAgo(approval.updatedAt)}</span>
             </span>
           </span>
         </Link>
@@ -616,18 +617,14 @@ function ApprovalInboxRow({
                   className="h-8 min-w-(--sz-64px) justify-center bg-green-700 px-3 text-white hover:bg-green-600"
                   onClick={onApprove}
                   disabled={isPending}
-                >
-                  Approve
-                </Button>
+                >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
                 <Button
                   variant="destructive"
                   size="sm"
                   className="h-8 min-w-(--sz-64px) justify-center px-3"
                   onClick={onReject}
                   disabled={isPending}
-                >
-                  Reject
-                </Button>
+                >{uiT("ui:messages.m_ab604a360777735f")}</Button>
               </>
             ) : null}
           </div>
@@ -640,18 +637,14 @@ function ApprovalInboxRow({
             className="h-8 min-w-(--sz-64px) justify-center bg-green-700 px-3 text-white hover:bg-green-600"
             onClick={onApprove}
             disabled={isPending}
-          >
-            Approve
-          </Button>
+          >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
           <Button
             variant="destructive"
             size="sm"
             className="h-8 min-w-(--sz-64px) justify-center px-3"
             onClick={onReject}
             disabled={isPending}
-          >
-            Reject
-          </Button>
+          >{uiT("ui:messages.m_ab604a360777735f")}</Button>
         </div>
       ) : null}
     </div>
@@ -701,7 +694,7 @@ function JoinRequestInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={uiT("ui:messages.m_50c8b81faf51e7d1")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -725,8 +718,8 @@ function JoinRequestInboxRow({
               {label}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <span>requested {timeAgo(joinRequest.createdAt)} from IP {joinRequest.requestIp}</span>
-              {joinRequest.adapterType && <span>adapter: {joinRequest.adapterType}</span>}
+              <span>{uiT("ui:messages.m_f900c716f8e50930")}{timeAgo(joinRequest.createdAt)}{uiT("ui:messages.m_170e1c2fc69a4653")}{joinRequest.requestIp}</span>
+              {joinRequest.adapterType && <span>{uiT("ui:messages.m_60e28bf806739148")}{joinRequest.adapterType}</span>}
             </span>
           </span>
         </div>
@@ -739,18 +732,14 @@ function JoinRequestInboxRow({
             className="h-8 bg-green-700 px-3 text-white hover:bg-green-600"
             onClick={onApprove}
             disabled={isPending}
-          >
-            Approve
-          </Button>
+          >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
           <Button
             variant="destructive"
             size="sm"
             className="h-8 px-3"
             onClick={onReject}
             disabled={isPending}
-          >
-            Reject
-          </Button>
+          >{uiT("ui:messages.m_ab604a360777735f")}</Button>
         </div>
       </div>
       <div className="mt-3 flex gap-2 sm:hidden">
@@ -759,18 +748,14 @@ function JoinRequestInboxRow({
           className="h-8 bg-green-700 px-3 text-white hover:bg-green-600"
           onClick={onApprove}
           disabled={isPending}
-        >
-          Approve
-        </Button>
+        >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
         <Button
           variant="destructive"
           size="sm"
           className="h-8 px-3"
           onClick={onReject}
           disabled={isPending}
-        >
-          Reject
-        </Button>
+        >{uiT("ui:messages.m_ab604a360777735f")}</Button>
       </div>
     </div>
   );
@@ -1218,7 +1203,7 @@ function StreamlinedInbox({
     if (currentUserId) {
       options.set(`user:${currentUserId}`, {
         id: `user:${currentUserId}`,
-        label: currentUserId === "local-board" ? "Board" : "Me",
+        label: currentUserId === "local-board" ? uiT("ui:messages.m_4816cbfd74aa8297") : uiT("ui:messages.m_d30af076b0dc85cc"),
         kind: "user",
         searchText: currentUserId === "local-board" ? "board me human local-board" : `me board human ${currentUserId}`,
       });
@@ -1849,7 +1834,7 @@ function StreamlinedInbox({
       queryClient.invalidateQueries({ queryKey: queryKeys.companies.all });
     },
     onError: (err) => {
-      setActionError(err instanceof Error ? err.message : "Failed to approve join request");
+      setActionError(err instanceof Error ? err.message : uiT("ui:messages.m_3b65e5b7c998c9dc"));
     },
   });
 
@@ -1862,7 +1847,7 @@ function StreamlinedInbox({
       queryClient.invalidateQueries({ queryKey: queryKeys.sidebarBadges(selectedCompanyId!) });
     },
     onError: (err) => {
-      setActionError(err instanceof Error ? err.message : "Failed to reject join request");
+      setActionError(err instanceof Error ? err.message : uiT("ui:messages.m_4d68f6e11d9ae57f"));
     },
   });
 
@@ -1907,7 +1892,7 @@ function StreamlinedInbox({
     },
     onError: (error) => {
       pushToast({
-        title: "Run retry failed",
+        title: uiT("ui:messages.m_243efbc1d68c5180"),
         body: error instanceof Error ? error.message : "Unable to retry run",
         tone: "error",
       });
@@ -1981,7 +1966,7 @@ function StreamlinedInbox({
       return { companyId: selectedCompanyId, previousData };
     },
     onError: (err, id, context) => {
-      setActionError(err instanceof Error ? err.message : "Failed to archive task");
+      setActionError(err instanceof Error ? err.message : uiT("ui:messages.m_ab3328ec3513c7fb"));
       if (context?.companyId) clearLocalInboxArchive(context.companyId, id);
       setArchivingIssueIds((prev) => {
         const next = new Set(prev);
@@ -2022,7 +2007,7 @@ function StreamlinedInbox({
       return { companyId: selectedCompanyId };
     },
     onError: (err, id, context) => {
-      setActionError(err instanceof Error ? err.message : "Failed to undo inbox archive");
+      setActionError(err instanceof Error ? err.message : uiT("ui:messages.m_f52fe16f6a79e73b"));
       if (context?.companyId) {
         beginLocalInboxArchive(context.companyId, id);
         boundLocalInboxArchive(context.companyId, id);
@@ -2532,11 +2517,11 @@ function StreamlinedInbox({
           <Tabs value={tab} onValueChange={(value) => navigate(`/inbox/${value}`)}>
             <PageTabBar
               items={[
-                { value: "mine", label: "Mine" },
-                { value: "recent", label: "Recent" },
-                { value: "unread", label: "Unread" },
-                { value: "blocked", label: "Blocked" },
-                { value: "all", label: "All" },
+                { value: "mine", label: uiT("ui:messages.m_f57afb7d275a26df") },
+                { value: "recent", label: uiT("ui:messages.m_690dbe9dc0993c42") },
+                { value: "unread", label: uiT("ui:messages.m_1b9f384c1436f607") },
+                { value: "blocked", label: uiT("ui:messages.m_18f2a0947f9d6523") },
+                { value: "all", label: uiT("ui:messages.m_a52ace420f2175d0") },
               ]}
             />
           </Tabs>
@@ -2597,7 +2582,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", blockedGroupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={uiT("ui:messages.m_34ca0e76608842ff")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2643,7 +2628,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 shrink-0"
-                    title="Sort"
+                    title={uiT("ui:messages.m_bec69036aa27e7fa")}
                   >
                     <ArrowUpDown className="h-3.5 w-3.5" />
                   </Button>
@@ -2676,7 +2661,7 @@ function StreamlinedInbox({
                 size="icon"
                 className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", nestingEnabled && "bg-accent")}
                 onClick={toggleNesting}
-                title={nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+                title={nestingEnabled ? uiT("ui:messages.m_8c5a4b177b78f1f5") : uiT("ui:messages.m_18cf6dba7656852e")}
               >
                 <ListTree className="h-3.5 w-3.5" />
               </Button>
@@ -2716,7 +2701,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={uiT("ui:messages.m_34ca0e76608842ff")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2772,28 +2757,22 @@ function StreamlinedInbox({
                     onClick={() => setShowMarkAllReadConfirm(true)}
                     disabled={markAllReadMutation.isPending}
                   >
-                    {markAllReadMutation.isPending ? "Marking…" : "Mark all as read"}
+                    {markAllReadMutation.isPending ? uiT("ui:messages.m_98a436e57b71dd50") : uiT("ui:messages.m_d7592650e1c90a85")}
                   </Button>
                   <Dialog open={showMarkAllReadConfirm} onOpenChange={setShowMarkAllReadConfirm}>
                     <DialogContent className="sm:max-w-md">
                       <DialogHeader>
-                        <DialogTitle>Mark all as read?</DialogTitle>
-                        <DialogDescription>
-                          This will mark {unreadIssueIds.length} unread {unreadIssueIds.length === 1 ? "item" : "items"} as read.
-                        </DialogDescription>
+                        <DialogTitle>{uiT("ui:messages.m_0bf166e29608656d")}</DialogTitle>
+                        <DialogDescription>{uiT("ui:messages.m_cd172eb57960a6ed")}{unreadIssueIds.length}{uiT("ui:messages.m_7207a77f4ab0b1b3")}{unreadIssueIds.length === 1 ? uiT("ui:messages.m_4a33eacd5fa65f2b") : uiT("ui:messages.m_5f3c4f8580d392e4")}{uiT("ui:messages.m_3c0884aa0ab40482")}</DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
-                        <Button variant="outline" onClick={() => setShowMarkAllReadConfirm(false)}>
-                          Cancel
-                        </Button>
+                        <Button variant="outline" onClick={() => setShowMarkAllReadConfirm(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                         <Button
                           onClick={() => {
                             setShowMarkAllReadConfirm(false);
                             markAllReadMutation.mutate(unreadIssueIds);
                           }}
-                        >
-                          Mark all as read
-                        </Button>
+                        >{uiT("ui:messages.m_d7592650e1c90a85")}</Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>
@@ -2813,7 +2792,7 @@ function StreamlinedInbox({
       {listError && (
         <div role="alert" className="flex items-center gap-2 text-sm text-destructive">
           <p>Unable to load the inbox: {listError.message}</p>
-          <Button variant="outline" size="sm" onClick={() => { retryFailedSources(); if (externalObjectSummariesError) retryExternalObjectSummaries(); }}>Retry</Button>
+          <Button variant="outline" size="sm" onClick={() => { retryFailedSources(); if (externalObjectSummariesError) retryExternalObjectSummaries(); }}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
         </div>
       )}
       {actionError && <p className="text-sm text-destructive">{actionError}</p>}
@@ -2940,7 +2919,7 @@ function StreamlinedInbox({
                           type="button"
                           data-slot="icon-button"
                           className="inline-flex h-4 w-4 shrink-0 items-center justify-center"
-                          aria-label={isExpanded ? "Collapse sub-tasks" : "Expand sub-tasks"}
+                          aria-label={isExpanded ? uiT("ui:messages.m_b533f9e83cfd41b7") : uiT("ui:messages.m_45dcdcbb82678e42")}
                           onClick={(event) => {
                             event.preventDefault();
                             event.stopPropagation();
@@ -2999,7 +2978,7 @@ function StreamlinedInbox({
                       ) : undefined}
                       titleSuffix={hasChildren && !isExpanded ? (
                         <span className="ml-1.5 text-xs text-muted-foreground">
-                          ({childCount} sub-task{childCount !== 1 ? "s" : ""})
+                          ({childCount}{uiT("ui:messages.m_ed32e44713f3e9b7")}{childCount !== 1 ? uiT("ui:messages.m_043a718774c572bd") : ""})
                         </span>
                       ) : undefined}
                       mobileTitleMeta={streamlinedUiEnabled ? issueActivityTimestamp(issue) : undefined}
@@ -3078,7 +3057,7 @@ function StreamlinedInbox({
                       >
                         <div className="h-px flex-1 bg-border/80" />
                         <span className="shrink-0 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                          {group.searchSection === "archived" ? "Archived" : "Other results"}
+                          {group.searchSection === "archived" ? uiT("ui:messages.m_bdb86505f8062d15") : uiT("ui:messages.m_d2fcaa7d025063fa")}
                         </span>
                         <div className="h-px flex-1 bg-border/80" />
                       </div>,
@@ -3115,8 +3094,8 @@ function StreamlinedInbox({
                               variant="ghost"
                               size="icon-xs"
                               className="-mr-2 text-muted-foreground"
-                              title={`New task in ${group.label}`}
-                              aria-label={`New task in ${group.label}`}
+                              title={uiT("ui:messages.m_9af4503357c1654e", { v0: (group.label) })}
+                              aria-label={uiT("ui:messages.m_9af4503357c1654e", { v0: (group.label) })}
                               onClick={(event) => {
                                 event.stopPropagation();
                                 openCreateIssueForGroup(group);
@@ -3185,9 +3164,7 @@ function StreamlinedInbox({
                           <span
                             className="shrink-0 text-(length:--text-micro) font-medium uppercase tracking-wider text-muted-foreground/70"
                             data-date-group-label=""
-                          >
-                            Earlier
-                          </span>
+                          >{uiT("ui:messages.m_e10ae99074011888")}</span>
                         </div>,
                       );
                     }
@@ -3400,9 +3377,7 @@ function StreamlinedInbox({
         <>
           {showSeparatorBefore("alerts") && <Separator />}
           <div>
-            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Alerts
-            </h3>
+            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_f62e9267d196c761")}</h3>
             <div className="divide-y divide-border border border-border">
               {showAggregateAgentError && (
                 <div className="group/alert relative flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/50">
@@ -3413,14 +3388,13 @@ function StreamlinedInbox({
                     <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
                     <span className="text-sm">
                       <span className="font-medium">{dashboard!.agents.error}</span>{" "}
-                      {dashboard!.agents.error === 1 ? "agent has" : "agents have"} errors
-                    </span>
+                      {dashboard!.agents.error === 1 ? uiT("ui:messages.m_73772d753cc5412b") : uiT("ui:messages.m_9e7c478e2a684de2")}{uiT("ui:messages.m_ffb2f0afdfc4edd2")}</span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:agent-errors")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={uiT("ui:messages.m_48845bff334a50a5")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -3433,17 +3407,14 @@ function StreamlinedInbox({
                     className="flex flex-1 cursor-pointer items-center gap-3 no-underline text-inherit"
                   >
                     <AlertTriangle className="h-4 w-4 shrink-0 text-yellow-400" />
-                    <span className="text-sm">
-                      Budget at{" "}
-                      <span className="font-medium">{dashboard!.costs.monthUtilizationPercent}%</span>{" "}
-                      utilization this month
-                    </span>
+                    <span className="text-sm">{uiT("ui:messages.m_42ed7a2d3f40d4e8")}{" "}
+                      <span className="font-medium">{dashboard!.costs.monthUtilizationPercent}%</span>{" "}{uiT("ui:messages.m_be7a25a60059aa2f")}</span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:budget")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={uiT("ui:messages.m_48845bff334a50a5")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useCoordinatorChatTaskHandoffs } from "./CoordinatorChatTaskHandoffs";
 import { CoordinatorCreatedTaskLink } from "./CoordinatorTaskCommitment";
@@ -17,16 +18,16 @@ export function CoordinatorConversationTasksPanel({ conversationIssueId }: { con
       .sort((a, b) => sort === "title" ? a.title.localeCompare(b.title) : (sort === "oldest" ? 1 : -1) * (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
   }, [tasks.handoffs, query, status, sort]);
   return <section className="space-y-4" aria-label="Tasks from this conversation">
-    <div className="space-y-1"><h2 className="text-lg font-medium">Tasks</h2><p className="text-sm text-muted-foreground">Created from this conversation.</p></div>
+    <div className="space-y-1"><h2 className="text-lg font-medium">{uiT("ui:messages.m_b3a60e61a5233d05")}</h2><p className="text-sm text-muted-foreground">Created from this conversation.</p></div>
     <ToolbarSearch query={query} onQueryChange={setQuery} label="Search conversation tasks" placeholder="Search tasks or IDs…" />
     <div className="flex flex-wrap gap-2">
-      <NativeSelect value={status} onChange={event => setStatus(event.target.value)} aria-label="Filter conversation tasks by status" className="w-auto"><option value="">All statuses</option><option value="todo">Ready to start</option><option value="in_progress">In progress</option><option value="in_review">Needs review</option><option value="blocked">Blocked</option><option value="done">Done</option><option value="cancelled">Cancelled</option></NativeSelect>
-      <NativeSelect value={sort} onChange={event => setSort(event.target.value)} aria-label="Sort conversation tasks" className="w-auto"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="title">Title</option></NativeSelect>
+      <NativeSelect value={status} onChange={event => setStatus(event.target.value)} aria-label="Filter conversation tasks by status" className="w-auto"><option value="">{uiT("ui:messages.m_8ee57323a6f24cc7")}</option><option value="todo">Ready to start</option><option value="in_progress">{uiT("ui:messages.m_c1f88e9d6c4145cf")}</option><option value="in_review">Needs review</option><option value="blocked">{uiT("ui:messages.m_18f2a0947f9d6523")}</option><option value="done">{uiT("ui:messages.m_11a6767d5674c7e4")}</option><option value="cancelled">{uiT("ui:messages.m_d353a99eb4556847")}</option></NativeSelect>
+      <NativeSelect value={sort} onChange={event => setSort(event.target.value)} aria-label="Sort conversation tasks" className="w-auto"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="title">{uiT("ui:messages.m_7e8cd2056da73a7f")}</option></NativeSelect>
     </div>
     {tasks.isPending && <p role="status" className="text-sm text-muted-foreground">Loading tasks…</p>}
-    {tasks.isError && <div role="alert" className="space-y-2"><p className="text-sm">Tasks couldn’t load.</p><Button variant="outline" onClick={() => void tasks.refetch()}>Retry</Button></div>}
+    {tasks.isError && <div role="alert" className="space-y-2"><p className="text-sm">Tasks couldn’t load.</p><Button variant="outline" onClick={() => void tasks.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></div>}
     <div className="space-y-3">{visible.map(task => <div key={task.id} className="overflow-hidden rounded-xl border border-border bg-card"><CoordinatorCreatedTaskLink task={task} /></div>)}</div>
     {!tasks.isPending && !tasks.isError && !visible.length && <p className="py-4 text-sm text-muted-foreground">{query || status ? "No loaded tasks match these filters." : "Tasks created from this conversation will appear here."}</p>}
-    {tasks.hasNextPage && <Button variant="outline" disabled={tasks.isFetchingNextPage} onClick={() => void tasks.fetchNextPage()}>{tasks.isFetchingNextPage ? "Loading…" : "Load more tasks"}</Button>}
+    {tasks.hasNextPage && <Button variant="outline" disabled={tasks.isFetchingNextPage} onClick={() => void tasks.fetchNextPage()}>{tasks.isFetchingNextPage ? uiT("ui:messages.m_ba3bbbe10d8bef66") : "Load more tasks"}</Button>}
   </section>;
 }

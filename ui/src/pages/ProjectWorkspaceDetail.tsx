@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -53,7 +54,7 @@ type OrderedProjectWorkspaceTabItem = {
 
 const DEFAULT_PLUGIN_DETAIL_TAB_ORDER = 100;
 const PROJECT_WORKSPACE_BASE_TAB_ITEMS: OrderedProjectWorkspaceTabItem[] = [
-  { value: "configuration", label: "Configuration", order: 30 },
+  { value: "configuration", label: uiT("ui:messages.m_b332c3492d5eb10a"), order: 30 },
 ];
 
 function isProjectWorkspacePluginTab(value: string | null): value is ProjectWorkspacePluginTab {
@@ -81,8 +82,8 @@ const SOURCE_TYPE_OPTIONS: Array<{ value: ProjectWorkspaceSourceType; label: str
 ];
 
 const VISIBILITY_OPTIONS: Array<{ value: ProjectWorkspaceVisibility; label: string }> = [
-  { value: "default", label: "Default" },
-  { value: "advanced", label: "Advanced" },
+  { value: "default", label: uiT("ui:messages.m_21b111cbfe6e8fca") },
+  { value: "advanced", label: uiT("ui:messages.m_9f088dbebd6c3c70") },
 ];
 
 function isSafeExternalUrl(value: string | null | undefined) {
@@ -326,9 +327,9 @@ export function ProjectWorkspaceDetail() {
   useEffect(() => {
     if (!project) return;
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
+      { label: uiT("ui:messages.m_04e2a9728af75840"), href: "/projects" },
       { label: project.name, href: `/projects/${canonicalProjectRef}` },
-      { label: "Workspaces", href: `/projects/${canonicalProjectRef}/workspaces` },
+      { label: uiT("ui:messages.m_1377264ba3b0a717"), href: `/projects/${canonicalProjectRef}/workspaces` },
       { label: workspace?.name ?? routeWorkspaceId },
     ]);
   }, [setBreadcrumbs, project, canonicalProjectRef, workspace?.name, routeWorkspaceId]);
@@ -356,7 +357,7 @@ export function ProjectWorkspaceDetail() {
       setErrorMessage(null);
     },
     onError: (error) => {
-      setErrorMessage(error instanceof Error ? error.message : "Failed to save workspace.");
+      setErrorMessage(error instanceof Error ? error.message : uiT("ui:messages.m_08f774be682a9f5c"));
     },
   });
 
@@ -367,7 +368,7 @@ export function ProjectWorkspaceDetail() {
       setErrorMessage(null);
     },
     onError: (error) => {
-      setErrorMessage(error instanceof Error ? error.message : "Failed to update workspace.");
+      setErrorMessage(error instanceof Error ? error.message : uiT("ui:messages.m_def40bab1de5e234"));
     },
   });
 
@@ -389,7 +390,7 @@ export function ProjectWorkspaceDetail() {
     },
     onError: (error) => {
       setRuntimeActionMessage(null);
-      setErrorMessage(error instanceof Error ? error.message : "Failed to control workspace commands.");
+      setErrorMessage(error instanceof Error ? error.message : uiT("ui:messages.m_2f75add6dd0a2c01"));
     },
   });
 
@@ -456,9 +457,7 @@ export function ProjectWorkspaceDetail() {
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 space-y-2">
-          <div className="text-xs font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-            Project workspace
-          </div>
+          <div className="text-xs font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_ce016e7f0a41c4f3")}</div>
           <h1 className="truncate text-xl font-semibold sm:text-2xl">{workspace.name}</h1>
         </div>
         {!workspace.isPrimary ? (
@@ -503,16 +502,16 @@ export function ProjectWorkspaceDetail() {
             <Separator className="my-5" />
 
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Workspace name">
+              <Field label={uiT("ui:messages.m_9619649d8dc1394f")}>
                 <input
                   className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                   value={form.name}
                   onChange={(event) => setForm((current) => current ? { ...current, name: event.target.value } : current)}
-                  placeholder="Workspace name"
+                  placeholder={uiT("ui:messages.m_9619649d8dc1394f")}
                 />
               </Field>
 
-              <Field label="Visibility">
+              <Field label={uiT("ui:messages.m_7448611d5f93aa8a")}>
                 <select
                   className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                   value={form.visibility}
@@ -528,7 +527,7 @@ export function ProjectWorkspaceDetail() {
             </div>
 
             <div className="mt-4 grid gap-4">
-              <Field label="Source type" hint={sourceTypeDescription ?? undefined}>
+              <Field label={uiT("ui:messages.m_24e59ff38c6b9029")} hint={sourceTypeDescription ?? undefined}>
                 <select
                   className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                   value={form.sourceType}
@@ -550,7 +549,7 @@ export function ProjectWorkspaceDetail() {
               */}
               {!hideHostPaths && (
                 <div className="grid gap-4 md:grid-cols-(--gtc-13)">
-                  <Field label="Local path">
+                  <Field label={uiT("ui:messages.m_e335847f885ededb")}>
                     <input
                       className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                       value={form.cwd}
@@ -565,7 +564,7 @@ export function ProjectWorkspaceDetail() {
               )}
 
               <div className="grid gap-4 md:grid-cols-2">
-                <Field label="Repo URL">
+                <Field label={uiT("ui:messages.m_de5c1d1e3353a331")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                     value={form.repoUrl}
@@ -573,26 +572,26 @@ export function ProjectWorkspaceDetail() {
                     placeholder="https://github.com/org/repo"
                   />
                 </Field>
-                <Field label="Repo ref">
+                <Field label={uiT("ui:messages.m_c79be6d1c2a5bbc5")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.repoRef}
                     onChange={(event) => setForm((current) => current ? { ...current, repoRef: event.target.value } : current)}
-                    placeholder="origin/main"
+                    placeholder={uiT("ui:messages.m_e52d7adb77ca8882")}
                   />
                 </Field>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                <Field label="Default ref">
+                <Field label={uiT("ui:messages.m_b6e3242fdf9a9ffe")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.defaultRef}
                     onChange={(event) => setForm((current) => current ? { ...current, defaultRef: event.target.value } : current)}
-                    placeholder="origin/main"
+                    placeholder={uiT("ui:messages.m_e52d7adb77ca8882")}
                   />
                 </Field>
-                <Field label="Shared workspace key">
+                <Field label={uiT("ui:messages.m_efb2ff5f7a820898")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.sharedWorkspaceKey}
@@ -603,7 +602,7 @@ export function ProjectWorkspaceDetail() {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                <Field label="Remote provider">
+                <Field label={uiT("ui:messages.m_04ecc2164b9916e8")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                     value={form.remoteProvider}
@@ -611,7 +610,7 @@ export function ProjectWorkspaceDetail() {
                     placeholder="codespaces"
                   />
                 </Field>
-                <Field label="Remote workspace ref">
+                <Field label={uiT("ui:messages.m_942ecb0796a7415f")}>
                   <input
                     className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.remoteWorkspaceRef}
@@ -622,7 +621,7 @@ export function ProjectWorkspaceDetail() {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                <Field label="Setup command" hint="Runs when this workspace needs custom bootstrap">
+                <Field label={uiT("ui:messages.m_6300595b1dfda210")} hint={uiT("ui:messages.m_78c7d692b1ed6c18")}>
                   <textarea
                     className="min-h-28 w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.setupCommand}
@@ -630,7 +629,7 @@ export function ProjectWorkspaceDetail() {
                     placeholder="pnpm install && pnpm dev"
                   />
                 </Field>
-                <Field label="Cleanup command" hint="Runs before project-level execution workspace teardown">
+                <Field label={uiT("ui:messages.m_062a91a9fb17b4b4")} hint={uiT("ui:messages.m_79b63225cd9e2646")}>
                   <textarea
                     className="min-h-28 w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                     value={form.cleanupCommand}
@@ -646,7 +645,7 @@ export function ProjectWorkspaceDetail() {
                   Paperclip derives Services and Jobs from this JSON. Prefer editing named commands first; use raw JSON for advanced lifecycle, port, readiness, or environment settings.
                 </p>
                 <div className="mt-3">
-                  <Field label="Workspace commands JSON" hint="Execution workspaces inherit this config unless they override it. Legacy `services` arrays still work, but `commands` supports both services and jobs.">
+                  <Field label={uiT("ui:messages.m_bd7ac36ac97f1654")} hint={uiT("ui:messages.m_cf62e415fa233339")}>
                     <textarea
                       className="min-h-96 w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                       value={form.runtimeConfig}
@@ -660,9 +659,7 @@ export function ProjectWorkspaceDetail() {
 
             <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Button className="w-full sm:w-auto" disabled={!isDirty || updateWorkspace.isPending} onClick={saveChanges}>
-                {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Save changes
-              </Button>
+                {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_dd0ae7a5cbcf2339")}</Button>
               <Button
                 variant="outline"
                 className="w-full sm:w-auto"
@@ -671,9 +668,7 @@ export function ProjectWorkspaceDetail() {
                   setForm(initialState);
                   setErrorMessage(null);
                 }}
-              >
-                Reset
-              </Button>
+              >{uiT("ui:messages.m_daee7606b339f3c3")}</Button>
               {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
               {!errorMessage && runtimeActionMessage ? <p className="text-sm text-muted-foreground">{runtimeActionMessage}</p> : null}
               {!errorMessage && !isDirty ? <p className="text-sm text-muted-foreground">No unsaved changes.</p> : null}
@@ -688,18 +683,18 @@ export function ProjectWorkspaceDetail() {
               <h2 className="text-lg font-semibold">Current state</h2>
             </div>
             <Separator className="my-4" />
-            <DetailRow label="Project">
+            <DetailRow label={uiT("ui:messages.m_9859597853197476")}>
               <Link to={`/projects/${canonicalProjectRef}`} className="hover:underline">{project.name}</Link>
             </DetailRow>
-            <DetailRow label="Workspace ID">
+            <DetailRow label={uiT("ui:messages.m_889d892993c3e5f0")}>
               <span className="break-all font-mono text-xs">{workspace.id}</span>
             </DetailRow>
             {hideHostPaths ? null : (
-              <DetailRow label="Local path">
-                <span className="break-all font-mono text-xs">{workspace.cwd ?? "None"}</span>
+              <DetailRow label={uiT("ui:messages.m_e335847f885ededb")}>
+                <span className="break-all font-mono text-xs">{workspace.cwd ?? uiT("ui:messages.m_dc937b59892604f5")}</span>
               </DetailRow>
             )}
-            <DetailRow label="Repo">
+            <DetailRow label={uiT("ui:messages.m_91dba14806ebf9d3")}>
               {workspace.repoUrl && isSafeExternalUrl(workspace.repoUrl) ? (
                 <a href={workspace.repoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline">
                   {workspace.repoUrl}
@@ -707,10 +702,10 @@ export function ProjectWorkspaceDetail() {
                 </a>
               ) : workspace.repoUrl ? (
                 <span className="break-all font-mono text-xs">{workspace.repoUrl}</span>
-              ) : "None"}
+              ) : uiT("ui:messages.m_dc937b59892604f5")}
             </DetailRow>
-            <DetailRow label="Default ref">{workspace.defaultRef ?? "None"}</DetailRow>
-            <DetailRow label="Updated">{new Date(workspace.updatedAt).toLocaleString()}</DetailRow>
+            <DetailRow label={uiT("ui:messages.m_b6e3242fdf9a9ffe")}>{workspace.defaultRef ?? uiT("ui:messages.m_dc937b59892604f5")}</DetailRow>
+            <DetailRow label={uiT("ui:messages.m_3a5ecca188c0579c")}>{new Date(workspace.updatedAt).toLocaleString()}</DetailRow>
           </Card>
 
           <Card className="block p-5">

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   Inbox,
   ListChecks,
@@ -130,17 +131,17 @@ export function Sidebar() {
               <button
                 onClick={() => openNewIssue()}
                 data-slot="icon-button"
-                aria-label={rail ? "New Task" : undefined}
+                aria-label={rail ? uiT("ui:messages.m_718e58cc20d67514") : undefined}
                 className="flex items-center gap-2.5 mx-2 rounded-lg px-2 py-1.5 pointer-coarse:py-1 text-(length:--text-compact) font-medium text-foreground/80 hover:bg-accent/50 hover:text-foreground transition-colors"
               >
                 <SquarePen className="h-4 w-4 shrink-0" />
-                <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : "truncate"}>New Task</span>
+                <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : "truncate"}>{uiT("ui:messages.m_718e58cc20d67514")}</span>
               </button>
             );
             return rail ? (
               <Tooltip>
                 <TooltipTrigger asChild>{newTaskButton}</TooltipTrigger>
-                <TooltipContent side="right">New Task</TooltipContent>
+                <TooltipContent side="right">{uiT("ui:messages.m_718e58cc20d67514")}</TooltipContent>
               </Tooltip>
             ) : (
               newTaskButton
@@ -150,8 +151,8 @@ export function Sidebar() {
               width; a nav row also keeps search reachable from the
               collapsed rail, where the old header icon was dropped entirely.
               Cmd/Ctrl+K remains the keyboard path (command palette). */}
-          <SidebarNavItem to="/search" label="Search" icon={Search} />
-          <SidebarNavItem to="/dashboard" label="Dashboard" icon={LayoutDashboard} liveCount={liveRunCount} />
+          <SidebarNavItem to="/search" label={uiT("ui:messages.m_49c266baaaa70981")} icon={Search} />
+          <SidebarNavItem to="/dashboard" label={uiT("ui:messages.m_67b696468610b879")} icon={LayoutDashboard} liveCount={liveRunCount} />
           <SidebarNavItem
             to="/inbox"
             label="Inbox"
@@ -164,28 +165,28 @@ export function Sidebar() {
           {showDecisions ? (
             <SidebarNavItem
               to="/decisions"
-              label="Decisions"
+              label={uiT("ui:messages.m_cfa6a08af3ed5871")}
               icon={ListChecks}
               badge={attentionCount}
               badgeLabel="decisions"
             />
           ) : null}
           {showStatusCards ? (
-            <SidebarNavItem to="/status" label="Status" icon={LayoutGrid} textBadge="beta" />
+            <SidebarNavItem to="/status" label={uiT("ui:messages.m_920e413c7d411b61")} icon={LayoutGrid} textBadge="beta" />
           ) : null}
           {conferenceRoomChatEnabled ? (
-            <SidebarNavItem to="/board-chat" label="Conference Room" icon={MessagesSquare} />
+            <SidebarNavItem to="/board-chat" label={uiT("ui:messages.m_fb9623fb6b5b8bec")} icon={MessagesSquare} />
           ) : null}
         </div>
 
-        <SidebarSection label="Work" collapsible={{ open: workOpen, onOpenChange: setWorkOpen }}>
+        <SidebarSection label={uiT("ui:messages.m_104ab9213e28e4ff")} collapsible={{ open: workOpen, onOpenChange: setWorkOpen }}>
           <SidebarNavItem to="/issues" label="Tasks" icon={CircleDot} />
           {showCases ? (
-            <SidebarNavItem to="/cases" label="Cases" icon={Layers} textBadge="beta" />
+            <SidebarNavItem to="/cases" label={uiT("ui:messages.m_2249bd503ec47d72")} icon={Layers} textBadge="beta" />
           ) : null}
-          <SidebarNavItem to="/routines" label="Routines" icon={Repeat} />
+          <SidebarNavItem to="/routines" label={uiT("ui:messages.m_61b7bb44e2b47b7c")} icon={Repeat} />
           {showGoalsLink ? (
-            <SidebarNavItem to="/goals" label="Goals" icon={Target} />
+            <SidebarNavItem to="/goals" label={uiT("ui:messages.m_116cd3982a9bc435")} icon={Target} />
           ) : goalsLinkPending ? (
             <div
               data-testid="sidebar-goals-placeholder"
@@ -193,14 +194,14 @@ export function Sidebar() {
               aria-hidden="true"
             />
           ) : null}
-          <SidebarNavItem to="/artifacts" label="Artifacts" icon={Package} />
-          <SidebarNavItem to="/skills" label="Skills" icon={Boxes} />
+          <SidebarNavItem to="/artifacts" label={uiT("ui:messages.m_314ae71b8c8dc9c9")} icon={Package} />
+          <SidebarNavItem to="/skills" label={uiT("ui:messages.m_66d0f523a379b2de")} icon={Boxes} />
           {showWorkspacesLink ? (
-            <SidebarNavItem to="/workspaces" label="Workspaces" icon={GitBranch} />
+            <SidebarNavItem to="/workspaces" label={uiT("ui:messages.m_1377264ba3b0a717")} icon={GitBranch} />
           ) : null}
           {streamlined ? (
             <>
-              <SidebarNavItem to="/projects" label="Projects" icon={FolderOpen} />
+              <SidebarNavItem to="/projects" label={uiT("ui:messages.m_04e2a9728af75840")} icon={FolderOpen} />
               <SidebarStarredProjects />
             </>
           ) : null}
@@ -224,15 +225,15 @@ export function Sidebar() {
 
         <SidebarAgents streamlined={streamlined} />
 
-        <SidebarSection label="Company" collapsible={{ open: companyOpen, onOpenChange: setCompanyOpen }}>
-          <SidebarNavItem to="/org" label="Org" icon={Network} />
-          {showApps ? <SidebarNavItem to="/apps" label="Connectors" icon={Unplug} /> : null}
-          <SidebarNavItem to="/timeline" label="Timeline" icon={GanttChartSquare} />
-          <SidebarNavItem to="/costs" label="Costs" icon={DollarSign} />
+        <SidebarSection label={uiT("ui:messages.m_de4743c879734dc3")} collapsible={{ open: companyOpen, onOpenChange: setCompanyOpen }}>
+          <SidebarNavItem to="/org" label={uiT("ui:messages.m_b1ee7e9705a211e0")} icon={Network} />
+          {showApps ? <SidebarNavItem to="/apps" label={uiT("ui:messages.m_c3d2e79ebdd046c6")} icon={Unplug} /> : null}
+          <SidebarNavItem to="/timeline" label={uiT("ui:messages.m_9dcff98e275f0cb9")} icon={GanttChartSquare} />
+          <SidebarNavItem to="/costs" label={uiT("ui:messages.m_b88fc5fc4765148e")} icon={DollarSign} />
           {/* One entry — /audit merged into the rich Activity feed (PAP-16302). */}
-          <SidebarNavItem to="/activity" label="Activity" icon={History} />
+          <SidebarNavItem to="/activity" label={uiT("ui:messages.m_38da1505ca837328")} icon={History} />
           <SidebarNavItem to="/activity/commentary" label="Commentary" icon={History} />
-          <SidebarNavItem to="/company/settings" label="Settings" icon={Settings} />
+          <SidebarNavItem to="/company/settings" label={uiT("ui:messages.m_74a883a037bc227f")} icon={Settings} />
         </SidebarSection>
 
         <PluginSlotOutlet

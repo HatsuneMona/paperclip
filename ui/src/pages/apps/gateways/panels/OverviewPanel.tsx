@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Copy } from "lucide-react";
 import type { ToolMcpGatewayWithTokens, ToolProfileWithDetails } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -54,9 +55,9 @@ export function OverviewPanel({
   async function copy(value: string, label: string) {
     try {
       await copyTextToClipboard(value);
-      pushToast({ title: "Copied", body: label, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_8d525e5f158b9afe"), body: label, tone: "success" });
     } catch {
-      pushToast({ title: "Copy failed", body: "Clipboard access is unavailable.", tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_5b50e7a693fee952"), body: "Clipboard access is unavailable.", tone: "error" });
     }
   }
 
@@ -64,21 +65,21 @@ export function OverviewPanel({
     <div className="space-y-5">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-lg border border-border p-4">
-          <div className="text-xs font-medium text-muted-foreground">{on ? "On" : "Off"}</div>
+          <div className="text-xs font-medium text-muted-foreground">{on ? uiT("ui:messages.m_130011756125313c") : uiT("ui:messages.m_ca7981b46ecf2c17")}</div>
           <div className="mt-2">
             <ToggleSwitch checked={on} disabled={toggleDisabled} onCheckedChange={onToggle} aria-label="Toggle gateway" />
           </div>
           <p className="mt-2 text-xs text-muted-foreground">Toggle the whole gateway off here.</p>
         </div>
-        <StatCard label="Apps">
-          {apps.length} {apps.length === 1 ? "app" : "apps"}
+        <StatCard label={uiT("ui:messages.m_89dd748442c19485")}>
+          {apps.length} {apps.length === 1 ? uiT("ui:messages.m_a172cedcae47474b") : "apps"}
           {profile ? ` · ${allowedToolsLabel(profile)}` : ""}
         </StatCard>
-        <StatCard label="Tokens">
-          {active} active{expiring > 0 ? ` · ${expiring} expiring` : ""}
+        <StatCard label={uiT("ui:messages.m_a039dfb9628b53dd")}>
+          {active}{uiT("ui:messages.m_2a222bd79b1a5483")}{expiring > 0 ? ` · ${expiring} expiring` : ""}
         </StatCard>
         <StatCard label="Health">
-          {needsAttention.length === 0 ? "All green" : `${needsAttention.length} needs attention`}
+          {needsAttention.length === 0 ? "All green" : uiT("ui:messages.m_325c6b117235374c", { v0: (needsAttention.length) })}
         </StatCard>
       </div>
 
@@ -94,7 +95,7 @@ export function OverviewPanel({
         <div className="mt-3 flex flex-wrap gap-2">
           <Chip>Scope · {formatScope(gateway, projectNames, agentNames)}</Chip>
           <Chip>Profile · {profile?.name ?? "Unavailable"}</Chip>
-          <Chip>{active} active {active === 1 ? "token" : "tokens"}</Chip>
+          <Chip>{active} active {active === 1 ? uiT("ui:messages.m_3c469e9d6c5875d3") : uiT("ui:messages.m_c51e455b41df6c01")}</Chip>
         </div>
       </section>
 
@@ -117,9 +118,7 @@ export function OverviewPanel({
         <div className="flex items-center justify-between gap-2">
           <h3 className="text-sm font-semibold text-foreground">How clients connect</h3>
           <Button variant="outline" size="sm" onClick={() => void copy(snippet, "Client config")}>
-            <Copy className="mr-1 h-3.5 w-3.5" />
-            Copy
-          </Button>
+            <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
         </div>
         <pre className="mt-3 overflow-auto whitespace-pre-wrap break-words rounded bg-background p-3 font-mono text-xs text-muted-foreground">
           {snippet}
@@ -157,7 +156,7 @@ function AppRow({ app }: { app: GatewayAppRow }) {
           {gatewayAppDisplayName(app)}
         </Link>
         <div className="text-xs text-muted-foreground">
-          {app.toolCount} {app.toolCount === 1 ? "tool" : "tools"}
+          {app.toolCount} {app.toolCount === 1 ? uiT("ui:messages.m_7c9bbe5ec9b3fb77") : uiT("ui:messages.m_f9d35d43770d3909")}
           {app.needsAttention && app.attentionReason ? ` · ${app.attentionReason}` : ""}
         </div>
       </div>
@@ -169,7 +168,7 @@ function AppRow({ app }: { app: GatewayAppRow }) {
             : "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
         )}
       >
-        {app.needsAttention ? "Needs attention" : "Healthy"}
+        {app.needsAttention ? uiT("ui:messages.m_c1ebc7817870e5be") : uiT("ui:messages.m_7f1e323b6272c620")}
       </span>
     </li>
   );

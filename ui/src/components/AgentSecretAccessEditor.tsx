@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { KeyRound, Plus, ServerCog, Trash2, Variable } from "lucide-react";
 import type {
@@ -312,7 +313,7 @@ export function AgentSecretAccessEditor({
                     {secret.pending ? <ProposedBadge /> : null}
                   </div>
                   <p className="flex flex-wrap items-center gap-1 text-muted-foreground">
-                    <span>proposed by {proposal.proposedBy.name}</span>
+                    <span>{uiT("ui:messages.m_b1fadb1b15f440f4")}{proposal.proposedBy.name}</span>
                     <span aria-hidden="true">·</span>
                     <span className="truncate italic">“{proposal.justification}”</span>
                   </p>
@@ -357,7 +358,7 @@ export function AgentSecretAccessEditor({
                           }
                         }}
                         placeholder="ALIAS"
-                        aria-label="Access alias"
+                        aria-label={uiT("ui:messages.m_363a8104d7100e46")}
                         disabled={disabled}
                         className={cn(
                           "h-9 font-mono text-sm",
@@ -450,9 +451,9 @@ export function AgentSecretAccessEditor({
                           });
                         }}
                         disabled={disabled || !selectedSecret}
-                        aria-label="Version"
+                        aria-label={uiT("ui:messages.m_dd167905de0defca")}
                       >
-                        <option value="latest">latest</option>
+                        <option value="latest">{uiT("ui:messages.m_5e1e2bcac305958b")}</option>
                         {selectedSecret
                           ? Array.from({ length: Math.max(0, selectedSecret.latestVersion) }, (_, index) => {
                               const version = selectedSecret.latestVersion - index;
@@ -470,7 +471,7 @@ export function AgentSecretAccessEditor({
                       type="button"
                       onClick={() => removeRow(row.id)}
                       disabled={disabled}
-                      aria-label="Remove API access"
+                      aria-label={uiT("ui:messages.m_e1a05f047539e2e2")}
                       className="mt-1 inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
                     >
                       <Trash2 className="size-3.5" />

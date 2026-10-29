@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Issue, IssueThreadInteraction } from "@paperclipai/shared";
@@ -54,18 +55,16 @@ export function IssuePropertiesPlansTab({ issue }: IssuePropertiesPlansTabProps)
     return (
       <div className="px-1 py-6 text-sm text-muted-foreground">
         {planDocumentLoading ? (
-          "Loading plan…"
+          uiT("ui:messages.m_c9773eb9591526b0")
         ) : issue.workMode === "planning" ? (
           <div className="space-y-2">
-            <p>This task is in plan mode but no plan document has been written yet.</p>
+            <p>{uiT("ui:messages.m_ff5abc6a0c83fed7")}</p>
             {pendingPlanConfirmation ? (
-              <p className="text-amber-foreground">
-                A plan confirmation is pending, but the plan document it should confirm is missing.
-              </p>
+              <p className="text-amber-foreground">{uiT("ui:messages.m_f9afd8eaa54041f2")}</p>
             ) : null}
           </div>
         ) : (
-          "No plan yet. The plan document, accepted plans, and their revisions will appear here."
+          uiT("ui:messages.m_4bafe14d5cb71e63")
         )}
       </div>
     );
@@ -80,12 +79,12 @@ export function IssuePropertiesPlansTab({ issue }: IssuePropertiesPlansTabProps)
       {planDocument ? (
         <section data-testid="issue-plan-document" className="space-y-2">
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            {`Revision ${planDocument.latestRevisionNumber ?? 1} · updated ${new Date(planDocument.updatedAt).toLocaleString([], {
+            {uiT("ui:messages.m_d3678949050ace34", { v0: (planDocument.latestRevisionNumber ?? 1), v1: (new Date(planDocument.updatedAt).toLocaleString([], {
               month: "short",
               day: "numeric",
               hour: "numeric",
               minute: "2-digit",
-            })}`}
+            })) })}
             <DocumentAnnotationsCountChip
               issueId={issue.id}
               docKey="plan"

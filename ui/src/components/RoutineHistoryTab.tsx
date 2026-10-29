@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History as HistoryIcon, RotateCcw, Search } from "lucide-react";
@@ -207,9 +208,7 @@ export function RoutineHistoryTab({
               : "Unknown error loading revisions."}
           </p>
         </div>
-        <Button size="sm" variant="outline" onClick={() => revisionsQuery.refetch()}>
-          Retry
-        </Button>
+        <Button size="sm" variant="outline" onClick={() => revisionsQuery.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
       </div>
     );
   }
@@ -336,8 +335,7 @@ function HistoricalPreviewBanner({
     <div className="rounded-md border border-amber-500/30 bg-amber-500/5 px-4 py-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
-            Viewing revision {revisionNumber} (read-only)
+          <p className="text-sm font-medium text-amber-800 dark:text-amber-200">{uiT("ui:messages.m_2ccec4dc51175ba9")}{revisionNumber} (read-only)
           </p>
           <p className="text-xs text-muted-foreground">
             Restoring this revision creates a new revision {nextRevisionNumber} with the same content.
@@ -382,9 +380,7 @@ function ConflictBanner({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" size="sm" onClick={onDiscard}>
-            Discard changes
-          </Button>
+          <Button variant="outline" size="sm" onClick={onDiscard}>{uiT("ui:messages.m_f9bfa3dc7c8fcdea")}</Button>
           <Button size="sm" onClick={onSave}>
             Save and continue
           </Button>
@@ -428,10 +424,8 @@ function RevisionList({
   return (
     <aside className="space-y-1">
       <header className="flex items-center justify-between pb-2">
-        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Revisions
-        </p>
-        <span className="text-(length:--text-micro) text-muted-foreground">{totalRevisions} total</span>
+        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_da80b1d5740caaef")}</p>
+        <span className="text-(length:--text-micro) text-muted-foreground">{totalRevisions}{uiT("ui:messages.m_88c4fa9611792c99")}</span>
       </header>
       {revisions.map((revision) => {
         const isSelected = revision.id === selectedRevisionId;
@@ -459,11 +453,9 @@ function RevisionList({
             data-testid={`revision-row-${revision.revisionNumber}`}
           >
             <div className="flex items-center gap-2 text-sm font-medium">
-              <span>rev {revision.revisionNumber}</span>
+              <span>{uiT("ui:messages.m_efd46cd7c40429d4")}{revision.revisionNumber}</span>
               {isCurrent && (
-                <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                  Current
-                </Badge>
+                <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_e0d1b68224bf0b31")}</Badge>
               )}
               {revision.restoredFromRevisionId && (
                 <Badge variant="outline" className="border-amber-500/40 bg-amber-500/10 px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-amber-800 dark:text-amber-200">
@@ -479,8 +471,7 @@ function RevisionList({
         );
       })}
       {totalRevisions > revisions.length && !showOlder && (
-        <Button variant="ghost" size="sm" className="w-full" onClick={onShowOlder}>
-          Show {totalRevisions - revisions.length} older…
+        <Button variant="ghost" size="sm" className="w-full" onClick={onShowOlder}>{uiT("ui:messages.m_dd0fcd29c826bed1")}{totalRevisions - revisions.length} older…
         </Button>
       )}
     </aside>
@@ -523,49 +514,49 @@ function RevisionPreview({
   const fieldRows: Array<{ key: string; label: string; value: string; differs: boolean }> = [
     {
       key: "title",
-      label: "Title",
+      label: uiT("ui:messages.m_7e8cd2056da73a7f"),
       value: snapshot.title,
       differs: !!currentSnapshot && currentSnapshot.title !== snapshot.title,
     },
     {
       key: "priority",
-      label: "Priority",
+      label: uiT("ui:messages.m_d60dbba079223254"),
       value: snapshot.priority,
       differs: !!currentSnapshot && currentSnapshot.priority !== snapshot.priority,
     },
     {
       key: "status",
-      label: "Status",
+      label: uiT("ui:messages.m_920e413c7d411b61"),
       value: snapshot.status,
       differs: !!currentSnapshot && currentSnapshot.status !== snapshot.status,
     },
     {
       key: "assigneeAgentId",
-      label: "Default agent",
+      label: uiT("ui:messages.m_94da52ecd6c5c3b7"),
       value: resolveAgentName(snapshot.assigneeAgentId, agents),
       differs: !!currentSnapshot && currentSnapshot.assigneeAgentId !== snapshot.assigneeAgentId,
     },
     {
       key: "projectId",
-      label: "Project",
+      label: uiT("ui:messages.m_9859597853197476"),
       value: resolveProjectName(snapshot.projectId, projects),
       differs: !!currentSnapshot && currentSnapshot.projectId !== snapshot.projectId,
     },
     {
       key: "concurrencyPolicy",
-      label: "Concurrency",
+      label: uiT("ui:messages.m_8708492f3ef5c138"),
       value: snapshot.concurrencyPolicy.replaceAll("_", " "),
       differs: !!currentSnapshot && currentSnapshot.concurrencyPolicy !== snapshot.concurrencyPolicy,
     },
     {
       key: "catchUpPolicy",
-      label: "Catch-up",
+      label: uiT("ui:messages.m_1c2d0f8e6b923cd0"),
       value: snapshot.catchUpPolicy.replaceAll("_", " "),
       differs: !!currentSnapshot && currentSnapshot.catchUpPolicy !== snapshot.catchUpPolicy,
     },
     {
       key: "env",
-      label: "Env",
+      label: uiT("ui:messages.m_494d9aa0c0684432"),
       value: envSummary,
       differs: envDiffers,
     },
@@ -576,9 +567,9 @@ function RevisionPreview({
       <header className={`${cardWrapper} p-4 space-y-2`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <p className="text-sm font-medium">rev {revision.revisionNumber}</p>
+            <p className="text-sm font-medium">{uiT("ui:messages.m_efd46cd7c40429d4")}{revision.revisionNumber}</p>
             <p className="text-xs text-muted-foreground truncate">
-              Saved {relativeTime(revision.createdAt)} by {getActorLabel(revision)}
+              Saved {relativeTime(revision.createdAt)}{uiT("ui:messages.m_52e86deffb8999c2")}{getActorLabel(revision)}
               {revision.changeSummary ? ` · ${revision.changeSummary}` : ""}
             </p>
           </div>
@@ -623,14 +614,12 @@ function RevisionPreview({
       </div>
 
       <div className={`${cardWrapper} p-3 space-y-2`}>
-        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Description
-        </p>
+        <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_526e0087cc3f254d")}</p>
         <div className="rounded-md bg-background/40 p-3 text-sm leading-7">
           {snapshot.description ? (
             <MarkdownBody>{snapshot.description}</MarkdownBody>
           ) : (
-            <span className="text-muted-foreground">No description</span>
+            <span className="text-muted-foreground">{uiT("ui:messages.m_bcd8cc53f40e3d4e")}</span>
           )}
         </div>
       </div>
@@ -655,7 +644,7 @@ function RevisionPreview({
                 <span
                   className={`ml-auto text-xs ${trigger.enabled ? "text-emerald-400" : "text-muted-foreground"}`}
                 >
-                  {trigger.enabled ? "enabled" : "disabled"}
+                  {trigger.enabled ? uiT("ui:messages.m_fb9cf75606b4070d") : uiT("ui:messages.m_17eb3c0168d0d7b2")}
                 </span>
               </li>
             ))}
@@ -753,14 +742,12 @@ function RestoreConfirmDialog({
           <Input
             id="restore-change-summary"
             value={changeSummary}
-            placeholder="Why are you restoring? Visible in history."
+            placeholder={uiT("ui:messages.m_9093cbf22a7bcad7")}
             onChange={(event) => onChangeSummaryChange(event.target.value)}
           />
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={pending}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button onClick={onConfirm} disabled={pending}>
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
             {pending ? "Restoring…" : `Restore as revision ${newRevisionNumber}`}
@@ -825,14 +812,14 @@ function RoutineRevisionDiffModal({
         </DialogHeader>
         <div className="flex flex-wrap items-center gap-3">
           <RevisionPicker
-            label="Old"
+            label={uiT("ui:messages.m_bca97160f4e1211f")}
             value={leftId}
             onChange={setLeftId}
             revisions={revisions}
             tone="red"
           />
           <RevisionPicker
-            label="New"
+            label={uiT("ui:messages.m_18fdd549b2ed367a")}
             value={rightId}
             onChange={setRightId}
             revisions={revisions}
@@ -850,7 +837,7 @@ function RoutineRevisionDiffModal({
               <table className="w-full text-sm border border-border rounded-md overflow-hidden">
                 <thead>
                   <tr className="text-xs uppercase tracking-wide bg-muted/30 text-muted-foreground">
-                    <th className="px-3 py-2 text-left">Field</th>
+                    <th className="px-3 py-2 text-left">{uiT("ui:messages.m_f45fc1dfdc96db27")}</th>
                     <th className="px-3 py-2 text-left">Old value</th>
                     <th className="px-3 py-2 text-left">New value</th>
                   </tr>
@@ -879,9 +866,7 @@ function RoutineRevisionDiffModal({
           </section>
         </div>
         <DialogFooter className="justify-between sm:justify-between">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
-          </Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_7d9eb7acb13e2462")}</Button>
           {leftIsHistorical && left && (
             <Button onClick={() => onRestore(left)}>
               <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
@@ -923,8 +908,7 @@ function RevisionPicker({
         className="h-8 min-w-(--sz-12rem) rounded-md border border-border/60 bg-background px-2 text-xs"
       >
         {revisions.map((revision) => (
-          <option key={revision.id} value={revision.id}>
-            rev {revision.revisionNumber} — {relativeTime(revision.createdAt)}
+          <option key={revision.id} value={revision.id}>{uiT("ui:messages.m_efd46cd7c40429d4")}{revision.revisionNumber} — {relativeTime(revision.createdAt)}
             {revision.changeSummary ? ` • ${revision.changeSummary}` : ""}
           </option>
         ))}
@@ -953,10 +937,10 @@ function DiffTable({ rows }: { rows: DiffRow[] }) {
   return (
     <div className="rounded-md border border-border text-xs font-mono leading-6 overflow-hidden">
       <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-        <span>Old</span>
-        <span>New</span>
+        <span>{uiT("ui:messages.m_bca97160f4e1211f")}</span>
+        <span>{uiT("ui:messages.m_18fdd549b2ed367a")}</span>
         <span />
-        <span>Content</span>
+        <span>{uiT("ui:messages.m_47bd29075f8b8019")}</span>
       </div>
       {rows.map((row, index) => (
         <div

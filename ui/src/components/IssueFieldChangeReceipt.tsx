@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import type { ActivityEvent } from "@paperclipai/shared";
 import {
@@ -65,9 +66,7 @@ export function IssueFieldChangeReceipt({
                 {/* Long text is stored as a preview, so the receipt says so
                     rather than implying the whole value is shown. */}
                 {row.truncated ? (
-                  <span className="text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                    preview
-                  </span>
+                  <span className="text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_5975cf1bba432391")}</span>
                 ) : null}
               </dd>
             </div>
@@ -84,12 +83,10 @@ export function IssueFieldChangeReceipt({
             aria-hidden="true"
           />
           {responsibleUserName ? (
-            <>
-              for <span className="text-foreground">{responsibleUserName}</span>
+            <>{uiT("ui:messages.m_21f4c696f93fb96f")}<span className="text-foreground">{responsibleUserName}</span>
               {" · "}
             </>
-          ) : null}
-          authorized by {reason}
+          ) : null}{uiT("ui:messages.m_1e787c0a3e0aaf7c")}{reason}
         </p>
       ) : null}
     </div>

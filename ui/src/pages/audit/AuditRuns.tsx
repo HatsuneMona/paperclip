@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { HeartbeatRun, RoutineRunSummary } from "@paperclipai/shared";
@@ -69,7 +70,7 @@ function RoutineScopedRuns({
     return (
       <div className="flex flex-col items-center gap-3 border-y border-border py-14 text-center">
         <p className="text-sm text-muted-foreground">{error.message}</p>
-        <Button variant="outline" size="sm" onClick={onRetry}>Try again</Button>
+        <Button variant="outline" size="sm" onClick={onRetry}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </div>
     );
   }
@@ -201,7 +202,7 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-semibold text-foreground">Runs</h2>
+        <h2 className="text-lg font-semibold text-foreground">{uiT("ui:messages.m_848f54e89660cea4")}</h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Recent agent executions across the organization. Open a run to inspect its transcript,
           output, and task context.
@@ -210,13 +211,13 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
 
       <div className="flex flex-wrap items-end gap-3 border-y border-border py-3">
         <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-          <span>Agent</span>
+          <span>{uiT("ui:messages.m_11b39c93777e8f1f")}</span>
           <Select value={agentId} onValueChange={(value) => updateFilter("agentId", value)}>
             <SelectTrigger className="w-48">
-              <SelectValue placeholder="All agents" />
+              <SelectValue placeholder={uiT("ui:messages.m_54c32d3e2cfa1cc8")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={ALL}>All agents</SelectItem>
+              <SelectItem value={ALL}>{uiT("ui:messages.m_54c32d3e2cfa1cc8")}</SelectItem>
               {(agents.data ?? []).map((agent) => (
                 <SelectItem key={agent.id} value={agent.id}>
                   {agent.name}
@@ -226,13 +227,13 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
           </Select>
         </label>
         <label className="grid gap-1 text-(length:--text-micro) font-medium text-muted-foreground">
-          <span>Status</span>
+          <span>{uiT("ui:messages.m_920e413c7d411b61")}</span>
           <Select value={status} onValueChange={(value) => updateFilter("runStatus", value)}>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="All statuses" />
+              <SelectValue placeholder={uiT("ui:messages.m_8ee57323a6f24cc7")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={ALL}>All statuses</SelectItem>
+              <SelectItem value={ALL}>{uiT("ui:messages.m_8ee57323a6f24cc7")}</SelectItem>
               {statuses.map((value) => (
                 <SelectItem key={value} value={value}>
                   {readableSource(value)}
@@ -242,24 +243,18 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
           </Select>
         </label>
         {agentId !== ALL || status !== ALL ? (
-          <Button variant="ghost" size="sm" onClick={clearFilters}>
-            Clear filters
-          </Button>
+          <Button variant="ghost" size="sm" onClick={clearFilters}>{uiT("ui:messages.m_7179ea0035fca783")}</Button>
         ) : null}
       </div>
 
       {runs.isLoading ? (
-        <div className="border-y border-border py-14 text-center text-sm text-muted-foreground">
-          Loading runs…
-        </div>
+        <div className="border-y border-border py-14 text-center text-sm text-muted-foreground">{uiT("ui:messages.m_8438ea394d1520d9")}</div>
       ) : runs.error ? (
         <div className="flex flex-col items-center gap-3 border-y border-border py-14 text-center">
           <p className="text-sm text-muted-foreground">
             {runs.error instanceof Error ? runs.error.message : "Failed to load runs."}
           </p>
-          <Button variant="outline" size="sm" onClick={() => runs.refetch()}>
-            Try again
-          </Button>
+          <Button variant="outline" size="sm" onClick={() => runs.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
         </div>
       ) : visibleRuns.length === 0 ? (
         <EmptyState
@@ -267,7 +262,7 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
           message={agentId !== ALL || status !== ALL ? "No runs match these filters." : "No runs yet."}
         />
       ) : (
-        <ul className="divide-y divide-border border-y border-border" aria-label="Recent runs">
+        <ul className="divide-y divide-border border-y border-border" aria-label={uiT("ui:messages.m_237112b89b77be8e")}>
           {visibleRuns.map((run) => {
             const agent = agentById.get(run.agentId);
             const summary = runSummary(run);
@@ -281,7 +276,7 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-medium text-foreground">
-                        {agent?.name ?? "Unknown agent"}
+                        {agent?.name ?? uiT("ui:messages.m_342b4ab21e2eb31a")}
                       </span>
                       <span className="font-mono text-(length:--text-micro) text-muted-foreground">
                         {run.id.slice(0, 8)}
@@ -289,7 +284,7 @@ export function AuditRuns({ companyId, routineId }: { companyId: string; routine
                       <StatusBadge status={run.status} />
                     </div>
                     <p className="mt-1 truncate text-sm text-muted-foreground">
-                      {summary ?? `${readableSource(run.invocationSource)} run`}
+                      {summary ?? uiT("ui:messages.m_b2b8bf9632d9949e", { v0: (readableSource(run.invocationSource)) })}
                     </p>
                   </div>
                   <div className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground sm:justify-end">

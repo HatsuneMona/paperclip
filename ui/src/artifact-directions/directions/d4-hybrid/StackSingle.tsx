@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { LabGroup } from "../../kit";
 import { ProseExcerpt } from "./Content";
@@ -63,7 +64,7 @@ export function StackSingle({ group }: { group: LabGroup }) {
         <div className="mt-auto flex min-w-0 items-end gap-3 pt-4">
           <p className="flex min-w-0 flex-1 flex-col gap-0.5 font-mono text-(length:--text-micro) leading-4 text-(--hy-ink-2)">
             <span>{artifactCount(group.count)}</span>
-            <span>Updated {group.updatedLabel}</span>
+            <span>{uiT("ui:messages.m_a919c7c2d1a48683")}{group.updatedLabel}</span>
           </p>
           <StateMark review={artifact.review} />
         </div>

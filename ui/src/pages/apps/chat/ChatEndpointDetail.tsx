@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { SpekoPhoneLine } from "@/components/voice/SpekoPhoneLine";
 import { SpekoIncomingCalls } from "@/components/voice/SpekoIncomingCalls";
 import { SpekoCallActivityItem, SpekoUnapprovedCallActivityItem, useSpekoCallHistory } from "@/components/voice/SpekoCallHistory";
@@ -281,15 +282,15 @@ export function ChatEndpointDetail() {
   useEffect(() => {
     if (!endpoint || !activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
       {
         label: `${endpoint.assignedAgentName} · ${providerNames[endpoint.provider]}`,
         href: `/apps/chat/${endpoint.id}/settings`,
       },
-      ...(reviewId ? [{ label: "Reviews", href: `/apps/chat/${endpoint.id}/reviews` }, { label: "Review" }] : [{
+      ...(reviewId ? [{ label: "Reviews", href: `/apps/chat/${endpoint.id}/reviews` }, { label: uiT("ui:messages.m_aff0766a5290e117") }] : [{
         label:
           tabItems.find((item) => item.value === activeTab)?.label ??
-          "Settings",
+          uiT("ui:messages.m_74a883a037bc227f"),
       }]),
     ]);
     return () => setBreadcrumbs([]);
@@ -310,9 +311,7 @@ export function ChatEndpointDetail() {
         <p className="text-sm text-destructive">
           This chat connection could not be loaded.
         </p>
-        <Button variant="outline" onClick={() => endpointQuery.refetch()}>
-          Try again
-        </Button>
+        <Button variant="outline" onClick={() => endpointQuery.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </div>
     );
   if (endpoint.provider === "agentmail" && activeTab === "settings")
@@ -446,14 +445,14 @@ function EmailAccess({ endpoint }: { endpoint: ChatEndpoint }) {
   if (!endpoint.connectionId || agents.isError || connection.isError) return (
     <div className="space-y-3">
       <p role="alert" className="text-sm text-destructive">Connection access could not be loaded.</p>
-      <Button variant="outline" onClick={() => { void agents.refetch(); void connection.refetch(); }}>Try again</Button>
+      <Button variant="outline" onClick={() => { void agents.refetch(); void connection.refetch(); }}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
     </div>
   );
   if (agents.isPending || connection.isPending) return <p role="status" className="text-sm text-muted-foreground">Loading access…</p>;
   const sourceId = connection.data.config?.credentialConnectionId;
   const credentialId = typeof sourceId === "string" ? sourceId : endpoint.connectionId;
   return <section className="max-w-3xl space-y-4">
-    <h2 className="text-lg font-semibold">Access</h2>
+    <h2 className="text-lg font-semibold">{uiT("ui:messages.m_ec5ba0abb717da87")}</h2>
     {credentialId !== endpoint.connectionId && <p className="text-sm text-muted-foreground">These settings apply to the saved AgentMail account and all inboxes using it.</p>}
     <EmailConnectionAccess key={credentialId} companyId={endpoint.companyId} connectionId={credentialId} agents={agents.data} />
   </section>;
@@ -533,7 +532,7 @@ function Settings({
       )}
       <div className="space-y-2">
         <h3 className="text-sm font-semibold">{endpoint.provider === "slack" ? "Allowed Channels" : "Destinations"}</h3>
-        {resourcesQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load channels. <button className="underline" onClick={() => void resourcesQuery.refetch()}>Try again</button></p> : resourcesQuery.isLoading ? (
+        {resourcesQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load channels. <button className="underline" onClick={() => void resourcesQuery.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</button></p> : resourcesQuery.isLoading ? (
           <p className="text-sm text-muted-foreground">Loading destinations…</p>
         ) : destinationResources.length === 0 && endpoint.provider !== "slack" ? (
           <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
@@ -730,7 +729,7 @@ function Access({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">People</h2>
         {endpoint.provider === "slack" && <Dialog>
-          <DialogTrigger asChild><Button>Invite people</Button></DialogTrigger>
+          <DialogTrigger asChild><Button>{uiT("ui:messages.m_27bf0f2d3f3f5490")}</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Invite people to talk to {endpoint.assignedAgentName}</DialogTitle>
@@ -746,7 +745,7 @@ function Access({
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Button variant="ghost" onClick={() => {
                   void copyTextToClipboard(joinCommand).then(() => setJoinCommandCopied(true), () => pushToast({ title: "Couldn't copy the command", tone: "error" }));
-                }}>{joinCommandCopied ? <Check className="size-4" /> : <Copy className="size-4" />}{joinCommandCopied ? "Copied" : "Copy command"}</Button>
+                }}>{joinCommandCopied ? <Check className="size-4" /> : <Copy className="size-4" />}{joinCommandCopied ? uiT("ui:messages.m_8d525e5f158b9afe") : "Copy command"}</Button>
                 <Button onClick={() => {
                   const workspace = endpoint.providerAccountId ? `https://app.slack.com/client/${encodeURIComponent(endpoint.providerAccountId)}` : "https://app.slack.com/";
                   void copyTextToClipboard(`Talk to ${endpoint.assignedAgentName} in Slack: ${workspace}\nSend ${joinCommand}, then open the bot’s private link and sign in to Paperclip to confirm your account. If you’re new to the organization, request access for an admin to approve.`).then(() => setInviteCopied(true), () => pushToast({ title: "Couldn't copy invitation", tone: "error" }));
@@ -783,13 +782,11 @@ function Access({
               );
             }}
           >
-            <Copy />
-            Copy link
-          </Button>
+            <Copy />{uiT("ui:messages.m_dbf362d4f210c780")}</Button>
         </div>
       )}
       <div className="space-y-2">
-        {linksQuery.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading people…</p> : linksQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load people. <button className="underline" onClick={() => void linksQuery.refetch()}>Try again</button></p> : links.length === 0 ? (
+        {linksQuery.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading people…</p> : linksQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load people. <button className="underline" onClick={() => void linksQuery.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</button></p> : links.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
             No linked accounts yet. Invite someone to connect.
           </p>
@@ -809,7 +806,7 @@ function Access({
                   <div className="min-w-0">
                     <p className="truncate text-sm" title={link.paperclipUserLabel ?? link.externalLabel}>{link.paperclipUserLabel ?? link.externalLabel}</p>
                     {(link.status !== "linked" || link.externalLabel !== link.paperclipUserLabel) && <p className="text-xs text-muted-foreground">
-                      {link.status === "revoked" ? "Disconnected" : link.status === "linked"
+                      {link.status === "revoked" ? uiT("ui:messages.m_04dfac3671b494ad") : link.status === "linked"
                         ? link.externalLabel
                         : "Waiting for account confirmation"}
                     </p>}
@@ -822,9 +819,7 @@ function Access({
                     disabled={revoke.isPending}
                     onClick={() => revoke.mutate(link.principalId)}
                   >
-                    <Unlink />
-                    Disconnect
-                  </Button>
+                    <Unlink />{uiT("ui:messages.m_acfc5be785a9bb3d")}</Button>
                 ) : (
                   <Button
                     size="sm"
@@ -867,7 +862,7 @@ function Conversations({
       {query.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading conversations…</p> : query.isError ? (
         <div className="space-y-3">
           <p role="alert" className="text-sm text-destructive">Conversations could not be loaded.</p>
-          <Button variant="outline" onClick={() => void query.refetch()}>Try again</Button>
+          <Button variant="outline" onClick={() => void query.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
         </div>
       ) : <ChatConversationList rows={query.data ?? []} provider={provider} />}
     </section>
@@ -1081,7 +1076,7 @@ function Activity({
                 <p className="text-xs font-medium">{label}</p>
                 <p className="text-xs text-muted-foreground">
                   {surface.status === "current"
-                    ? "Current"
+                    ? uiT("ui:messages.m_e0d1b68224bf0b31")
                     : surface.status === "stale"
                       ? "Stale URL"
                       : "Not observed"}
@@ -1118,9 +1113,7 @@ function Activity({
                   <Loader2 className="animate-spin" />
                 ) : (
                   <Pause />
-                )}
-                Pause
-              </Button>
+                )}{uiT("ui:messages.m_858e4ba7a29fd38b")}</Button>
             )}
             {status === "paused" && (
               <Button
@@ -1132,9 +1125,7 @@ function Activity({
                   <Loader2 className="animate-spin" />
                 ) : (
                   <Play />
-                )}
-                Resume
-              </Button>
+                )}{uiT("ui:messages.m_d640c7421da06661")}</Button>
             )}
             {[
               "active",
@@ -1157,8 +1148,8 @@ function Activity({
               >
                 <RefreshCw />
                 {status === "draft" || status === "verifying"
-                  ? "Finish setup"
-                  : "Reconnect"}
+                  ? uiT("ui:messages.m_bc01ae77f37cf304")
+                  : uiT("ui:messages.m_bf8a9eab9e7e141b")}
               </Button>
             )}
             <Button
@@ -1167,9 +1158,7 @@ function Activity({
               disabled={lifecycle.isPending}
               onClick={() => setRemoveOpen(true)}
             >
-              <Trash2 />
-              Remove connection
-            </Button>
+              <Trash2 />{uiT("ui:messages.m_e9e9e26c6c2f8326")}</Button>
           </div>
           {status !== "draft" && status !== "verifying" && (
             <p className="text-xs text-muted-foreground">
@@ -1182,8 +1171,8 @@ function Activity({
       </details>
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <h3 className="text-sm font-semibold">Recent activity</h3>
-          {endpoint.provider === "speko" && !cursor && <Button size="sm" variant="ghost" onClick={() => { void query.refetch(); calls.onRetry(); }} disabled={query.isFetching || calls.loading}>Refresh</Button>}
+          <h3 className="text-sm font-semibold">{uiT("ui:messages.m_6cb44b56336af70b")}</h3>
+          {endpoint.provider === "speko" && !cursor && <Button size="sm" variant="ghost" onClick={() => { void query.refetch(); calls.onRetry(); }} disabled={query.isFetching || calls.loading}>{uiT("ui:messages.m_0e91610117029a62")}</Button>}
         </div>
         {endpoint.provider === "agentmail" && rows.some((item) => item.kind === "publication" && item.status === "delivery_unknown") && (
           <p className="text-sm text-muted-foreground">
@@ -1207,9 +1196,7 @@ function Activity({
                 size="sm"
                 variant="outline"
                 onClick={() => query.refetch()}
-              >
-                Try again
-              </Button>
+              >{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
             </div>
           )}
           {endpoint.provider === "speko" && !cursor && [
@@ -1292,8 +1279,8 @@ function Activity({
       <nav aria-label="Activity pagination" className="flex items-center justify-between gap-3">
         <span className="text-xs text-muted-foreground">Page {cursors.length}</span>
         <div className="flex items-center gap-2">
-          <Button size="sm" variant="outline" disabled={cursors.length === 1 || query.isFetching} onClick={() => setCursors((pages) => pages.slice(0, -1))}>Previous</Button>
-          <Button size="sm" variant="outline" disabled={!query.data?.nextCursor || query.isFetching || query.isError} onClick={() => { if (query.data?.nextCursor) setCursors((pages) => [...pages, query.data.nextCursor!]); }}>Next</Button>
+          <Button size="sm" variant="outline" disabled={cursors.length === 1 || query.isFetching} onClick={() => setCursors((pages) => pages.slice(0, -1))}>{uiT("ui:messages.m_a57b08a480b822a0")}</Button>
+          <Button size="sm" variant="outline" disabled={!query.data?.nextCursor || query.isFetching || query.isError} onClick={() => { if (query.data?.nextCursor) setCursors((pages) => [...pages, query.data.nextCursor!]); }}>{uiT("ui:messages.m_1ff57a29d7c9d11b")}</Button>
         </div>
       </nav>
       <AlertDialog
@@ -1407,7 +1394,7 @@ function Activity({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={lifecycle.isPending}
@@ -1415,9 +1402,7 @@ function Activity({
             >
               {lifecycle.isPending && (
                 <Loader2 className="h-4 w-4 animate-spin" />
-              )}
-              Remove connection
-            </AlertDialogAction>
+              )}{uiT("ui:messages.m_e9e9e26c6c2f8326")}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

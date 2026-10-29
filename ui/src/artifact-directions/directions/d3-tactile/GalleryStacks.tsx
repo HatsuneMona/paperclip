@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import type { LabArtifact, LabGroup } from "../../kit";
@@ -60,8 +61,7 @@ function Count({ group, className }: { group: LabGroup; className?: string }) {
       <span className="whitespace-nowrap">
         <span className="font-mono text-(length:--tac-mono-scale)">{group.count}</span> {countLabel(group.count)}
       </span>
-      <span className="whitespace-nowrap">
-        Updated <span className="font-mono text-(length:--tac-mono-scale)">{group.updatedLabel}</span>
+      <span className="whitespace-nowrap">{uiT("ui:messages.m_a919c7c2d1a48683")}<span className="font-mono text-(length:--tac-mono-scale)">{group.updatedLabel}</span>
       </span>
     </span>
   );

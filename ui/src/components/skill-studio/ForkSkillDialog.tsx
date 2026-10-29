@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GitFork, Loader2, Users } from "lucide-react";
@@ -232,9 +233,7 @@ export function ForkSkillDialog({
             variant="ghost"
             onClick={() => onOpenChange(false)}
             disabled={busy}
-          >
-            Cancel
-          </Button>
+          >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             type="button"
             variant={reusableFork ? "outline" : "default"}

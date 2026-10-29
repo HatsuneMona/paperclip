@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { CsvPreview } from "./CsvPreview";
 import { isCsvFile } from "@/lib/csv-preview";
 import {
@@ -799,8 +800,8 @@ export function FileViewerSheet({
                     <a
                       href={downloadUrl}
                       download={resolvedResource?.title ?? basename(state.path)}
-                      aria-label="Download file"
-                      title="Download file"
+                      aria-label={uiT("ui:messages.m_9de4149fb9716cfc")}
+                      title={uiT("ui:messages.m_9de4149fb9716cfc")}
                     >
                       <Download className="h-4 w-4" />
                     </a>
@@ -813,8 +814,8 @@ export function FileViewerSheet({
                   variant="ghost"
                   size="icon-sm"
                   onClick={handleCopyContent}
-                  aria-label={copiedField === "content" ? "Copied file contents" : "Copy file contents"}
-                  title={copiedField === "content" ? "Copied contents" : "Copy file contents"}
+                  aria-label={copiedField === "content" ? "Copied file contents" : uiT("ui:messages.m_b3278e5f53cc34b0")}
+                  title={copiedField === "content" ? "Copied contents" : uiT("ui:messages.m_b3278e5f53cc34b0")}
                   className="h-7 w-7"
                 >
                   {copyingField === "content" ? (
@@ -833,7 +834,7 @@ export function FileViewerSheet({
                   size="icon-sm"
                   onClick={handleCopyLink}
                   aria-label={copiedField === "link" ? "Copied file view link" : "Copy link to this file view"}
-                  title={copiedField === "link" ? "Copied link" : "Copy link"}
+                  title={copiedField === "link" ? "Copied link" : uiT("ui:messages.m_dbf362d4f210c780")}
                   className="h-7 w-7"
                 >
                   {copyingField === "link" ? (
@@ -852,7 +853,7 @@ export function FileViewerSheet({
                 onClick={() => handleOpenChange(false)}
                 className="h-7 w-7"
                 aria-label="Close file viewer"
-                title="Close"
+                title={uiT("ui:messages.m_7d9eb7acb13e2462")}
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -985,7 +986,7 @@ export function FileViewerBody({
       return (
         <FileViewerStateView
           icon={<FileSearch aria-hidden="true" className="h-6 w-6 text-muted-foreground" />}
-          title="File not found"
+          title={uiT("ui:messages.m_3521021a2e875fbc")}
           body="That file was not found in the active workspace."
           actions={
             <>
@@ -995,8 +996,7 @@ export function FileViewerBody({
                 </Button>
               ) : null}
               <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-                <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
-              </Button>
+                <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
             </>
           }
         />
@@ -1019,8 +1019,7 @@ export function FileViewerBody({
         body={denial.body}
         actions={
           <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
-          </Button>
+            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
         }
       />
     );
@@ -1059,8 +1058,7 @@ export function FileViewerBody({
         body={denial.body}
         actions={
           <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
-          </Button>
+            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
         }
       />
     );

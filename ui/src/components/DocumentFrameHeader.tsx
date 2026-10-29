@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar, type AvatarAgent } from "./AgentAvatar";
 import type { ReactNode } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -116,13 +117,12 @@ export function DocumentFrameHeader({
                     "h-auto px-1.5 py-0 text-(length:--text-micro) font-normal text-muted-foreground hover:text-foreground",
                     revisionMenu.historicalPreview && "text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200",
                   )}
-                >
-                  rev {revisionMenu.displayedRevisionNumber}
+                >{uiT("ui:messages.m_efd46cd7c40429d4")}{revisionMenu.displayedRevisionNumber}
                   <ChevronDown className="h-3 w-3" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-72">
-                <DropdownMenuLabel>Revision history</DropdownMenuLabel>
+                <DropdownMenuLabel>{uiT("ui:messages.m_5ae0d3d186c734b2")}</DropdownMenuLabel>
                 {revisionMenu.loading && revisionMenu.revisions.length === 0 ? (
                   <DropdownMenuItem disabled>Loading revisions...</DropdownMenuItem>
                 ) : revisionMenu.revisions.length > 0 ? (
@@ -138,11 +138,9 @@ export function DocumentFrameHeader({
                         >
                           <div className="flex min-w-0 flex-col">
                             <div className="flex items-center gap-2">
-                              <span className="font-medium">rev {revision.revisionNumber}</span>
+                              <span className="font-medium">{uiT("ui:messages.m_efd46cd7c40429d4")}{revision.revisionNumber}</span>
                               {isCurrentRevision ? (
-                                <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                                  Current
-                                </Badge>
+                                <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_e0d1b68224bf0b31")}</Badge>
                               ) : null}
                             </div>
                             <div className="mt-1 flex min-w-0 items-center gap-1.5 text-(length:--text-micro) text-muted-foreground">
@@ -166,8 +164,7 @@ export function DocumentFrameHeader({
             <a
               href={updatedHref ?? `#document-${encodeURIComponent(documentKey)}`}
               className="truncate text-(length:--text-micro) text-muted-foreground transition-colors hover:text-foreground hover:underline"
-            >
-              updated {relativeTime(updatedAt)}
+            >{uiT("ui:messages.m_53961930ab4482d8")}{relativeTime(updatedAt)}
             </a>
           ) : null}
           {annotationSlot}

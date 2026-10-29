@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   Check,
@@ -69,19 +70,19 @@ function statusMeta(entry: WorkspaceServiceControlEntry): { label: string; unhea
     case "provisioning":
       return { label: "Provisioning…", unhealthy: false };
     case "starting":
-      return { label: "Starting…", unhealthy: false };
+      return { label: uiT("ui:messages.m_bbe5fc3b9ef39f99"), unhealthy: false };
     case "stopping":
-      return { label: "Stopping…", unhealthy: false };
+      return { label: uiT("ui:messages.m_bbe8574175aba84f"), unhealthy: false };
     case "restarting":
       return { label: "Restarting…", unhealthy: false };
     case "failed":
-      return { label: "Failed", unhealthy: false };
+      return { label: uiT("ui:messages.m_031a8f0f659df890"), unhealthy: false };
     case "running":
       return entry.healthStatus === "unhealthy"
-        ? { label: "Unhealthy", unhealthy: true }
-        : { label: "Running", unhealthy: false };
+        ? { label: uiT("ui:messages.m_317b1fbc1e13beeb"), unhealthy: true }
+        : { label: uiT("ui:messages.m_f4ccae29e1bb0c20"), unhealthy: false };
     default:
-      return { label: "Stopped", unhealthy: false };
+      return { label: uiT("ui:messages.m_1a4f630ac1b69fd0"), unhealthy: false };
   }
 }
 
@@ -181,10 +182,10 @@ function UrlSegment({ entry, compact }: { entry: WorkspaceServiceControlEntry; c
           size="icon-xs"
           disabled={!live}
           className="text-muted-foreground hover:text-foreground"
-          title="Open in new tab"
+          title={uiT("ui:messages.m_e0af5c0bc2457475")}
         >
           {live ? (
-            <a href={entry.url ?? undefined} target="_blank" rel="noreferrer" aria-label="Open in new tab">
+            <a href={entry.url ?? undefined} target="_blank" rel="noreferrer" aria-label={uiT("ui:messages.m_e0af5c0bc2457475")}>
               <ExternalLink className="size-3" />
             </a>
           ) : (
@@ -214,12 +215,10 @@ function ActionSlots({
         className="w-13 justify-center"
         disabled={!canStart}
         onClick={() => onAction("start")}
-        aria-label="Start"
-        title="Start"
+        aria-label={uiT("ui:messages.m_e4bb9f1ece9af926")}
+        title={uiT("ui:messages.m_e4bb9f1ece9af926")}
       >
-        <Play className="size-3" />
-        Start
-      </Button>
+        <Play className="size-3" />{uiT("ui:messages.m_e4bb9f1ece9af926")}</Button>
     );
   }
 
@@ -231,8 +230,8 @@ function ActionSlots({
           size="icon-xs"
           disabled={!canStart}
           onClick={() => onAction("start")}
-          aria-label="Start"
-          title="Start"
+          aria-label={uiT("ui:messages.m_e4bb9f1ece9af926")}
+          title={uiT("ui:messages.m_e4bb9f1ece9af926")}
         >
           <Play className="size-3" />
         </Button>
@@ -241,8 +240,8 @@ function ActionSlots({
           size="icon-xs"
           disabled={!canStart}
           onClick={() => onAction("restart")}
-          aria-label="Restart"
-          title="Restart"
+          aria-label={uiT("ui:messages.m_6b983a81e5e8099e")}
+          title={uiT("ui:messages.m_6b983a81e5e8099e")}
           className="border border-border text-foreground"
         >
           <RotateCcw className="size-3" />
@@ -258,8 +257,8 @@ function ActionSlots({
         size="icon-xs"
         disabled={transitional}
         onClick={() => onAction("stop")}
-        aria-label="Stop"
-        title="Stop"
+        aria-label={uiT("ui:messages.m_cae7d57bc067a514")}
+        title={uiT("ui:messages.m_cae7d57bc067a514")}
         className="border border-border text-foreground"
       >
         <Square className="size-3" />
@@ -269,8 +268,8 @@ function ActionSlots({
         size="icon-xs"
         disabled={transitional || !canStart}
         onClick={() => onAction("restart")}
-        aria-label="Restart"
-        title="Restart"
+        aria-label={uiT("ui:messages.m_6b983a81e5e8099e")}
+        title={uiT("ui:messages.m_6b983a81e5e8099e")}
         className="border border-border text-foreground"
       >
         <RotateCcw className="size-3" />
@@ -457,7 +456,7 @@ function MultiServiceBar({
                 aria-label={`${runningCount} of ${services.length} services running — show services`}
               >
                 <StatusIndicator entry={aggregateEntry} />
-                <span className="whitespace-nowrap">{runningCount}/{services.length} running</span>
+                <span className="whitespace-nowrap">{runningCount}/{services.length}{uiT("ui:messages.m_934b35e4b1b32d98")}</span>
                 <ChevronDown className="size-3 text-muted-foreground" />
               </button>
             </PopoverTrigger>

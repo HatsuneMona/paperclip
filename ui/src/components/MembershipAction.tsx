@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { MouseEvent } from "react";
 import { Loader2, LogIn, LogOut } from "lucide-react";
 import type { ResourceMembershipState } from "@paperclipai/shared";
@@ -25,8 +26,8 @@ export function MembershipAction({
 }: MembershipActionProps) {
   const isLeft = state === "left";
   const label = pending
-    ? pendingState === "left" ? "Leaving..." : "Joining..."
-    : isLeft ? "Join" : "Leave";
+    ? pendingState === "left" ? uiT("ui:messages.m_9b6b4fb63c666d77") : "Joining..."
+    : isLeft ? uiT("ui:messages.m_fd30fe681b4b2d9e") : "Leave";
   const ariaLabel = `${isLeft ? "Join" : "Leave"} ${resourceName}`;
   const Icon = pending ? Loader2 : isLeft ? LogIn : LogOut;
 

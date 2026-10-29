@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type {
   WorkspaceOperation,
   WorkspaceReadiness,
@@ -75,7 +76,7 @@ function timestampMs(value: Date | string | null | undefined): number | null {
 function failedRepairNotice(repair: WorkspaceOperation): WorkspaceAccessNotice {
   const phase = typeof repair.metadata?.repairPhase === "string" ? repair.metadata.repairPhase : null;
   return {
-    title: "Repair failed",
+    title: uiT("ui:messages.m_9445b1425fef90cc"),
     description: phase
       ? `The repair stopped during ${phase}. The pre-repair backup was kept.`
       : "The repair stopped before the workspace became usable. The pre-repair backup was kept.",
@@ -284,7 +285,7 @@ export function resolveWorkspaceAccessState(input: {
   if (servingService) {
     return {
       state: "ready",
-      title: "Ready",
+      title: uiT("ui:messages.m_5fa7aac5375c5815"),
       description: "Opening the workspace signs you in to the cloned board without a password.",
       action: { kind: "open", label: "Open workspace" },
       handoffAvailable,

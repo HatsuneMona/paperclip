@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import {
@@ -149,7 +150,7 @@ function Diff({ additions, deletions, filesChanged }: DiffProps) {
       )}
       {filesChanged != null && (
         <span className="text-muted-foreground">
-          {filesChanged} {filesChanged === 1 ? "file" : "files"}
+          {filesChanged} {filesChanged === 1 ? uiT("ui:messages.m_3b9c358f36f0a31b") : uiT("ui:messages.m_3d7db37d08f9140f")}
         </span>
       )}
     </div>
@@ -343,7 +344,7 @@ function Markdown({ body }: { body: string }) {
                 rel="noreferrer"
                 className="underline underline-offset-4"
               >
-                {alt || "Open image"}
+                {alt || uiT("ui:messages.m_1b5fe59610ba676e")}
               </a>
             ) : (
               <span>{alt}</span>
@@ -463,7 +464,7 @@ function DataTable({ columns, rows }: Pick<DataCardProps, "columns" | "rows">) {
         </tbody>
       </table>
       {rows.length === 0 && (
-        <p className="p-4 text-xs text-muted-foreground">No rows</p>
+        <p className="p-4 text-xs text-muted-foreground">{uiT("ui:messages.m_1a715b4b93b3c9c0")}</p>
       )}
     </div>
   );
@@ -666,7 +667,7 @@ export function LinkPreviewCard(props: LinkPreviewCardProps) {
       </div>
       <Footer
         {...props}
-        action={<SourceLink url={props.url}>Open link</SourceLink>}
+        action={<SourceLink url={props.url}>{uiT("ui:messages.m_aab63f85c7f1cd14")}</SourceLink>}
       />
     </Card>
   );
@@ -720,9 +721,7 @@ export function FileCard(props: FileCardProps) {
             )}
             {props.downloadUrl ? (
               <Button asChild size="sm" variant="outline">
-                <a href={props.downloadUrl} download={props.filename}>
-                  Download file
-                </a>
+                <a href={props.downloadUrl} download={props.filename}>{uiT("ui:messages.m_9de4149fb9716cfc")}</a>
               </Button>
             ) : (
               <Button size="sm" variant="outline" disabled>

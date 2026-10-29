@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { PauseCircle, PlayCircle, Repeat, XCircle } from "lucide-react";
@@ -42,13 +43,13 @@ export function TaskTreeControlMenuItems({
       {canPause ? (
         <button disabled={pending} className={itemClass} onClick={onPause}>
           <PauseCircle className="h-3 w-3" />
-          {scope === "leaf" ? "Pause work" : "Pause subtree"}
+          {scope === "leaf" ? uiT("ui:messages.m_0faaea9a215fb95e") : uiT("ui:messages.m_d44920538f70721a")}
         </button>
       ) : null}
       {canResume ? (
         <button disabled={pending} className={itemClass} onClick={onResume}>
           <PlayCircle className="h-3 w-3" />
-          {scope === "leaf" ? "Resume work" : "Resume subtree"}
+          {scope === "leaf" ? uiT("ui:messages.m_4c474b94554900a6") : uiT("ui:messages.m_b38209885d3237c7")}
         </button>
       ) : null}
       {canCancel ? (
@@ -57,15 +58,11 @@ export function TaskTreeControlMenuItems({
           className={`${itemClass} text-destructive`}
           onClick={onCancel}
         >
-          <XCircle className="h-3 w-3" />
-          Cancel subtree...
-        </button>
+          <XCircle className="h-3 w-3" />{uiT("ui:messages.m_fccd5115640dc89c")}</button>
       ) : null}
       {canRestore ? (
         <button disabled={pending} className={itemClass} onClick={onRestore}>
-          <Repeat className="h-3 w-3" />
-          Restore subtree...
-        </button>
+          <Repeat className="h-3 w-3" />{uiT("ui:messages.m_b42c304472894f02")}</button>
       ) : null}
     </>
   );
@@ -107,12 +104,12 @@ export function TaskTreeControlDialog({
   const cancel = mode === "cancel";
   const tasks = `${affectedCount} task${affectedCount === 1 ? "" : "s"}`;
   const title = cancel
-    ? "Cancel subtree?"
+    ? uiT("ui:messages.m_b8b708d6da49315a")
     : mode === "restore"
-      ? "Restore subtree"
+      ? uiT("ui:messages.m_d824b6aa69a9be91")
       : scope === "leaf"
-        ? "Resume work"
-        : "Resume subtree";
+        ? uiT("ui:messages.m_4c474b94554900a6")
+        : uiT("ui:messages.m_b38209885d3237c7");
   return (
     <Dialog
       open={open}
@@ -128,9 +125,9 @@ export function TaskTreeControlDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             {loading
-              ? "Loading…"
+              ? uiT("ui:messages.m_ba3bbbe10d8bef66")
               : cancel
-                ? `${tasks} will be cancelled.`
+                ? uiT("ui:messages.m_d91d01934473de6c", { v0: (tasks) })
                 : mode === "restore"
                   ? `${tasks} will be restored.`
                   : `The pause will be removed from ${tasks}.`}
@@ -146,9 +143,7 @@ export function TaskTreeControlDialog({
               variant="outline"
               disabled={pending}
               onClick={onRetry}
-            >
-              Retry preview
-            </Button>
+            >{uiT("ui:messages.m_ceba352728693758")}</Button>
           </div>
         ) : null}
         {!cancel ? (
@@ -158,8 +153,7 @@ export function TaskTreeControlDialog({
               checked={wakeAgents && affectedAgentCount > 0}
               disabled={pending || loading || affectedAgentCount === 0}
               onChange={(event) => onWakeAgentsChange(event.target.checked)}
-            />
-            Wake affected agents ({affectedAgentCount})
+            />{uiT("ui:messages.m_ba0ae69712daf3e3")}{affectedAgentCount})
           </label>
         ) : null}
         {!loading ? warnings.map((warning) => (
@@ -171,7 +165,7 @@ export function TaskTreeControlDialog({
             disabled={pending}
             onClick={() => onOpenChange(false)}
           >
-            {cancel ? "Keep tasks" : "Close"}
+            {cancel ? uiT("ui:messages.m_8d7bd1de33002336") : uiT("ui:messages.m_7d9eb7acb13e2462")}
           </Button>
           <Button
             variant={cancel ? "destructive" : "default"}
@@ -179,11 +173,11 @@ export function TaskTreeControlDialog({
             onClick={onApply}
           >
             {pending
-              ? "Applying…"
+              ? uiT("ui:messages.m_3329a9bb48b9c8d4")
               : cancel
-                ? `Cancel ${tasks}`
+                ? uiT("ui:messages.m_db3da0ce0ff66481", { v0: (tasks) })
                 : mode === "restore"
-                  ? `Restore ${tasks}`
+                  ? uiT("ui:messages.m_5ec37798e61ff747", { v0: (tasks) })
                   : title}
           </Button>
         </DialogFooter>
@@ -215,7 +209,7 @@ export function TaskPauseNotice({
       )}
     >
       <span>
-        {scope === "subtree" ? "Subtree is paused." : "Task is paused."}
+        {scope === "subtree" ? uiT("ui:messages.m_f9ebf72d55c38755") : uiT("ui:messages.m_fb9c04c93b5e4f5a")}
       </span>
       {resumeLink ??
         (onResume ? (
@@ -225,7 +219,7 @@ export function TaskPauseNotice({
             disabled={pending}
             onClick={onResume}
           >
-            {scope === "subtree" ? "Resume subtree" : "Resume work"}
+            {scope === "subtree" ? uiT("ui:messages.m_b38209885d3237c7") : uiT("ui:messages.m_4c474b94554900a6")}
           </Button>
         ) : null)}
     </div>

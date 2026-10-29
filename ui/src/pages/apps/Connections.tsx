@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { isRetiredComposioConnection, RETIRED_COMPOSIO_MESSAGE } from "@paperclipai/shared";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -127,8 +128,8 @@ export function Connections() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
-      { label: "Connections" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
+      { label: uiT("ui:messages.m_dc273117482b4429") },
     ]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
@@ -334,7 +335,7 @@ export function Connections() {
         <div className="space-y-5">
           <header className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Connections</h1>
+              <h1 className="text-2xl font-bold tracking-tight">{uiT("ui:messages.m_dc273117482b4429")}</h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 The tools you’ve connected, and whether they’re working.
               </p>
@@ -343,8 +344,7 @@ export function Connections() {
           </header>
 
           <div className="flex flex-wrap items-center gap-2">
-            <FilterChip active={filter === "all"} onClick={() => setFilter("all")}>
-              All ({rows.length})
+            <FilterChip active={filter === "all"} onClick={() => setFilter("all")}>{uiT("ui:messages.m_6ddbebadc0708eba")}{rows.length})
             </FilterChip>
             <FilterChip
               active={filter === "attention"}
@@ -398,12 +398,12 @@ export function Connections() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2.5">Connection</th>
-                  <th className="px-4 py-2.5">Type</th>
-                  <th className="px-4 py-2.5">Connected by</th>
-                  <th className="px-4 py-2.5">Status</th>
-                  <th className="px-4 py-2.5">Actions</th>
-                  <th className="px-4 py-2.5">Last used</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_639a40e82b9a96f0")}</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_baaddf70fb5d432b")}</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_9952ce521b785711")}</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_920e413c7d411b61")}</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_ff8059dc6752afdd")}</th>
+                  <th className="px-4 py-2.5">{uiT("ui:messages.m_830ec7f812f9d862")}</th>
                   <th className="px-4 py-2.5" />
                 </tr>
               </thead>
@@ -415,12 +415,12 @@ export function Connections() {
                     connection && isRetiredComposioConnection(connection) ? RETIRED_COMPOSIO_MESSAGE :
                     status.tone === "attention"
                       ? connection?.authKind === "oauth"
-                        ? "Reconnect required — sign in again to restore access."
-                        : "The key stopped working — reconnect to fix."
+                        ? uiT("ui:messages.m_50f21863c6ae2104")
+                        : uiT("ui:messages.m_012b6f588000cb32")
                       : status.tone === "paused"
-                        ? "Paused — agents can’t use it right now."
+                        ? uiT("ui:messages.m_dade03b26d3bb2bc")
                         : status.tone === "not_connected"
-                          ? "Connect it so agents can use it."
+                          ? uiT("ui:messages.m_1b1eda62d947ffb7")
                           : row.displayName !== application.name
                             ? application.name
                             : null;
@@ -505,7 +505,7 @@ export function Connections() {
                               variant="ghost"
                               size="icon-sm"
                               className="text-muted-foreground hover:text-destructive"
-                              aria-label={`Delete ${row.displayName} connection`}
+                              aria-label={uiT("ui:messages.m_51b7d922c1bc8a9e", { v0: (row.displayName) })}
                               onClick={(event) => {
                                 event.stopPropagation();
                                 setConnectionToDelete({
@@ -544,8 +544,7 @@ export function Connections() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Delete {connectionToDelete?.appName ?? "this"} connection?
+            <AlertDialogTitle>{uiT("ui:messages.m_85941fb9c992536d")}{connectionToDelete?.appName ?? "this"} connection?
             </AlertDialogTitle>
             <AlertDialogDescription>
               {connectionToDelete && connectionToDelete.remainingConnectionCount > 0
@@ -554,7 +553,7 @@ export function Connections() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleteConnection.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleteConnection.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={!connectionToDelete || deleteConnection.isPending}
@@ -564,7 +563,7 @@ export function Connections() {
               }}
             >
               {deleteConnection.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-              {deleteConnection.isPending ? "Deleting..." : "Delete connection"}
+              {deleteConnection.isPending ? uiT("ui:messages.m_685ecb984ac29ce8") : "Delete connection"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -618,7 +617,7 @@ function CloudConnectorEnrollmentBanner({
       </div>
       <Button variant="outline" size="sm" disabled={busy} onClick={onEnable}>
         {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-        {status?.status === "pending" ? "Continue enrollment" : "Enable"}
+        {status?.status === "pending" ? "Continue enrollment" : uiT("ui:messages.m_5342e09f2729fbc6")}
       </Button>
     </div>
   );
@@ -675,7 +674,7 @@ function EmptyConnections({ onBrowse }: { onBrowse: () => void }) {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">Connections</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{uiT("ui:messages.m_dc273117482b4429")}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           The tools you’ve connected, and whether they’re working.
         </p>
@@ -685,9 +684,9 @@ function EmptyConnections({ onBrowse }: { onBrowse: () => void }) {
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted">
           <AppWindow className="h-6 w-6 text-muted-foreground" />
         </div>
-        <p className="mt-4 text-sm font-medium text-foreground">No connections yet.</p>
+        <p className="mt-4 text-sm font-medium text-foreground">{uiT("ui:messages.m_643013cde6f1dbcd")}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Add one from <span className="font-medium text-foreground">Apps</span> to give your agents
+          Add one from <span className="font-medium text-foreground">{uiT("ui:messages.m_89dd748442c19485")}</span> to give your agents
           the tools they need.
         </p>
         <Button className="mt-6" onClick={onBrowse}>

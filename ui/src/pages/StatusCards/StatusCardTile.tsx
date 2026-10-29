@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import type { SummarySlotIssueRef } from "@paperclipai/shared";
@@ -112,7 +113,7 @@ export function StatusCardTile({
           )}
           title={card.title ?? card.interestPrompt}
         >
-          {card.title ?? "New card"}
+          {card.title ?? uiT("ui:messages.m_8d3efc397417cfd0")}
         </span>
         <div onClick={(event) => event.stopPropagation()}>
           <DropdownMenu>
@@ -127,16 +128,12 @@ export function StatusCardTile({
                 Refresh now
               </DropdownMenuItem>
               {(lifecycle === "compiling" && !setupRunning) || lifecycle === "error" ? (
-                <DropdownMenuItem onSelect={onRecompile} disabled={recompilePending}>
-                  Run now
-                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={onRecompile} disabled={recompilePending}>{uiT("ui:messages.m_0991397702fabb40")}</DropdownMenuItem>
               ) : null}
               <DropdownMenuItem onSelect={onEditInterest}>Edit interest &amp; settings</DropdownMenuItem>
               <DropdownMenuItem onSelect={onOpenDebug}>Query debug</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={onArchive} variant="destructive">
-                Archive
-              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={onArchive} variant="destructive">{uiT("ui:messages.m_66f4804ee23ddc09")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -178,7 +175,7 @@ export function StatusCardTile({
                 className="mt-2 inline-flex items-center gap-1.5 font-medium text-foreground underline-offset-2 hover:underline disabled:opacity-60"
               >
                 <Wand2 className={cn("h-3.5 w-3.5", recompilePending && "animate-pulse")} />
-                {recompilePending ? "Starting…" : "Run now"}
+                {recompilePending ? uiT("ui:messages.m_bbe5fc3b9ef39f99") : uiT("ui:messages.m_0991397702fabb40")}
               </button>
             )}
           </div>
@@ -216,9 +213,9 @@ export function StatusCardTile({
             className="flex w-full items-center justify-between gap-2 rounded-md border border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-left text-xs text-foreground transition-colors hover:bg-amber-500/10 disabled:opacity-60"
           >
             <span>
-              {card.pendingChangeCount} {card.pendingChangeCount === 1 ? "change" : "changes"} since last update
+              {card.pendingChangeCount} {card.pendingChangeCount === 1 ? uiT("ui:messages.m_12ea12eace7d655f") : uiT("ui:messages.m_d0b4ba2311b3e849")} since last update
             </span>
-            <span className="shrink-0 font-medium text-amber-700 dark:text-amber-400">Refresh</span>
+            <span className="shrink-0 font-medium text-amber-700 dark:text-amber-400">{uiT("ui:messages.m_0e91610117029a62")}</span>
           </button>
         ) : null}
 
@@ -229,12 +226,8 @@ export function StatusCardTile({
               Last update failed
             </span>
             <span className="flex shrink-0 items-center gap-3">
-              <button type="button" onClick={stopClick(onRefresh)} disabled={refreshPending} className="font-medium text-destructive hover:underline disabled:opacity-60">
-                Retry
-              </button>
-              <button type="button" onClick={stopClick(onOpen)} className="text-muted-foreground hover:underline">
-                Details
-              </button>
+              <button type="button" onClick={stopClick(onRefresh)} disabled={refreshPending} className="font-medium text-destructive hover:underline disabled:opacity-60">{uiT("ui:messages.m_942087cc2d41e013")}</button>
+              <button type="button" onClick={stopClick(onOpen)} className="text-muted-foreground hover:underline">{uiT("ui:messages.m_45989de49fb7f66d")}</button>
             </span>
           </div>
         ) : null}

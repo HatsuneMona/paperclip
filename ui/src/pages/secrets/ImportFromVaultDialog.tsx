@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -477,13 +478,13 @@ export function ImportFromVaultDialog({
         awsVaults.find((vault) => vault.id === vaultId)?.displayName ?? "AWS";
       if (result.errorCount === draftList.length && result.errorCount > 0) {
         toast.pushToast({
-          title: "Import failed",
+          title: uiT("ui:messages.m_0a26f41abd00f95e"),
           body: `No secrets were imported from ${vaultName}.`,
           tone: "error",
         });
       } else {
         toast.pushToast({
-          title: result.errorCount > 0 ? "Import completed with errors" : "Import complete",
+          title: result.errorCount > 0 ? "Import completed with errors" : uiT("ui:messages.m_a9c747fe220f0a9f"),
           body: `${result.importedCount} created · ${result.skippedCount} skipped · ${result.errorCount} failed`,
           tone: result.errorCount > 0 ? "warn" : "success",
         });
@@ -491,7 +492,7 @@ export function ImportFromVaultDialog({
     },
     onError: (error) => {
       toast.pushToast({
-        title: "Import failed",
+        title: uiT("ui:messages.m_0a26f41abd00f95e"),
         body: readableErrorMessage(error),
         tone: "error",
       });
@@ -666,7 +667,7 @@ export function ImportFromVaultDialog({
             type="button"
             className="rounded-sm text-muted-foreground transition-opacity hover:opacity-100 opacity-70"
             onClick={() => handleClose()}
-            aria-label="Close import dialog"
+            aria-label={uiT("ui:messages.m_0dbadc41afe7ec1a")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -729,9 +730,7 @@ export function ImportFromVaultDialog({
           />
           <div className="flex items-center gap-2">
             {step !== "result" && (
-              <Button variant="ghost" size="sm" onClick={() => handleClose()}>
-                Cancel
-              </Button>
+              <Button variant="ghost" size="sm" onClick={() => handleClose()}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             )}
             {step === "review" && (
               <Button
@@ -739,9 +738,7 @@ export function ImportFromVaultDialog({
                 size="sm"
                 onClick={() => setStep("select")}
                 disabled={importMutation.isPending}
-              >
-                Back
-              </Button>
+              >{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             )}
             {step === "select" && (
               <Button
@@ -772,9 +769,7 @@ export function ImportFromVaultDialog({
               </Button>
             )}
             {step === "result" && (
-              <Button size="sm" onClick={() => handleClose(true)}>
-                Done
-              </Button>
+              <Button size="sm" onClick={() => handleClose(true)}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
             )}
           </div>
         </footer>
@@ -785,9 +780,9 @@ export function ImportFromVaultDialog({
 
 function Stepper({ step }: { step: Step }) {
   const steps: { id: Step; label: string }[] = [
-    { id: "select", label: "Select" },
-    { id: "review", label: "Review" },
-    { id: "result", label: "Result" },
+    { id: "select", label: uiT("ui:messages.m_2a78025de6aae5e7") },
+    { id: "review", label: uiT("ui:messages.m_aff0766a5290e117") },
+    { id: "result", label: uiT("ui:messages.m_6e7d50e84f4731ef") },
   ];
   const activeIndex = steps.findIndex((s) => s.id === step);
   return (
@@ -897,7 +892,7 @@ function SelectStep(props: SelectStepProps) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex flex-wrap items-center gap-2 border-b border-border/60 px-5 py-3">
-        <label className="text-xs uppercase tracking-wide text-muted-foreground">Vault</label>
+        <label className="text-xs uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_5d55c415e356dd7b")}</label>
         {awsVaults.length === 1 && eligible.length === 1 ? (
           <span className="text-xs font-medium" data-testid="vault-static-label">
             {eligible[0].displayName}
@@ -907,8 +902,8 @@ function SelectStep(props: SelectStepProps) {
             value={vaultId ?? undefined}
             onValueChange={onVaultChange}
           >
-            <SelectTrigger size="sm" className="text-xs" aria-label="Select AWS vault">
-              <SelectValue placeholder="Select an AWS vault" />
+            <SelectTrigger size="sm" className="text-xs" aria-label={uiT("ui:messages.m_88ec6b21b5ab4e08")}>
+              <SelectValue placeholder={uiT("ui:messages.m_f45bb374c92fc59c")} />
             </SelectTrigger>
             <SelectContent>
               {awsVaults.map((vault) => {
@@ -923,14 +918,14 @@ function SelectStep(props: SelectStepProps) {
                     <span className="flex items-center gap-2">
                       <span>{vault.displayName}</span>
                       {vault.isDefault && (
-                        <Badge variant="outline" className="px-1 py-0 text-(length:--text-nano)">default</Badge>
+                        <Badge variant="outline" className="px-1 py-0 text-(length:--text-nano)">{uiT("ui:messages.m_37a8eec1ce19687d")}</Badge>
                       )}
                       {vault.status === "warning" && (
-                        <Badge variant="outline" className="px-1 py-0 text-(length:--text-nano) text-amber-500 border-amber-500/40">warning</Badge>
+                        <Badge variant="outline" className="px-1 py-0 text-(length:--text-nano) text-amber-500 border-amber-500/40">{uiT("ui:messages.m_4bd9354bb6522334")}</Badge>
                       )}
                       {blocked && (
                         <Badge variant="outline" className="px-1 py-0 text-(length:--text-nano) text-muted-foreground">
-                          {vault.status === "coming_soon" ? "coming soon" : vault.status}
+                          {vault.status === "coming_soon" ? uiT("ui:messages.m_62bfdf0b726cbcc5") : vault.status}
                         </Badge>
                       )}
                     </span>
@@ -946,9 +941,9 @@ function SelectStep(props: SelectStepProps) {
           <Input
             value={searchInput}
             onChange={(event) => onSearchInput(event.target.value)}
-            placeholder="Search by name, ARN, tag"
+            placeholder={uiT("ui:messages.m_3e837ef52f1c9d77")}
             className="pl-7 pr-7 text-xs"
-            aria-label="Search remote secrets"
+            aria-label={uiT("ui:messages.m_4ea13763b5821adc")}
             data-testid="vault-search"
           />
           {showSearchSpinner && (
@@ -961,7 +956,7 @@ function SelectStep(props: SelectStepProps) {
           size="sm"
           onClick={onRefresh}
           disabled={previewLoading || !vaultId}
-          aria-label="Refresh remote secrets"
+          aria-label={uiT("ui:messages.m_587837d13acf308f")}
         >
           <RefreshCw className={cn("h-3.5 w-3.5", previewLoading && "animate-spin")} />
         </Button>
@@ -978,7 +973,7 @@ function SelectStep(props: SelectStepProps) {
             className="h-6 px-2 text-xs"
             onClick={() => onShowOnlySelectedChange(!showOnlySelected)}
           >
-            {showOnlySelected ? "Show all" : "Show selected"}
+            {showOnlySelected ? uiT("ui:messages.m_2150d8df37e48957") : "Show selected"}
           </Button>
         </div>
       )}
@@ -998,7 +993,7 @@ function SelectStep(props: SelectStepProps) {
                   <Checkbox
                     checked={headerCheckboxState}
                     onCheckedChange={() => toggleAllLoaded()}
-                    aria-label={`Select all loaded (${selectableInLoaded.length})`}
+                    aria-label={uiT("ui:messages.m_35c2c4e1efe7f807", { v0: (selectableInLoaded.length) })}
                     disabled={selectableInLoaded.length === 0}
                   />
                 </th>
@@ -1006,7 +1001,7 @@ function SelectStep(props: SelectStepProps) {
                 <th className="px-2 py-2 text-left font-medium">Reference</th>
                 <th className="px-2 py-2 text-left font-medium">Last changed</th>
                 <th className="px-2 py-2 text-left font-medium">Suggested name</th>
-                <th className="px-2 py-2 text-left font-medium">State</th>
+                <th className="px-2 py-2 text-left font-medium">{uiT("ui:messages.m_a3b50c476732c740")}</th>
               </tr>
             </thead>
             <tbody data-testid="vault-table-body">
@@ -1038,7 +1033,7 @@ function SelectStep(props: SelectStepProps) {
                         checked={isSelected}
                         onCheckedChange={() => toggleRow(candidate)}
                         disabled={!candidate.importable}
-                        aria-label={`Select ${candidate.remoteName}`}
+                        aria-label={uiT("ui:messages.m_58661820dfdc4c9f", { v0: (candidate.remoteName) })}
                       />
                     </td>
                     <td className="px-2 py-2.5">
@@ -1142,8 +1137,7 @@ function PreviewErrorBanner({ error, onRetry }: { error: unknown; onRetry: () =>
         </div>
         <div className="mt-2 flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={onRetry}>
-            <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry
-          </Button>
+            <RefreshCw className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
           {isPermission && (
             <a
               href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awssecretsmanager.html"
@@ -1258,7 +1252,7 @@ function ReviewStep({ drafts, reviewErrors, updateDraft, removeDraft, importing 
                       />
                     </label>
                     <label className="flex flex-col gap-1 text-xs">
-                      <span className="text-muted-foreground">Key</span>
+                      <span className="text-muted-foreground">{uiT("ui:messages.m_99a52df3ff3d4994")}</span>
                       <Input
                         value={draft.key}
                         onChange={(e) =>
@@ -1276,7 +1270,7 @@ function ReviewStep({ drafts, reviewErrors, updateDraft, removeDraft, importing 
                       />
                     </label>
                     <label className="flex flex-col gap-1 text-xs">
-                      <span className="text-muted-foreground">Description (optional)</span>
+                      <span className="text-muted-foreground">{uiT("ui:messages.m_f6cbe2f0c1f8a38b")}</span>
                       <Input
                         value={draft.description}
                         onChange={(e) =>
@@ -1305,7 +1299,7 @@ function ReviewStep({ drafts, reviewErrors, updateDraft, removeDraft, importing 
                   variant="ghost"
                   size="icon"
                   onClick={() => removeDraft(draft.candidate.externalRef)}
-                  aria-label={`Remove ${draft.candidate.remoteName}`}
+                  aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (draft.candidate.remoteName) })}
                   className="h-7 w-7"
                   disabled={importing}
                 >
@@ -1346,30 +1340,30 @@ function ResultStep({ result, draftList }: ResultStepProps) {
 
   const heading =
     result.errorCount === result.results.length && result.errorCount > 0
-      ? "Import failed"
+      ? uiT("ui:messages.m_0a26f41abd00f95e")
       : result.errorCount === 0 && result.skippedCount === 0
         ? `All ${result.importedCount} secrets imported`
-        : "Import complete";
+        : uiT("ui:messages.m_a9c747fe220f0a9f");
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="border-b border-border/60 px-5 py-3" data-testid="result-summary">
         <h3 className="text-sm font-semibold">{heading}</h3>
         <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-          <span className="text-emerald-600 dark:text-emerald-400">✓ {result.importedCount} created</span>
-          <span>⊘ {result.skippedCount} skipped</span>
-          <span className="text-destructive">⨯ {result.errorCount} failed</span>
+          <span className="text-emerald-600 dark:text-emerald-400">✓ {result.importedCount}{uiT("ui:messages.m_244de782ca928663")}</span>
+          <span>⊘ {result.skippedCount}{uiT("ui:messages.m_24c76fca20491429")}</span>
+          <span className="text-destructive">⨯ {result.errorCount}{uiT("ui:messages.m_f2f92ba55da2180e")}</span>
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
         {grouped.created.length > 0 && (
-          <ResultGroup label="Created" rows={grouped.created} draftLookup={draftLookup} />
+          <ResultGroup label={uiT("ui:messages.m_d70b9e24bca26b40")} rows={grouped.created} draftLookup={draftLookup} />
         )}
         {grouped.skipped.length > 0 && (
-          <ResultGroup label="Skipped" rows={grouped.skipped} draftLookup={draftLookup} />
+          <ResultGroup label={uiT("ui:messages.m_12698ce1ea5cd4ab")} rows={grouped.skipped} draftLookup={draftLookup} />
         )}
         {grouped.failed.length > 0 && (
-          <ResultGroup label="Failed" rows={grouped.failed} draftLookup={draftLookup} />
+          <ResultGroup label={uiT("ui:messages.m_031a8f0f659df890")} rows={grouped.failed} draftLookup={draftLookup} />
         )}
       </div>
     </div>
@@ -1456,7 +1450,7 @@ function FooterStatus({
       <div className="text-xs text-muted-foreground">
         {totalSelected === 0
           ? "Select remote secrets to import"
-          : `${totalSelected} selected`}
+          : uiT("ui:messages.m_b3edc3b37ecffe19", { v0: (totalSelected) })}
       </div>
     );
   }
@@ -1466,8 +1460,7 @@ function FooterStatus({
         {readyReviewCount} ready
         {blockedReviewCount > 0 && (
           <span className="ml-2 text-amber-600 dark:text-amber-400">
-            · {blockedReviewCount} blocked
-          </span>
+            · {blockedReviewCount}{uiT("ui:messages.m_1b30e46cb30f0b9b")}</span>
         )}
       </div>
     );
@@ -1475,9 +1468,9 @@ function FooterStatus({
   if (result) {
     return (
       <div className="flex items-center gap-3 text-xs text-muted-foreground">
-        <span>{result.importedCount} created</span>
-        <span>{result.skippedCount} skipped</span>
-        <span>{result.errorCount} failed</span>
+        <span>{result.importedCount}{uiT("ui:messages.m_244de782ca928663")}</span>
+        <span>{result.skippedCount}{uiT("ui:messages.m_24c76fca20491429")}</span>
+        <span>{result.errorCount}{uiT("ui:messages.m_f2f92ba55da2180e")}</span>
       </div>
     );
   }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
@@ -44,13 +45,9 @@ export function ArchivedStatusCardRow({
           summary); Restore is safe but secondary — it brings the card back
           stale and never auto-runs. */}
       <div className="flex shrink-0 gap-2">
-        <Button size="sm" onClick={onView}>
-          View
-        </Button>
+        <Button size="sm" onClick={onView}>{uiT("ui:messages.m_dcc839a4015c4b7d")}</Button>
         <Button variant="outline" size="sm" onClick={onRestore} disabled={restorePending}>
-          {restorePending ? <Loader2 className="animate-spin" /> : null}
-          Restore
-        </Button>
+          {restorePending ? <Loader2 className="animate-spin" /> : null}{uiT("ui:messages.m_a76e13b9839270eb")}</Button>
       </div>
     </div>
   );

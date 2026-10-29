@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -180,7 +181,7 @@ export function SidebarAccountMenu({
               "flex min-w-0 items-center gap-2.5 rounded-lg text-left text-(length:--text-compact) font-medium text-foreground/80 transition-colors hover:bg-accent/50 hover:text-foreground",
               rail ? "w-full px-3 py-2" : "flex-1 px-2 py-1.5",
             )}
-            aria-label="Open account menu"
+            aria-label={uiT("ui:messages.m_04b5bfe665e3b832")}
           >
             <Avatar size="sm">
               {session?.user.image ? <AvatarImage src={session.user.image} alt={displayName} /> : null}
@@ -201,7 +202,7 @@ export function SidebarAccountMenu({
             <div className="relative flex items-start gap-3">
               <Link
                 to={profileHref}
-                aria-label="View profile"
+                aria-label={uiT("ui:messages.m_d4788f256f730423")}
                 onClick={closeNavigationChrome}
                 className="absolute inset-0 rounded-xl transition-colors hover:bg-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
@@ -220,7 +221,7 @@ export function SidebarAccountMenu({
                     href={`https://github.com/paperclipai/paperclip/commit/${stagingCommit}`}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={`View commit ${stagingCommit} on GitHub`}
+                    aria-label={uiT("ui:messages.m_e5800e4d9ac9a1e8", { v0: (stagingCommit) })}
                     title={stagingCommit}
                   >
                     SHA {stagingCommit.slice(0, 7)}
@@ -232,8 +233,8 @@ export function SidebarAccountMenu({
             <div className="mt-4 space-y-1">
               {showInvite && inviteHref ? (
                 <MenuAction
-                  label="Invite"
-                  description="Invite people to your organization."
+                  label={uiT("ui:messages.m_1fd9ae1607aa3d80")}
+                  description={uiT("ui:messages.m_22344f54a6a332bc")}
                   icon={UserPlus}
                   href={inviteHref}
                   topLevel={isCloud}
@@ -241,8 +242,8 @@ export function SidebarAccountMenu({
                 />
               ) : null}
               <MenuAction
-                label="Documentation"
-                description="Open Paperclip docs in a new tab."
+                label={uiT("ui:messages.m_c205924de0fe636c")}
+                description={uiT("ui:messages.m_1b5779dcc55bf28a")}
                 icon={BookOpen}
                 href={DOCS_URL}
                 external
@@ -264,11 +265,9 @@ export function SidebarAccountMenu({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-medium text-foreground">
-                      {signOutMutation.isPending ? "Signing out..." : "Sign out"}
+                      {signOutMutation.isPending ? uiT("ui:messages.m_0436231679a0cb2b") : uiT("ui:messages.m_48f0d3d397d49f13")}
                     </span>
-                    <span className="block text-xs text-muted-foreground">
-                      End this browser session.
-                    </span>
+                    <span className="block text-xs text-muted-foreground">{uiT("ui:messages.m_c1dadf22fd83136e")}</span>
                   </span>
                 </button>
               ) : null}
@@ -284,13 +283,13 @@ export function SidebarAccountMenu({
                 href={FEEDBACK_URL}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Share feedback"
+                aria-label={uiT("ui:messages.m_2af5686738876d50")}
                 className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground/50 transition-colors hover:bg-accent/50 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <Flag className="h-4 w-4" aria-hidden="true" />
               </a>
             </TooltipTrigger>
-            <TooltipContent side="top">Share feedback</TooltipContent>
+            <TooltipContent side="top">{uiT("ui:messages.m_2af5686738876d50")}</TooltipContent>
           </Tooltip>
         ) : null}
       </div>

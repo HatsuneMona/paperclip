@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { experimentalSettingKey } from "@paperclipai/shared";
 import { accessApi } from "@/api/access";
@@ -76,7 +77,7 @@ export function CoordinatorWorkspaceSetting() {
       {error && (
         <div role="alert" className="mt-3 flex items-center gap-2 text-sm text-destructive">
           <span>{error}</span>
-          <Button variant="ghost" size="sm" onClick={() => { void workspace.retry(); }}>Retry</Button>
+          <Button variant="ghost" size="sm" onClick={() => { void workspace.retry(); }}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
         </div>
       )}
     </Card>

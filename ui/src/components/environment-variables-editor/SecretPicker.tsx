@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useMemo, useState } from "react";
 import { CornerUpLeft, Folder, KeyRound, Plus } from "lucide-react";
 import type { CompanySecret, SecretStatus } from "@paperclipai/shared";
@@ -107,7 +108,7 @@ function buildFolderGroup(
     options.push({
       key: `folder-up-${pathKey(currentPath)}`,
       value: folderValue(parentPath),
-      label: "Up one folder",
+      label: uiT("ui:messages.m_ef9a7ae0b5bec50e"),
       title: pathLabel(parentPath),
       searchText: pathLabel(parentPath),
       kind: "back",
@@ -171,7 +172,7 @@ export function SecretPicker({
     if (boundMissing) {
       result.push({
         id: "current-missing",
-        label: "Current",
+        label: uiT("ui:messages.m_e0d1b68224bf0b31"),
         options: [
           {
             key: `missing-${secretId}`,

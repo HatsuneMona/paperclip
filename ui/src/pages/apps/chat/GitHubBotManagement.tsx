@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -101,9 +102,7 @@ export function GitHubRepositoryAccess({
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem disabled={pending} onClick={onRefresh}>
-              <RefreshCw className="size-4" />
-              Refresh repositories
-            </DropdownMenuItem>
+              <RefreshCw className="size-4" />{uiT("ui:messages.m_31be4d417759782f")}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -114,7 +113,7 @@ export function GitHubRepositoryAccess({
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative min-w-0 flex-1 basis-48">
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input aria-label="Search repositories" placeholder="Search repositories" className="pl-9"
+          <Input aria-label={uiT("ui:messages.m_a134ed6423fab021")} placeholder={uiT("ui:messages.m_a134ed6423fab021")} className="pl-9"
             value={search} maxLength={200} onChange={(event) => setSearch(event.target.value)} />
         </div>
         <Button variant="outline" size="sm" disabled={pending || list.isFetching || !summary || !summary.totalCount || (!disableAll && !summary.availableCount)}
@@ -124,10 +123,10 @@ export function GitHubRepositoryAccess({
         </Button>
       </div>
       {summary && <p className="text-xs text-muted-foreground">
-        {summary.enabledCount} of {summary.totalCount} repositories enabled. Toggle all applies across the entire connection.
+        {summary.enabledCount}{uiT("ui:messages.m_a4282e4b2298b90b")}{summary.totalCount} repositories enabled. Toggle all applies across the entire connection.
       </p>}
       {list.isError && <p role="alert" className="text-sm text-destructive">
-        Could not load repositories. <Button variant="link" size="sm" onClick={() => void list.refetch()}>Try again</Button>
+        Could not load repositories. <Button variant="link" size="sm" onClick={() => void list.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </p>}
       <div ref={scroller} role="region" aria-label="Repositories" tabIndex={0}
         className="max-h-96 overflow-y-auto overscroll-contain border-y border-border">
@@ -241,9 +240,7 @@ export function GitHubBotManagement({
           onClick={() => {
             void query.refetch();
           }}
-        >
-          Try again
-        </Button>
+        >{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </p>
     );
   if (!record)
@@ -357,9 +354,7 @@ export function GitHubBotManagement({
               setEditorVersion((value) => value + 1);
               setError("");
             }}
-          >
-            Discard changes
-          </Button>
+          >{uiT("ui:messages.m_f9bfa3dc7c8fcdea")}</Button>
           <Button
             disabled={pending || !scoreValid}
             onClick={() =>
@@ -380,7 +375,7 @@ export function GitHubBotManagement({
               })
             }
           >
-            {pending ? "Saving…" : "Save changes"}
+            {pending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}
           </Button>
         </div>
       )}
@@ -495,7 +490,7 @@ function ReviewResult({ review }: { review: GitHubTaskReview }) {
                   ))}
                 </section>
               )}
-              <h3 className="font-medium">Coverage</h3>
+              <h3 className="font-medium">{uiT("ui:messages.m_523487a5de21adb5")}</h3>
               <p className="text-xs text-muted-foreground">
                 {review.assessment.coverage.reviewedPaths.length} files reviewed
                 · {review.assessment.coverage.omittedPaths.length} omitted
@@ -613,9 +608,7 @@ export function GitHubReviews({
     return (
       <p role="alert" className="text-sm text-destructive">
         {reviewId ? "This review could not be loaded or was not found in this connection." : "Reviews could not be loaded."}{" "}
-        <Button variant="link" onClick={() => void query.refetch()}>
-          Try again
-        </Button>
+        <Button variant="link" onClick={() => void query.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </p>
     );
   if (query.isPending)

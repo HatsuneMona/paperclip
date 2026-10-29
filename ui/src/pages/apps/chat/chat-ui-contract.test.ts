@@ -1,8 +1,9 @@
+import { withEnglishUiCopy } from "../../../test-utils/source-translations";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 function source(relativePath: string) {
-  return readFileSync(new URL(relativePath, import.meta.url), "utf8");
+  return withEnglishUiCopy(readFileSync(new URL(relativePath, import.meta.url), "utf8"));
 }
 
 describe("chat connector UI contract", () => {

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Agent } from "@paperclipai/shared";
 import { AlertTriangle, ArrowUpRight, Bot, Check, CheckCircle2, ChevronDown, ChevronRight, CircleDashed, Clock, ExternalLink, FileText, GitBranch, ImagePlus, KeyRound, Loader2, MessageSquareQuote, MinusCircle, ShieldAlert, ThumbsUp, TriangleAlert, Wrench, X, XCircle } from "lucide-react";
@@ -295,14 +296,14 @@ function planStatusClasses(
         return {
           shell: "border-2 border-amber-500/70 bg-transparent",
           badge: "border-amber-500/60 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-100",
-          label: "Approved — agent resume failed",
+          label: uiT("ui:messages.m_03dbaee78a06fbac"),
           Icon: AlertTriangle,
         };
       }
       return {
         shell: "border-2 border-green-500/80 bg-transparent",
         badge: "border-green-500/60 bg-green-500/10 text-green-900 dark:bg-green-500/15 dark:text-green-100",
-        label: "Approved",
+        label: uiT("ui:messages.m_87b42e40c2a290e0"),
         Icon: CheckCircle2,
       };
     case "rejected":
@@ -310,7 +311,7 @@ function planStatusClasses(
       return {
         shell: "border-2 border-red-500/80 bg-transparent",
         badge: "border-red-500/60 bg-red-500/10 text-red-900 dark:bg-red-500/15 dark:text-red-100",
-        label: outcome === "withdrawn" ? "Withdrawn" : "Changes requested",
+        label: outcome === "withdrawn" ? uiT("ui:messages.m_00c0b03fcfa2ac02") : uiT("ui:messages.m_10a92a8ad3ee5891"),
         Icon: XCircle,
       };
     case "failed":
@@ -318,14 +319,14 @@ function planStatusClasses(
       return {
         shell: "border-2 border-amber-500/70 bg-transparent",
         badge: "border-amber-500/60 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-100",
-        label: "Expired",
+        label: uiT("ui:messages.m_424a2551d356754c"),
         Icon: AlertTriangle,
       };
     default:
       return {
         shell: "border-2 border-violet-500/80 bg-transparent",
         badge: "border-violet-500/60 bg-violet-500/10 text-violet-900 dark:bg-violet-500/15 dark:text-violet-100",
-        label: "In review",
+        label: uiT("ui:messages.m_c39059141ced2ea7"),
         Icon: FileText,
       };
   }
@@ -486,7 +487,7 @@ function toolActionStatusClasses(state: ToolActionCardState): {
       return {
         shell: "border-2 border-amber-500/70 bg-transparent",
         badge: "border-amber-500/60 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-100",
-        label: "Running…",
+        label: uiT("ui:messages.m_46c541363b0253b1"),
         Icon: Loader2,
         spin: true,
       };
@@ -494,31 +495,31 @@ function toolActionStatusClasses(state: ToolActionCardState): {
       return {
         shell: "border-2 border-green-500/80 bg-transparent",
         badge: "border-green-500/60 bg-green-500/10 text-green-900 dark:bg-green-500/15 dark:text-green-100",
-        label: "Executed",
+        label: uiT("ui:messages.m_3aa8b683ebf3703c"),
         Icon: CheckCircle2,
       };
     case "failed":
       return {
         shell: "border-2 border-amber-500/70 bg-transparent",
         badge: "border-amber-500/60 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-100",
-        label: "Failed",
+        label: uiT("ui:messages.m_031a8f0f659df890"),
         Icon: XCircle,
       };
     case "declined":
       return {
         shell: "border-2 border-red-500/80 bg-transparent",
         badge: "border-red-500/60 bg-red-500/10 text-red-900 dark:bg-red-500/15 dark:text-red-100",
-        label: "Declined",
+        label: uiT("ui:messages.m_dce083a2c47ffdc4"),
         Icon: XCircle,
         dimmed: true,
       };
     case "cancelled":
-      return { shell: "border-2 border-border bg-transparent", badge: "border-border bg-muted text-muted-foreground", label: "Cancelled", Icon: XCircle, dimmed: true };
+      return { shell: "border-2 border-border bg-transparent", badge: "border-border bg-muted text-muted-foreground", label: uiT("ui:messages.m_d353a99eb4556847"), Icon: XCircle, dimmed: true };
     case "expired":
       return {
         shell: "border-2 border-border bg-transparent",
         badge: "border-border bg-muted/60 text-muted-foreground",
-        label: "Expired",
+        label: uiT("ui:messages.m_424a2551d356754c"),
         Icon: Clock,
         dimmed: true,
       };
@@ -526,7 +527,7 @@ function toolActionStatusClasses(state: ToolActionCardState): {
       return {
         shell: "border-2 border-violet-500/80 bg-transparent",
         badge: "border-violet-500/60 bg-violet-500/10 text-violet-900 dark:bg-violet-500/15 dark:text-violet-100",
-        label: "Awaiting approval",
+        label: uiT("ui:messages.m_ae25c9b1d366d159"),
         Icon: ShieldAlert,
       };
   }
@@ -625,7 +626,7 @@ function TaskTreeNode({
                 <Checkbox
                   checked={isSelected}
                   onCheckedChange={(checked) => onToggleSelection?.(node, checked === true)}
-                  aria-label={`Include ${node.task.title}`}
+                  aria-label={uiT("ui:messages.m_8890b6d6a699740f", { v0: (node.task.title) })}
                   className="mt-0.5"
                 />
               ) : null}
@@ -643,9 +644,7 @@ function TaskTreeNode({
                   </div>
                 </div>
                 {depth > 0 ? (
-                  <div className="mt-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                    Child task
-                  </div>
+                  <div className="mt-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_4e6d7bdb7ee5f2eb")}</div>
                 ) : null}
                 {node.task.description ? (
                   <p className="mt-0.5 text-sm leading-5 text-muted-foreground">
@@ -665,25 +664,23 @@ function TaskTreeNode({
               <ChevronRight className="h-3 w-3" />
             </Link>
           ) : isSkipped ? (
-            <span className="inline-flex shrink-0 items-center rounded-sm border border-amber-500/60 bg-amber-500/10 px-2.5 py-1 text-(length:--text-micro) font-medium text-amber-900 dark:text-amber-100">
-              Skipped
-            </span>
+            <span className="inline-flex shrink-0 items-center rounded-sm border border-amber-500/60 bg-amber-500/10 px-2.5 py-1 text-(length:--text-micro) font-medium text-amber-900 dark:text-amber-100">{uiT("ui:messages.m_12698ce1ea5cd4ab")}</span>
           ) : null}
         </div>
 
         {hasMetadata ? (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {hasExplicitAssignee ? (
-              <TaskField label="Responsible" value={assigneeLabel} />
+              <TaskField label={uiT("ui:messages.m_bc110a6d0722098a")} value={assigneeLabel} />
             ) : null}
             {node.task.billingCode ? (
-              <TaskField label="Billing" value={node.task.billingCode} />
+              <TaskField label={uiT("ui:messages.m_3ac8bbca9a74cfbd")} value={node.task.billingCode} />
             ) : null}
             {node.task.projectId ? (
-              <TaskField label="Project" value={node.task.projectId} tone="subtle" />
+              <TaskField label={uiT("ui:messages.m_9859597853197476")} value={node.task.projectId} tone="subtle" />
             ) : null}
             {labels.map((label) => (
-              <TaskField key={label} label="Label" value={label} tone="subtle" />
+              <TaskField key={label} label={uiT("ui:messages.m_0e66373f45dcf3dd")} value={label} tone="subtle" />
             ))}
           </div>
         ) : null}
@@ -693,8 +690,8 @@ function TaskTreeNode({
             <GitBranch className="h-3.5 w-3.5 shrink-0" />
             <span>
               {hiddenChildCount === 1
-                ? "1 follow-on task hidden in preview"
-                : `${hiddenChildCount} follow-on tasks hidden in preview`}
+                ? uiT("ui:messages.m_20e5cdebdcbad0f4")
+                : uiT("ui:messages.m_6f1282d8383bac0f", { v0: (hiddenChildCount) })}
             </span>
           </div>
         ) : null}
@@ -852,9 +849,9 @@ function SuggestTasksCard({
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-        <span>{totalTasks === 1 ? "1 draft issue" : `${totalTasks} draft issues`}</span>
+        <span>{totalTasks === 1 ? uiT("ui:messages.m_142b5c43a2dd87b9") : uiT("ui:messages.m_c27e53744a693c0f", { v0: (totalTasks) })}</span>
         {interaction.payload.defaultParentId ? (
-          <TaskField label="Default parent" value={interaction.payload.defaultParentId} tone="subtle" />
+          <TaskField label={uiT("ui:messages.m_ac981ebffeaa6b4d")} value={interaction.payload.defaultParentId} tone="subtle" />
         ) : null}
       </div>
 
@@ -877,27 +874,23 @@ function SuggestTasksCard({
 
       {interaction.status === "accepted" ? (
         <div className="rounded-sm border border-emerald-500/60 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-900 dark:text-emerald-100">
-          <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-emerald-700">
-            Resolution summary
-          </div>
+          <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-emerald-700">{uiT("ui:messages.m_5ac338f055a7abe5")}</div>
           <p className="mt-1 leading-6">
             {skippedCount > 0
-              ? `Created ${createdCount} draft ${createdCount === 1 ? "issue" : "issues"} and skipped ${skippedCount} during review.`
-              : `Created all ${createdCount} draft ${createdCount === 1 ? "issue" : "issues"}.`}
+              ? uiT("ui:messages.m_2c668cad2c896aef", { v0: (createdCount), v1: (createdCount === 1 ? uiT("ui:messages.m_4a502846d070e208") : uiT("ui:messages.m_02e3fe5aad80ca85")), v2: (skippedCount) })
+              : uiT("ui:messages.m_1a9911a9bf51eb02", { v0: (createdCount), v1: (createdCount === 1 ? uiT("ui:messages.m_4a502846d070e208") : uiT("ui:messages.m_02e3fe5aad80ca85")) })}
           </p>
         </div>
       ) : null}
 
       {interaction.status === "rejected" ? (
         <div className="rounded-sm border border-rose-500/60 bg-rose-500/10 px-4 py-3 text-sm text-rose-900 dark:text-rose-100">
-          <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-rose-700">
-            Rejection reason
-          </div>
+          <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-rose-700">{uiT("ui:messages.m_e57499264f493e58")}</div>
           <p className={cn(
             "mt-1 leading-6",
             !interaction.result?.rejectionReason && "text-rose-900/75",
           )}>
-            {interaction.result?.rejectionReason || "No reason provided."}
+            {interaction.result?.rejectionReason || uiT("ui:messages.m_a63c933ad7a29d41")}
           </p>
         </div>
       ) : null}
@@ -908,13 +901,12 @@ function SuggestTasksCard({
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
               <span>
                 {selectedCount === totalTasks
-                  ? `All ${totalTasks} draft ${totalTasks === 1 ? "issue" : "issues"} selected`
-                  : `${selectedCount} of ${totalTasks} draft ${totalTasks === 1 ? "issue" : "issues"} selected`}
+                  ? uiT("ui:messages.m_37bc6d6a06ee568d", { v0: (totalTasks), v1: (totalTasks === 1 ? uiT("ui:messages.m_4a502846d070e208") : uiT("ui:messages.m_02e3fe5aad80ca85")) })
+                  : uiT("ui:messages.m_c2e32bf968db941d", { v0: (selectedCount), v1: (totalTasks), v2: (totalTasks === 1 ? uiT("ui:messages.m_4a502846d070e208") : uiT("ui:messages.m_02e3fe5aad80ca85")) })}
               </span>
               {selectedCount < totalTasks ? (
                 <span>
-                  {totalTasks - selectedCount} will be skipped if you accept this interaction.
-                </span>
+                  {totalTasks - selectedCount}{uiT("ui:messages.m_d3786c4d25bf2fcf")}</span>
               ) : null}
             </div>
 
@@ -927,11 +919,9 @@ function SuggestTasksCard({
                 >
                   {working === "accept" ? (
                     <>
-                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Accepting...
-                    </>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_31409c77894fb400")}</>
                   ) : (
-                    selectedCount === totalTasks ? "Accept drafts" : "Accept selected drafts"
+                    selectedCount === totalTasks ? uiT("ui:messages.m_43a26ceb78ea73aa") : uiT("ui:messages.m_3db4cde14abef81a")
                   )}
                 </Button>
                 <Button
@@ -939,18 +929,14 @@ function SuggestTasksCard({
                   variant="outline"
                   disabled={!onRejectInteraction || working !== null}
                   onClick={() => setRejecting((current) => !current)}
-                >
-                  Reject
-                </Button>
+                >{uiT("ui:messages.m_ab604a360777735f")}</Button>
                 {selectedCount < totalTasks ? (
                   <Button
                     size="sm"
                     variant="ghost"
                     disabled={working !== null}
                     onClick={() => setSelectedClientKeys(new Set(interaction.payload.tasks.map((task) => task.clientKey)))}
-                  >
-                    Reset selection
-                  </Button>
+                  >{uiT("ui:messages.m_2e9246864f088a40")}</Button>
                 ) : null}
               </div>
             </DecisionCardFooter>
@@ -961,7 +947,7 @@ function SuggestTasksCard({
               <Textarea
                 value={rejectReason}
                 onChange={(event) => setRejectReason(event.target.value)}
-                placeholder="Add a short reason for rejecting this suggestion"
+                placeholder={uiT("ui:messages.m_11886cf22e87c75b")}
                 className="min-h-24 bg-background text-sm"
               />
               <div className="flex justify-end">
@@ -973,11 +959,9 @@ function SuggestTasksCard({
                 >
                   {working === "reject" ? (
                     <>
-                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Saving...
-                    </>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_dc85af8f2b1d0d67")}</>
                   ) : (
-                    "Save rejection"
+                    uiT("ui:messages.m_6fc943c1e5b36330")
                   )}
                 </Button>
               </div>
@@ -1211,13 +1195,11 @@ function AskUserQuestionsCard({
     <div className="space-y-4">
       {!compact ? <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <Badge variant="outline" className="border-border/70 bg-background/70 px-2.5 py-1 uppercase tracking-(--tracking-eyebrow) text-foreground/70">
-          <MessageSquareQuote className="h-3 w-3" />
-          Ask user questions
-        </Badge>
+          <MessageSquareQuote className="h-3 w-3" />{uiT("ui:messages.m_85f982633587e0c1")}</Badge>
         <span>
           {questions.length === 1
-            ? "1 question"
-            : `${questions.length} questions`}
+            ? uiT("ui:messages.m_d69c3b1839e70205")
+            : uiT("ui:messages.m_0d98d85d258272d7", { v0: (questions.length) })}
         </span>
       </div> : null}
 
@@ -1275,8 +1257,7 @@ function AskUserQuestionsCard({
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  {!compact ? <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                    Question {index + 1}
+                  {!compact ? <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_39821a754d341ad5")}{index + 1}
                   </div> : null}
                   <div
                     id={`${interaction.id}-${question.id}-prompt`}
@@ -1294,7 +1275,7 @@ function AskUserQuestionsCard({
                 {compact ? <span className="sr-only" id={`${interaction.id}-${question.id}-requirements`}>
                   {question.selectionMode === "single" ? "Choose one answer." : "Choose one or more answers."} {question.required ? "Required." : "Optional."}
                 </span> : <TaskField
-                  label={question.selectionMode === "single" ? "Pick" : "Pick many"}
+                  label={question.selectionMode === "single" ? uiT("ui:messages.m_831a9d52a9c37435") : uiT("ui:messages.m_1c7919368277ed4e")}
                   value={question.required ? "Required" : "Optional"}
                   tone="subtle"
                 />}
@@ -1327,14 +1308,14 @@ function AskUserQuestionsCard({
                         />
                         {isFreeText && optionSelected ? (
                           <Textarea
-                            aria-label={`Describe your answer for ${question.prompt}`}
+                            aria-label={uiT("ui:messages.m_09887c1750031946", { v0: (question.prompt) })}
                             value={draftOtherAnswers[question.id] ?? ""}
                             onChange={(event) =>
                               setDraftOtherAnswers((current) => ({
                                 ...current,
                                 [question.id]: event.target.value,
                               }))}
-                            placeholder="Type your answer"
+                            placeholder={uiT("ui:messages.m_d078bf7520a710d0")}
                             className="min-h-24 bg-background text-sm"
                             autoFocus
                           />
@@ -1363,19 +1344,17 @@ function AskUserQuestionsCard({
                       )}
                       onClick={() =>
                         toggleOption(question.id, OTHER_ANSWER_ID, question.selectionMode)}
-                    >
-                      Other
-                    </button>
+                    >{uiT("ui:messages.m_f97e9da0e3b879f0")}</button>
                     {otherActiveQuestions[question.id] ? (
                       <Textarea
-                        aria-label={`Other answer for ${question.prompt}`}
+                        aria-label={uiT("ui:messages.m_0b982573e6aff5bf", { v0: (question.prompt) })}
                         value={draftOtherAnswers[question.id] ?? ""}
                         onChange={(event) =>
                           setDraftOtherAnswers((current) => ({
                             ...current,
                             [question.id]: event.target.value,
                           }))}
-                        placeholder="Type your answer"
+                        placeholder={uiT("ui:messages.m_d078bf7520a710d0")}
                         className="min-h-24 bg-background text-sm"
                       />
                     ) : null}
@@ -1388,9 +1367,7 @@ function AskUserQuestionsCard({
 
           <DecisionCardFooter leading={footerSlot}>
             <div className={compact ? "flex flex-wrap items-center justify-end gap-3" : "flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border/70 bg-background/75 p-4"}>
-              {!compact ? <div className="text-sm text-muted-foreground">
-                Submit once after you finish the full form.
-              </div> : null}
+              {!compact ? <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_02885ec7af193b0a")}</div> : null}
               <div className="flex flex-wrap items-center gap-2">
                 {onCancelInteraction ? (
                   <Button
@@ -1401,11 +1378,9 @@ function AskUserQuestionsCard({
                   >
                     {cancelling ? (
                       <>
-                        <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                        Cancelling...
-                      </>
+                        <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_7b26131098bb18b2")}</>
                     ) : (
-                      "Cancel question"
+                      uiT("ui:messages.m_437c1e5661520292")
                     )}
                     </Button>
                   ) : null}
@@ -1416,11 +1391,9 @@ function AskUserQuestionsCard({
                 >
                   {working ? (
                     <>
-                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Submitting...
-                    </>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_64115d5b9c794c92")}</>
                   ) : (
-                    interaction.payload.submitLabel ?? "Submit answers"
+                    interaction.payload.submitLabel ?? uiT("ui:messages.m_6d23261523eb641c")
                   )}
                 </Button>
               </div>
@@ -1433,15 +1406,15 @@ function AskUserQuestionsCard({
         <div className="rounded-2xl border border-rose-300/60 bg-rose-50/85 p-4 text-sm leading-6 text-rose-950 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
           <div className="font-semibold">
             {interaction.result?.outcome === "withdrawn"
-              ? questions.length === 1 ? "Question withdrawn" : "Questions withdrawn"
-              : "Question cancelled"}
+              ? questions.length === 1 ? uiT("ui:messages.m_7fb9da0d31ce3cfa") : uiT("ui:messages.m_5f00159eb0a684f2")
+              : uiT("ui:messages.m_e8960873b52bc79f")}
           </div>
           {interaction.result?.cancellationReason ? (
             <p className="mt-1">{interaction.result.cancellationReason}</p>
           ) : interaction.result?.reason ? (
             <p className="mt-1">{interaction.result.reason}</p>
           ) : (
-            <p className="mt-1">No answer was recorded.</p>
+            <p className="mt-1">{uiT("ui:messages.m_9122bb871bbd9ae5")}</p>
           )}
         </div>
       ) : interaction.status === "expired" ? (
@@ -1450,24 +1423,22 @@ function AskUserQuestionsCard({
             <AlertTriangle className="h-4 w-4" />
             {interaction.result?.outcome === "issue_closed"
               ? questions.length === 1
-                ? "Question expired when the issue closed"
-                : "Questions expired when the issue closed"
+                ? uiT("ui:messages.m_25e10cc4b7912257")
+                : uiT("ui:messages.m_0f7b109de2e44149")
               : questions.length === 1
-                ? "Question expired by comment"
-                : "Questions expired by comment"}
+                ? uiT("ui:messages.m_9a1e929d06d9edf9")
+                : uiT("ui:messages.m_891685543f6e5ab3")}
           </div>
           <p className="mt-1">
             {interaction.result?.outcome === "issue_closed"
-              ? "This question request expired automatically when the issue reached a terminal state."
-              : "A later board/user comment superseded this question request. Create a fresh request if answers are still needed."}
+              ? uiT("ui:messages.m_7dc5da5d51873165")
+              : uiT("ui:messages.m_890aebaab34c22fe")}
           </p>
           {interaction.result?.commentId ? (
             <a
               href={`#comment-${interaction.result.commentId}`}
               className="mt-3 inline-flex text-sm font-medium underline underline-offset-4"
-            >
-              Jump to comment
-            </a>
+            >{uiT("ui:messages.m_c8799fd3b3b2fed8")}</a>
           ) : null}
         </div>
       ) : (
@@ -1488,10 +1459,10 @@ function AskUserQuestionsCard({
                 <div className="mt-2 flex flex-wrap gap-2">
                   {labels.length > 0 ? (
                     labels.map((label) => (
-                      <TaskField key={label} label="Answer" value={label} />
+                      <TaskField key={label} label={uiT("ui:messages.m_b2a3aa602762a782")} value={label} />
                     ))
                   ) : (
-                    <span className="text-sm text-muted-foreground">No answer recorded.</span>
+                    <span className="text-sm text-muted-foreground">{uiT("ui:messages.m_85dd23047a757de7")}</span>
                   )}
                 </div>
               </div>
@@ -1500,9 +1471,7 @@ function AskUserQuestionsCard({
 
           {interaction.result?.summaryMarkdown ? (
             <div className="rounded-2xl border border-emerald-300/60 bg-emerald-50/85 p-4">
-              <div className="mb-2 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-emerald-700">
-                Submitted summary
-              </div>
+              <div className="mb-2 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-emerald-700">{uiT("ui:messages.m_6af3ea688c2d33de")}</div>
               <MarkdownBody externalReferences={externalReferences}>{interaction.result.summaryMarkdown}</MarkdownBody>
             </div>
           ) : null}
@@ -1608,21 +1577,18 @@ function RequestConfirmationResolution({
       return (
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2 text-sm leading-6 text-foreground">
-            <span className="font-medium">Confirmed</span>
+            <span className="font-medium">{uiT("ui:messages.m_fe00b67b6dd1143f")}</span>
             <RequestConfirmationTargetChip interaction={interaction} target={target} />
           </div>
           <div className="rounded-sm border border-amber-500/60 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100">
-            <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-amber-700">
-              Agent resume failed
-            </div>
+            <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-amber-700">{uiT("ui:messages.m_a456bede8c75f3c0")}</div>
             <p className="mt-1 leading-6">
               {resumeFailure.status === "retrying"
-                ? `Paperclip is retrying the agent resume after approval (attempt ${resumeFailure.attempt}/${resumeFailure.maxAttempts}).`
-                : "Paperclip needs attention before the agent can resume this approved work."}
+                ? uiT("ui:messages.m_ff68a5b418c0ebe6", { v0: (resumeFailure.attempt), v1: (resumeFailure.maxAttempts) })
+                : uiT("ui:messages.m_d517e69acc3f1776")}
             </p>
             {resumeFailure.errorCode ? (
-              <p className="mt-1 leading-6">
-                Latest cause: <code className="font-mono text-(length:--text-micro)">{resumeFailure.errorCode}</code>
+              <p className="mt-1 leading-6">{uiT("ui:messages.m_96dc286e65687af1")}<code className="font-mono text-(length:--text-micro)">{resumeFailure.errorCode}</code>
               </p>
             ) : null}
           </div>
@@ -1631,7 +1597,7 @@ function RequestConfirmationResolution({
     }
     return (
       <div className="flex flex-wrap items-center gap-2 text-sm leading-6 text-foreground">
-        <span className="font-medium">Confirmed</span>
+        <span className="font-medium">{uiT("ui:messages.m_fe00b67b6dd1143f")}</span>
         <RequestConfirmationTargetChip interaction={interaction} target={target} />
       </div>
     );
@@ -1641,7 +1607,7 @@ function RequestConfirmationResolution({
     return (
       <div className="space-y-2">
         <div className="flex flex-wrap items-center gap-2 text-sm leading-6 text-foreground">
-          <span className="font-medium">Declined</span>
+          <span className="font-medium">{uiT("ui:messages.m_dce083a2c47ffdc4")}</span>
           <RequestConfirmationTargetChip interaction={interaction} target={target} />
         </div>
         {interaction.result?.reason ? (
@@ -1660,7 +1626,7 @@ function RequestConfirmationResolution({
     // and no duplicated reason text.
     return (
       <div className="flex flex-wrap items-center gap-2 text-sm leading-6 text-foreground">
-        <span className="font-medium">Withdrawn</span>
+        <span className="font-medium">{uiT("ui:messages.m_00c0b03fcfa2ac02")}</span>
         <RequestConfirmationTargetChip interaction={interaction} target={target} />
       </div>
     );
@@ -1680,19 +1646,19 @@ function RequestConfirmationResolution({
          */}
         {expiredByIssueClosed ? null : (
           <div className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-amber-700">
-            {expiredByComment ? "Expired by comment" : "Expired by target change"}
+            {expiredByComment ? uiT("ui:messages.m_2261bc69df12dcbd") : uiT("ui:messages.m_29b61c07a1af4430")}
           </div>
         )}
         <p className="leading-6">
           {expiredByComment
-            ? "A board comment superseded this confirmation before it was resolved."
+            ? uiT("ui:messages.m_93bcdf36fb064b5b")
             : expiredByIssueClosed
-              ? "This confirmation expired automatically when the issue reached a terminal state."
-              : "The requested target changed before this confirmation was resolved."}
+              ? uiT("ui:messages.m_d9d1a93282983a4b")
+              : uiT("ui:messages.m_45202d1a0937c682")}
         </p>
         {expiredByComment && interaction.result?.commentId ? (
           <Button asChild size="sm" variant="ghost" className="h-7 px-2 text-amber-950 hover:bg-amber-500/15 dark:text-amber-50">
-            <a href={`#comment-${interaction.result.commentId}`}>Jump to comment</a>
+            <a href={`#comment-${interaction.result.commentId}`}>{uiT("ui:messages.m_c8799fd3b3b2fed8")}</a>
           </Button>
         ) : null}
         {expiredByTargetChange ? (
@@ -1715,9 +1681,7 @@ function RequestConfirmationResolution({
 
   if (interaction.status === "failed") {
     return (
-      <p className="text-sm leading-6 text-muted-foreground">
-        This request could not be resolved. Try again or create a new request.
-      </p>
+      <p className="text-sm leading-6 text-muted-foreground">{uiT("ui:messages.m_7056ad01b4c11aa6")}</p>
     );
   }
 
@@ -1754,14 +1718,14 @@ function ToolActionResolution({
   const status = <>
     <Icon className={cn("h-3.5 w-3.5 shrink-0", state === "running" && "animate-spin", state === "failed" && "text-destructive")} />
     {labels[state]}
-    {result?.rememberedAction ? " · Always allowed" : ""}
+    {result?.rememberedAction ? uiT("ui:messages.m_b2f63ebe84ae46f3") : ""}
   </>;
   return (
     <div className="space-y-1 text-sm text-muted-foreground" aria-live="polite">
       {output ? (
         <Collapsible open={resultOpen} onOpenChange={setResultOpen}>
           <CollapsibleTrigger asChild>
-            <button type="button" className="flex items-center gap-1.5 rounded-sm hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={resultOpen ? "Hide result details" : "Show result details"}>
+            <button type="button" className="flex items-center gap-1.5 rounded-sm hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={resultOpen ? uiT("ui:messages.m_1ff4e49e4fd49c0e") : uiT("ui:messages.m_68254305e7a9ea7d")}>
               {status}<ChevronDown className={cn("h-3 w-3", resultOpen && "rotate-180")} />
             </button>
           </CollapsibleTrigger>
@@ -1772,7 +1736,7 @@ function ToolActionResolution({
       ) : <p className="flex items-center gap-1.5">{status}</p>}
       {detail ? <p className={cn("break-words", state === "failed" && "text-destructive")}>{detail}</p> : null}
       {state === "executed" && result?.resultHref?.trim() ? (
-        <a className="inline-flex items-center gap-1 underline underline-offset-4 hover:text-foreground" href={result.resultHref} target="_blank" rel="noreferrer">View result<ExternalLink className="h-3 w-3" /></a>
+        <a className="inline-flex items-center gap-1 underline underline-offset-4 hover:text-foreground" href={result.resultHref} target="_blank" rel="noreferrer">{uiT("ui:messages.m_fdb7eafd12ba788b")}<ExternalLink className="h-3 w-3" /></a>
       ) : null}
     </div>
   );
@@ -1832,23 +1796,21 @@ function RequestToolActionCard({
         <DecisionCardFooter leading={footerSlot} className="mt-3">
           <div className={cn(!footerSlot && "mt-3", "flex flex-wrap items-center justify-end gap-2")}>
           <Button size="sm" variant="ghost" disabled={!onRejectInteraction || working !== null} onClick={() => void decide("reject")}>
-            {working === "reject" ? "Declining…" : "Decline"}
+            {working === "reject" ? uiT("ui:messages.m_fb03c72b9ced6a80") : uiT("ui:messages.m_a2d285b352873457")}
           </Button>
-          <div className="inline-flex" role="group" aria-label="Approve request">
+          <div className="inline-flex" role="group" aria-label={uiT("ui:messages.m_9ed200aeb78c5b9b")}>
             <Button size="sm" variant={variant} className={payload.rememberActionScope ? "rounded-r-none" : undefined} disabled={!onAcceptInteraction || working !== null} onClick={() => void decide("accept")}>
-              {working === "accept" || working === "always" ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />{working === "always" ? "Saving…" : "Approving…"}</> : "Approve & run"}
+              {working === "accept" || working === "always" ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />{working === "always" ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_e99dcb0a97a2320d")}</> : uiT("ui:messages.m_e31adde562aa3470")}
             </Button>
             {payload.rememberActionScope ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size="icon-sm" variant={variant} className="rounded-l-none border-l border-background/30" aria-label="Approval options" disabled={!onAcceptInteraction || working !== null}>
+                  <Button size="icon-sm" variant={variant} className="rounded-l-none border-l border-background/30" aria-label={uiT("ui:messages.m_b8cd0e4b744cdfb7")} disabled={!onAcceptInteraction || working !== null}>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onSelect={() => void decide("always")} title={payload.rememberActionScope} aria-description={payload.rememberActionScope}>
-                    Always allow
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => void decide("always")} title={payload.rememberActionScope} aria-description={payload.rememberActionScope}>{uiT("ui:messages.m_977618bd8bc7eef4")}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : null}
@@ -1887,7 +1849,7 @@ function secretProposalStatusClasses(state: SecretProposalCardState) {
     return {
       shell: "border-2 border-red-500/80 bg-transparent",
       badge: "border-red-500/60 bg-red-500/10 text-red-900 dark:bg-red-500/15 dark:text-red-100",
-      label: "FAILED",
+      label: uiT("ui:messages.m_02bd349299173f7f"),
       Icon: XCircle,
     };
   }
@@ -1909,9 +1871,7 @@ function SecretProposalIdentityHeader({
         <KeyRound className="h-5 w-5" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-base font-bold leading-tight text-foreground">
-          Bind an existing secret
-        </div>
+        <div className="text-base font-bold leading-tight text-foreground">{uiT("ui:messages.m_2aea300f8bec71c0")}</div>
       </div>
     </div>
   );
@@ -1925,21 +1885,15 @@ function SecretProposalDetails({
   return (
     <dl className="grid gap-3 rounded-sm border border-border/70 bg-muted/30 p-3 sm:grid-cols-2">
       <div className="min-w-0 space-y-1">
-        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-          Source secret
-        </dt>
+        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_60e1f18db6c8a297")}</dt>
         <dd className="truncate text-sm font-medium text-foreground">{payload.sourceSecretLabel}</dd>
       </div>
       <div className="min-w-0 space-y-1">
-        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-          Target agent
-        </dt>
+        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_d539091489783f89")}</dt>
         <dd className="truncate text-sm font-medium text-foreground">{payload.targetAgentName}</dd>
       </div>
       <div className="min-w-0 space-y-1 sm:col-span-2">
-        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-          New config path
-        </dt>
+        <dt className="text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_be59ea68894f6302")}</dt>
         <dd className="break-all font-mono text-sm text-foreground">{payload.configPath}</dd>
       </div>
     </dl>
@@ -1968,10 +1922,8 @@ function SecretProposalResolution({
       <div aria-live="polite" className="flex items-start gap-2 rounded-sm border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100">
         <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin" />
         <div>
-          <div className="font-medium">Approved by {who} — creating the binding</div>
-          <p className="mt-1 text-amber-900/80 dark:text-amber-100/80">
-            Paperclip is re-checking authority and the proposal snapshot before writing.
-          </p>
+          <div className="font-medium">{uiT("ui:messages.m_17923f10b195ab78")}{who}{uiT("ui:messages.m_0a5d873cf74d88f3")}</div>
+          <p className="mt-1 text-amber-900/80 dark:text-amber-100/80">{uiT("ui:messages.m_5117fae9ab1d3182")}</p>
         </div>
       </div>
     );
@@ -1982,9 +1934,8 @@ function SecretProposalResolution({
       <div aria-live="polite" className="flex items-start gap-2 rounded-sm border border-green-500/50 bg-green-500/10 px-4 py-3 text-sm text-green-900 dark:text-green-100">
         <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
-          <div className="font-medium">Binding created · approved by {who}</div>
-          <p className="mt-1 text-green-900/80 dark:text-green-100/80">
-            The target agent can now use the proposed config path{when ? ` · ${when}` : ""}.
+          <div className="font-medium">{uiT("ui:messages.m_263f6218b09473de")}{who}</div>
+          <p className="mt-1 text-green-900/80 dark:text-green-100/80">{uiT("ui:messages.m_c91e5f787cc690ae")}{when ? ` · ${when}` : ""}.
           </p>
         </div>
       </div>
@@ -1998,19 +1949,13 @@ function SecretProposalResolution({
         <div className="flex items-start gap-2">
           <XCircle className="mt-0.5 h-4 w-4 shrink-0" />
           <div>
-            <div className="font-semibold uppercase tracking-(--tracking-eyebrow)">
-              FAILED · binding was not created
-            </div>
-            <p className="mt-1 text-red-900/80 dark:text-red-100/80">
-              The request was accepted, but execution failed closed. No secret value was exposed.
-            </p>
+            <div className="font-semibold uppercase tracking-(--tracking-eyebrow)">{uiT("ui:messages.m_0c4d9095e29b66dd")}</div>
+            <p className="mt-1 text-red-900/80 dark:text-red-100/80">{uiT("ui:messages.m_2b88620383f3113d")}</p>
           </div>
         </div>
         {errorCode ? (
           <div className="rounded-sm border border-red-500/50 bg-background/60 px-3 py-2">
-            <span className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow)">
-              Error code
-            </span>{" "}
+            <span className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow)">{uiT("ui:messages.m_0570b384c3cecf81")}</span>{" "}
             <code className="font-mono text-foreground">{errorCode}</code>
           </div>
         ) : null}
@@ -2025,8 +1970,8 @@ function SecretProposalResolution({
         <div className="flex items-start gap-2">
           <XCircle className="mt-0.5 h-4 w-4 shrink-0" />
           <div>
-            <div className="font-medium">Rejected by {who}</div>
-            <p className="mt-1 text-red-900/80 dark:text-red-100/80">The binding was not created.</p>
+            <div className="font-medium">{uiT("ui:messages.m_66c88919768b5e49")}{who}</div>
+            <p className="mt-1 text-red-900/80 dark:text-red-100/80">{uiT("ui:messages.m_383649952b47b11a")}</p>
           </div>
         </div>
         {reason ? (
@@ -2042,8 +1987,8 @@ function SecretProposalResolution({
     <div className="flex items-start gap-2 rounded-sm border border-border bg-muted/50 px-4 py-3 text-sm text-muted-foreground">
       <Clock className="mt-0.5 h-4 w-4 shrink-0" />
       <div>
-        <div className="font-medium text-foreground">Proposal expired{when ? ` · ${when}` : ""}</div>
-        <p className="mt-1">The binding was not created. A fresh proposal is required.</p>
+        <div className="font-medium text-foreground">{uiT("ui:messages.m_63284dbbf1a312e6")}{when ? ` · ${when}` : ""}</div>
+        <p className="mt-1">{uiT("ui:messages.m_7676878454063aec")}</p>
       </div>
     </div>
   );
@@ -2110,8 +2055,7 @@ function RequestSecretProposalCard({
       <SecretProposalDetails payload={payload} />
       <ProposalJustification justification={payload.justification} />
       <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
-        <Clock className="h-3.5 w-3.5" />
-        Expires {formatDateTime(payload.expiresAt)}
+        <Clock className="h-3.5 w-3.5" />{uiT("ui:messages.m_d970e4fd1080c607")}{formatDateTime(payload.expiresAt)}
       </div>
 
       {isPending ? (
@@ -2266,9 +2210,7 @@ function ConfirmationActionRow({
           >
             {working === "accept" ? (
               <>
-                <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                Approving…
-              </>
+                <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_e99dcb0a97a2320d")}</>
             ) : (
               approveLabel
             )}
@@ -2297,9 +2239,7 @@ function ConfirmationActionRow({
             >
               {working === "reject" && !revising ? (
                 <>
-                  <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                  Rejecting…
-                </>
+                  <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_09868524d9262e41")}</>
               ) : (
                 rejectLabel
               )}
@@ -2321,7 +2261,7 @@ function ConfirmationActionRow({
             )}
           />
           {attempted && reasonMissing ? (
-            <p className="text-xs text-destructive">Add a note describing the changes you want.</p>
+            <p className="text-xs text-destructive">{uiT("ui:messages.m_d5ef6ba97db8fdf1")}</p>
           ) : null}
           {revisePanelChildren}
           <DecisionCardFooter leading={footerSlot}>
@@ -2334,9 +2274,7 @@ function ConfirmationActionRow({
                   setRevising(false);
                   setAttempted(false);
                 }}
-              >
-                Cancel
-              </Button>
+              >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button
                 size="sm"
                 variant="outline"
@@ -2345,11 +2283,9 @@ function ConfirmationActionRow({
               >
                 {working === "reject" ? (
                   <>
-                    <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                    Sending…
-                  </>
+                    <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_b8ed5279e897be5d")}</>
                 ) : (
-                  "Send revision"
+                  uiT("ui:messages.m_953cc98c1bd59e81")
                 )}
               </Button>
             </div>
@@ -2376,7 +2312,7 @@ function connectionAuthorizationStatusClasses(
       return {
         shell: "border-2 border-sky-500/70 bg-transparent",
         badge: "border-sky-500/60 bg-sky-500/10 text-sky-900 dark:bg-sky-500/15 dark:text-sky-100",
-        label: "Action required",
+        label: uiT("ui:messages.m_adf69e75cc7d3c9d"),
         Icon: KeyRound,
       };
     case "waiting":
@@ -2385,14 +2321,14 @@ function connectionAuthorizationStatusClasses(
       return {
         shell: "border-border bg-transparent",
         badge: "border-border bg-muted/60 text-muted-foreground",
-        label: `Waiting for ${copy.addresseeLabel}`,
+        label: uiT("ui:messages.m_499293feda7dfd2d", { v0: (copy.addresseeLabel) }),
         Icon: Clock,
       };
     case "connected":
       return {
         shell: "border-2 border-green-500/80 bg-transparent",
         badge: "border-green-500/60 bg-green-500/10 text-green-900 dark:bg-green-500/15 dark:text-green-100",
-        label: `${copy.providerName} connected`,
+        label: uiT("ui:messages.m_db4ed330c9ec2ce6", { v0: (copy.providerName) }),
         Icon: CheckCircle2,
       };
     case "declined":
@@ -2407,7 +2343,7 @@ function connectionAuthorizationStatusClasses(
       return {
         shell: "border-border bg-transparent",
         badge: "border-border bg-muted/60 text-muted-foreground",
-        label: "Authorization expired",
+        label: uiT("ui:messages.m_92b4263f21419cf4"),
         Icon: CircleDashed,
       };
   }
@@ -2520,8 +2456,7 @@ function RequestConnectionAuthorizationCard({
                 className="grid grid-cols-1 items-stretch gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-end"
               >
                 <Button asChild size="sm" variant="cta" className="w-full sm:w-auto">
-                  <a href={href} target="_blank" rel="noreferrer">
-                    Connect {providerName}
+                  <a href={href} target="_blank" rel="noreferrer">{uiT("ui:messages.m_3b887c9884f2c97a")}{providerName}
                     <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
                   </a>
                 </Button>
@@ -2534,11 +2469,9 @@ function RequestConnectionAuthorizationCard({
                 >
                   {working ? (
                     <>
-                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Saving…
-                    </>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_23e39291d6135814")}</>
                   ) : (
-                    "Not now"
+                    uiT("ui:messages.m_a0e63d7c7125d29a")
                   )}
                 </Button>
               </div>
@@ -2568,14 +2501,13 @@ function RequestConnectionAuthorizationCard({
           testId="connection-authorization-connected"
           headline={`${providerName} connected`}
           detail={
-            <>
-              Connected by{" "}
+            <>{uiT("ui:messages.m_9952ce521b785711")}{" "}
               <span className="font-medium text-foreground">
                 {/* "You" is display-cased for a badge; this is mid-sentence. */}
-                {(resolvedByLabel ?? addresseeLabel) === "You" ? "you" : resolvedByLabel ?? addresseeLabel}
+                {(resolvedByLabel ?? addresseeLabel) === "You" ? uiT("ui:messages.m_bb0347a468d97e98") : resolvedByLabel ?? addresseeLabel}
               </span>
               {resolvedByAgent ? <ResolvedByAgentChip /> : null}
-              {interaction.resolvedAt ? ` on ${formatDateTime(interaction.resolvedAt)}` : ""}
+              {interaction.resolvedAt ? uiT("ui:messages.m_4c6ed53c0a4cf54e", { v0: (formatDateTime(interaction.resolvedAt)) }) : ""}
             </>
           }
         />
@@ -2688,7 +2620,7 @@ function RequestConfirmationCard({
       }
       if (uploaded.length > 0) setShots((current) => [...current, ...uploaded]);
     } catch {
-      setUploadError("Couldn't upload that image. Try again.");
+      setUploadError(uiT("ui:messages.m_0764ae5ab3086410"));
     } finally {
       setUploading(false);
     }
@@ -2737,9 +2669,7 @@ function RequestConfirmationCard({
           {interaction.payload.detailsMarkdown ? (
             compact ? <details className="group/confirmation-details">
               <summary className="flex cursor-pointer list-none items-center gap-1 rounded-sm text-xs font-medium text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                <ChevronRight aria-hidden className="h-3.5 w-3.5 transition-transform group-open/confirmation-details:rotate-90 motion-reduce:transition-none" />
-                Details
-              </summary>
+                <ChevronRight aria-hidden className="h-3.5 w-3.5 transition-transform group-open/confirmation-details:rotate-90 motion-reduce:transition-none" />{uiT("ui:messages.m_45989de49fb7f66d")}</summary>
               <div className="mt-2 rounded-sm bg-muted/40 px-2.5 py-2 text-sm text-muted-foreground">
                 <MarkdownBody externalReferences={externalReferences}>{interaction.payload.detailsMarkdown}</MarkdownBody>
               </div>
@@ -2791,7 +2721,7 @@ function RequestConfirmationCard({
                         />
                         <button
                           type="button"
-                          aria-label={`Remove ${shot.name}`}
+                          aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (shot.name) })}
                           className="absolute right-0.5 top-0.5 rounded-full bg-background/90 p-0.5 text-foreground opacity-0 transition-opacity group-hover:opacity-100"
                           onClick={() =>
                             setShots((current) => current.filter((_, i) => i !== index))
@@ -2823,14 +2753,10 @@ function RequestConfirmationCard({
                 >
                   {uploading ? (
                     <>
-                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Uploading...
-                    </>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />{uiT("ui:messages.m_72cb29c90ccd8361")}</>
                   ) : (
                     <>
-                      <ImagePlus className="mr-2 h-3.5 w-3.5" />
-                      Attach screenshots
-                    </>
+                      <ImagePlus className="mr-2 h-3.5 w-3.5" />{uiT("ui:messages.m_d0f8e01df872f862")}</>
                   )}
                 </Button>
                 {uploadError ? (
@@ -2877,15 +2803,15 @@ function RequestCheckboxConfirmationResolution({
         <div className="flex flex-wrap items-center gap-2 text-sm leading-6 text-foreground">
           <span className="font-medium">
             {selectedCount === 0
-              ? "Confirmed with no options selected"
-              : `Confirmed ${selectedCount} of ${totalOptions} ${totalOptions === 1 ? "option" : "options"}`}
+              ? uiT("ui:messages.m_1962f778e51c0325")
+              : uiT("ui:messages.m_6e1d685a26f2eaaf", { v0: (selectedCount), v1: (totalOptions), v2: (totalOptions === 1 ? uiT("ui:messages.m_a11a75e0feeecc1a") : uiT("ui:messages.m_a793ab8fcc2afce5")) })}
           </span>
           <RequestConfirmationTargetChip interaction={interaction} target={target} />
         </div>
         {visibleLabels.length > 0 ? (
           <div className="flex flex-wrap gap-1.5">
             {visibleLabels.map((label, index) => (
-              <TaskField key={`${label}-${index}`} label="Selected" value={label} />
+              <TaskField key={`${label}-${index}`} label={uiT("ui:messages.m_57fd7a0cf33f2666")} value={label} />
             ))}
             {hasHiddenLabels ? (
               <button
@@ -2897,7 +2823,7 @@ function RequestCheckboxConfirmationResolution({
                 )}
                 aria-expanded={expanded}
               >
-                {expanded ? "Show less" : `+${hiddenCount} more`}
+                {expanded ? uiT("ui:messages.m_94ea9b1d33a02975") : uiT("ui:messages.m_8769eb5def333374", { v0: (hiddenCount) })}
               </button>
             ) : null}
           </div>
@@ -2916,9 +2842,7 @@ function RequestCheckboxConfirmationResolution({
 
   if (interaction.status === "failed") {
     return (
-      <p className="text-sm leading-6 text-muted-foreground">
-        This request could not be resolved. Try again or create a new request.
-      </p>
+      <p className="text-sm leading-6 text-muted-foreground">{uiT("ui:messages.m_7056ad01b4c11aa6")}</p>
     );
   }
 
@@ -3138,23 +3062,19 @@ function RequestCheckboxConfirmationCard({
               variant="ghost"
               disabled={working !== null || selectedCount === totalOptions || (maxSelected != null && selectedCount >= maxSelected)}
               onClick={handleSelectAll}
-            >
-              Select all
-            </Button>
+            >{uiT("ui:messages.m_1fc9a387654d410f")}</Button>
             <Button
               size="sm"
               variant="ghost"
               disabled={working !== null || selectedCount === 0}
               onClick={handleClearSelection}
-            >
-              Clear selection
-            </Button>
+            >{uiT("ui:messages.m_cea4d2e010b8fd52")}</Button>
           </div>
         </div>
 
         <div
           role="group"
-          aria-label="Selectable options"
+          aria-label={uiT("ui:messages.m_aaabfe0b43a1950b")}
           className="max-h-80 overflow-y-auto rounded-sm border border-border/70"
         >
           {options.map((option) => {
@@ -3247,9 +3167,7 @@ function ItemVerdictDeepLink({ item, interaction }: { item: RequestItemVerdictsI
   const className =
     "inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
   const label = (
-    <>
-      Open
-      {isInternal ? <ArrowUpRight className="h-3 w-3" aria-hidden /> : <ExternalLink className="h-3 w-3" aria-hidden />}
+    <>{uiT("ui:messages.m_ed077f3d8125d60d")}{isInternal ? <ArrowUpRight className="h-3 w-3" aria-hidden /> : <ExternalLink className="h-3 w-3" aria-hidden />}
     </>
   );
   if (isInternal) {
@@ -3282,7 +3200,7 @@ function ItemVerdictSegmentedControl({
   return (
     <div
       role="group"
-      aria-label="Choose a verdict"
+      aria-label={uiT("ui:messages.m_849de4eb8d64c99c")}
       className="flex shrink-0 flex-wrap items-center gap-2"
     >
       {verdicts.map((verdict) => {
@@ -3301,7 +3219,7 @@ function ItemVerdictSegmentedControl({
             variant={variant}
             disabled={disabled}
             aria-pressed={active}
-            aria-label={`${VERDICT_LABEL[verdict]} this item`}
+            aria-label={uiT("ui:messages.m_fb77b19d01e3933b", { v0: (VERDICT_LABEL[verdict]) })}
             className="min-h-11 min-w-24"
             onClick={() => onSelect(verdict)}
             data-verdict={verdict}
@@ -3483,22 +3401,20 @@ function RequestItemVerdictsCard({
           <div className="flex items-center gap-2 font-medium">
             <AlertTriangle className="h-4 w-4" aria-hidden />
             {interaction.result?.outcome === "superseded_by_comment"
-              ? "This review expired after a later comment."
+              ? uiT("ui:messages.m_080c089706f6ea0f")
               : interaction.result?.outcome === "stale_target"
-                ? "This review expired after the target changed."
-                : "This review expired."}
+                ? uiT("ui:messages.m_66123ea977259592")
+                : uiT("ui:messages.m_36cd0712e3aa8335")}
           </div>
           {progress.decided > 0 ? (
             <p className="mt-1 text-xs leading-5">
-              {progress.decided === 1 ? "1 item was" : `${progress.decided} items were`} already applied and cannot be
-              reverted. Remaining items were cancelled.
-            </p>
+              {progress.decided === 1 ? uiT("ui:messages.m_f4000d8ca4f0fdf5") : uiT("ui:messages.m_56aa0570f64f15fc", { v0: (progress.decided) })}{uiT("ui:messages.m_26943104fab5a2e7")}</p>
           ) : null}
         </div>
       ) : null}
 
       {/* Item list (S1/S2/S3/S4) */}
-      <ul className="space-y-2" aria-label="Items to review">
+      <ul className="space-y-2" aria-label={uiT("ui:messages.m_6cac728c6d49cabe")}>
         {items.map((item) => {
           const resolved = resolvedById.get(item.id);
           const applying = applyingItemIds.has(item.id);
@@ -3540,14 +3456,10 @@ function RequestItemVerdictsCard({
                     <VerdictConsequenceChip verdict={resolved.verdict} />
                   ) : applying ? (
                     <span className="inline-flex items-center gap-1.5 rounded-sm border border-border/70 bg-muted/40 px-2 py-0.5 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                      <Loader2 className="h-3.5 w-3.5 motion-safe:animate-spin" aria-hidden />
-                      Applying…
-                    </span>
+                      <Loader2 className="h-3.5 w-3.5 motion-safe:animate-spin" aria-hidden />{uiT("ui:messages.m_3329a9bb48b9c8d4")}</span>
                   ) : isTerminal ? (
                     <span className="inline-flex items-center gap-1 rounded-sm border border-border/70 bg-muted/30 px-2 py-0.5 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                      <CircleDashed className="h-3.5 w-3.5" aria-hidden />
-                      Not decided
-                    </span>
+                      <CircleDashed className="h-3.5 w-3.5" aria-hidden />{uiT("ui:messages.m_4fb8e6bd5ffdafb6")}</span>
                   ) : (
                     <ItemVerdictSegmentedControl
                       itemId={item.id}
@@ -3573,7 +3485,7 @@ function RequestItemVerdictsCard({
                     id={`${interaction.id}-${item.id}-reason`}
                     value={draft.reason}
                     onChange={(event) => setDraftReason(item.id, event.target.value)}
-                    placeholder="Give the agent a reason so it can act on this item."
+                    placeholder={uiT("ui:messages.m_0149096b8e353627")}
                     aria-invalid={attempted && invalidDraftIds.has(item.id)}
                     className={cn(
                       "min-h-16 bg-background text-sm",
@@ -3581,7 +3493,7 @@ function RequestItemVerdictsCard({
                     )}
                   />
                   {attempted && invalidDraftIds.has(item.id) ? (
-                    <p className="text-xs text-destructive">A reason is required to {VERDICT_LABEL[draft.verdict].toLowerCase()} this item.</p>
+                    <p className="text-xs text-destructive">{uiT("ui:messages.m_7bac9427778c2724")}{VERDICT_LABEL[draft.verdict].toLowerCase()}{uiT("ui:messages.m_1ec8bfc5c3c0c5c0")}</p>
                   ) : null}
                 </div>
               ) : null}
@@ -3595,8 +3507,7 @@ function RequestItemVerdictsCard({
         <div className="flex flex-wrap items-center gap-2 rounded-sm border border-emerald-500/50 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-900 dark:text-emerald-100">
           <CheckCircle2 className="h-4 w-4" aria-hidden />
           <span className="font-medium">
-            {progress.decided} decided · {progress.approved} approved · {progress.rejected} rejected
-            {progress.deferred > 0 ? ` · ${progress.deferred} deferred` : ""}
+            {progress.decided}{uiT("ui:messages.m_c18905f5e7ba6072")}{progress.approved}{uiT("ui:messages.m_fa552f18cd584e6c")}{progress.rejected}{uiT("ui:messages.m_76d920c4b1d2fdd5")}{progress.deferred > 0 ? uiT("ui:messages.m_45c830a8191a47ec", { v0: (progress.deferred) }) : ""}
           </span>
         </div>
       ) : null}
@@ -3607,8 +3518,8 @@ function RequestItemVerdictsCard({
           <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-3">
             <div className="text-xs text-muted-foreground">
               {draftCount > 0
-                ? `${draftCount} draft verdict${draftCount === 1 ? "" : "s"} ready to apply`
-                : "Mark verdicts, then apply them in one pass."}
+                ? uiT("ui:messages.m_846180a4202f3066", { v0: (draftCount), v1: (draftCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })
+                : uiT("ui:messages.m_881de88bc923c13d")}
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {allowBulkApprove ? (
@@ -3619,9 +3530,7 @@ function RequestItemVerdictsCard({
                   disabled={working || progress.pendingItemIds.length === 0}
                   onClick={handleApproveAll}
                 >
-                  <ThumbsUp className="h-4 w-4" aria-hidden />
-                  Approve all
-                </Button>
+                  <ThumbsUp className="h-4 w-4" aria-hidden />{uiT("ui:messages.m_ae067b6871072a45")}</Button>
               ) : null}
               <Button
                 type="button"
@@ -3633,9 +3542,7 @@ function RequestItemVerdictsCard({
               >
                 {working ? (
                   <>
-                    <Loader2 className="h-4 w-4 motion-safe:animate-spin" aria-hidden />
-                    Applying…
-                  </>
+                    <Loader2 className="h-4 w-4 motion-safe:animate-spin" aria-hidden />{uiT("ui:messages.m_3329a9bb48b9c8d4")}</>
                 ) : (
                   applyLabel
                 )}
@@ -3663,9 +3570,7 @@ function VerdictProgressBadge({
       {/* Von Restorff accent when a draft reject is missing its reason */}
       {pendingReason ? (
         <span className="inline-flex items-center gap-1 rounded-sm border border-amber-500/60 bg-amber-500/10 px-1.5 py-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow) text-amber-900 dark:text-amber-100">
-          <AlertTriangle className="h-3 w-3" aria-hidden />
-          Reason needed
-        </span>
+          <AlertTriangle className="h-3 w-3" aria-hidden />{uiT("ui:messages.m_e2d71a28dacc5d9e")}</span>
       ) : null}
       <div
         className="flex items-center gap-2"
@@ -3673,7 +3578,7 @@ function VerdictProgressBadge({
         aria-valuemin={0}
         aria-valuemax={progress.total}
         aria-valuenow={progress.decided}
-        aria-label={`${progress.decided} of ${progress.total} decided`}
+        aria-label={uiT("ui:messages.m_d95cde7cac421f2f", { v0: (progress.decided), v1: (progress.total) })}
       >
         <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
           <div
@@ -3682,8 +3587,7 @@ function VerdictProgressBadge({
           />
         </div>
         <span className="whitespace-nowrap text-xs font-medium text-muted-foreground">
-          {progress.decided} of {progress.total} decided
-        </span>
+          {progress.decided}{uiT("ui:messages.m_a4282e4b2298b90b")}{progress.total}{uiT("ui:messages.m_9c843b82f79501bd")}</span>
       </div>
     </div>
   );
@@ -3898,7 +3802,7 @@ export function IssueThreadInteractionCard({
                 <StatusIcon className={cn("h-3.5 w-3.5", iconSpin && "animate-spin")} />
                 {isSecretProposal ? (
                   <span className="flex flex-col sm:flex-row sm:items-center sm:gap-1">
-                    <span>Secret binding</span>
+                    <span>{uiT("ui:messages.m_c769362857f641b3")}</span>
                     <span className="hidden text-current/60 sm:inline">/</span>
                     <span>{statusText}</span>
                   </span>
@@ -3909,7 +3813,7 @@ export function IssueThreadInteractionCard({
                   <span>{statusText}</span>
                 ) : (
                   <>
-                    {isPlan ? "Plan" : interactionKindLabel(interaction.kind)}
+                    {isPlan ? uiT("ui:messages.m_fa8ed0bdabdd6bcb") : interactionKindLabel(interaction.kind)}
                     <span className="text-current/60">/</span>
                     {statusText}
                   </>
@@ -3923,13 +3827,10 @@ export function IssueThreadInteractionCard({
                       className="gap-1"
                       data-testid="interaction-addressee-badge"
                     >
-                      <Bot className="h-3 w-3" />
-                      For {addresseeLabel}
+                      <Bot className="h-3 w-3" />{uiT("ui:messages.m_98502e168ecfa993")}{addresseeLabel}
                     </Badge>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" className="max-w-xs text-xs">
-                    Directed to {addresseeLabel}. Agent-addressed interactions are owned by that agent and are kept out of the open organization attention feed.
-                  </TooltipContent>
+                  <TooltipContent side="bottom" className="max-w-xs text-xs">{uiT("ui:messages.m_f8fc21c15bacf45e")}{addresseeLabel}{uiT("ui:messages.m_6aabcb218e328c0b")}</TooltipContent>
                 </Tooltip>
               ) : null}
             </div>
@@ -3937,27 +3838,27 @@ export function IssueThreadInteractionCard({
             <div className="mt-3 text-lg font-bold text-foreground">
               {interaction.title
                 ?? (interaction.kind === "suggest_tasks"
-                  ? "Suggested task tree"
+                  ? uiT("ui:messages.m_7673189563a39fca")
                   : interaction.kind === "ask_user_questions"
                     // Only a human-only card is genuinely "for the operator";
                     // an open card is answerable by any teammate (PAP-17280).
                     ? interaction.payload.title
                       ?? (audience.policy === "human_only"
-                        ? "Questions for the operator"
-                        : "Questions to answer")
+                        ? uiT("ui:messages.m_09c5a86ef56d95bb")
+                        : uiT("ui:messages.m_9b3aa9589f653d3f"))
                   : interaction.kind === "request_checkbox_confirmation"
-                    ? "Checkbox confirmation requested"
+                    ? uiT("ui:messages.m_afc8475cf2354609")
                     : isSecretProposal
-                      ? "Secret binding requested"
+                      ? uiT("ui:messages.m_c2a0831be09d67a5")
                     : connectionAuthorization
-                      ? `Connect your ${connectionAuthorization.providerName} to continue`
+                      ? uiT("ui:messages.m_d0ded5faa54406e7", { v0: (connectionAuthorization.providerName) })
                     : isToolAction
-                      ? "Tool approval requested"
+                      ? uiT("ui:messages.m_76497c62df975fb0")
                       : interaction.kind === "request_item_verdicts"
-                        ? "Review these items"
+                        ? uiT("ui:messages.m_2309d9300f709e31")
                         : isPlan
-                          ? "Plan review"
-                          : "Confirmation requested")}
+                          ? uiT("ui:messages.m_649e8b225605125a")
+                          : uiT("ui:messages.m_92e16918fc3e80aa"))}
             </div>
             {/* A connection-authorization card composes its own single body
                 below, because the closing sentence depends on whether the
@@ -3977,11 +3878,10 @@ export function IssueThreadInteractionCard({
             <TooltipTrigger asChild>
               <div className="rounded-sm border border-border/70 bg-transparent px-3 py-2 text-right text-xs text-muted-foreground">
                 <div className="font-medium text-foreground">{formatShortDate(interaction.createdAt)}</div>
-                <div>proposed by {createdByLabel}</div>
+                <div>{uiT("ui:messages.m_b1fadb1b15f440f4")}{createdByLabel}</div>
               </div>
             </TooltipTrigger>
-            <TooltipContent side="bottom" className="text-xs">
-              Created {formatDateTime(interaction.createdAt)}
+            <TooltipContent side="bottom" className="text-xs">{uiT("ui:messages.m_f21b805903d72219")}{formatDateTime(interaction.createdAt)}
             </TooltipContent>
           </Tooltip>
         </div>}
@@ -4076,11 +3976,10 @@ export function IssueThreadInteractionCard({
             className="mt-4 border-t border-border/60 pt-3 text-xs text-muted-foreground"
             data-testid="interaction-withdrawn-footer"
           >
-            <div>
-              Withdrawn by{" "}
-              <span className="font-medium text-foreground">{resolvedByLabel ?? "an agent"}</span>
+            <div>{uiT("ui:messages.m_305109dc492182d2")}{" "}
+              <span className="font-medium text-foreground">{resolvedByLabel ?? uiT("ui:messages.m_647936ec3e40783d")}</span>
               {resolvedByAgent ? <ResolvedByAgentChip /> : null}
-              {interaction.resolvedAt ? ` on ${formatShortDate(interaction.resolvedAt)}` : ""}
+              {interaction.resolvedAt ? uiT("ui:messages.m_4c6ed53c0a4cf54e", { v0: (formatShortDate(interaction.resolvedAt)) }) : ""}
             </div>
             {adminReason ? (
               <div className="mt-1 italic text-muted-foreground/90">"{adminReason}"</div>
@@ -4102,10 +4001,9 @@ export function IssueThreadInteractionCard({
           <div
             className="mt-4 flex flex-wrap items-center gap-x-1 gap-y-0.5 border-t border-border/60 pt-3 text-xs text-muted-foreground"
             data-testid="interaction-resolved-footer"
-          >
-            Resolved by <span className="font-medium text-foreground">{resolvedByLabel}</span>
+          >{uiT("ui:messages.m_55b02ae184233b41")}<span className="font-medium text-foreground">{resolvedByLabel}</span>
             {resolvedByAgent ? <ResolvedByAgentChip /> : null}
-            {interaction.resolvedAt ? ` on ${formatShortDate(interaction.resolvedAt)}` : ""}
+            {interaction.resolvedAt ? uiT("ui:messages.m_4c6ed53c0a4cf54e", { v0: (formatShortDate(interaction.resolvedAt)) }) : ""}
           </div>
         ) : null}
       </div>
@@ -4126,13 +4024,9 @@ function ResolvedByAgentChip() {
           className="ml-1 gap-1 border-indigo-500/50 py-0 text-[length:--text-micro] text-indigo-700 dark:text-indigo-200"
           data-testid="interaction-resolved-by-agent-chip"
         >
-          <Bot className="h-3 w-3" />
-          Agent
-        </Badge>
+          <Bot className="h-3 w-3" />{uiT("ui:messages.m_11b39c93777e8f1f")}</Badge>
       </TooltipTrigger>
-      <TooltipContent side="bottom" className="max-w-xs text-xs">
-        Resolved by an agent under the organization's interaction governance policy — audit-distinct from a human board resolution.
-      </TooltipContent>
+      <TooltipContent side="bottom" className="max-w-xs text-xs">{uiT("ui:messages.m_a511fb1064bcb2a0")}</TooltipContent>
     </Tooltip>
   );
 }

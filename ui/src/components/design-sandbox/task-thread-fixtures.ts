@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { revealWordProgress } from "./word-reveal";
 import type { HeartbeatRunEvent } from "@paperclipai/shared";
 import type { TranscriptEntry } from "../../adapters";
@@ -79,7 +80,7 @@ const permission = (status: "pending" | "resolved" | "expired" | "cancelled", in
   kind: "runtime_request", ts: ts(15), requestId: `preview-${input ? "question" : "permission"}`, requestKind: input ? "elicitation" : "command_approval",
   turnId: "synthetic-turn", requestType: input ? "input" : "permission", status,
   prompt: input ? "Which reconnect behavior should I verify?" : "Allow running the focused reconnect tests?",
-  choices: input ? [] : [{ key: "accept", label: "Allow once" }, { key: "decline", label: "Deny" }], fields: [],
+  choices: input ? [] : [{ key: "accept", label: "Allow once" }, { key: "decline", label: uiT("ui:messages.m_05a2d7332eb9d8bf") }], fields: [],
   questionSet: input ? { schema: "paperclip.question_set.v1", title: "Choose a reconnect policy", questions: [{
     id: "policy", prompt: "Which reconnect policy should I test?", required: true, answerMode: "single_select",
     options: [{ id: "bounded", label: "Bounded retry", description: "Stop after three attempts." }, { id: "manual", label: "Manual recovery", description: "Ask before reconnecting." }],
@@ -158,7 +159,7 @@ export const THREAD_PREVIEW_ALIASES: Record<string, string> = {
  * uses units of --motion-sandbox-playback-step; no agent/provider is contacted. */
 export const CONVERSATION_PLAYBACK_STAGES = [
   { label: "Starting", units: 0.25 },
-  { label: "Thinking", units: 0.5 },
+  { label: uiT("ui:messages.m_a20d12c5e9c428c3"), units: 0.5 },
   { label: "Commentary", units: 0.5 },
   { label: "Reading files", units: 0.5 },
   { label: "Reviewing the component list", units: 0.5 },

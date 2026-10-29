@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ArrowUpRight, Check, MessageSquare, X } from "lucide-react";
 import type { IssueThreadInteraction } from "@/lib/issue-thread-interactions";
 import { Link } from "@/lib/router";
@@ -9,7 +10,7 @@ export function CoordinatorInteractionReceipt({ interaction }: { interaction: Is
   const target = "target" in interaction.payload ? interaction.payload.target : null;
   const accepted = interaction.status === "accepted";
   const answered = interaction.status === "answered";
-  const label = answered ? "Answers recorded" : accepted ? "Approved" : interaction.status === "rejected" ? "Changes requested" : interaction.status.replaceAll("_", " ");
+  const label = answered ? "Answers recorded" : accepted ? uiT("ui:messages.m_87b42e40c2a290e0") : interaction.status === "rejected" ? uiT("ui:messages.m_10a92a8ad3ee5891") : interaction.status.replaceAll("_", " ");
   const Icon = answered ? MessageSquare : accepted ? Check : X;
   const answerAnchor = `comment-interaction-response:${interaction.id}`;
   const href = answered ? `#${answerAnchor}` : decisionReceiptHref({ issueHref: `/issues/${interaction.issueId}`, interactionId: interaction.id, target });

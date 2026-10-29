@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { ArrowUp, AtSign, Check, ChevronDown, ChevronRight, Copy, Plus, ThumbsDown, ThumbsUp } from "lucide-react";
 import { StatusIcon } from "@/components/StatusIcon";
@@ -64,7 +65,7 @@ export function MessageFooter({ timestamp }: { timestamp: string }) {
     <div className="flex w-full items-center justify-between gap-2 px-1">
       <span className="text-(length:--text-micro) text-muted-foreground">{timestamp}</span>
       <div className="flex items-center gap-0.5">
-        <button type="button" className={ACTION} aria-label="Copy message">
+        <button type="button" className={ACTION} aria-label={uiT("ui:messages.m_457efe538b254dfb")}>
           <Copy className="h-3.5 w-3.5" />
         </button>
         <button type="button" className={ACTION} aria-label="Good response">
@@ -83,7 +84,7 @@ export function WorkedRow() {
   return (
     <button type="button" aria-expanded={false} className="group flex w-full items-center gap-2 px-1 text-muted-foreground transition-colors hover:text-foreground py-0.5 text-xs min-w-0">
       <Check className="h-3.5 w-3.5 shrink-0" />
-      <span>Worked</span>
+      <span>{uiT("ui:messages.m_e7f93aad5026eeaf")}</span>
       <ChevronRight className="h-3 w-3 shrink-0 transition-transform" aria-hidden />
     </button>
   );

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, useId, type CSSProperties, type ReactNode } from "react";
 import { DndContext, PointerSensor, closestCenter, pointerWithin, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy, useSortable } from "@dnd-kit/sortable";
@@ -153,10 +154,10 @@ export function TaskListColumnSettings({ visibleColumns, onVisibleColumnsChange,
   return (
     <FlyoutAppearanceProvider><DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button type="button" variant="ghost" size="icon-xs" className="task-list-settings-trigger" aria-label="Columns"><Ellipsis aria-hidden /></Button>
+        <Button type="button" variant="ghost" size="icon-xs" className="task-list-settings-trigger" aria-label={uiT("ui:messages.m_53aade77cd69a77b")}><Ellipsis aria-hidden /></Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="task-list-options" aria-label="Columns">
-        <DropdownMenuLabel asChild><FlyoutHeader className="task-list-options-heading">Columns</FlyoutHeader></DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="task-list-options" aria-label={uiT("ui:messages.m_53aade77cd69a77b")}>
+        <DropdownMenuLabel asChild><FlyoutHeader className="task-list-options-heading">{uiT("ui:messages.m_53aade77cd69a77b")}</FlyoutHeader></DropdownMenuLabel>
         <FlyoutOptions className="task-list-options-items">
           {order.map(id => (
             <DropdownMenuCheckboxItem
@@ -170,7 +171,7 @@ export function TaskListColumnSettings({ visibleColumns, onVisibleColumnsChange,
               {taskListColumns.find(column => column.id === id)!.label}
             </DropdownMenuCheckboxItem>
           ))}
-          <DropdownMenuItem className="task-list-options-reset" onSelect={event => { event.preventDefault(); onColumnOrderChange?.(allTaskListColumns); onVisibleColumnsChange(defaultTaskListColumns); onResetDefaults?.(); }}>Reset defaults</DropdownMenuItem>
+          <DropdownMenuItem className="task-list-options-reset" onSelect={event => { event.preventDefault(); onColumnOrderChange?.(allTaskListColumns); onVisibleColumnsChange(defaultTaskListColumns); onResetDefaults?.(); }}>{uiT("ui:messages.m_4542d49a520543f9")}</DropdownMenuItem>
         </FlyoutOptions>
       </DropdownMenuContent>
     </DropdownMenu></FlyoutAppearanceProvider>

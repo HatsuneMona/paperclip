@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { StepHeader } from "./ConnectionSetupHeader";
 import { GoogleWorkspaceServicesDialog } from "./GoogleWorkspaceServices";
 import type { GoogleWorkspaceServiceSelection } from "@paperclipai/shared";
@@ -612,7 +613,7 @@ export function ConnectionSetupFlow(props: ConnectionSetupFlowProps = {}) {
   const provider = source || existing.data?.config?.sourceTemplateKey;
   const method = searchParams.get("method") || existing.data?.config?.connectionMethodKey;
   if (lookup && existing.isPending) return <p className="p-6 text-sm text-muted-foreground">Loading connection…</p>;
-  if (lookup && existing.isError) return <div role="alert" className="space-y-3 p-6"><p>Could not load this connection. Your saved access and credentials have not changed.</p><Button variant="outline" onClick={() => void existing.refetch()}>Try again</Button></div>;
+  if (lookup && existing.isError) return <div role="alert" className="space-y-3 p-6"><p>Could not load this connection. Your saved access and credentials have not changed.</p><Button variant="outline" onClick={() => void existing.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button></div>;
   if (gatedDefinitions.length) {
     if (!availability.loaded) return <p role="status" className="p-6 text-sm text-muted-foreground">Loading connection settings…</p>;
     if (availability.failed) return <p role="alert" className="p-6 text-destructive text-sm">Could not load connector availability. Refresh to try again.</p>;
@@ -877,7 +878,7 @@ function StandardConnectionSetupFlow({
     } catch (error) {
       if (controller.signal.aborted) return;
       setOAuthPhase("error");
-      setOAuthError(error instanceof Error ? error.message : "Paperclip couldn’t start secure sign-in. Try again.");
+      setOAuthError(error instanceof Error ? error.message : uiT("ui:messages.m_47928280e9721837"));
       onPhaseChange?.("needs_retry");
     } finally {
       if (oauthHandoffAbortRef.current === controller) oauthHandoffAbortRef.current = null;
@@ -1037,7 +1038,7 @@ function StandardConnectionSetupFlow({
   useEffect(() => {
     if (host !== "page") return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
       { label: vercelConnectMode ? "Vercel Connect" : byoOnly ? "Connect your own tool" : "Connect an app" },
     ]);
     return () => setBreadcrumbs([]);
@@ -1368,7 +1369,7 @@ function StandardConnectionSetupFlow({
           ? "Your authorization expired or was revoked. Reconnect to continue."
           : error instanceof Error
             ? error.message
-            : "Paperclip couldn’t start secure sign-in. Try again.",
+            : uiT("ui:messages.m_47928280e9721837"),
       );
     },
   });
@@ -1556,7 +1557,7 @@ function StandardConnectionSetupFlow({
             ? "Your authorization expired or was revoked. Reconnect to continue."
             : error instanceof Error
               ? error.message
-              : "Paperclip couldn’t start secure sign-in. Try again.",
+              : uiT("ui:messages.m_47928280e9721837"),
         );
         return;
       }
@@ -1949,12 +1950,8 @@ function StandardConnectionSetupFlow({
                 setOAuthPhase("entry");
               }
             }}
-          >
-            Try again
-          </Button>
-          <Button type="button" variant="outline" onClick={() => navigate("/apps")}>
-            Back to apps
-          </Button>
+          >{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
+          <Button type="button" variant="outline" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
         </div>
       </div>
     );
@@ -1967,9 +1964,7 @@ function StandardConnectionSetupFlow({
         <p className="mt-2 text-sm text-muted-foreground">
           The saved connection no longer exists or is not available to this organization.
         </p>
-        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>
-          Back to apps
-        </Button>
+        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
       </div>
     );
   }
@@ -1987,9 +1982,7 @@ function StandardConnectionSetupFlow({
         <p className="mt-2 text-sm text-muted-foreground">
           This saved draft does not match the requested provider. The connection was not changed.
         </p>
-        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>
-          Back to apps
-        </Button>
+        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
       </div>
     );
   }
@@ -2008,9 +2001,7 @@ function StandardConnectionSetupFlow({
             ? "The retained connection no longer exists or is not available to this organization."
             : "This reconnect link does not match the retained connection's provider."}
         </p>
-        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>
-          Back to apps
-        </Button>
+        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
       </div>
     );
   }
@@ -2023,12 +2014,8 @@ function StandardConnectionSetupFlow({
           Paperclip couldn’t load the provider details needed to restore this connection. The retained connection was not changed.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <Button type="button" onClick={() => void galleryQuery.refetch()}>
-            Try again
-          </Button>
-          <Button type="button" variant="outline" onClick={() => navigate("/apps")}>
-            Back to apps
-          </Button>
+          <Button type="button" onClick={() => void galleryQuery.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
+          <Button type="button" variant="outline" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
         </div>
       </div>
     );
@@ -2041,9 +2028,7 @@ function StandardConnectionSetupFlow({
         <p className="mt-2 text-sm text-muted-foreground">
           Paperclip no longer has a supported setup method for this retained connection. The retained connection was not changed.
         </p>
-        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>
-          Back to apps
-        </Button>
+        <Button type="button" variant="outline" className="mt-5" onClick={() => navigate("/apps")}>{uiT("ui:messages.m_27ab5ab0768a8715")}</Button>
       </div>
     );
   }
@@ -2081,7 +2066,7 @@ function StandardConnectionSetupFlow({
       <div className="max-w-5xl" data-testid="connection-existing-choice">
         <div className="mb-6">
           <h1 className="text-2xl font-bold tracking-tight">
-            Use an existing {requestedAppKey ? "connection" : "app connection"}
+            Use an existing {requestedAppKey ? uiT("ui:messages.m_b38d9d168c3aedf1") : "app connection"}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Reuse a connection without changing who already has access, or connect a new one.
@@ -2110,7 +2095,7 @@ function StandardConnectionSetupFlow({
           <Button type="button" variant="outline" onClick={() => setShowConnectionChoice(false)}>
             {configuredConnection ? "Review connection setup" : "Connect new"}
           </Button>
-          {onCancel ? <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button> : null}
+          {onCancel ? <Button type="button" variant="ghost" onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button> : null}
         </div>
       </div>
     );
@@ -2532,11 +2517,9 @@ function StandardConnectionSetupFlow({
             </Button>
           ) : null}
           <div className="mt-6 flex items-center justify-between gap-3">
-            <Button type="button" variant="ghost" onClick={backToGallery}>Back</Button>
+            <Button type="button" variant="ghost" onClick={backToGallery}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             <Button type="button" disabled={galleryQuery.isFetching} onClick={() => void galleryQuery.refetch()}>
-              {galleryQuery.isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-              Try again
-            </Button>
+              {galleryQuery.isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
           </div>
         </div>
       ) : step === "key" && entry && showConnectorEnrollmentStep ? (
@@ -2578,9 +2561,7 @@ function StandardConnectionSetupFlow({
             ) : null}
             {connectionDefaults}
             <div className="mt-6 flex items-center justify-between gap-3">
-              <Button type="button" variant="ghost" onClick={backToGallery}>
-                Back
-              </Button>
+              <Button type="button" variant="ghost" onClick={backToGallery}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
               <Button
                 type="button"
                 disabled={connectorEnrollmentQuery.isLoading || startConnectorEnrollment.isPending}
@@ -2595,7 +2576,7 @@ function StandardConnectionSetupFlow({
               >
                 {startConnectorEnrollment.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 {connectorEnrollmentQuery.data?.status === "pending"
-                  ? "Continue"
+                  ? uiT("ui:messages.m_31fbef162594de01")
                   : "Connect with Paperclip"}
               </Button>
             </div>
@@ -2925,7 +2906,7 @@ export function OAuthConnectStateScreen({
             <Button type="button" onClick={onRetry} disabled={!settingsValid}>
               {phase === "entry"
                 ? resuming ? `Finish with ${serverName}` : `Continue to ${serverName}`
-                : "Try again"}
+                : uiT("ui:messages.m_d8b8392e2c542950")}
               {phase === "entry" ? <ArrowUpRight className="h-4 w-4" aria-hidden="true" /> : null}
             </Button>
           ) : (
@@ -2934,7 +2915,7 @@ export function OAuthConnectStateScreen({
             </Button>
           )}
           {authorizationUrl ? <Button variant="outline" asChild><a href={authorizationUrl} target="_blank" rel="noopener noreferrer" onClick={onOpenAuthorization}>Open sign-in in a new tab</a></Button> : null}
-          <Button type="button" variant="ghost" onClick={onBack}>Back</Button>
+          <Button type="button" variant="ghost" onClick={onBack}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
         </div>
       </div>
     </div>
@@ -2986,12 +2967,10 @@ function ZapierConnectStep({
       {defaults}
 
       <div className="mt-6 flex items-center justify-between">
-        <Button variant="ghost" onClick={onBack} disabled={submitting}>
-          Back
-        </Button>
+        <Button variant="ghost" onClick={onBack} disabled={submitting}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
         <Button onClick={onConnect} disabled={submitting || !isZapierLink}>
           {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {submitting ? "Checking…" : "Check link"}
+          {submitting ? uiT("ui:messages.m_ec963ffc911b8401") : "Check link"}
         </Button>
       </div>
     </div>
@@ -3178,7 +3157,7 @@ function GalleryStep({
         <div>
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
             <Link2 className="h-4 w-4 text-muted-foreground" />
-            {zapierSource ? "Connect Zapier" : byo ? "Connect your own MCP server" : "Connect with a link"}
+            {zapierSource ? "Connect Zapier" : byo ? uiT("ui:messages.m_abb2409de6f9cc52") : "Connect with a link"}
           </div>
           <p className="mt-1 text-xs text-muted-foreground">
             {zapierSource
@@ -3216,8 +3195,8 @@ function GalleryStep({
                 {matchedEntry.availability?.available === false
                   ? "Not available"
                   : matchedEntry.slug === "zapier"
-                    ? "Continue"
-                    : `Use ${matchedEntry.name}`}
+                    ? uiT("ui:messages.m_31fbef162594de01")
+                    : uiT("ui:messages.m_4a3ba369d7ae6c1f", { v0: (matchedEntry.name) })}
               </Button>
             </div>
           )}
@@ -3229,7 +3208,7 @@ function GalleryStep({
               type={zapierSource || matchedEntry?.slug === "zapier" ? "password" : "url"}
               autoComplete="off"
               spellCheck={false}
-              aria-label="MCP server URL"
+              aria-label={uiT("ui:messages.m_4f5aff033a99aafc")}
               value={linkInput}
               onChange={(e) => {
                 linkInputEdited.current = true;
@@ -3242,9 +3221,7 @@ function GalleryStep({
               placeholder={zapierSource ? "https://mcp.zapier.com/api/v1/connect?token=…" : "https://example.com/actions"}
               className="h-10"
             />
-            <Button type="button" variant="outline" onClick={continueWithLink}>
-              Continue
-            </Button>
+            <Button type="button" variant="outline" onClick={continueWithLink}>{uiT("ui:messages.m_31fbef162594de01")}</Button>
           </div>
           {linkError && <div className="text-xs text-destructive">{linkError}</div>}
         </div>
@@ -3362,8 +3339,7 @@ function LinkConnectStep({
             <AppLogo name={matchedEntry.name} logoUrl={matchedEntry.branding.logoUrl} darkLogoUrl={matchedEntry.branding.darkLogoUrl} size={24} />
             <span className="truncate">Paperclip has a guided setup for {matchedEntry.name}.</span>
           </div>
-          <Button type="button" size="sm" variant="outline" onClick={onUseMatchedEntry}>
-            Use {matchedEntry.name}
+          <Button type="button" size="sm" variant="outline" onClick={onUseMatchedEntry}>{uiT("ui:messages.m_bb33dbdb2f216aee")}{matchedEntry.name}
           </Button>
         </div>
       ) : null}
@@ -3380,7 +3356,7 @@ function LinkConnectStep({
         {showKeyField ? (
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-foreground" htmlFor="generic-mcp-key">App key</label>
+              <label className="text-sm font-medium text-foreground" htmlFor="generic-mcp-key">{uiT("ui:messages.m_e9ba76956424f762")}</label>
               <Input
                 id="generic-mcp-key"
                 type="password"
@@ -3427,8 +3403,8 @@ function LinkConnectStep({
                     <Input
                       value={row.name}
                       onChange={(e) => updateHeader(row.id, { name: e.target.value })}
-                      placeholder="Header name"
-                      aria-label="Header name"
+                      placeholder={uiT("ui:messages.m_c1dcc8fb31f6ee89")}
+                      aria-label={uiT("ui:messages.m_c1dcc8fb31f6ee89")}
                       className="h-10 font-mono"
                     />
                     <Input
@@ -3436,8 +3412,8 @@ function LinkConnectStep({
                       autoComplete="off"
                       value={row.value}
                       onChange={(e) => updateHeader(row.id, { value: e.target.value })}
-                      placeholder="Value"
-                      aria-label={row.name.trim() ? `Value for ${row.name.trim()}` : "Header value"}
+                      placeholder={uiT("ui:messages.m_8e37953d23daca5f")}
+                      aria-label={row.name.trim() ? `Value for ${row.name.trim()}` : uiT("ui:messages.m_f9a9058c0c22e511")}
                       className="h-10 font-mono"
                     />
                     <Button
@@ -3447,9 +3423,7 @@ function LinkConnectStep({
                       className="h-10 shrink-0"
                       onClick={() => onHeadersChange(headers.filter((candidate) => candidate.id !== row.id))}
                       disabled={headers.length === 1}
-                    >
-                      Remove
-                    </Button>
+                    >{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
                   </div>
                 ))}
                 <Button
@@ -3471,15 +3445,13 @@ function LinkConnectStep({
                   server's docs tell you to register Paperclip yourself first.
                 </p>
                 <div>
-                  <label className="text-sm font-medium text-foreground" htmlFor="generic-mcp-client-id">
-                    Client ID
-                  </label>
+                  <label className="text-sm font-medium text-foreground" htmlFor="generic-mcp-client-id">{uiT("ui:messages.m_8726db013948f070")}</label>
                   <Input
                     id="generic-mcp-client-id"
                     value={oauthClientId}
                     onChange={(e) => onOAuthClientIdChange(e.target.value)}
                     autoComplete="off"
-                    placeholder="Optional"
+                    placeholder={uiT("ui:messages.m_59be71333c960fd0")}
                     className="mt-2 h-11 font-mono"
                   />
                 </div>
@@ -3493,7 +3465,7 @@ function LinkConnectStep({
                     autoComplete="off"
                     value={oauthClientSecret}
                     onChange={(e) => onOAuthClientSecretChange(e.target.value)}
-                    placeholder="Optional"
+                    placeholder={uiT("ui:messages.m_59be71333c960fd0")}
                     className="mt-2 h-11 font-mono"
                   />
                 </div>
@@ -3506,12 +3478,10 @@ function LinkConnectStep({
       {defaults}
 
       <div className="mt-8 flex items-center justify-between">
-        <Button variant="ghost" onClick={onBack} disabled={submitting}>
-          Back
-        </Button>
+        <Button variant="ghost" onClick={onBack} disabled={submitting}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
         <Button onClick={onConnect} disabled={submitting || !canSubmit || Boolean(headerError)}>
           {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {submitting ? "Checking…" : "Check link"}
+          {submitting ? uiT("ui:messages.m_ec963ffc911b8401") : "Check link"}
         </Button>
       </div>
     </div>
@@ -3886,12 +3856,10 @@ function KeyStep({
         {defaults}
 
         <div className="mt-8 flex items-center justify-between">
-          <Button variant="ghost" onClick={onBack} disabled={submitting}>
-            Back
-          </Button>
+          <Button variant="ghost" onClick={onBack} disabled={submitting}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
           <Button onClick={onConnect} disabled={submitting || !canConnect}>
             {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {submitting ? "Checking…" : "Connect"}
+            {submitting ? uiT("ui:messages.m_ec963ffc911b8401") : uiT("ui:messages.m_1a2303ede07493ac")}
           </Button>
         </div>
       </div>
@@ -4027,18 +3995,16 @@ function KeyStep({
       {defaults}
 
       <div className="mt-8 flex items-center justify-between">
-        <Button variant="ghost" onClick={onBack} disabled={submitting}>
-          Back
-        </Button>
+        <Button variant="ghost" onClick={onBack} disabled={submitting}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
         <Button onClick={onConnect} disabled={submitting || !settingsValid || !hasMethodSelection || !allFilled || !oauthClientFilled || !vercelConnectorFilled || !configFilled || !configRequirementMet}>
           {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {submitting
-            ? "Checking…"
+            ? uiT("ui:messages.m_ec963ffc911b8401")
             : usingVercel
               ? method?.auth === "oauth" ? "Validate and continue" : "Validate and connect"
               : method?.auth === "oauth"
                 ? entry.slug === "github" ? "Continue to GitHub" : "Continue to sign in"
-                : "Connect"}
+                : uiT("ui:messages.m_1a2303ede07493ac")}
         </Button>
       </div>
     </div>
@@ -4061,7 +4027,7 @@ function CopyValueButton({ value, ariaLabel }: { value: string; ariaLabel: strin
       onClick={() => void copy(value)}
     >
       {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
-      {copied ? "Copied" : failed ? "Copy failed" : "Copy"}
+      {copied ? uiT("ui:messages.m_8d525e5f158b9afe") : failed ? uiT("ui:messages.m_5b50e7a693fee952") : uiT("ui:messages.m_e21f935f11d7e966")}
     </Button>
   );
 }
@@ -4107,8 +4073,7 @@ function OAuthClientFields({
             target="_blank"
             rel="noreferrer"
             className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-foreground underline underline-offset-2"
-          >
-            Open {entry.name} app settings
+          >{uiT("ui:messages.m_b8039d1d54bf9e3b")}{entry.name} app settings
             <ArrowUpRight className="h-3 w-3" />
           </a>
         ) : null}
@@ -4131,15 +4096,13 @@ function OAuthClientFields({
         </div>
       ) : null}
       <div>
-        <label className="text-sm font-medium text-foreground" htmlFor="curated-oauth-client-id">
-          Client ID
-        </label>
+        <label className="text-sm font-medium text-foreground" htmlFor="curated-oauth-client-id">{uiT("ui:messages.m_8726db013948f070")}</label>
         <Input
           id="curated-oauth-client-id"
           value={clientId}
           onChange={(event) => onClientIdChange(event.target.value)}
           autoComplete="off"
-          placeholder={required ? "Required" : "Optional"}
+          placeholder={required ? uiT("ui:messages.m_4850b174b713d88c") : uiT("ui:messages.m_59be71333c960fd0")}
           className="mt-2 h-11 font-mono"
         />
       </div>
@@ -4153,7 +4116,7 @@ function OAuthClientFields({
           value={clientSecret}
           onChange={(event) => onClientSecretChange(event.target.value)}
           autoComplete="off"
-          placeholder={method.oauthClientSecretRequired ? "Required" : "Optional for public clients"}
+          placeholder={method.oauthClientSecretRequired ? uiT("ui:messages.m_4850b174b713d88c") : "Optional for public clients"}
           className="mt-2 h-11 font-mono"
         />
       </div>
@@ -4197,7 +4160,7 @@ function MethodConfigField({
           onChange={(event) => onChange(event.target.value)}
           className="mt-2 h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
         >
-          <option value="" disabled>Select an option</option>
+          <option value="" disabled>{uiT("ui:messages.m_fb1cbc38fb4060f4")}</option>
           {(field.options ?? []).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
       ) : (
@@ -4355,7 +4318,7 @@ export function AccessStepContent({
                 <div>
                   <div className="text-sm font-medium text-foreground">
                     {allowedGrantKinds[0] === "user"
-                      ? githubIdentity ? "My GitHub account" : "Just me"
+                      ? githubIdentity ? "My GitHub account" : uiT("ui:messages.m_3a4b4df869c76a24")
                       : allowedGrantKinds[0] === "agent"
                         ? "A dedicated account for an agent"
                         : githubIdentity ? "Shared organization GitHub account (advanced)" : "Any human in the organization"}
@@ -4387,7 +4350,7 @@ export function AccessStepContent({
                 options={[
                   {
                     value: "user",
-                    title: githubIdentity ? "My GitHub account" : "Just me",
+                    title: githubIdentity ? "My GitHub account" : uiT("ui:messages.m_3a4b4df869c76a24"),
                     description: githubIdentity
                       ? "Agents use it only for runs where you are the responsible person."
                       : undefined,
@@ -4465,7 +4428,7 @@ export function AccessStepContent({
                   },
                   {
                     value: "all",
-                    title: "Any agent",
+                    title: uiT("ui:messages.m_ee3e7690173b4911"),
                     description: githubIdentity
                       ? grantKind === "user"
                         ? "Every agent may use your GitHub when you’re responsible."
@@ -4506,9 +4469,7 @@ export function AccessStepContent({
       {/* Mobile stacks actions full-width with the primary action first in
           reading order; desktop keeps Back on the left. */}
       {hideFooter ? null : <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <Button variant="ghost" className="w-full sm:w-auto" onClick={onBack} disabled={pending}>
-          Back
-        </Button>
+        <Button variant="ghost" className="w-full sm:w-auto" onClick={onBack} disabled={pending}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
         <Button
           className="w-full sm:w-auto"
           onClick={onContinue}
@@ -4655,10 +4616,10 @@ export function accessSummaryLines(input: {
     ? "Any agent"
     : `${input.installCount} selected ${input.installCount === 1 ? "agent" : "agents"}`;
   return [
-    { label: "Identity", value: identity },
+    { label: uiT("ui:messages.m_999f23fcd7bec707"), value: identity },
     { label: "Available to", value: availableTo },
     {
-      label: "Actions",
+      label: uiT("ui:messages.m_ff8059dc6752afdd"),
       value: `${input.enabledCount} ${input.enabledCount === 1 ? "action" : "actions"} on`,
     },
   ];

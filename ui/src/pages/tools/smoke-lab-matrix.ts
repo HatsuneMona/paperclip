@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   SMOKE_RUN_STEP_PATHS,
   type SmokeRun,
@@ -37,13 +38,13 @@ export interface LifecycleStage {
 
 /** The PAP-12373 governed lifecycle, in order (plan §3). */
 export const LIFECYCLE_STAGES: LifecycleStage[] = [
-  { key: "connect", label: "Connect", match: ["connect", "oauth", "login", "auth"] },
+  { key: "connect", label: uiT("ui:messages.m_1a2303ede07493ac"), match: ["connect", "oauth", "login", "auth"] },
   { key: "discover", label: "Discover catalog", match: ["discover", "catalog", "list-tools"] },
   { key: "read", label: "Allowed read", match: ["read", "allowed"] },
   { key: "write", label: "Ask-first write", match: ["write", "approve", "ask-first", "askfirst", "review"] },
   { key: "deny", label: "Denied call", match: ["deny", "denied", "block", "forbidden"] },
   { key: "quarantine", label: "Schema-change quarantine", match: ["quarantine", "schema"] },
-  { key: "revoke", label: "Revoke", match: ["revoke"] },
+  { key: "revoke", label: uiT("ui:messages.m_87e6d00bbf53ec5a"), match: ["revoke"] },
   { key: "audit", label: "Audit evidence", match: ["audit", "activity", "evidence"] },
 ];
 

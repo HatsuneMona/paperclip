@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { taskChatHashAnchor } from "@/components/task-chat/scroll-navigation";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import { CoordinatorAgentSwitcher } from "@/components/CoordinatorAgentSwitcher";
@@ -778,8 +779,7 @@ function AttributionAvatar({
               {actor.name}
             </div>
             {via ? (
-              <div className="max-w-48 truncate text-(length:--text-nano) leading-3 text-background/60">
-                via {via}
+              <div className="max-w-48 truncate text-(length:--text-nano) leading-3 text-background/60">{uiT("ui:messages.m_c1035a0b39a76dbc")}{via}
               </div>
             ) : null}
           </div>
@@ -855,7 +855,7 @@ function IssueAttributionByline({
     <TooltipProvider>
       <AvatarGroup
         className="-space-x-1.5"
-        aria-label="Task people"
+        aria-label={uiT("ui:messages.m_46ac7b2e5fe9a6f8")}
         data-testid="issue-attribution-avatar-stack"
       >
         {assignee ? (
@@ -1036,11 +1036,9 @@ export function IssueDetailLoadingState({
                 <Badge
                   variant="outline"
                   className="border-violet-500/30 bg-violet-500/10 text-(length:--text-nano) text-violet-600 dark:text-violet-400"
-                  title={`Routine execution from routine ${headerSeed.originId}`}
+                  title={uiT("ui:messages.m_262c8d8a24970f8a", { v0: (headerSeed.originId) })}
                 >
-                  <Repeat className="h-3 w-3" />
-                  Routine
-                </Badge>
+                  <Repeat className="h-3 w-3" />{uiT("ui:messages.m_0b5baf309897ec7e")}</Badge>
               ) : null}
               {/* Seeded header — same anatomy as the resolved one below, so the
                   eyebrow does not change shape when the real issue arrives. */}
@@ -1053,9 +1051,7 @@ export function IssueDetailLoadingState({
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 text-xs text-muted-foreground opacity-50 px-1 -mx-1 py-0.5">
-                  <ProjectTile size="xs" />
-                  No project
-                </span>
+                  <ProjectTile size="xs" />{uiT("ui:messages.m_f34c2be0d1c5f562")}</span>
               )}
             </>
           ) : (
@@ -1154,7 +1150,7 @@ function InboxMobileToolbar({
             navigate(backHref);
           }
         }}
-        aria-label="Back to inbox"
+        aria-label={uiT("ui:messages.m_97555c45940cc4b1")}
       >
         <ArrowLeft className="h-5 w-5" />
       </Button>
@@ -1166,7 +1162,7 @@ function InboxMobileToolbar({
             size="icon-sm"
             onClick={onArchive}
             disabled={archivePending}
-            aria-label="Archive from inbox"
+            aria-label={uiT("ui:messages.m_67c88421778ecd8b")}
           >
             <Archive className="h-5 w-5" />
           </Button>
@@ -1174,7 +1170,7 @@ function InboxMobileToolbar({
 
         <Popover open={menuOpen} onOpenChange={setMenuOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label="More actions">
+            <Button variant="ghost" size="icon-sm" aria-label={uiT("ui:messages.m_f8d46c2570e70736")}>
               <MoreVertical className="h-5 w-5" />
             </Button>
           </PopoverTrigger>
@@ -1186,9 +1182,7 @@ function InboxMobileToolbar({
                 setMenuOpen(false);
               }}
             >
-              <Copy className="h-3 w-3" />
-              Copy as markdown
-            </button>
+              <Copy className="h-3 w-3" />{uiT("ui:messages.m_fec6709d0f0a779b")}</button>
             <button
               className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50"
               onClick={() => {
@@ -1196,9 +1190,7 @@ function InboxMobileToolbar({
                 setMenuOpen(false);
               }}
             >
-              <SlidersHorizontal className="h-3 w-3" />
-              Properties
-            </button>
+              <SlidersHorizontal className="h-3 w-3" />{uiT("ui:messages.m_ae43692b2a310b8e")}</button>
             {issueIdProp && (
               <button
                 className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50 text-destructive"
@@ -1207,9 +1199,7 @@ function InboxMobileToolbar({
                   setMenuOpen(false);
                 }}
               >
-                <EyeOff className="h-3 w-3" />
-                Hide this task
-              </button>
+                <EyeOff className="h-3 w-3" />{uiT("ui:messages.m_429dbcbd26baf366")}</button>
             )}
           </PopoverContent>
         </Popover>
@@ -1701,7 +1691,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
     onSuccess: (result) => {
       if (!result.runId) {
         pushToast({
-          title: "Retry queued",
+          title: uiT("ui:messages.m_06fd42bb07601325"),
           body: "The exact request will retry when this task is ready.",
           tone: "success",
         });
@@ -1720,7 +1710,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
     },
     onError: (error) => {
       pushToast({
-        title: "Run retry failed",
+        title: uiT("ui:messages.m_243efbc1d68c5180"),
         body: error instanceof Error ? error.message : "Unable to retry run",
         tone: "error",
       });
@@ -2545,7 +2535,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
               : null;
         if (code === "queued_comment_already_dispatching") {
           pushToast({
-            title: "Message is already being sent",
+            title: uiT("ui:messages.m_fecf0744dcf1c945"),
             body: "The continuation started before the discard was confirmed, so Paperclip could not unsend it.",
             tone: "error",
             ttlMs: 15_000,
@@ -2585,8 +2575,8 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
         onClick={onLoadOlderComments}
       >
         {commentsLoadingOlder
-          ? "Loading earlier comments..."
-          : "Load earlier comments"}
+          ? uiT("ui:messages.m_aa9192a11cb5f23d")
+          : uiT("ui:messages.m_a41f98dd82a1500e")}
       </Button>
     </div>
   ) : null;
@@ -3001,48 +2991,41 @@ function IssueDetailActivityTab({
     <>
       {shouldShowCostSummary && (
         <div className="mb-3 px-3 py-2 rounded-lg border border-border">
-          <div className="text-sm font-medium text-muted-foreground mb-1">
-            Cost Summary
-          </div>
+          <div className="text-sm font-medium text-muted-foreground mb-1">{uiT("ui:messages.m_3ae4392d4840974a")}</div>
           {!issueCostSummary.hasCost &&
           !issueCostSummary.hasTokens &&
           !hasIssueTreeCost ? (
-            <div className="text-xs text-muted-foreground">
-              No cost data yet.
-            </div>
+            <div className="text-xs text-muted-foreground">{uiT("ui:messages.m_b13184a88b1483ae")}</div>
           ) : (
             <div className="space-y-1 text-xs text-muted-foreground tabular-nums">
               <div className="flex flex-wrap gap-3">
-                <span className="font-medium text-foreground">This task</span>
+                <span className="font-medium text-foreground">{uiT("ui:messages.m_4f5b1b5d5083bfee")}</span>
                 {issueCostSummary.hasCost ? (
                   <span className="font-medium text-foreground">
                     ${issueCostSummary.cost.toFixed(4)}
                   </span>
                 ) : null}
                 {issueCostSummary.hasTokens ? (
-                  <span>
-                    Tokens {formatTokens(issueCostSummary.totalTokens)}
+                  <span>{uiT("ui:messages.m_4c1286c23cb763e0")}{formatTokens(issueCostSummary.totalTokens)}
                     {issueCostSummary.cached > 0
-                      ? ` (in ${formatTokens(issueCostSummary.input)}, out ${formatTokens(issueCostSummary.output)}, cached ${formatTokens(issueCostSummary.cached)})`
-                      : ` (in ${formatTokens(issueCostSummary.input)}, out ${formatTokens(issueCostSummary.output)})`}
+                      ? uiT("ui:messages.m_909fd2e9ccc99ba8", { v0: (formatTokens(issueCostSummary.input)), v1: (formatTokens(issueCostSummary.output)), v2: (formatTokens(issueCostSummary.cached)) })
+                      : uiT("ui:messages.m_6a9746965ca2a0c4", { v0: (formatTokens(issueCostSummary.input)), v1: (formatTokens(issueCostSummary.output)) })}
                   </span>
                 ) : null}
                 {issueCostSummary.hasRuntime ? (
-                  <span>
-                    Runtime {formatDurationMs(issueCostSummary.runtimeMs)}
-                    {` (${issueCostSummary.runCount} run${issueCostSummary.runCount === 1 ? "" : "s"})`}
+                  <span>{uiT("ui:messages.m_69800e644316bbb6")}{formatDurationMs(issueCostSummary.runtimeMs)}
+                    {uiT("ui:messages.m_3b0e4a0deb6b3527", { v0: (issueCostSummary.runCount), v1: (issueCostSummary.runCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
                   </span>
                 ) : null}
                 {!issueCostSummary.hasCost &&
                 !issueCostSummary.hasTokens &&
                 !issueCostSummary.hasRuntime ? (
-                  <span>No direct cost data.</span>
+                  <span>{uiT("ui:messages.m_5a04bc3854361ac0")}</span>
                 ) : null}
               </div>
               {hasIssueTreeCost && issueTreeCostSummary ? (
                 <div className="flex flex-wrap gap-3">
-                  <span className="font-medium text-foreground">
-                    Including sub-tasks{" "}
+                  <span className="font-medium text-foreground">{uiT("ui:messages.m_7a7698025216bc11")}{" "}
                     {(issueTreeCostSummary.costCents / 100).toLocaleString(
                       undefined,
                       {
@@ -3053,21 +3036,18 @@ function IssueDetailActivityTab({
                       },
                     )}
                   </span>
-                  <span>
-                    Tokens {formatTokens(issueTreeCostTokens)}
+                  <span>{uiT("ui:messages.m_4c1286c23cb763e0")}{formatTokens(issueTreeCostTokens)}
                     {issueTreeCostSummary.cachedInputTokens > 0
-                      ? ` (in ${formatTokens(issueTreeCostSummary.inputTokens)}, out ${formatTokens(issueTreeCostSummary.outputTokens)}, cached ${formatTokens(issueTreeCostSummary.cachedInputTokens)})`
-                      : ` (in ${formatTokens(issueTreeCostSummary.inputTokens)}, out ${formatTokens(issueTreeCostSummary.outputTokens)})`}
+                      ? uiT("ui:messages.m_909fd2e9ccc99ba8", { v0: (formatTokens(issueTreeCostSummary.inputTokens)), v1: (formatTokens(issueTreeCostSummary.outputTokens)), v2: (formatTokens(issueTreeCostSummary.cachedInputTokens)) })
+                      : uiT("ui:messages.m_6a9746965ca2a0c4", { v0: (formatTokens(issueTreeCostSummary.inputTokens)), v1: (formatTokens(issueTreeCostSummary.outputTokens)) })}
                   </span>
                   {issueTreeCostSummary.runCount > 0 ? (
-                    <span>
-                      Runtime {formatDurationMs(issueTreeCostSummary.runtimeMs)}
-                      {` (${issueTreeCostSummary.runCount} run${issueTreeCostSummary.runCount === 1 ? "" : "s"})`}
+                    <span>{uiT("ui:messages.m_69800e644316bbb6")}{formatDurationMs(issueTreeCostSummary.runtimeMs)}
+                      {uiT("ui:messages.m_3b0e4a0deb6b3527", { v0: (issueTreeCostSummary.runCount), v1: (issueTreeCostSummary.runCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
                     </span>
                   ) : null}
                   <span>
-                    {issueTreeCostSummary.issueCount} task
-                    {issueTreeCostSummary.issueCount === 1 ? "" : "s"}
+                    {issueTreeCostSummary.issueCount}{uiT("ui:messages.m_3e7a7664eec2fc88")}{issueTreeCostSummary.issueCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                   </span>
                 </div>
               ) : null}
@@ -4134,7 +4114,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       options.push({ id: `agent:${agent.id}`, label: agent.name });
     }
     if (currentUserId) {
-      options.push({ id: `user:${currentUserId}`, label: "Me" });
+      options.push({ id: `user:${currentUserId}`, label: uiT("ui:messages.m_d30af076b0dc85cc") });
     }
     return options;
   }, [agents, companyMembers?.users, currentUserId]);
@@ -4365,7 +4345,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
 
       try {
         await issuesApi.unarchiveFromInbox(id);
-        pushToast({ title: "Task restored to inbox", tone: "success" });
+        pushToast({ title: uiT("ui:messages.m_a17ff0d06b96ce99"), tone: "success" });
       } catch (error) {
         if (companyId) {
           beginLocalInboxArchive(companyId, id);
@@ -4373,7 +4353,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           boundLocalInboxArchive(companyId, id);
         }
         pushToast({
-          title: "Undo failed",
+          title: uiT("ui:messages.m_c7abe568e9629874"),
           body:
             error instanceof Error
               ? error.message
@@ -4506,7 +4486,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       pushToast({
-        title: "Recovery resolution failed",
+        title: uiT("ui:messages.m_f9244c725b820bdb"),
         body:
           err instanceof Error
             ? err.message
@@ -4720,8 +4700,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       pushToast({
         title:
           status === "done"
-            ? "Run stopped and task done"
-            : "Run stopped and task cancelled",
+            ? uiT("ui:messages.m_6116129545c3c0a8")
+            : uiT("ui:messages.m_18448b85874afb4e"),
         tone: "success",
       });
     },
@@ -4729,10 +4709,10 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       const runWasStopped = didRunCancelBeforeStatusUpdateFail(err);
       pushToast({
         title: runWasStopped
-          ? "Run stopped; task update failed"
+          ? uiT("ui:messages.m_5d6ff3151f462928")
           : status === "done"
-            ? "Stop and done failed"
-            : "Stop and cancel failed",
+            ? uiT("ui:messages.m_2f4e24e9f7ae0d85")
+            : uiT("ui:messages.m_3b957b736d23571a"),
         body:
           err instanceof Error
             ? err.message
@@ -4774,7 +4754,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       pushToast({
-        title: "Task update failed",
+        title: uiT("ui:messages.m_c182c1dba44b6119"),
         body:
           err instanceof Error
             ? err.message
@@ -4865,13 +4845,13 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueRunState();
       invalidateIssueCollections();
       pushToast({
-        title: "Monitor check queued",
+        title: uiT("ui:messages.m_9cbc908e0226c51d"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Monitor check failed",
+        title: uiT("ui:messages.m_bcd59e0aa70f37d9"),
         body:
           err instanceof Error
             ? err.message
@@ -4914,8 +4894,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       pushToast({
         title:
           variables.action === "approve"
-            ? "Approval approved"
-            : "Approval rejected",
+            ? uiT("ui:messages.m_013f5619222bfcf0")
+            : uiT("ui:messages.m_64b0e7abe9cde157"),
         tone: "success",
       });
     },
@@ -4923,8 +4903,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       pushToast({
         title:
           variables.action === "approve"
-            ? "Approval failed"
-            : "Rejection failed",
+            ? uiT("ui:messages.m_8246891f03714c67")
+            : uiT("ui:messages.m_a21eed92b03fbb74"),
         body: err instanceof Error ? err.message : "Unable to update approval",
         tone: "error",
       });
@@ -5028,7 +5008,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           return;
         } catch (err) {
           pushToast({
-            title: "Cancel failed",
+            title: uiT("ui:messages.m_785ae808af53eca5"),
             body:
               err instanceof Error
                 ? err.message
@@ -5173,18 +5153,18 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       pushToast({
         title:
           interaction.kind === "request_confirmation"
-            ? "Request confirmed"
+            ? uiT("ui:messages.m_469bddd0980a3e9f")
             : interaction.kind === "request_checkbox_confirmation"
-              ? "Selection confirmed"
+              ? uiT("ui:messages.m_b16d1591db3a4c46")
               : skippedCount > 0
-                ? `Accepted ${createdCount} draft${createdCount === 1 ? "" : "s"} and skipped ${skippedCount}`
-                : "Suggested tasks accepted",
+                ? uiT("ui:messages.m_a47391f110a3c908", { v0: (createdCount), v1: (createdCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")), v2: (skippedCount) })
+                : uiT("ui:messages.m_1b2ba6ca6b4a5564"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Accept failed",
+        title: uiT("ui:messages.m_d576f243b24d8d8d"),
         body: interactionResolutionErrorMessage(err),
         tone: "error",
       });
@@ -5207,13 +5187,13 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         title:
           interaction.kind === "request_confirmation"
             ? buildIssueThreadInteractionSummary(interaction)
-            : "Suggestion rejected",
+            : uiT("ui:messages.m_6750d6594fc55d9d"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Reject failed",
+        title: uiT("ui:messages.m_8b1d9fa46b369481"),
         body: interactionResolutionErrorMessage(err),
         tone: "error",
       });
@@ -5233,13 +5213,13 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueDetail();
       invalidateIssueCollections();
       pushToast({
-        title: "Answers submitted",
+        title: uiT("ui:messages.m_6908408b54410861"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Submit failed",
+        title: uiT("ui:messages.m_a8bf099a3d3b939c"),
         body: interactionResolutionErrorMessage(err),
         tone: "error",
       });
@@ -5270,14 +5250,14 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           : false;
       pushToast({
         title: complete
-          ? "All verdicts applied"
-          : `Applied ${applied} decision${applied === 1 ? "" : "s"}`,
+          ? uiT("ui:messages.m_7cacb3cdfaeb2a58")
+          : uiT("ui:messages.m_1788513d4649458a", { v0: (applied), v1: (applied === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) }),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Apply failed",
+        title: uiT("ui:messages.m_cae4cf5ca2c95e9e"),
         body:
           err instanceof Error ? err.message : "Unable to apply the verdicts",
         tone: "error",
@@ -5296,13 +5276,13 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueDetail();
       invalidateIssueCollections();
       pushToast({
-        title: "Question cancelled",
+        title: uiT("ui:messages.m_e8960873b52bc79f"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Cancel failed",
+        title: uiT("ui:messages.m_785ae808af53eca5"),
         body:
           err instanceof Error ? err.message : "Unable to cancel the question",
         tone: "error",
@@ -5329,7 +5309,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       pushToast({
-        title: "Skip failed",
+        title: uiT("ui:messages.m_491e45ae86076b1a"),
         body:
           err instanceof Error ? err.message : "Unable to skip this request",
         tone: "error",
@@ -5453,7 +5433,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           return;
         } catch (err) {
           pushToast({
-            title: "Cancel failed",
+            title: uiT("ui:messages.m_785ae808af53eca5"),
             body:
               err instanceof Error
                 ? err.message
@@ -5568,14 +5548,14 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueThreadLazily();
       invalidateIssueCollections();
       pushToast({
-        title: "Queued comment canceled",
+        title: uiT("ui:messages.m_33606e66b464ec9e"),
         body: "The queued message was restored to the composer.",
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Cancel failed",
+        title: uiT("ui:messages.m_785ae808af53eca5"),
         body:
           err instanceof Error
             ? err.message
@@ -5596,14 +5576,14 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueCollections();
       invalidateIssueDocumentAnnotationState();
       pushToast({
-        title: "Comment deleted",
+        title: uiT("ui:messages.m_7199a134a33912a5"),
         body: "The thread now shows a deleted-comment marker.",
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Delete failed",
+        title: uiT("ui:messages.m_8727e2ba364c2c46"),
         body:
           err instanceof Error ? err.message : "Unable to delete the comment",
         tone: "error",
@@ -5624,7 +5604,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         if (cancelledCommentBody) {
           restoreQueuedCommentDraft(cancelledCommentBody);
           pushToast({
-            title: "Queued comment canceled",
+            title: uiT("ui:messages.m_33606e66b464ec9e"),
             body: "The queued message was restored to the composer.",
             tone: "success",
           });
@@ -5688,11 +5668,11 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         title:
           variables.sharingPreferenceAtSubmit === "prompt"
             ? variables.allowSharing
-              ? "Feedback saved. Future votes will share"
-              : "Feedback saved. Future votes will stay local"
+              ? uiT("ui:messages.m_510bbe8f61127a2e")
+              : uiT("ui:messages.m_1fc74647e162936c")
             : variables.allowSharing
-              ? "Feedback saved and sharing enabled"
-              : "Feedback saved",
+              ? uiT("ui:messages.m_3ef000edf98f1b85")
+              : uiT("ui:messages.m_e812e0b80090d923"),
         tone: "success",
       });
     },
@@ -5704,7 +5684,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         );
       }
       pushToast({
-        title: "Failed to save feedback",
+        title: uiT("ui:messages.m_ad0dfc664cec55ab"),
         body: err instanceof Error ? err.message : "Unknown error",
         tone: "error",
       });
@@ -5733,7 +5713,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       if (!issueId) void queryClient.invalidateQueries({ queryKey: queryKeys.issues.detail(result.issueId) });
     },
     onError: (err) => {
-      setAttachmentError(err instanceof Error ? err.message : "Upload failed");
+      setAttachmentError(err instanceof Error ? err.message : uiT("ui:messages.m_6efc5d27f30b20c1"));
     },
   });
 
@@ -5763,7 +5743,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       setAttachmentError(
-        err instanceof Error ? err.message : "Document import failed",
+        err instanceof Error ? err.message : uiT("ui:messages.m_39d8367909850f2e"),
       );
     },
   });
@@ -5779,7 +5759,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       invalidateIssueDetail();
     },
     onError: (err) => {
-      setAttachmentError(err instanceof Error ? err.message : "Delete failed");
+      setAttachmentError(err instanceof Error ? err.message : uiT("ui:messages.m_8727e2ba364c2c46"));
     },
   });
 
@@ -5809,10 +5789,10 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         { replace: true },
       );
       pushToast({
-        title: "Task archived from inbox",
+        title: uiT("ui:messages.m_ca9374d16da7e408"),
         tone: "success",
         action: {
-          label: "Undo",
+          label: uiT("ui:messages.m_a8283ade31856f71"),
           onClick: () => {
             void undoInboxArchive(
               id,
@@ -5829,7 +5809,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         restoreIssueToInboxCaches(queryClient, context.previousData, id);
       }
       pushToast({
-        title: "Archive failed",
+        title: uiT("ui:messages.m_a0d5f584981a8ba4"),
         body:
           err instanceof Error
             ? err.message
@@ -5860,7 +5840,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         label: conversationAgent.name,
         leading: <AgentAvatar agent={conversationAgent} size={24} />,
         leadingKey: `agent:${conversationAgent.id}:${JSON.stringify(conversationAgent.appearance)}`,
-        trailing: coordinatorWorkspaceEnabled ? <CoordinatorAgentSwitcher agent={conversationAgent} /> : <Button variant="ghost" size="icon-xs" asChild aria-label={`Configure ${conversationAgent.name}`}><Link to={agentDetailHref(conversationAgent.id, "runtime")}><ChatSettings /></Link></Button>,
+        trailing: coordinatorWorkspaceEnabled ? <CoordinatorAgentSwitcher agent={conversationAgent} /> : <Button variant="ghost" size="icon-xs" asChild aria-label={uiT("ui:messages.m_1ea11a99c4ffbe91", { v0: (conversationAgent.name) })}><Link to={agentDetailHref(conversationAgent.id, "runtime")}><ChatSettings /></Link></Button>,
         trailingKey: `${coordinatorWorkspaceEnabled ? "switch" : "configure"}:${conversationAgent.id}`,
       }]);
       return;
@@ -6565,11 +6545,11 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     try {
       await copyTextToClipboard(md);
       setCopied(true);
-      pushToast({ title: "Copied to clipboard", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_d37078fe6a1faa15"), tone: "success" });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       pushToast({
-        title: "Copy failed",
+        title: uiT("ui:messages.m_5b50e7a693fee952"),
         body:
           error instanceof Error
             ? error.message
@@ -6766,7 +6746,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     () => [
       {
         id: "cancel",
-        label: "Stop and cancel",
+        label: uiT("ui:messages.m_d1fcb8822c6fd346"),
         pendingLabel: "Stopping and cancelling...",
         isPending:
           stopAndFinalizeRun.isPending &&
@@ -6780,7 +6760,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       },
       {
         id: "done",
-        label: "Stop and done",
+        label: uiT("ui:messages.m_787e84f68bb49d4c"),
         pendingLabel: "Stopping and marking done...",
         isPending:
           stopAndFinalizeRun.isPending &&
@@ -6986,7 +6966,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
         issue.description ?? "",
       ];
       return issuesApi.create(issue.companyId, {
-        title: `Re-issue (isolated): ${issue.title ?? sourceLabel}`,
+        title: uiT("ui:messages.m_1252753240ea3ad1", { v0: (issue.title ?? sourceLabel) }),
         description: descriptionLines.join("\n"),
         priority: issue.priority,
         projectId: issue.projectId ?? null,
@@ -7006,7 +6986,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     onSuccess: (created) => {
       invalidateIssueCollections();
       pushToast({
-        title: "Isolated re-issue created",
+        title: uiT("ui:messages.m_6d11286299c74513"),
         body: created.identifier
           ? `${created.identifier} will run on a fresh isolated workspace.`
           : "A fresh isolated re-issue was created.",
@@ -7018,7 +6998,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       pushToast({
-        title: "Re-issue failed",
+        title: uiT("ui:messages.m_d2f4dc96997e51d4"),
         body:
           err instanceof Error
             ? err.message
@@ -7062,12 +7042,12 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       pushToast(
         variables.mode === "quarantine_restore"
           ? {
-              title: "Workspace repaired",
+              title: uiT("ui:messages.m_22f46fd2c10aa2cb"),
               body: "Dirty changes were quarantined onto a rescue branch and the recorded branch restored; the task will resume.",
               tone: "success",
             }
           : {
-              title: "Workspace branch reconciled",
+              title: uiT("ui:messages.m_a01d3ef71b57c6fb"),
               body: "The recorded branch now matches the live branch; the task will resume.",
               tone: "success",
             },
@@ -7075,7 +7055,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     },
     onError: (err) => {
       pushToast({
-        title: "Reconcile failed",
+        title: uiT("ui:messages.m_45e781836d87377c"),
         body:
           err instanceof Error
             ? err.message
@@ -7097,7 +7077,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
   const handleReconcileForwardRecoveryAction = useCallback(() => {
     if (!reconcileExecutionWorkspaceId) {
       pushToast({
-        title: "Reconcile failed",
+        title: uiT("ui:messages.m_45e781836d87377c"),
         body: "This task has no execution workspace to reconcile.",
         tone: "error",
       });
@@ -7116,7 +7096,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
     (reason: string) => {
       if (!reconcileExecutionWorkspaceId) {
         pushToast({
-          title: "Reconcile failed",
+          title: uiT("ui:messages.m_45e781836d87377c"),
           body: "This task has no execution workspace to reconcile.",
           tone: "error",
         });
@@ -7139,7 +7119,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
   const handleQuarantineRestoreRecoveryAction = useCallback(() => {
     if (!reconcileExecutionWorkspaceId) {
       pushToast({
-        title: "Repair failed",
+        title: uiT("ui:messages.m_9445b1425fef90cc"),
         body: "This task has no execution workspace to repair.",
         tone: "error",
       });
@@ -7358,11 +7338,11 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
       >
         <Paperclip className="h-3.5 w-3.5 mr-1.5" />
         {uploadAttachment.isPending || importMarkdownDocument.isPending ? (
-          "Uploading..."
+          uiT("ui:messages.m_72cb29c90ccd8361")
         ) : (
           <>
-            <span className="hidden sm:inline">Upload attachment</span>
-            <span className="sm:hidden">Upload</span>
+            <span className="hidden sm:inline">{uiT("ui:messages.m_dacea186cf5b68d4")}</span>
+            <span className="sm:hidden">{uiT("ui:messages.m_865e89de78d94c74")}</span>
           </>
         )}
       </Button>
@@ -7512,31 +7492,25 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
-            </span>
-            Live
-          </Badge>
+            </span>{uiT("ui:messages.m_b64ac05f17e64d03")}</Badge>
         )}
 
         {issue.originKind === "routine_execution" && issue.originId && (
           <Link
             to={`/routines/${issue.originId}`}
             className="inline-flex items-center gap-1 rounded-full bg-violet-500/10 border border-violet-500/30 px-2 py-0.5 text-(length:--text-nano) font-medium text-violet-600 dark:text-violet-400 shrink-0 hover:bg-violet-500/20 transition-colors"
-            title={`Routine execution from routine ${issue.originId}`}
+            title={uiT("ui:messages.m_262c8d8a24970f8a", { v0: (issue.originId) })}
           >
-            <Repeat className="h-3 w-3" />
-            Routine
-          </Link>
+            <Repeat className="h-3 w-3" />{uiT("ui:messages.m_0b5baf309897ec7e")}</Link>
         )}
 
         {issue.originKind === "task_watchdog" ? (
           <Badge
             variant="outline"
             className="border-sky-500/40 bg-sky-500/10 text-(length:--text-nano) text-sky-700 dark:text-sky-300"
-            title="This task is a generated watchdog task. It verifies whether stopped work in the watched task tree is legitimate."
+            title={uiT("ui:messages.m_2aeca021e90223c1")}
           >
-            <ScanEye className="h-3 w-3" />
-            Watchdog
-          </Badge>
+            <ScanEye className="h-3 w-3" />{uiT("ui:messages.m_da0ccfeab090c58a")}</Badge>
         ) : null}
 
         {/* Task Chat Redesign: no mode chip in the header — mode is a
@@ -7555,7 +7529,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                     "text-(length:--text-nano)",
                     workModeMeta.classes.badge,
                   )}
-                  title={`This task is in ${workModeMeta.label.toLowerCase()}.`}
+                  title={uiT("ui:messages.m_4fee61772f823ce2", { v0: (workModeMeta.label.toLowerCase()) })}
                 >
                   <WorkModeIcon className="h-3 w-3" aria-hidden />
                   {workModeMeta.label}
@@ -7569,11 +7543,9 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
             variant="outline"
             data-testid="issue-detail-parked-blocker"
             className="border-amber-500/60 bg-amber-500/15 text-(length:--text-nano) text-amber-700 dark:text-amber-300"
-            title="Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee."
+            title={uiT("ui:messages.m_36e80d73a6384440")}
           >
-            <Flag className="h-3 w-3" />
-            Blocked by parked work
-          </Badge>
+            <Flag className="h-3 w-3" />{uiT("ui:messages.m_8b239473a30cf86f")}</Badge>
         ) : null}
 
         {/* Project reads as a tile plus a name, matching the project rows in
@@ -7600,9 +7572,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           </Link>
         ) : (
           <span className="inline-flex items-center gap-1 text-xs text-muted-foreground opacity-50 px-1 -mx-1 py-0.5">
-            <ProjectTile size="xs" />
-            No project
-          </span>
+            <ProjectTile size="xs" />{uiT("ui:messages.m_f34c2be0d1c5f562")}</span>
         )}
 
         <IssueAttributionByline
@@ -7642,7 +7612,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               variant="ghost"
               size="icon-xs"
               onClick={copyIssueToClipboard}
-              title="Copy task as markdown"
+              title={uiT("ui:messages.m_a6e95a422aa766a5")}
             >
               {copied ? (
                 <Check className="h-4 w-4 text-green-500" />
@@ -7654,7 +7624,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               variant="ghost"
               size="icon-xs"
               onClick={() => setMobilePropsOpen(true)}
-              title="Properties"
+              title={uiT("ui:messages.m_ae43692b2a310b8e")}
             >
               <SlidersHorizontal className="h-4 w-4" />
             </Button>
@@ -7671,8 +7641,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                   archiveFromInbox.mutate(issue.id);
               }}
               disabled={archivePending}
-              title="Archive from inbox"
-              aria-label="Archive from inbox"
+              title={uiT("ui:messages.m_67c88421778ecd8b")}
+              aria-label={uiT("ui:messages.m_67c88421778ecd8b")}
             >
               <Archive className="h-4 w-4" />
             </Button>
@@ -7682,8 +7652,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               variant="ghost"
               size="icon-xs"
               onClick={() => setFileViewerPromptOpen(true)}
-              title="Open file... (g f)"
-              aria-label="Open file in this issue"
+              title={uiT("ui:messages.m_ac25d0b74213ed22")}
+              aria-label={uiT("ui:messages.m_9ac0bbc6936cf693")}
             >
               <FileCode2 className="h-4 w-4" />
             </Button>
@@ -7693,7 +7663,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               variant="ghost"
               size="icon-xs"
               onClick={copyIssueToClipboard}
-              title="Copy task as markdown"
+              title={uiT("ui:messages.m_a6e95a422aa766a5")}
             >
               {copied ? (
                 <Check className="h-4 w-4 text-green-500" />
@@ -7735,8 +7705,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                   variant="ghost"
                   size="icon-xs"
                   className="shrink-0"
-                  aria-label="More task actions"
-                  title="More task actions"
+                  aria-label={uiT("ui:messages.m_4fbf1e4ca386da9c")}
+                  title={uiT("ui:messages.m_4fbf1e4ca386da9c")}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
@@ -7769,9 +7739,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                         setMoreOpen(false);
                       }}
                     >
-                      <Plus className="h-3 w-3" />
-                      Add subtask
-                    </button>
+                      <Plus className="h-3 w-3" />{uiT("ui:messages.m_65db0c29ba4fffc3")}</button>
                     <button
                       className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-xs hover:bg-accent/50"
                       onClick={() => {
@@ -7783,9 +7751,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                         <Check className="h-3 w-3" />
                       ) : (
                         <Copy className="h-3 w-3" />
-                      )}
-                      Copy as markdown
-                    </button>
+                      )}{uiT("ui:messages.m_fec6709d0f0a779b")}</button>
                     {canArchiveFromInbox ? (
                       <button
                         className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-xs hover:bg-accent/50 disabled:opacity-50"
@@ -7796,9 +7762,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                           setMoreOpen(false);
                         }}
                       >
-                        <Archive className="h-3 w-3" />
-                        Archive from inbox
-                      </button>
+                        <Archive className="h-3 w-3" />{uiT("ui:messages.m_67c88421778ecd8b")}</button>
                     ) : null}
                   </>
                 ) : null}
@@ -7855,9 +7819,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                     setMoreOpen(false);
                   }}
                 >
-                  <EyeOff className="h-3 w-3" />
-                  Hide this task
-                </button>
+                  <EyeOff className="h-3 w-3" />{uiT("ui:messages.m_429dbcbd26baf366")}</button>
               </PopoverContent>
             </Popover>
                 )}
@@ -7901,7 +7863,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           draftKey={`issue:${issue.id}:description`}
           as="p"
           className="text-sm leading-7 text-foreground"
-          placeholder="Add a description..."
+          placeholder={uiT("ui:messages.m_eed0f05bd942078d")}
           multiline
           foldable
           mentions={mentionOptions}
@@ -7996,7 +7958,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           {error && coreIssueQuery.data && !isTransientError(error) ? (
             <div role="status" className="flex items-center gap-2 text-sm text-muted-foreground">
               Some task details could not be loaded.
-              <Button type="button" variant="ghost" size="sm" onClick={() => void refetchIssueDetail()}>Retry</Button>
+              <Button type="button" variant="ghost" size="sm" onClick={() => void refetchIssueDetail()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
             </div>
           ) : null}
           {/* Parent chain breadcrumb (redesign: rendered inside the thread viewport) */}
@@ -8026,7 +7988,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           )}
 
           {issue.status === "in_review" && issue.externalConversationState === "waiting" && (
-            <p role="status" className="text-sm text-muted-foreground">Reply sent. Send a message to continue.</p>
+            <p role="status" className="text-sm text-muted-foreground">{uiT("ui:messages.m_5b43d3527c9389d0")}</p>
           )}
 
           {issue.hiddenAt && (
@@ -8037,9 +7999,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                 taskChatShellEnabled && (isMobile ? "mt-4" : "mt-3"),
               )}
             >
-              <EyeOff className="h-4 w-4 shrink-0" />
-              This task is hidden
-            </div>
+              <EyeOff className="h-4 w-4 shrink-0" />{uiT("ui:messages.m_99c389715b813cb7")}</div>
           )}
           {treeControlWakeWarning ? (
             <p
@@ -8068,9 +8028,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
           {taskChatShellEnabled ? null : showRichSubIssuesSection ? (
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-medium text-muted-foreground">
-                  Sub-tasks
-                </h3>
+                <h3 className="text-sm font-medium text-muted-foreground">{uiT("ui:messages.m_ede4f8886e7d356e")}</h3>
               </div>
               <IssuesList
                 issues={childIssues}
@@ -8107,9 +8065,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                 onClick={openNewSubIssue}
                 className="shrink-0 shadow-none"
               >
-                <Plus className="mr-1.5 h-3.5 w-3.5" />
-                New Sub-task
-              </Button>
+                <Plus className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_2c89e3345cbe3b90")}</Button>
             </div>
           )}
 
@@ -8253,9 +8209,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               return (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">
-                      Artifacts
-                    </h3>
+                    <h3 className="text-sm font-medium text-muted-foreground">{uiT("ui:messages.m_314ae71b8c8dc9c9")}</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {workProductsWithFileRefs.map(({ product, fileRef }) => (
@@ -8291,17 +8245,11 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                 className={cn("w-full justify-start gap-1", shellSectionClass)}
               >
                 <TabsTrigger value="chat" className="gap-1.5">
-                  <MessageSquare className="h-3.5 w-3.5" />
-                  Chat
-                </TabsTrigger>
+                  <MessageSquare className="h-3.5 w-3.5" />{uiT("ui:messages.m_460b3a7da007b7af")}</TabsTrigger>
                 <TabsTrigger value="activity" className="gap-1.5">
-                  <ActivityIcon className="h-3.5 w-3.5" />
-                  Activity
-                </TabsTrigger>
+                  <ActivityIcon className="h-3.5 w-3.5" />{uiT("ui:messages.m_38da1505ca837328")}</TabsTrigger>
                 <TabsTrigger value="related-work" className="gap-1.5">
-                  <ListTree className="h-3.5 w-3.5" />
-                  Related work
-                </TabsTrigger>
+                  <ListTree className="h-3.5 w-3.5" />{uiT("ui:messages.m_f4f15799295a5006")}</TabsTrigger>
                 {issuePluginTabItems.map((item) => (
                   <TabsTrigger key={item.value} value={item.value}>
                     {item.label}
@@ -8750,7 +8698,7 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
               {taskChatShellEnabled ? (
                 <>
                   <SheetHeader className="sr-only">
-                    <SheetTitle>Task side panel</SheetTitle>
+                    <SheetTitle>{uiT("ui:messages.m_08f62aa5fae801c4")}</SheetTitle>
                   </SheetHeader>
                   <TaskSidePanel
                     pluginPanels={pluginPanels}
@@ -8819,8 +8767,8 @@ export function TaskDetailSurface({ conversation, tasksTab }: { tasksTab?: TaskS
                   <SheetHeader>
                     <SheetTitle className="text-sm">
                       {documentDeepLink?.documentKey === "plan"
-                        ? "Plan"
-                        : "Properties"}
+                        ? uiT("ui:messages.m_fa8ed0bdabdd6bcb")
+                        : uiT("ui:messages.m_ae43692b2a310b8e")}
                     </SheetTitle>
                   </SheetHeader>
                   <ScrollArea className="flex-1 overflow-y-auto">

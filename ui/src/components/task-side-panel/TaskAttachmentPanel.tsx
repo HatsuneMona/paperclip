@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Download } from "lucide-react";
@@ -59,7 +60,7 @@ export function TextAttachmentPreview({ title, text, markdown, html = false, csv
         <h2 className="min-w-0 flex-1 truncate text-sm font-medium" title={title}>{title}</h2>
         {markdown || html || csv ? <FilePreviewModeToggle mode={mode} onChange={setMode} label={html ? "HTML view" : csv ? "CSV view" : "Markdown view"} /> : null}
         <Button asChild variant="ghost" size="icon-sm">
-          <a href={downloadUrl} download aria-label={`Download ${title}`} title={`Download ${title}`}><Download aria-hidden /></a>
+          <a href={downloadUrl} download aria-label={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (title) })} title={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (title) })}><Download aria-hidden /></a>
         </Button>
       </header>
       <div className={renderHtml || renderCsv ? "flex min-h-0 flex-1 flex-col overflow-hidden" : "min-h-0 flex-1 overflow-auto p-4"}>
@@ -109,8 +110,8 @@ export function TaskAttachmentPanel({ issueId, attachmentId }: { issueId: string
     return (
       <div className="space-y-3 p-4" role="alert">
         <p className="text-sm">{contentView.kind === "error" ? "Could not preview this file. Retry or download it." : "This file is too large or is not supported for text preview. Download it instead."}</p>
-        {eligible ? <Button onClick={() => void content.refetch()}>Retry</Button> : null}
-        <Button asChild variant="outline"><a href={downloadUrl} download>Download file</a></Button>
+        {eligible ? <Button onClick={() => void content.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button> : null}
+        <Button asChild variant="outline"><a href={downloadUrl} download>{uiT("ui:messages.m_9de4149fb9716cfc")}</a></Button>
       </div>
     );
   }

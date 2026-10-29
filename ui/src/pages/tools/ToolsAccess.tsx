@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect } from "react";
 import { Wrench } from "lucide-react";
 import { Link, Navigate, useParams } from "@/lib/router";
@@ -40,8 +41,8 @@ export function ToolsAccess() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Apps", href: "/apps" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_89dd748442c19485"), href: "/apps" },
       ...(advanced
         ? [{ label: "Advanced setup" }]
         : [
@@ -87,9 +88,7 @@ export function ToolsAccess() {
         <header>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl font-bold text-foreground">Advanced setup</h1>
-            <span className="inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-(length:--text-micro) font-bold text-background">
-              Advanced
-            </span>
+            <span className="inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-(length:--text-micro) font-bold text-background">{uiT("ui:messages.m_9f088dbebd6c3c70")}</span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
             For tools that aren't in the gallery. You'll need details from the tool's documentation.

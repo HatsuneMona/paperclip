@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCurrentAccountGuard } from "@/hooks/useAccountBoundMutation";
 import { AgentAvatar } from "../AgentAvatar";
 import {
@@ -1306,12 +1307,11 @@ export function TaskChatComposer({
             <div className="ml-auto flex shrink-0 items-center gap-1">
               {takeover.pendingCount > 1 ? (
                 <Button type="button" size="sm" variant="ghost" className="h-7 px-2" onClick={takeover.onShowNext}>
-                  {takeover.pendingCount} pending
-                </Button>
+                  {takeover.pendingCount}{uiT("ui:messages.m_f9ad5e1de7d0af51")}</Button>
               ) : null}
               <div ref={setTakeoverControlsSlot} className="flex shrink-0 items-center" data-testid="task-chat-composer-takeover-controls-slot" />
               <Button type="button" size="icon-xs" variant="ghost" className="text-muted-foreground hover:text-foreground"
-                aria-label={`Dismiss ${takeover.label}`} disabled={takeoverBusy} onClick={takeover.onDismiss}>
+                aria-label={uiT("ui:messages.m_277f0be349a73834", { v0: (takeover.label) })} disabled={takeoverBusy} onClick={takeover.onDismiss}>
                 <X aria-hidden />
               </Button>
             </div>
@@ -1395,8 +1395,7 @@ export function TaskChatComposer({
             {pendingTakeover?.label ?? takeover?.label ?? "Pending input"}
           </span>
           <span className="shrink-0 font-medium">
-            {pendingTakeover?.count ?? takeover?.pendingCount ?? 1} pending
-          </span>
+            {pendingTakeover?.count ?? takeover?.pendingCount ?? 1}{uiT("ui:messages.m_f9ad5e1de7d0af51")}</span>
         </button>
       ) : null}
           {pause && conversationMode ? (
@@ -1412,7 +1411,7 @@ export function TaskChatComposer({
               onChange={changeBody}
               placeholder={
                 disabled
-                  ? (disabledReason ?? "Composer disabled")
+                  ? (disabledReason ?? uiT("ui:messages.m_72a59faee394ed54"))
                   : effectivePlaceholder
               }
               readOnly={disabled || !!uncertainSubmission || Boolean(creation && (submitting || creation.readOnly))}
@@ -1483,7 +1482,7 @@ export function TaskChatComposer({
                         {attachment.status === "uploading"
                           ? "Uploading…"
                           : attachment.status === "error"
-                            ? (attachment.error ?? "Upload failed")
+                            ? (attachment.error ?? uiT("ui:messages.m_6efc5d27f30b20c1"))
                             : [kind.label, sizeLabel]
                                 .filter(Boolean)
                                 .join(" · ")}
@@ -1500,7 +1499,7 @@ export function TaskChatComposer({
                         </AttachmentAction>
                       ) : null}
                       <AttachmentAction
-                        aria-label={`Remove ${attachment.name}`}
+                        aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (attachment.name) })}
                         disabled={!!uncertainSubmission}
                         onClick={() =>
                           setAttachments((prev) =>
@@ -1583,11 +1582,11 @@ export function TaskChatComposer({
               <InlineEntitySelector
                 value={assigneeValue}
                 options={reassignOptions ?? []}
-                placeholder="Assignee"
+                placeholder={uiT("ui:messages.m_5e20d20e3978dcf8")}
                 mobileTitle="Select assignee"
                 noneLabel="No assignee"
-                searchPlaceholder="Search assignees…"
-                emptyMessage="No matches."
+                searchPlaceholder={uiT("ui:messages.m_12019555b7b48d70")}
+                emptyMessage={uiT("ui:messages.m_d6572bd2e77380ce")}
                 onChange={updatePendingAssignee}
                 disabled={disabled}
                 triggerTestId="task-chat-composer-assignee"
@@ -1633,9 +1632,7 @@ export function TaskChatComposer({
                 onClick={onCancelQueuedEdit}
                 disabled={submitting}
                 className="h-8 shrink-0 rounded-md px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
-              >
-                Cancel
-              </button>
+              >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</button>
             ) : null}
             <button
               type="button"
@@ -1655,28 +1652,28 @@ export function TaskChatComposer({
               title={
                 showStop
                   ? stopControl.stopping
-                    ? "Stopping…"
-                    : "Stop response"
+                    ? uiT("ui:messages.m_bbe8574175aba84f")
+                    : uiT("ui:messages.m_d5ca579c1943396c")
                   : queuedEdit
                     ? queuedEdit.stale
-                      ? "Queue as new message"
-                      : "Save queued message"
+                      ? uiT("ui:messages.m_c4284a6608e93951")
+                      : uiT("ui:messages.m_3d52a0db1756eee7")
                     : uploadPending
-                      ? "Waiting for upload to finish"
+                      ? uiT("ui:messages.m_71fd6a43957e57db")
                       : uploadFailed
-                        ? "Remove the failed attachment to send"
-                        : creation ? `${creation.submitLabel} (⌘+Enter)` : "Send (⌘+Enter)"
+                        ? uiT("ui:messages.m_10d2ce8e995a605d")
+                        : creation ? `${creation.submitLabel} (⌘+Enter)` : uiT("ui:messages.m_b5f7acc1f87d8c26")
               }
               aria-label={
                 showStop
                   ? stopControl.stopping
-                    ? "Stopping…"
-                    : "Stop"
+                    ? uiT("ui:messages.m_bbe8574175aba84f")
+                    : uiT("ui:messages.m_cae7d57bc067a514")
                   : queuedEdit
                     ? queuedEdit.stale
-                      ? "Queue as new message"
-                      : "Save queued message"
-                    : creation?.submitLabel ?? "Send"
+                      ? uiT("ui:messages.m_c4284a6608e93951")
+                      : uiT("ui:messages.m_3d52a0db1756eee7")
+                    : creation?.submitLabel ?? uiT("ui:messages.m_f6f4688ff23d50c6")
               }
               aria-busy={submitting}
               className={cn(

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   COMPANY_SEARCH_UPDATED_WITHIN_OPTIONS,
   ISSUE_PRIORITIES,
@@ -45,7 +46,7 @@ export const SEARCH_OPERATOR_SUGGESTIONS: SearchOperatorSuggestion[] = [
   { token: "assignee:me", label: "Assigned to me", description: "Use your current board user" },
   { token: "project:\"Paperclip App\"", label: "Project name", description: "Quote multi-word project names" },
   { token: "label:bug", label: "Label", description: "Filter by issue label" },
-  { token: "priority:high", label: "High priority", description: "Filter by priority" },
+  { token: "priority:high", label: "High priority", description: uiT("ui:messages.m_48b74b8f81c021ef") },
   { token: "updated:>7d", label: "Recently updated", description: "Updated in the last 7 days" },
 ];
 

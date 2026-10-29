@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, Loader2 } from "lucide-react";
@@ -187,7 +188,7 @@ export function GitHubChatSetup() {
   }, [connected, bot, selectedAgent, state, queryClient, navigate]);
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
       { label: "GitHub Code Review Bot" },
     ]);
     return () => setBreadcrumbs([]);
@@ -303,7 +304,7 @@ export function GitHubChatSetup() {
           ? "Choose agent"
           : identityOnly || state?.state === "identity"
               ? "Connect your account"
-              : reconnect && existing ? "Reconnect GitHub" : "Connect GitHub"}
+              : reconnect && existing ? "Reconnect GitHub" : uiT("ui:messages.m_4027e5b24418520f")}
       </h1>
       {(error || (!identityOnly && !existing && progress.error) || accounts.error) && (
         <p role="alert" className="text-sm text-destructive">
@@ -586,9 +587,7 @@ export function GitHubChatSetup() {
           <Link
             className="text-sm underline"
             to={`/apps/chat/${bot.id}/settings`}
-          >
-            Connection settings
-          </Link>
+          >{uiT("ui:messages.m_b4ddb3c1ca6cd289")}</Link>
           {footer("Try again", refresh)}
         </>
       ) : (
@@ -622,7 +621,7 @@ export function GitHubChatSetup() {
           </div>
           {accountChoice === "organization" && (
             <div className="space-y-2">
-              <Label htmlFor="github-owner-login">Organization</Label>
+              <Label htmlFor="github-owner-login">{uiT("ui:messages.m_d764d42592fc9687")}</Label>
               <Input
                 id="github-owner-login"
                 disabled={busy || !!state?.registration}
@@ -633,7 +632,7 @@ export function GitHubChatSetup() {
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="github-app-name">App name</Label>
+            <Label htmlFor="github-app-name">{uiT("ui:messages.m_e6ad399685374164")}</Label>
             <Input
               id="github-app-name"
               disabled={busy || !!state?.registration}

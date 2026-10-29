@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -226,7 +227,7 @@ export function StatusCardDetailDrawer({
                 ) : (
                   <Wand2 className="h-3.5 w-3.5" />
                 )}
-                {setupRunning ? "Setting up…" : recompileMutation.isPending ? "Running…" : "Run now"}
+                {setupRunning ? "Setting up…" : recompileMutation.isPending ? uiT("ui:messages.m_46c541363b0253b1") : uiT("ui:messages.m_0991397702fabb40")}
               </Button>
             ) : (
               <Button
@@ -236,7 +237,7 @@ export function StatusCardDetailDrawer({
                 disabled={refreshMutation.isPending || lifecycle === "updating"}
               >
                 <RefreshCw className={cn("h-3.5 w-3.5", refreshMutation.isPending && "animate-spin")} />
-                {refreshMutation.isPending ? "Refreshing…" : "Refresh"}
+                {refreshMutation.isPending ? uiT("ui:messages.m_1c0def7be0607b96") : uiT("ui:messages.m_0e91610117029a62")}
               </Button>
             )}
           </div>
@@ -248,10 +249,10 @@ export function StatusCardDetailDrawer({
 
         <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col gap-0">
           <TabsList variant="line" className="w-full justify-start gap-4 border-b border-border px-4">
-            <TabsTrigger value="summary">Summary</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="summary">{uiT("ui:messages.m_8e76a94ac8320d51")}</TabsTrigger>
+            <TabsTrigger value="settings">{uiT("ui:messages.m_74a883a037bc227f")}</TabsTrigger>
             <TabsTrigger value="watched">Watched issues</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="history">{uiT("ui:messages.m_0e76960093379060")}</TabsTrigger>
           </TabsList>
 
           {actionError ? (
@@ -281,8 +282,7 @@ export function StatusCardDetailDrawer({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent align="end" position="popper">
-                        <SelectItem value="__latest__" className="text-xs">
-                          Revision {latestRevisionNumber} · latest
+                        <SelectItem value="__latest__" className="text-xs">{uiT("ui:messages.m_e330d85ff901027a")}{latestRevisionNumber} · latest
                         </SelectItem>
                         <SelectSeparator />
                         {summaryRevisions.slice(0, 30).map((update) => (
@@ -298,7 +298,7 @@ export function StatusCardDetailDrawer({
                       </SelectContent>
                     </Select>
                   ) : latestRevisionNumber > 0 ? (
-                    <span className="text-xs text-muted-foreground">Revision {latestRevisionNumber} · latest</span>
+                    <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_e330d85ff901027a")}{latestRevisionNumber} · latest</span>
                   ) : null}
                 </div>
               ) : null}
@@ -307,8 +307,7 @@ export function StatusCardDetailDrawer({
                 <MarkdownBody className="text-sm leading-7">{draftStream.draft}</MarkdownBody>
               ) : selectedRevision ? (
                 <div className="space-y-2 rounded-md border border-border bg-muted/30 p-3">
-                  <p className="text-xs text-muted-foreground" title={formatDateTime(selectedRevision.startedAt)}>
-                    Revision {revisionNumberOf(selectedRevision)} · {updateKindLabel(selectedRevision.kind)} ·{" "}
+                  <p className="text-xs text-muted-foreground" title={formatDateTime(selectedRevision.startedAt)}>{uiT("ui:messages.m_e330d85ff901027a")}{revisionNumberOf(selectedRevision)} · {updateKindLabel(selectedRevision.kind)} ·{" "}
                     {relativeTime(selectedRevision.startedAt)}
                   </p>
                   {selectedRevisionBody ? (
@@ -361,7 +360,7 @@ export function StatusCardDetailDrawer({
                 <section className="space-y-2">
                   <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {selectedRevision ? "Integrated in this revision" : "Integrated in this update"} (
-                    {displayedChanges.length} {displayedChanges.length === 1 ? "change" : "changes"})
+                    {displayedChanges.length} {displayedChanges.length === 1 ? uiT("ui:messages.m_12ea12eace7d655f") : uiT("ui:messages.m_d0b4ba2311b3e849")})
                   </h3>
                   <div className="space-y-1.5">
                     {displayedChanges.map((change) => (
@@ -385,7 +384,7 @@ export function StatusCardDetailDrawer({
                 <>
                   <div className="text-xs text-muted-foreground">
                     Today: {todayRollup.updateCount}{" "}
-                    {todayRollup.updateCount === 1 ? "update" : "updates"} ·{" "}
+                    {todayRollup.updateCount === 1 ? uiT("ui:messages.m_2937013f21818106") : "updates"} ·{" "}
                     {formatTokens(todayRollup.totalTokens)} · {formatCents(todayRollup.totalCostCents)}
                     {card.refreshPolicy.dailyTokenCap ? ` · daily cap ${formatTokens(card.refreshPolicy.dailyTokenCap)}` : ""}
                   </div>
@@ -427,7 +426,7 @@ export function StatusCardDetailDrawer({
                 </div>
               ) : dryRunQuery.isError ? (
                 <InlineBanner tone="danger" title="Could not load matched issues">
-                  {dryRunQuery.error instanceof Error ? dryRunQuery.error.message : "Try again."}
+                  {dryRunQuery.error instanceof Error ? dryRunQuery.error.message : uiT("ui:messages.m_a0c2cc1374d94994")}
                 </InlineBanner>
               ) : (
                 <MatchedIssueList
@@ -465,7 +464,7 @@ export function StatusCardDetailDrawer({
               </section>
 
               <section className="space-y-2">
-                <h3 className="text-sm font-semibold">Agent</h3>
+                <h3 className="text-sm font-semibold">{uiT("ui:messages.m_11b39c93777e8f1f")}</h3>
                 <SummarizerAgentSelect
                   companyId={card.companyId}
                   value={summarizerAgentId}
@@ -480,9 +479,7 @@ export function StatusCardDetailDrawer({
 
               <div className="flex justify-end border-t border-border pt-4">
                 <Button onClick={() => saveSettingsMutation.mutate()} disabled={saveSettingsMutation.isPending}>
-                  {saveSettingsMutation.isPending ? <Loader2 className="animate-spin" /> : null}
-                  Save
-                </Button>
+                  {saveSettingsMutation.isPending ? <Loader2 className="animate-spin" /> : null}{uiT("ui:messages.m_1509f561f2416598")}</Button>
               </div>
             </TabsContent>
           </div>

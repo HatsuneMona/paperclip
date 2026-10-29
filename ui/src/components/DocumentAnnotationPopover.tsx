@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Agent, DocumentAnnotationThreadWithComments } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -102,14 +103,14 @@ export function DocumentAnnotationPopover(props: DocumentAnnotationPopoverProps)
                 submitComposer();
               }
             }}
-            placeholder="Write a comment…"
+            placeholder={uiT("ui:messages.m_d21c3e2f61407ea0")}
             disabled={props.newCommentDisabled || createThread.isPending}
             className="resize-y text-sm"
           />
           <div className="mt-2 flex justify-end gap-2">
-            <Button type="button" size="sm" variant="ghost" onClick={props.onClose}>Cancel</Button>
+            <Button type="button" size="sm" variant="ghost" onClick={props.onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button type="button" size="sm" disabled={!composer.trim() || createThread.isPending || props.newCommentDisabled || !props.baseRevisionId} onClick={submitComposer}>
-              {createThread.isPending ? "Posting…" : "Comment"}
+              {createThread.isPending ? uiT("ui:messages.m_648a2ef491ba918c") : uiT("ui:messages.m_44f5e3fbec57be75")}
             </Button>
           </div>
         </div>

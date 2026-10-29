@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,11 +64,11 @@ function AuthAttempt({
   };
   return (
     <section
-      aria-label={`Connect ${info.name}`}
+      aria-label={uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (info.name) })}
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-semibold">Connect {info.name}</h3>
+        <h3 className="text-sm font-semibold">{uiT("ui:messages.m_3b887c9884f2c97a")}{info.name}</h3>
         <p className="text-xs text-muted-foreground">
           {aiMethodLabel(provider, method)}
         </p>
@@ -105,7 +106,7 @@ function AuthAttempt({
                   value={value}
                   onChange={setValue}
                   onSubmit={submit}
-                  placeholder="Enter API key here"
+                  placeholder={uiT("ui:messages.m_c80c3ac9799dc19b")}
                   disabled={busy}
                   autoFocus
                 />
@@ -155,13 +156,11 @@ function AuthAttempt({
                 setValue("");
                 onCancel();
               }}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             {!unsupported &&
               (method === "api_key" ? (
                 <Button disabled={busy || !value.trim()} onClick={submit}>
-                  {busy ? "Connecting…" : "Connect"}
+                  {busy ? uiT("ui:messages.m_72021eb70e91b4d5") : uiT("ui:messages.m_1a2303ede07493ac")}
                 </Button>
               ) : state.phase === "waiting" ? (
                 provider === "anthropic" ? (
@@ -178,8 +177,8 @@ function AuthAttempt({
                   {busy
                     ? "Preparing sign-in…"
                     : state.phase === "idle"
-                      ? "Sign in"
-                      : "Try again"}
+                      ? uiT("ui:messages.m_bfd402b2f6f38125")
+                      : uiT("ui:messages.m_d8b8392e2c542950")}
                 </Button>
               ))}
           </div>

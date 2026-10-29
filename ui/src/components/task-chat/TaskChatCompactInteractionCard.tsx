@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { itemVerdictHref } from "@/lib/item-verdict-links";
 import { Link } from "@/lib/router";
 import {
@@ -544,8 +545,7 @@ function ReceiptDisclosure({
               <strong>{interaction.payload.toolAction.toolDisplayName}</strong>{" "}
               · {interaction.payload.toolAction.risk} risk
             </p>
-            <p className="mt-1">
-              Expires{" "}
+            <p className="mt-1">{uiT("ui:messages.m_f6725f3af08a06a2")}{" "}
               {new Date(
                 interaction.payload.toolAction.expiresAt,
               ).toLocaleString()}
@@ -566,7 +566,7 @@ function ReceiptDisclosure({
         {interaction.payload.secretProposal ? (
           <dl className="grid gap-1 rounded-sm bg-muted/45 px-3 py-2.5 text-sm">
             <div>
-              <dt className="text-xs text-muted-foreground">Secret</dt>
+              <dt className="text-xs text-muted-foreground">{uiT("ui:messages.m_7e32a729b1226ed1")}</dt>
               <dd>{interaction.payload.secretProposal.sourceSecretLabel}</dd>
             </div>
             <div>
@@ -581,7 +581,7 @@ function ReceiptDisclosure({
               <dd>{interaction.payload.secretProposal.justification}</dd>
             </div>
             <div>
-              <dt className="text-xs text-muted-foreground">Expires</dt>
+              <dt className="text-xs text-muted-foreground">{uiT("ui:messages.m_f6725f3af08a06a2")}</dt>
               <dd>
                 {new Date(
                   interaction.payload.secretProposal.expiresAt,
@@ -906,8 +906,7 @@ function ConfirmationCard({
             >
               {interaction.payload.toolAction.risk} risk
             </span>
-            <span className="ml-auto text-xs text-muted-foreground">
-              Expires{" "}
+            <span className="ml-auto text-xs text-muted-foreground">{uiT("ui:messages.m_f6725f3af08a06a2")}{" "}
               {new Date(
                 interaction.payload.toolAction.expiresAt,
               ).toLocaleString()}
@@ -932,7 +931,7 @@ function ConfirmationCard({
       {interaction.payload.secretProposal ? (
         <dl className="mt-3 grid gap-2 rounded-sm bg-muted/45 px-3 py-2.5 text-sm">
           <div>
-            <dt className="text-xs text-muted-foreground">Secret</dt>
+            <dt className="text-xs text-muted-foreground">{uiT("ui:messages.m_7e32a729b1226ed1")}</dt>
             <dd>{interaction.payload.secretProposal.sourceSecretLabel}</dd>
           </div>
           <div>
@@ -947,7 +946,7 @@ function ConfirmationCard({
             <dd>{interaction.payload.secretProposal.justification}</dd>
           </div>
           <div>
-            <dt className="text-xs text-muted-foreground">Expires</dt>
+            <dt className="text-xs text-muted-foreground">{uiT("ui:messages.m_f6725f3af08a06a2")}</dt>
             <dd>
               {new Date(
                 interaction.payload.secretProposal.expiresAt,
@@ -963,7 +962,7 @@ function ConfirmationCard({
             className="text-xs font-medium leading-4 text-foreground"
           >
             {interaction.payload.rejectReasonLabel ?? "What should change?"}
-            {interaction.payload.rejectRequiresReason ? "" : " (optional)"}
+            {interaction.payload.rejectRequiresReason ? "" : uiT("ui:messages.m_edbfc3dcbe849138")}
           </p>
           {isPlanConfirmation ? (
             <TaskChatRichInput
@@ -971,7 +970,7 @@ function ConfirmationCard({
               onChange={setReason}
               placeholder={
                 interaction.payload.declineReasonPlaceholder ??
-                "Describe what should change"
+                uiT("ui:messages.m_05189224f028d6a0")
               }
               imageUploadHandler={onUploadImage}
               mentions={mentions}
@@ -992,7 +991,7 @@ function ConfirmationCard({
               onChange={(event) => setReason(event.target.value)}
               placeholder={
                 interaction.payload.declineReasonPlaceholder ??
-                "Add a short note"
+                uiT("ui:messages.m_1adb884ad7345cf3")
               }
               className={TAKEOVER_TEXTAREA_CLASS}
               autoFocus
@@ -1013,9 +1012,7 @@ function ConfirmationCard({
               onClick={() => {
                 setRejecting(false);
               }}
-            >
-              Back
-            </Button>
+            >{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             <Button
               type="button"
               size="sm"
@@ -1032,7 +1029,7 @@ function ConfirmationCard({
               {working === "reject" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {interaction.payload.rejectLabel ?? uiT("ui:messages.m_ab604a360777735f")}
             </Button>
           </>
         ) : (
@@ -1048,7 +1045,7 @@ function ConfirmationCard({
                   : void resolve("reject")
               }
             >
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {interaction.payload.rejectLabel ?? uiT("ui:messages.m_ab604a360777735f")}
             </Button>
             <Button
               type="button"
@@ -1059,7 +1056,7 @@ function ConfirmationCard({
               {working === "accept" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.acceptLabel ?? "Approve"}
+              {interaction.payload.acceptLabel ?? uiT("ui:messages.m_6007acbe30b2cd98")}
             </Button>
           </>
         )}
@@ -1184,8 +1181,8 @@ function CheckboxConfirmationCard({
             <Input
               value={filter}
               onChange={(event) => setFilter(event.target.value)}
-              placeholder="Filter options"
-              aria-label="Filter options"
+              placeholder={uiT("ui:messages.m_62b7223959c2ebdb")}
+              aria-label={uiT("ui:messages.m_62b7223959c2ebdb")}
               className="pl-8"
             />
           </label>
@@ -1227,14 +1224,14 @@ function CheckboxConfirmationCard({
             className="text-xs font-medium text-foreground"
           >
             {interaction.payload.rejectReasonLabel ?? "What should change?"}
-            {interaction.payload.rejectRequiresReason ? "" : " (optional)"}
+            {interaction.payload.rejectRequiresReason ? "" : uiT("ui:messages.m_edbfc3dcbe849138")}
           </label>
           <Textarea
             id={`${interaction.id}-reject-reason`}
             value={reason}
             onChange={(event) => setReason(event.target.value)}
             placeholder={
-              interaction.payload.declineReasonPlaceholder ?? "Add a short note"
+              interaction.payload.declineReasonPlaceholder ?? uiT("ui:messages.m_1adb884ad7345cf3")
             }
             className={TAKEOVER_TEXTAREA_CLASS}
             autoFocus
@@ -1252,9 +1249,7 @@ function CheckboxConfirmationCard({
               variant="ghost"
               disabled={working !== null}
               onClick={() => setRejecting(false)}
-            >
-              Back
-            </Button>
+            >{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             <Button
               type="button"
               size="sm"
@@ -1270,7 +1265,7 @@ function CheckboxConfirmationCard({
               {working === "reject" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.rejectLabel ?? "Decline"}
+              {interaction.payload.rejectLabel ?? uiT("ui:messages.m_a2d285b352873457")}
             </Button>
           </>
         ) : (
@@ -1286,7 +1281,7 @@ function CheckboxConfirmationCard({
                   : void resolve("reject")
               }
             >
-              {interaction.payload.rejectLabel ?? "Decline"}
+              {interaction.payload.rejectLabel ?? uiT("ui:messages.m_a2d285b352873457")}
             </Button>
             <Button
               type="button"
@@ -1466,15 +1461,15 @@ function SuggestedTasksCard({
           <Input
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            placeholder="Filter suggested tasks"
-            aria-label="Filter suggested tasks"
+            placeholder={uiT("ui:messages.m_fa7c7e087a1b70e2")}
+            aria-label={uiT("ui:messages.m_fa7c7e087a1b70e2")}
             className="pl-8"
           />
         </label>
       ) : null}
       <ul
         className="mt-2 max-h-(--sz-28dvh) overflow-y-auto scrollbar-auto-hide"
-        aria-label="Suggested tasks"
+        aria-label={uiT("ui:messages.m_5addd6fff8dd7969")}
       >
         {visibleRoots.map((node) => (
           <SuggestedTaskRow
@@ -1497,7 +1492,7 @@ function SuggestedTasksCard({
             id={`${interaction.id}-reject-reason`}
             value={reason}
             onChange={(event) => setReason(event.target.value)}
-            placeholder="Add a short note"
+            placeholder={uiT("ui:messages.m_1adb884ad7345cf3")}
             className={TAKEOVER_TEXTAREA_CLASS}
             autoFocus
           />
@@ -1505,7 +1500,7 @@ function SuggestedTasksCard({
       ) : null}
       <InteractionActionError message={actionError} />
       {coordinator && interaction.payload.tasks.length > 1 ? (
-        <p className="mt-3 text-xs text-muted-foreground">{selected.size} of {interaction.payload.tasks.length} selected</p>
+        <p className="mt-3 text-xs text-muted-foreground">{selected.size}{uiT("ui:messages.m_a4282e4b2298b90b")}{interaction.payload.tasks.length}{uiT("ui:messages.m_97a2e8815acd21f3")}</p>
       ) : null}
       <ActionRow
         hint={coordinator ? null : `${selected.size} of ${interaction.payload.tasks.length} selected`}
@@ -1519,7 +1514,7 @@ function SuggestedTasksCard({
               disabled={working !== null}
               onClick={() => setRejecting(false)}
             >
-              {coordinator ? "Cancel" : "Back"}
+              {coordinator ? uiT("ui:messages.m_19766ed6ccb2f4a3") : uiT("ui:messages.m_76900f1bfd16c8d4")}
             </Button>
             <Button
               type="button"
@@ -1531,13 +1526,13 @@ function SuggestedTasksCard({
               {working === "reject" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {coordinator ? "Request revision" : "Send back"}
+              {coordinator ? uiT("ui:messages.m_0bf92c49028dd595") : "Send back"}
             </Button>
           </>
         ) : (
           <>
             {coordinator ? <Button type="button" size="sm" variant="ghost" disabled={working !== null || !onRejectInteraction}
-              onClick={() => { setReason(""); void resolve("reject", ""); }}>Reject</Button> : null}
+              onClick={() => { setReason(""); void resolve("reject", ""); }}>{uiT("ui:messages.m_ab604a360777735f")}</Button> : null}
             <Button
               type="button"
               size="sm"
@@ -1558,7 +1553,7 @@ function SuggestedTasksCard({
               {working === "accept" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {coordinator ? "Create" : "Create selected"}
+              {coordinator ? uiT("ui:messages.m_4759498ac2a719c6") : "Create selected"}
             </Button>
           </>
         )}
@@ -1729,30 +1724,30 @@ function ItemVerdictsCard({
   return (
     <div>
       <div className="mb-2 flex items-center text-xs text-muted-foreground">
-        <span>{drafts.size + resolvedById.size} decided</span>
+        <span>{drafts.size + resolvedById.size}{uiT("ui:messages.m_9c843b82f79501bd")}</span>
         <TaskChatComposerTakeoverControls>
           <nav
             className="flex shrink-0 items-center gap-1"
-            aria-label="Item pagination"
+            aria-label={uiT("ui:messages.m_3ca1c211751463fe")}
           >
             <Button
               type="button"
               size="icon-xs"
               variant="ghost"
-              aria-label="Previous item"
+              aria-label={uiT("ui:messages.m_81b35f1b4332ab68")}
               disabled={working || page === 0}
               onClick={() => setPage((current) => current - 1)}
             >
               <ChevronLeft aria-hidden />
             </Button>
             <span className="min-w-10 text-center tabular-nums">
-              {page + 1} of {items.length}
+              {page + 1}{uiT("ui:messages.m_a4282e4b2298b90b")}{items.length}
             </span>
             <Button
               type="button"
               size="icon-xs"
               variant="ghost"
-              aria-label="Next item"
+              aria-label={uiT("ui:messages.m_1e47d4f7a1a3c545")}
               disabled={
                 working ||
                 page === items.length - 1 ||
@@ -1777,16 +1772,14 @@ function ItemVerdictsCard({
           ) : null}
         </div>
         {itemHref && !itemHref.startsWith("/api/") && (itemHref.startsWith("/") || itemHref.startsWith("#")) ? (
-          <Link to={itemHref} disableIssueQuicklook className="text-xs font-medium text-primary hover:underline">Open</Link>
+          <Link to={itemHref} disableIssueQuicklook className="text-xs font-medium text-primary hover:underline">{uiT("ui:messages.m_ed077f3d8125d60d")}</Link>
         ) : itemHref ? (
           <a
             href={itemHref}
             target="_blank"
             rel="noreferrer"
             className="text-xs font-medium text-primary hover:underline"
-          >
-            Open
-          </a>
+          >{uiT("ui:messages.m_ed077f3d8125d60d")}</a>
         ) : null}
       </div>
       {item.previewMarkdown ? (
@@ -1805,7 +1798,7 @@ function ItemVerdictsCard({
         <div
           className="mt-3 flex flex-wrap gap-1.5"
           role="group"
-          aria-label={`Verdict for ${item.label}`}
+          aria-label={uiT("ui:messages.m_591ae08ca7589af6", { v0: (item.label) })}
         >
           {enabledVerdicts.map((verdict) => (
             <Button
@@ -1844,13 +1837,13 @@ function ItemVerdictsCard({
             htmlFor={`${interaction.id}-${item.id}-reason`}
             className="text-xs font-medium text-foreground"
           >
-            {interaction.payload.reasonLabel ?? "Reason"}
+            {interaction.payload.reasonLabel ?? uiT("ui:messages.m_f81ab834de5f8491")}
           </label>
           <Textarea
             id={`${interaction.id}-${item.id}-reason`}
             value={draft.reason}
             onChange={(event) => setReason(event.target.value)}
-            placeholder="Add a short reason"
+            placeholder={uiT("ui:messages.m_9e6390b263aa1848")}
             className={TAKEOVER_TEXTAREA_CLASS}
             autoFocus
           />

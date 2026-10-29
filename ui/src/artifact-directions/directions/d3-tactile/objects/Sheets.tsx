@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../../kit";
 import { excerptBlocks, isTaskDocument, tabLabel, tabTone } from "../kind";
@@ -78,7 +79,7 @@ export function DocumentSheet({ artifact, size }: { artifact: LabArtifact; size:
             </span>
           </span>
         )}
-        {isTaskDocument(artifact) ? <Stamp>rev {artifact.revision}</Stamp> : null}
+        {isTaskDocument(artifact) ? <Stamp>{uiT("ui:messages.m_efd46cd7c40429d4")}{artifact.revision}</Stamp> : null}
       </Paper>
       {tab ? <ExtTab label={tab} tone={tabTone(artifact)} /> : null}
     </Scaled>

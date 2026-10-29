@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -12,12 +13,12 @@ import { ErrorState, RelativeTime } from "@/pages/tools/shared";
 const PAGE_SIZE = 25;
 
 const OUTCOME_META: Record<ToolAuditOutcome, { label: string; status: string }> = {
-  allowed: { label: "Allowed", status: "allowed" },
-  blocked: { label: "Blocked", status: "denied" },
-  asked_first: { label: "Asked first", status: "require-approval" },
-  waiting: { label: "Waiting", status: "deferred" },
-  failed: { label: "Failed", status: "failed" },
-  unknown: { label: "Recorded", status: "unchecked" },
+  allowed: { label: uiT("ui:messages.m_1bb201d188352e9b"), status: "allowed" },
+  blocked: { label: uiT("ui:messages.m_18f2a0947f9d6523"), status: "denied" },
+  asked_first: { label: uiT("ui:messages.m_db928628a30ccd18"), status: "require-approval" },
+  waiting: { label: uiT("ui:messages.m_6e293a8c009e0011"), status: "deferred" },
+  failed: { label: uiT("ui:messages.m_031a8f0f659df890"), status: "failed" },
+  unknown: { label: uiT("ui:messages.m_c7175fa7a0db0d3c"), status: "unchecked" },
 };
 
 function detailString(details: Record<string, unknown> | null, key: string): string | null {
@@ -93,7 +94,7 @@ function ActivityRow({ event }: { event: ToolGatewayActivityEvent }) {
         )}
         <span className="min-w-0 flex-1">
           <span className="block text-foreground">
-            <span className="font-medium">{actor}</span> used <span className="font-medium">{tool}</span> in {app}
+            <span className="font-medium">{actor}</span> used <span className="font-medium">{tool}</span>{uiT("ui:messages.m_2eb9d0d30d4ceaac")}{app}
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-2 whitespace-nowrap">
@@ -107,14 +108,14 @@ function ActivityRow({ event }: { event: ToolGatewayActivityEvent }) {
       {open ? (
         <div className="border-t border-border bg-muted/30 px-4 py-3 pl-10 text-xs">
           <dl>
-            {rawTool ? <Fact label="Tool" value={rawTool} mono /> : null}
-            {event.invocation?.status ? <Fact label="Call status" value={event.invocation.status} /> : null}
-            {event.invocation?.policyDecision ? <Fact label="Decision" value={event.invocation.policyDecision} /> : null}
-            {reason ? <Fact label="Reason" value={reason} mono /> : null}
-            {duration ? <Fact label="Duration" value={duration} /> : null}
-            {event.invocation?.id ? <Fact label="Invocation ID" value={event.invocation.id} mono /> : null}
-            {event.invocation?.errorCode ? <Fact label="Error code" value={event.invocation.errorCode} mono /> : null}
-            {event.invocation?.errorMessage ? <Fact label="Error" value={event.invocation.errorMessage} /> : null}
+            {rawTool ? <Fact label={uiT("ui:messages.m_2e53bdcd0740867b")} value={rawTool} mono /> : null}
+            {event.invocation?.status ? <Fact label={uiT("ui:messages.m_c43d9824781fc965")} value={event.invocation.status} /> : null}
+            {event.invocation?.policyDecision ? <Fact label={uiT("ui:messages.m_640ae4baf96061fe")} value={event.invocation.policyDecision} /> : null}
+            {reason ? <Fact label={uiT("ui:messages.m_f81ab834de5f8491")} value={reason} mono /> : null}
+            {duration ? <Fact label={uiT("ui:messages.m_4fc52a3c4c558b51")} value={duration} /> : null}
+            {event.invocation?.id ? <Fact label={uiT("ui:messages.m_56d237ee606ca2dd")} value={event.invocation.id} mono /> : null}
+            {event.invocation?.errorCode ? <Fact label={uiT("ui:messages.m_0570b384c3cecf81")} value={event.invocation.errorCode} mono /> : null}
+            {event.invocation?.errorMessage ? <Fact label={uiT("ui:messages.m_54a0e8c17ebb21a1")} value={event.invocation.errorMessage} /> : null}
           </dl>
           {argumentsText ? (
             <div className="mt-2 space-y-1">
@@ -198,7 +199,7 @@ export function GatewayActivityPanel({
             onClick={() => activityQuery.fetchNextPage()}
             disabled={activityQuery.isFetchingNextPage}
           >
-            {activityQuery.isFetchingNextPage ? "Loading…" : "Load more"}
+            {activityQuery.isFetchingNextPage ? uiT("ui:messages.m_ba3bbbe10d8bef66") : uiT("ui:messages.m_ac8991ef01019cf5")}
           </Button>
         </div>
       ) : null}

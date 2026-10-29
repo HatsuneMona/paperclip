@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 export type AuditSection = "activity" | "runs" | "costs" | "budgets" | "timeline" | "commentary";
 
 export const AUDIT_SECTIONS: ReadonlyArray<{
@@ -5,12 +6,12 @@ export const AUDIT_SECTIONS: ReadonlyArray<{
   label: string;
   href: string;
 }> = [
-  { value: "activity", label: "Activity", href: "/activity" },
-  { value: "runs", label: "Runs", href: "/activity/runs" },
+  { value: "activity", label: uiT("ui:messages.m_38da1505ca837328"), href: "/activity" },
+  { value: "runs", label: uiT("ui:messages.m_848f54e89660cea4"), href: "/activity/runs" },
   { value: "commentary", label: "Commentary", href: "/activity/commentary" },
-  { value: "costs", label: "Costs", href: "/activity/costs" },
-  { value: "budgets", label: "Budgets", href: "/activity/budgets" },
-  { value: "timeline", label: "Timeline", href: "/activity/timeline" },
+  { value: "costs", label: uiT("ui:messages.m_b88fc5fc4765148e"), href: "/activity/costs" },
+  { value: "budgets", label: uiT("ui:messages.m_a1a06e046b0b9ad3"), href: "/activity/budgets" },
+  { value: "timeline", label: uiT("ui:messages.m_9dcff98e275f0cb9"), href: "/activity/timeline" },
 ];
 
 export interface AuditLinkScope {

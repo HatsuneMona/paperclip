@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Building2, Loader2, Lock, RefreshCw, TriangleAlert, UserRound } from "lucide-react";
 import type {
@@ -176,17 +177,16 @@ export function IdentitiesSection({
     const github = agentGrant?.providerTenant?.github;
     return (
       <section className="space-y-5">
-        <h2 className="text-sm font-semibold text-foreground">GitHub identity</h2>
+        <h2 className="text-sm font-semibold text-foreground">{uiT("ui:messages.m_c043831d870fa5a0")}</h2>
         <p className="text-sm text-muted-foreground">This agent uses this GitHub account for everyone’s work, instead of the person giving instructions.</p>
         <IdentityRow
-          title={github ? `@${github.login}` : "Dedicated GitHub account"}
+          title={github ? `@${github.login}` : uiT("ui:messages.m_55fb115cee43ef13")}
           status={agentGrant?.status ?? null}
           detail={dedicatedAgent ? (
             <Link
               to={agentUrl(dedicatedAgent)}
               className="transition-colors hover:text-foreground hover:underline"
-            >
-              Used only by {dedicatedAgent.name}
+            >{uiT("ui:messages.m_4bf518f8efaaddbc")}{dedicatedAgent.name}
             </Link>
           ) : "Dedicated to one agent"}
           actions={!agentGrant && dedicatedAgent && capabilities?.canConfigure ? (
@@ -248,9 +248,7 @@ export function IdentitiesSection({
           orgGrant ? (
             orgGrant.capabilities?.canEditAudience ? (
               <div className="flex justify-end">
-                  <Button size="sm" variant="outline" onClick={() => onOpenAudience(orgGrant.id)}>
-                    Manage access
-                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => onOpenAudience(orgGrant.id)}>{uiT("ui:messages.m_a90527b63530c612")}</Button>
               </div>
             ) : null
           ) : (
@@ -360,7 +358,7 @@ function GitHubConnectionSummary({
                 <a className="flex items-center gap-2 text-muted-foreground hover:underline" href={`https://github.com/${repository.fullName.split("/").map(encodeURIComponent).join("/")}`} target="_blank" rel="noreferrer">
                   <GithubIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                   <span className="break-all">{repository.fullName}</span>
-                  {repository.private === true ? <Lock className="h-3 w-3 shrink-0" role="img" aria-label="Private repository" /> : null}
+                  {repository.private === true ? <Lock className="h-3 w-3 shrink-0" role="img" aria-label={uiT("ui:messages.m_6ab5ea78cce6f30b")} /> : null}
                 </a>
               </li>
             ))}
@@ -415,7 +413,7 @@ function HumanAccessCards({
         options={personal ? [
           {
             value: "personal",
-            title: "Just me",
+            title: uiT("ui:messages.m_3a4b4df869c76a24"),
             description: "Only you can use this connection.",
             icon: <UserRound className="h-4 w-4" />,
           },
@@ -563,9 +561,7 @@ export function AudienceDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="ghost" onClick={onCancel} disabled={pending}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={onCancel} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             disabled={pending || !canSave}
             onClick={() => onSave(scope === "all" ? [] : [...selected])}
@@ -629,9 +625,7 @@ export function RevokeGrantDialog({
         </AlertDialogHeader>
         {children}
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending} autoFocus>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel disabled={pending} autoFocus>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
           <AlertDialogAction
             disabled={pending}
             onClick={(event) => {

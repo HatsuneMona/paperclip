@@ -1,3 +1,5 @@
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { t as uiT } from "@/i18n";
 import { CoordinatorSidebar } from "./CoordinatorSidebar";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import {
@@ -149,6 +151,7 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
         <SidebarCompanyMenu />
       </div>
 
+      <div className={rail ? "px-2 pb-2" : "px-4 pb-2"}><LanguageSwitcher compact={rail} /></div>
       <nav className={primarySidebarStyles.nav}>
         <div className={primarySidebarStyles.group}>
           {/* New Task button aligned with nav items */}
@@ -157,19 +160,19 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
               <button
                 onClick={() => openNewIssue()}
                 data-slot="icon-button"
-                aria-label={rail ? "New Task" : undefined}
+                aria-label={rail ? uiT("ui:messages.m_718e58cc20d67514") : undefined}
                 className={cn(
                   "flex items-center gap-2.5 mx-2 rounded-lg px-2 py-1.5 pointer-coarse:py-1 text-(length:--text-compact) font-medium text-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                 )}
               >
                 <SquarePen className="h-4 w-4 shrink-0" />
-                <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : "truncate"}>New Task</span>
+                <span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : "truncate"}>{uiT("ui:messages.m_718e58cc20d67514")}</span>
               </button>
             );
             return rail ? (
               <Tooltip>
                 <TooltipTrigger asChild>{newTaskButton}</TooltipTrigger>
-                <TooltipContent side="right">New Task</TooltipContent>
+                <TooltipContent side="right">{uiT("ui:messages.m_718e58cc20d67514")}</TooltipContent>
               </Tooltip>
             ) : (
               newTaskButton
@@ -179,8 +182,8 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
               width; a nav row also keeps search reachable from the
               collapsed rail, where the old header icon was dropped entirely.
               Cmd/Ctrl+K remains the keyboard path (command palette). */}
-          <SidebarNavItem to="/search" label="Search" icon={Search} />
-          <SidebarNavItem to="/dashboard" label="Dashboard" icon={LayoutDashboard} liveCount={liveRunCount} />
+          <SidebarNavItem to="/search" label={uiT("ui:messages.m_49c266baaaa70981")} icon={Search} />
+          <SidebarNavItem to="/dashboard" label={uiT("ui:messages.m_67b696468610b879")} icon={LayoutDashboard} liveCount={liveRunCount} />
           {!combinedInboxTasks ? (
             <SidebarNavItem
               to="/inbox"
@@ -192,30 +195,30 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
               alert={inboxBadge.failedRuns > 0}
             />
           ) : null}
-          {agentChatEnabled && !chatRail ? <SidebarNavItem to="/chats" label="Chat" icon={MessageCircle} /> : null}
+          {agentChatEnabled && !chatRail ? <SidebarNavItem to="/chats" label={uiT("ui:messages.m_460b3a7da007b7af")} icon={MessageCircle} /> : null}
           {showDecisions ? (
             <SidebarNavItem
               to="/decisions"
-              label="Decisions"
+              label={uiT("ui:messages.m_cfa6a08af3ed5871")}
               icon={ListChecks}
               badge={attentionCount}
               badgeLabel="decisions"
             />
           ) : null}
           {showStatusCards ? (
-            <SidebarNavItem to="/status" label="Status" icon={LayoutGrid} textBadge="beta" />
+            <SidebarNavItem to="/status" label={uiT("ui:messages.m_920e413c7d411b61")} icon={LayoutGrid} textBadge="beta" />
           ) : null}
           {conferenceRoomChatEnabled ? (
-            <SidebarNavItem to="/board-chat" label="Conference Room" icon={MessagesSquare} />
+            <SidebarNavItem to="/board-chat" label={uiT("ui:messages.m_fb9623fb6b5b8bec")} icon={MessagesSquare} />
           ) : null}
         </div>
 
-        <SidebarSection label="Work" collapsible={{ open: workOpen, onOpenChange: setWorkOpen }}>
+        <SidebarSection label={uiT("ui:messages.m_104ab9213e28e4ff")} collapsible={{ open: workOpen, onOpenChange: setWorkOpen }}>
           {/* Agent Chat: Chat leads the Work group as a single row — the
               agents you talk to live in the Chat surface's own secondary rail
               (ChatContextualSidebar), not in the primary nav. */}
           {chatRail ? (
-            <SidebarNavItem to="/chats" label="Chat" icon={MessageCircle} />
+            <SidebarNavItem to="/chats" label={uiT("ui:messages.m_460b3a7da007b7af")} icon={MessageCircle} />
           ) : null}
           {/* Combined Inbox + Task List: Inbox is a view inside Tasks, so the
               unread/failed-run badge rides on Tasks. */}
@@ -234,17 +237,17 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
           )}
           {streamlinedUiEnabled ? (
             <>
-              <SidebarNavItem to="/projects" label="Projects" icon={FolderOpen} />
+              <SidebarNavItem to="/projects" label={uiT("ui:messages.m_04e2a9728af75840")} icon={FolderOpen} />
               <SidebarStarredProjects />
             </>
           ) : null}
-          <SidebarNavItem to="/routines" label="Routines" icon={Repeat} />
-          <SidebarNavItem to="/artifacts" label="Artifacts" icon={Package} />
+          <SidebarNavItem to="/routines" label={uiT("ui:messages.m_61b7bb44e2b47b7c")} icon={Repeat} />
+          <SidebarNavItem to="/artifacts" label={uiT("ui:messages.m_314ae71b8c8dc9c9")} icon={Package} />
           {showCases ? (
-            <SidebarNavItem to="/cases" label="Cases" icon={Layers} textBadge="beta" />
+            <SidebarNavItem to="/cases" label={uiT("ui:messages.m_2249bd503ec47d72")} icon={Layers} textBadge="beta" />
           ) : null}
           {showGoalsLink ? (
-            <SidebarNavItem to="/goals" label="Goals" icon={Target} />
+            <SidebarNavItem to="/goals" label={uiT("ui:messages.m_116cd3982a9bc435")} icon={Target} />
           ) : goalsLinkPending ? (
             <div
               data-testid="sidebar-goals-placeholder"
@@ -253,7 +256,7 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
             />
           ) : null}
           {showWorkspacesLink ? (
-            <SidebarNavItem to="/workspaces" label="Workspaces" icon={GitBranch} />
+            <SidebarNavItem to="/workspaces" label={uiT("ui:messages.m_1377264ba3b0a717")} icon={GitBranch} />
           ) : null}
           <PluginSlotOutlet
             slotTypes={["sidebar"]}
@@ -272,13 +275,13 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
 
         {streamlinedUiEnabled ? (
           <SidebarSection
-            label="Org"
+            label={uiT("ui:messages.m_b1ee7e9705a211e0")}
             collapsible={{ open: organizationOpen, onOpenChange: setOrganizationOpen }}
           >
-            <SidebarNavItem to="/agents" label="Agents" icon={Users} />
-            <SidebarNavItem to="/skills" label="Skills" icon={Boxes} />
-            <SidebarNavItem to="/apps" label="Connectors" icon={Unplug} />
-            <SidebarNavItem to="/activity" label="Audit" icon={History} />
+            <SidebarNavItem to="/agents" label={uiT("ui:messages.m_279b44d2ab4b40c0")} icon={Users} />
+            <SidebarNavItem to="/skills" label={uiT("ui:messages.m_66d0f523a379b2de")} icon={Boxes} />
+            <SidebarNavItem to="/apps" label={uiT("ui:messages.m_c3d2e79ebdd046c6")} icon={Unplug} />
+            <SidebarNavItem to="/activity" label={uiT("ui:messages.m_bb6aea28739637ea")} icon={History} />
           </SidebarSection>
         ) : null}
 
@@ -291,16 +294,16 @@ function ClassicSidebar({ children }: { children?: ReactNode }) {
             <SidebarProjects />
             <SidebarAgents />
             <SidebarSection
-              label="Organization"
+              label={uiT("ui:messages.m_d764d42592fc9687")}
               collapsible={{ open: organizationOpen, onOpenChange: setOrganizationOpen }}
             >
-              <SidebarNavItem to="/org" label="Org" icon={Network} />
-              <SidebarNavItem to="/apps" label="Connectors" icon={Unplug} />
-              <SidebarNavItem to="/timeline" label="Timeline" icon={GanttChartSquare} />
-              <SidebarNavItem to="/costs" label="Costs" icon={DollarSign} />
-              <SidebarNavItem to="/activity" label="Activity" icon={History} />
+              <SidebarNavItem to="/org" label={uiT("ui:messages.m_b1ee7e9705a211e0")} icon={Network} />
+              <SidebarNavItem to="/apps" label={uiT("ui:messages.m_c3d2e79ebdd046c6")} icon={Unplug} />
+              <SidebarNavItem to="/timeline" label={uiT("ui:messages.m_9dcff98e275f0cb9")} icon={GanttChartSquare} />
+              <SidebarNavItem to="/costs" label={uiT("ui:messages.m_b88fc5fc4765148e")} icon={DollarSign} />
+              <SidebarNavItem to="/activity" label={uiT("ui:messages.m_38da1505ca837328")} icon={History} />
               <SidebarNavItem to="/activity/commentary" label="Commentary" icon={History} />
-              <SidebarNavItem to="/company/settings" label="Settings" icon={Settings} />
+              <SidebarNavItem to="/company/settings" label={uiT("ui:messages.m_74a883a037bc227f")} icon={Settings} />
             </SidebarSection>
           </>
         )}

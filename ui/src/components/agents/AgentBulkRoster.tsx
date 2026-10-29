@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { lazy, Suspense, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Check, Filter, Pencil, X } from "lucide-react";
@@ -35,7 +36,7 @@ export function AgentBulkRoster({ companyId, agents, visibleAgents, renderAgent 
     <div className="flex flex-wrap items-center justify-between gap-3">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label="Filter agents" title={filter === "all" ? "Filter" : `Filter: ${getAdapterLabel(filter)}`}
+          <Button variant="ghost" size="icon" aria-label="Filter agents" title={filter === "all" ? uiT("ui:messages.m_638e249f4a15ebb8") : `Filter: ${getAdapterLabel(filter)}`}
             className={cn("relative h-8 w-8 shrink-0", filter !== "all" && "text-blue-600 dark:text-blue-400")}>
             <Filter className="h-3.5 w-3.5" aria-hidden />
             {filter !== "all" && <span aria-hidden className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-blue-600 text-(length:--text-nano) font-bold text-white">1</span>}
@@ -43,8 +44,8 @@ export function AgentBulkRoster({ companyId, agents, visibleAgents, renderAgent 
         </PopoverTrigger>
         <PopoverContent aria-label="Agent filters" align="start" className="w-64 space-y-3 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Filters</span>
-            {filter !== "all" && <button type="button" className="text-xs text-muted-foreground hover:text-foreground" onClick={() => setFilter("all")}>Clear</button>}
+            <span className="text-sm font-medium">{uiT("ui:messages.m_546ebb8eb993ea56")}</span>
+            {filter !== "all" && <button type="button" className="text-xs text-muted-foreground hover:text-foreground" onClick={() => setFilter("all")}>{uiT("ui:messages.m_83b12c2216efb4fd")}</button>}
           </div>
           <div role="group" aria-label="Harness" className="space-y-1">
             <div className="px-2 text-xs font-medium text-muted-foreground">Harness</div>
@@ -55,29 +56,29 @@ export function AgentBulkRoster({ companyId, agents, visibleAgents, renderAgent 
           </div>
         </PopoverContent>
       </Popover>
-      <span className="text-xs text-muted-foreground">{visible.length} {visible.length === 1 ? "agent" : "agents"}</span>
+      <span className="text-xs text-muted-foreground">{visible.length} {visible.length === 1 ? uiT("ui:messages.m_d4f0bc5a29de06b5") : uiT("ui:messages.m_8c70b25cbbbe8e79")}</span>
     </div>
     {selectedAgents.length > 0 && <div role="region" aria-label="Bulk actions" className="sticky top-0 z-10 flex flex-wrap items-center gap-3 rounded-md border bg-muted p-3">
-      <span className="text-sm font-medium">{selectedAgents.length} selected</span>
+      <span className="text-sm font-medium">{selectedAgents.length}{uiT("ui:messages.m_97a2e8815acd21f3")}</span>
       {hidden > 0 && <span className="text-xs text-muted-foreground">{hidden} hidden by filters</span>}
       {groups.length > 1 && <span className="text-xs text-muted-foreground">Choose a harness to edit</span>}
       <div className="flex flex-1 flex-wrap items-center justify-end gap-2">{groups.map(h => <Button key={h} size="sm" variant="outline" onClick={() => setEditing(selectedAgents.filter(a => bulkAgentHarness(a) === h))}>
         <Pencil className="size-3.5" aria-hidden />{groups.length === 1 ? "Edit connection & model" : `Edit ${selectedAgents.filter(a => bulkAgentHarness(a) === h).length} ${getAdapterLabel(h)}`}
-      </Button>)}<Button size="icon-sm" variant="ghost" aria-label="Clear selection" onClick={() => setSelected([])}><X className="size-4" /></Button></div>
+      </Button>)}<Button size="icon-sm" variant="ghost" aria-label={uiT("ui:messages.m_cea4d2e010b8fd52")} onClick={() => setSelected([])}><X className="size-4" /></Button></div>
     </div>}
     {notice && <p role="status" className="flex items-center gap-2 text-sm"><Check className="size-4" aria-hidden />{notice}</p>}
-    {accounts.error && <p className="text-xs text-destructive">Connection names couldn’t be loaded. <Button variant="link" size="sm" onClick={() => void accounts.refetch()}>Retry</Button></p>}
+    {accounts.error && <p className="text-xs text-destructive">Connection names couldn’t be loaded. <Button variant="link" size="sm" onClick={() => void accounts.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></p>}
     <div className="overflow-x-auto"><table aria-label="Agent roster" className="w-full text-left text-sm">
       <thead className="text-xs text-muted-foreground [&_th]:px-3 [&_th]:py-3 [&_th]:font-normal"><tr>
         <th className="w-10"><Checkbox aria-label="Select all visible editable agents" checked={all ? true : some ? "indeterminate" : false} disabled={!selectable.length} onCheckedChange={toggleAll} /></th>
-        <th>Agent</th><th>Harness</th><th>Connection</th><th>Default model</th>
+        <th>{uiT("ui:messages.m_11b39c93777e8f1f")}</th><th>Harness</th><th>{uiT("ui:messages.m_639a40e82b9a96f0")}</th><th>{uiT("ui:messages.m_3840d9d29421c46c")}</th>
       </tr></thead>
       <tbody>{visible.map(agent => <tr key={agent.id} data-state={selected.includes(agent.id) ? "selected" : undefined} className="border-t border-border data-[state=selected]:bg-accent/30 [&_td]:px-3">
-        <td title={bulkAgentDisabledReason(agent)}><Checkbox aria-label={`Select ${agent.name}`} checked={selectedAgents.some(a => a.id === agent.id)} disabled={!!bulkAgentDisabledReason(agent)} onCheckedChange={value => setSelected(value ? [...new Set([...selected, agent.id])] : selected.filter(id => id !== agent.id))} /></td>
+        <td title={bulkAgentDisabledReason(agent)}><Checkbox aria-label={uiT("ui:messages.m_58661820dfdc4c9f", { v0: (agent.name) })} checked={selectedAgents.some(a => a.id === agent.id)} disabled={!!bulkAgentDisabledReason(agent)} onCheckedChange={value => setSelected(value ? [...new Set([...selected, agent.id])] : selected.filter(id => id !== agent.id))} /></td>
         <td className="min-w-64 p-0">{renderAgent(agent)}</td>
         <td className="whitespace-nowrap text-xs">{getAdapterLabel(bulkAgentHarness(agent))}</td>
         <td className="text-xs">{["http", "process"].includes(agent.adapterType) ? "Managed externally" : bulkConnectionName(agentConnection(agent), accounts.data)}</td>
-        <td className="font-mono text-xs">{agentDefaultModel(agent) ?? "Harness default"}</td>
+        <td className="font-mono text-xs">{agentDefaultModel(agent) ?? uiT("ui:messages.m_7760912abe8a12d7")}</td>
       </tr>)}</tbody>
     </table></div>
     {!visible.length && <p className="py-8 text-center text-sm text-muted-foreground">No agents match these filters.</p>}

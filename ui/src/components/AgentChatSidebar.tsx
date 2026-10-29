@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Star, SquarePen } from "lucide-react";
 import { SidebarNavItem } from "@/components/SidebarNavItem";
 import { AgentIcon } from "@/components/AgentIconPicker";
@@ -71,8 +72,8 @@ export function AgentChatSidebar({
           type="button"
           variant="ghost"
           size="icon-xs"
-          aria-label="Chat with an agent"
-          title="Chat with an agent"
+          aria-label={uiT("ui:messages.m_73adffe32a9a861c")}
+          title={uiT("ui:messages.m_73adffe32a9a861c")}
           onClick={onOpenChat}
           className="absolute right-2 top-(--pct-50) -translate-y-(--pct-50) text-muted-foreground opacity-0 group-hover/chats:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
         >

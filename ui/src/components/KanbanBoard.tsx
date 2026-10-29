@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useMemo, useState } from "react";
 import { Link } from "@/lib/router";
@@ -203,7 +204,7 @@ function KanbanColumn({
           tone.rail,
           isOver && tone.railOver,
         )}
-        title={`${statusLabel(status)}: ${issues.length}`}
+        title={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (statusLabel(status)), v1: (issues.length) })}
       >
         <StatusIcon status={status} />
         <span className={cn("mt-2 [writing-mode:vertical-rl] rotate-180 text-(length:--text-nano) font-semibold uppercase tracking-wide", tone.header)}>
@@ -256,13 +257,10 @@ function KanbanColumn({
             type="button"
             className="mt-1 flex w-full items-center justify-center rounded-md border border-dashed border-border bg-background/70 px-2 py-2 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             onClick={onShowMore}
-          >
-            Show {nextRevealCount} more
-          </button>
+          >{uiT("ui:messages.m_dd0fcd29c826bed1")}{nextRevealCount}{uiT("ui:messages.m_226ba18bbcdb7518")}</button>
         ) : null}
         {issues.length > 0 && (hiddenCount > 0 || issues.length >= visibleCount) ? (
-          <p className="px-1 pt-1 text-(length:--text-micro) text-muted-foreground">
-            Showing {visibleIssues.length} of {issues.length}
+          <p className="px-1 pt-1 text-(length:--text-micro) text-muted-foreground">{uiT("ui:messages.m_7282e1fbb2c6d34c")}{visibleIssues.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{issues.length}
           </p>
         ) : null}
       </div>
@@ -338,8 +336,8 @@ function KanbanCard({
           {isSuccessfulRunHandoffRequired(issue) ? (
             <Badge variant="outline"
               className="border-amber-400/45 bg-amber-50/60 px-1.5 text-(length:--text-nano) text-amber-700 dark:border-amber-300/35 dark:bg-amber-400/10 dark:text-amber-300"
-              title="This task needs a next step"
-              aria-label="Needs next step"
+              title={uiT("ui:messages.m_aa4b55368cd2026a")}
+              aria-label={uiT("ui:messages.m_e45a2c0f61e00966")}
             >
               <AlertTriangle className="h-3 w-3" />
               Next step
@@ -351,17 +349,16 @@ function KanbanCard({
                 <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
-              {compact ? "Live" : null}
+              {compact ? uiT("ui:messages.m_b64ac05f17e64d03") : null}
             </span>
           )}
           {!isLive && subtreeLiveCount > 0 && (
             <Badge variant="outline"
               className="border-border px-1.5 text-(length:--text-nano) text-muted-foreground"
-              title={`${subtreeLiveCount} sub-task${subtreeLiveCount === 1 ? "" : "s"} running below`}
+              title={uiT("ui:messages.m_2fa663c50c15881f", { v0: (subtreeLiveCount), v1: (subtreeLiveCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
             >
               <span className="h-2 w-2 shrink-0 rounded-full border border-muted-foreground/60" aria-hidden="true" />
-              {subtreeLiveCount} live below
-            </Badge>
+              {subtreeLiveCount}{uiT("ui:messages.m_5618c53e03a04bfb")}</Badge>
           )}
         </div>
         <p className={`${compact ? "mb-1.5 text-xs" : "mb-2 text-sm"} leading-snug line-clamp-2`}>{issue.title}</p>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -109,9 +110,7 @@ function CopyableCompactValue({
           aria-live="polite"
           className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 inline-flex -translate-x-1/2 items-center gap-1 rounded-md bg-foreground px-2 py-1 text-xs whitespace-nowrap text-background"
         >
-          <Check className="h-3 w-3 shrink-0" />
-          Copied
-        </span>
+          <Check className="h-3 w-3 shrink-0" />{uiT("ui:messages.m_8d525e5f158b9afe")}</span>
       ) : null}
     </span>
   );
@@ -185,7 +184,7 @@ export function CaseFieldValue({
 
   if (typeof value === "boolean") {
     return value ? (
-      <Check className="h-4 w-4 text-green-600 dark:text-green-400" aria-label="true" />
+      <Check className="h-4 w-4 text-green-600 dark:text-green-400" aria-label={uiT("ui:messages.m_b5bea41b6c623f7c")} />
     ) : (
       <EmptyValue />
     );
@@ -353,7 +352,7 @@ export function CaseFieldsPanel({ fields }: { fields: Record<string, unknown> })
   return (
     <section className="space-y-2">
       <div className="flex items-baseline gap-2">
-        <h2 className="text-sm font-semibold">Fields</h2>
+        <h2 className="text-sm font-semibold">{uiT("ui:messages.m_616f48c1db195b6f")}</h2>
         <span className="text-xs text-muted-foreground">from the skill&apos;s schema — rendered generically</span>
       </div>
       <Card className="gap-0 py-0">

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Check, Circle, Loader2 } from "lucide-react";
 import type { TaskChatPlan, TaskChatPlanEntryStatus } from "./task-chat-model";
@@ -24,11 +25,10 @@ export function TaskChatPlanView({ plan }: { plan: TaskChatPlan }) {
   return (
     <div className="flex flex-col gap-2 py-2">
       <div className="flex items-center gap-2 px-1 text-xs text-muted-foreground">
-        <span className="font-medium text-foreground">Plan</span>
+        <span className="font-medium text-foreground">{uiT("ui:messages.m_fa8ed0bdabdd6bcb")}</span>
         <span>· rev {plan.revision}</span>
         <span className="ml-auto">
-          {done}/{plan.entries.length} done
-        </span>
+          {done}/{plan.entries.length}{uiT("ui:messages.m_61ac69123baea172")}</span>
       </div>
       <ul className="flex flex-col gap-1">
         {plan.entries.map((entry, i) => {

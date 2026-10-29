@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { ChatExecutionDefaults as Defaults, TaskWorkspaceSelection } from "@paperclipai/shared";
@@ -66,21 +67,21 @@ export function ChatExecutionDefaults({ companyId, value, resource = false, onSa
       <h3 id={`${id}-title`} className="text-sm font-semibold">Task defaults</h3>
       <p className="text-sm text-muted-foreground">Applies to new conversations. Existing tasks keep their files and project.</p>
     </div>
-    {(projects.isError || workspaces.isError) && <p role="alert" className="text-sm text-destructive">Couldn’t load available projects or workspaces. <button type="button" className="underline" onClick={() => { void projects.refetch(); void workspaces.refetch(); }}>Try again</button></p>}
+    {(projects.isError || workspaces.isError) && <p role="alert" className="text-sm text-destructive">Couldn’t load available projects or workspaces. <button type="button" className="underline" onClick={() => { void projects.refetch(); void workspaces.refetch(); }}>{uiT("ui:messages.m_d8b8392e2c542950")}</button></p>}
     <div className="space-y-2">
-      <label htmlFor={`${id}-project`} className="text-sm font-medium">Project</label>
+      <label htmlFor={`${id}-project`} className="text-sm font-medium">{uiT("ui:messages.m_9859597853197476")}</label>
       <NativeSelect id={`${id}-project`} value={projectValue} disabled={pending || projects.isPending} onChange={(event) => {
         const { projectId: _previous, ...rest } = current;
         change(event.target.value === "inherit" ? rest : { ...rest, projectId: event.target.value === "none" ? null : event.target.value });
       }}>
         <option value="inherit">{resource ? "Use connection defaults" : "Use task defaults"}</option>
-        <option value="none">No project</option>
+        <option value="none">{uiT("ui:messages.m_f34c2be0d1c5f562")}</option>
         {current.projectId && !projects.data?.some((project) => project.id === current.projectId) && <option value={current.projectId}>Saved project (unavailable)</option>}
         {(projects.data ?? []).map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
       </NativeSelect>
     </div>
     <div className="space-y-2">
-      <label htmlFor={`${id}-workspace`} className="text-sm font-medium">Workspace</label>
+      <label htmlFor={`${id}-workspace`} className="text-sm font-medium">{uiT("ui:messages.m_87bb59ba2f92f2a5")}</label>
       <NativeSelect id={`${id}-workspace`} value={workspaceValue} disabled={pending || projects.isPending || workspaces.isPending} onChange={(event) => {
         const key = event.target.value;
         const { workspace: _previous, ...rest } = current;
@@ -105,8 +106,8 @@ export function ChatExecutionDefaults({ companyId, value, resource = false, onSa
     </div>
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     <div className="flex items-center justify-between gap-3">
-      <div>{dirty ? <Button type="button" variant="ghost" disabled={pending} onClick={() => { setDraft(null); setError(null); }}>Cancel</Button> : saved ? <span role="status" className="text-sm text-muted-foreground">Saved for new tasks.</span> : null}</div>
-      <Button type="submit" disabled={!dirty || pending}>{pending ? "Saving…" : "Save defaults"}</Button>
+      <div>{dirty ? <Button type="button" variant="ghost" disabled={pending} onClick={() => { setDraft(null); setError(null); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button> : saved ? <span role="status" className="text-sm text-muted-foreground">Saved for new tasks.</span> : null}</div>
+      <Button type="submit" disabled={!dirty || pending}>{pending ? uiT("ui:messages.m_23e39291d6135814") : "Save defaults"}</Button>
     </div>
   </form>;
 }

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight, ScrollText } from "lucide-react";
@@ -30,29 +31,29 @@ const ALL = "__all";
 
 /** Outcome chip vocabulary (spec §4C / §5): Allowed · Blocked · Asked first · Failed · Waiting. */
 const OUTCOME_META: Record<ToolAuditOutcome, { label: string; status: string }> = {
-  allowed: { label: "Allowed", status: "allowed" },
-  blocked: { label: "Blocked", status: "denied" },
-  asked_first: { label: "Asked first", status: "require-approval" },
-  waiting: { label: "Waiting", status: "deferred" },
-  failed: { label: "Failed", status: "failed" },
-  unknown: { label: "Recorded", status: "unchecked" },
+  allowed: { label: uiT("ui:messages.m_1bb201d188352e9b"), status: "allowed" },
+  blocked: { label: uiT("ui:messages.m_18f2a0947f9d6523"), status: "denied" },
+  asked_first: { label: uiT("ui:messages.m_db928628a30ccd18"), status: "require-approval" },
+  waiting: { label: uiT("ui:messages.m_6e293a8c009e0011"), status: "deferred" },
+  failed: { label: uiT("ui:messages.m_031a8f0f659df890"), status: "failed" },
+  unknown: { label: uiT("ui:messages.m_c7175fa7a0db0d3c"), status: "unchecked" },
 };
 
 const OUTCOME_FILTERS: { value: string; label: string }[] = [
   { value: ALL, label: "All outcomes" },
-  { value: "allowed", label: "Allowed" },
-  { value: "blocked", label: "Blocked" },
-  { value: "asked_first", label: "Asked first" },
-  { value: "waiting", label: "Waiting" },
-  { value: "failed", label: "Failed" },
+  { value: "allowed", label: uiT("ui:messages.m_1bb201d188352e9b") },
+  { value: "blocked", label: uiT("ui:messages.m_18f2a0947f9d6523") },
+  { value: "asked_first", label: uiT("ui:messages.m_db928628a30ccd18") },
+  { value: "waiting", label: uiT("ui:messages.m_6e293a8c009e0011") },
+  { value: "failed", label: uiT("ui:messages.m_031a8f0f659df890") },
 ];
 
 const WINDOW_FILTERS: { value: ToolAuditWindow; label: string }[] = [
-  { value: "all", label: "All time" },
+  { value: "all", label: uiT("ui:messages.m_9755c8d7d44a6258") },
   { value: "1h", label: "Last 1 hour" },
-  { value: "24h", label: "Last 24 hours" },
-  { value: "7d", label: "Last 7 days" },
-  { value: "30d", label: "Last 30 days" },
+  { value: "24h", label: uiT("ui:messages.m_5c37cf8f018b4ac5") },
+  { value: "7d", label: uiT("ui:messages.m_0603deca4fcb660f") },
+  { value: "30d", label: uiT("ui:messages.m_f8f03fb441b8b4ae") },
 ];
 
 function detailString(details: Record<string, unknown> | null, key: string): string | undefined {
@@ -218,15 +219,14 @@ function ActivityRow({
             <span className="block text-foreground">
               <span className="font-medium">{who}</span>'s run received 0 MCP servers —{" "}
               <span className="font-medium">{permittedNotInstalledCount ?? permittedNotInstalledConnections.length}</span>{" "}
-              permitted {(permittedNotInstalledCount ?? permittedNotInstalledConnections.length) === 1 ? "connection" : "connections"} not installed
+              permitted {(permittedNotInstalledCount ?? permittedNotInstalledConnections.length) === 1 ? uiT("ui:messages.m_b38d9d168c3aedf1") : uiT("ui:messages.m_1e5fac867454a4fe")} not installed
             </span>
           ) : (
             <span className="block text-foreground">
               <span className="font-medium">{who}</span> used <span className="font-medium">{action}</span>
               {app ? (
                 <>
-                  {" "}
-                  in <span className="font-medium">{app}</span>
+                  {" "}{uiT("ui:messages.m_74241f65e5ac9f84")}<span className="font-medium">{app}</span>
                 </>
               ) : null}
             </span>
@@ -254,14 +254,10 @@ function ActivityRow({
 
           <div className="flex flex-wrap gap-3 text-xs">
             {issueId ? (
-              <Link to={`/issues/${issueId}`} className="text-primary hover:underline">
-                View task
-              </Link>
+              <Link to={`/issues/${issueId}`} className="text-primary hover:underline">{uiT("ui:messages.m_01444a2b442a7b78")}</Link>
             ) : null}
             {runId && agentId ? (
-              <Link to={`/agents/${agentId}/runs/${runId}`} className="text-primary hover:underline">
-                View run
-              </Link>
+              <Link to={`/agents/${agentId}/runs/${runId}`} className="text-primary hover:underline">{uiT("ui:messages.m_aaf7fccc7d1315f2")}</Link>
             ) : null}
           </div>
 
@@ -271,33 +267,31 @@ function ActivityRow({
               onClick={() => setDetailsOpen((v) => !v)}
               className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground"
             >
-              {detailsOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
-              Details
-            </button>
+              {detailsOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}{uiT("ui:messages.m_45989de49fb7f66d")}</button>
             {detailsOpen ? (
               <div className="mt-2 space-y-1.5 text-xs">
-                {rawTool ? <DetailFact label="Action name" value={rawTool} mono /> : null}
-                <DetailFact label="Reason code" value={reasonCode} mono />
-                <DetailFact label="Actor type" value={event.actorType ?? "—"} />
-                {runId ? <DetailFact label="Run ID" value={runId} mono /> : null}
-                {transport ? <DetailFact label="Transport" value={transport} mono /> : null}
-                {requestMethod && endpoint ? <DetailFact label="HTTP request" value={`${requestMethod} ${endpoint}`} mono /> : null}
-                {mcpMethod ? <DetailFact label="MCP method" value={mcpMethod} mono /> : null}
-                {requestId ? <DetailFact label="Request ID" value={requestId} mono /> : null}
-                {request ? <DetailFact label="Dispatched" value={request.dispatched === true ? "Yes" : "No"} /> : null}
-                {httpStatus !== undefined ? <DetailFact label="HTTP status" value={String(httpStatus)} mono /> : null}
-                {contentType ? <DetailFact label="Content type" value={contentType} mono /> : null}
-                {responseBytes !== undefined ? <DetailFact label="Response size" value={`${responseBytes} bytes`} /> : null}
-                {upstreamRequestId ? <DetailFact label="Upstream ID" value={upstreamRequestId} mono /> : null}
+                {rawTool ? <DetailFact label={uiT("ui:messages.m_323a3fff01247561")} value={rawTool} mono /> : null}
+                <DetailFact label={uiT("ui:messages.m_9e13ec9ee6a95a38")} value={reasonCode} mono />
+                <DetailFact label={uiT("ui:messages.m_6d003d9d9a934965")} value={event.actorType ?? "—"} />
+                {runId ? <DetailFact label={uiT("ui:messages.m_26d3e7aaace43436")} value={runId} mono /> : null}
+                {transport ? <DetailFact label={uiT("ui:messages.m_aaead4abf5d0fd5e")} value={transport} mono /> : null}
+                {requestMethod && endpoint ? <DetailFact label={uiT("ui:messages.m_f1ee1152c8b29ea2")} value={`${requestMethod} ${endpoint}`} mono /> : null}
+                {mcpMethod ? <DetailFact label={uiT("ui:messages.m_e810a950faf752c6")} value={mcpMethod} mono /> : null}
+                {requestId ? <DetailFact label={uiT("ui:messages.m_d561f528baf777c7")} value={requestId} mono /> : null}
+                {request ? <DetailFact label={uiT("ui:messages.m_a43dccadeb619e3e")} value={request.dispatched === true ? "Yes" : "No"} /> : null}
+                {httpStatus !== undefined ? <DetailFact label={uiT("ui:messages.m_0f7cf91f242cdf7a")} value={String(httpStatus)} mono /> : null}
+                {contentType ? <DetailFact label={uiT("ui:messages.m_6f51cb0403204b19")} value={contentType} mono /> : null}
+                {responseBytes !== undefined ? <DetailFact label={uiT("ui:messages.m_3bbd79b42b54c2b1")} value={`${responseBytes} bytes`} /> : null}
+                {upstreamRequestId ? <DetailFact label={uiT("ui:messages.m_56ca20b2823d9585")} value={upstreamRequestId} mono /> : null}
                 {isRuntimeMcpDeliveryDiagnostic ? (
                   <>
-                    <DetailFact label="Delivered MCP servers" value="0" mono />
+                    <DetailFact label={uiT("ui:messages.m_e8f93a3ea5e8fb3c")} value="0" mono />
                     {permittedNotInstalledConnections.map((connection) => {
                       const connectionId = detailString(connection, "id");
                       const connectionName = detailString(connection, "name") ?? "Unnamed connection";
                       return connectionId ? (
                         <div key={connectionId} className="flex gap-2">
-                          <span className="shrink-0 text-muted-foreground">Not installed</span>
+                          <span className="shrink-0 text-muted-foreground">{uiT("ui:messages.m_d177cdc09a4ea3f3")}</span>
                           <Link to={`/apps/${connectionId}/permissions`} className="font-medium text-primary hover:underline">
                             {connectionName}
                           </Link>
@@ -396,14 +390,14 @@ export function AuditTab({ companyId }: { companyId: string }) {
   return (
     <div className="space-y-4">
       <ToolsPageHeader
-        title="Activity"
-        description="What your agents actually did with your apps, newest first. Each line is one decision — allowed, blocked, asked first, waiting, or failed."
+        title={uiT("ui:messages.m_38da1505ca837328")}
+        description={uiT("ui:messages.m_c7a12a9c26f81c5d")}
       />
 
       <div className="flex flex-wrap items-center gap-2">
         <Select value={app} onValueChange={setApp}>
           <SelectTrigger className="w-40">
-            <SelectValue placeholder="App" />
+            <SelectValue placeholder={uiT("ui:messages.m_0d04bfeb7d64b71c")} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ALL}>All apps</SelectItem>
@@ -445,15 +439,13 @@ export function AuditTab({ companyId }: { companyId: string }) {
           </SelectContent>
         </Select>
         <Input
-          placeholder="Search activity…"
+          placeholder={uiT("ui:messages.m_6f14857bfd04fabe")}
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           className="max-w-xs"
         />
         {hasActiveFilters ? (
-          <Button variant="ghost" size="sm" onClick={clearFilters}>
-            Clear filters
-          </Button>
+          <Button variant="ghost" size="sm" onClick={clearFilters}>{uiT("ui:messages.m_7179ea0035fca783")}</Button>
         ) : null}
       </div>
 
@@ -472,9 +464,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
                   Try a wider time window or different filters.
                 </p>
               </div>
-              <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear filters
-              </Button>
+              <Button variant="outline" size="sm" onClick={clearFilters}>{uiT("ui:messages.m_7179ea0035fca783")}</Button>
             </CardContent>
           </Card>
         ) : (
@@ -510,7 +500,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
             onClick={() => activity.fetchNextPage()}
             disabled={activity.isFetchingNextPage}
           >
-            {activity.isFetchingNextPage ? "Loading…" : "Load more"}
+            {activity.isFetchingNextPage ? uiT("ui:messages.m_ba3bbbe10d8bef66") : uiT("ui:messages.m_ac8991ef01019cf5")}
           </Button>
         </div>
       ) : null}

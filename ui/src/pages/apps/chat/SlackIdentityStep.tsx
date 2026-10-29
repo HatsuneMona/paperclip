@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Copy, ExternalLink, Loader2 } from "lucide-react";
@@ -54,7 +55,7 @@ export function SlackIdentityStep({ endpointId, command, testStartedAt, onConnec
         <code className="text-sm">{connectCommand}</code>
         <Button variant="ghost" size="sm" onClick={() => {
           void copyTextToClipboard(connectCommand).then(() => { setCopied(true); setCopyError(false); }, () => setCopyError(true));
-        }}><Copy className="size-4" />{copied ? "Copied" : "Copy command"}</Button>
+        }}><Copy className="size-4" />{copied ? uiT("ui:messages.m_8d525e5f158b9afe") : "Copy command"}</Button>
       </div>
       {copyError && <p role="alert" className="text-sm text-destructive">Couldn&apos;t copy the command. Select and copy it above.</p>}
       <p className="text-sm">
@@ -90,7 +91,7 @@ export function SlackIdentityStep({ endpointId, command, testStartedAt, onConnec
       {!userId && !session.isPending && !health.isPending && <p role="alert" className="text-sm text-destructive">Sign in to Paperclip to link your Slack account. Refresh this page after signing in.</p>}
       {link.isError && <p role="alert" className="text-sm text-destructive">Couldn&apos;t link your account. Check that you are a member of this company and try again.</p>}
       <div className="flex items-center justify-between gap-3">
-        <Button variant="ghost" className="text-muted-foreground" onClick={onSaveExit}>Save &amp; exit</Button>
+        <Button variant="ghost" className="text-muted-foreground" onClick={onSaveExit}>{uiT("ui:messages.m_0bd63bf3d32e9119")}</Button>
         {linkedToMe && <Button onClick={onConnected}>Continue to message test</Button>}
       </div>
     </div>

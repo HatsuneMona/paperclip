@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, HelpCircle } from "lucide-react";
 import { isValidRoutineDateString, syncRoutineVariablesWithTemplate, type RoutineVariable } from "@paperclipai/shared";
@@ -83,7 +84,7 @@ export function RoutineVariablesEditor({
     <Collapsible open={open} onOpenChange={setOpen} className="overflow-hidden rounded-lg border border-border/70">
       <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-left">
         <div>
-          <p className="text-sm font-medium">Variables</p>
+          <p className="text-sm font-medium">{uiT("ui:messages.m_02db55bac5e3f7ce")}</p>
           <p className="text-xs text-muted-foreground">
             Detected from `{"{{name}}"}` placeholders in the title and instructions.
           </p>
@@ -104,7 +105,7 @@ export function RoutineVariablesEditor({
 
             <div className="grid gap-3 md:grid-cols-2">
               <div className="space-y-1.5">
-                <Label className="text-xs">Label</Label>
+                <Label className="text-xs">{uiT("ui:messages.m_0e66373f45dcf3dd")}</Label>
                 <Input
                   value={variable.label ?? ""}
                   onChange={(event) => onChange(updateVariableList(syncedVariables, variable.name, (current) => ({
@@ -116,7 +117,7 @@ export function RoutineVariablesEditor({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs">Type</Label>
+                <Label className="text-xs">{uiT("ui:messages.m_baaddf70fb5d432b")}</Label>
                 <Select
                   value={variable.type}
                   onValueChange={(type) => onChange(updateVariableList(syncedVariables, variable.name, (current) => ({
@@ -148,9 +149,7 @@ export function RoutineVariablesEditor({
                         ...current,
                         required: event.target.checked,
                       })))}
-                    />
-                    Required
-                  </label>
+                    />{uiT("ui:messages.m_4850b174b713d88c")}</label>
                 </div>
 
                 {variable.type === "textarea" ? (
@@ -174,9 +173,9 @@ export function RoutineVariablesEditor({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__unset__">No default</SelectItem>
-                      <SelectItem value="true">True</SelectItem>
-                      <SelectItem value="false">False</SelectItem>
+                      <SelectItem value="__unset__">{uiT("ui:messages.m_706e7d9f0e1dc1ec")}</SelectItem>
+                      <SelectItem value="true">{uiT("ui:messages.m_3cbc87c7681f34db")}</SelectItem>
+                      <SelectItem value="false">{uiT("ui:messages.m_60a33e6cf5151f2d")}</SelectItem>
                     </SelectContent>
                   </Select>
                 ) : variable.type === "select" ? (
@@ -209,10 +208,10 @@ export function RoutineVariablesEditor({
                         })))}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="No default" />
+                          <SelectValue placeholder={uiT("ui:messages.m_706e7d9f0e1dc1ec")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="__unset__">No default</SelectItem>
+                          <SelectItem value="__unset__">{uiT("ui:messages.m_706e7d9f0e1dc1ec")}</SelectItem>
                           {variable.options.map((option) => (
                             <SelectItem key={option} value={option}>{option}</SelectItem>
                           ))}
@@ -301,13 +300,12 @@ export function RoutineVariablesHint() {
               <h3 className="text-xs font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
                 Custom variables
               </h3>
-              <p className="text-muted-foreground">
-                Type{" "}
+              <p className="text-muted-foreground">{uiT("ui:messages.m_baaddf70fb5d432b")}{" "}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
                   {"{{variable_name}}"}
                 </code>{" "}
                 anywhere in the title or instructions. Paperclip detects each placeholder, lists it
-                under <span className="font-medium text-foreground">Variables</span>, and prompts
+                under <span className="font-medium text-foreground">{uiT("ui:messages.m_02db55bac5e3f7ce")}</span>, and prompts
                 for a value before each run.
               </p>
               <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
@@ -331,8 +329,8 @@ export function RoutineVariablesHint() {
                   <thead className="bg-muted/40 text-muted-foreground">
                     <tr>
                       <th className="px-3 py-2 font-medium">Placeholder</th>
-                      <th className="px-3 py-2 font-medium">Example</th>
-                      <th className="px-3 py-2 font-medium">Description</th>
+                      <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_d029f87e3d80f8fd")}</th>
+                      <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_526e0087cc3f254d")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/70">

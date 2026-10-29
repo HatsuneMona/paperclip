@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Network, Monitor } from "lucide-react";
@@ -273,7 +274,7 @@ export function AiProviderSetup({
   ) : undefined;
   const cancel = () => reconnect || initialProvider ? onCancel() : setStep("provider");
   if (!reconnect && accounts.isPending) return <p role="status">Loading connection permissions…</p>;
-  if (!reconnect && accounts.isError) return <p role="alert">Could not load connection permissions. <Button type="button" variant="ghost" onClick={() => void accounts.refetch()}>Retry</Button></p>;
+  if (!reconnect && accounts.isError) return <p role="alert">Could not load connection permissions. <Button type="button" variant="ghost" onClick={() => void accounts.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></p>;
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6" onSubmit={(event) => event.stopPropagation()}>
       <div className="space-y-2">
@@ -283,7 +284,7 @@ export function AiProviderSetup({
             : `${reconnect ? "Reconnect" : "Connect"} ${label}`}
         </h2>
       </div>
-      {agents.isError && <p role="alert" className="text-sm text-destructive">Could not load agents. <Button type="button" variant="ghost" onClick={() => void agents.refetch()}>Retry</Button></p>}
+      {agents.isError && <p role="alert" className="text-sm text-destructive">Could not load agents. <Button type="button" variant="ghost" onClick={() => void agents.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></p>}
       {step === "provider" ? (
         <>
           {advancedOnly ? choices(true) : <>
@@ -295,9 +296,7 @@ export function AiProviderSetup({
             <div className="pt-4">{choices(true)}</div>
           </details>
           </>}
-          <Button type="button" variant="ghost" onClick={onCancel}>
-            Cancel
-          </Button>
+          <Button type="button" variant="ghost" onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
         </>
       ) : !advanced ? (
         <AiConnectionCredentialStep
@@ -371,10 +370,8 @@ export function AiProviderSetup({
             </>
           )}
           {provider === "bedrock" && (
-            <label className="block space-y-2 text-xs text-muted-foreground">
-              AWS region
-              <Input
-                aria-label="AWS region"
+            <label className="block space-y-2 text-xs text-muted-foreground">{uiT("ui:messages.m_295e09c8d1998aed")}<Input
+                aria-label={uiT("ui:messages.m_295e09c8d1998aed")}
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
                 disabled={Boolean(reconnect)}
@@ -382,21 +379,19 @@ export function AiProviderSetup({
             </label>
           )}
           {provider !== "openrouter" && (
-            <label className="block space-y-2 text-xs text-muted-foreground">
-              Authentication
-              <Select
+            <label className="block space-y-2 text-xs text-muted-foreground">{uiT("ui:messages.m_66880d2d8216260d")}<Select
                 value={auth}
                 onValueChange={(v) => setAuth(v as typeof auth)}
                 disabled={Boolean(reconnect)}
               >
-                <SelectTrigger aria-label="Authentication" className="w-full">
+                <SelectTrigger aria-label={uiT("ui:messages.m_66880d2d8216260d")} className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="bearer">
                     {provider === "bedrock"
                       ? "Bedrock API key"
-                      : "Bearer token"}
+                      : uiT("ui:messages.m_b22ac30e61f624d5")}
                   </SelectItem>
                   {provider !== "bedrock" && (
                     <>
@@ -414,10 +409,8 @@ export function AiProviderSetup({
           )}
           {
             auth !== "none" && (
-              <label className="block space-y-2 text-xs text-muted-foreground">
-                API key
-                <Input
-                  aria-label="API key"
+              <label className="block space-y-2 text-xs text-muted-foreground">{uiT("ui:messages.m_16f0ee47f993d627")}<Input
+                  aria-label={uiT("ui:messages.m_16f0ee47f993d627")}
                   type="password"
                   autoComplete="new-password"
                   value={apiKey}
@@ -445,9 +438,7 @@ export function AiProviderSetup({
               variant="ghost"
               onClick={cancel}
               disabled={save.isPending}
-            >
-              Back
-            </Button>
+            >{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
             <Button
               type="submit"
               disabled={
@@ -457,10 +448,10 @@ export function AiProviderSetup({
               }
             >
               {save.isPending
-                ? submitLabel ? "Saving…" : "Connecting…"
+                ? submitLabel ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_72021eb70e91b4d5")
                 : reconnect
-                  ? "Reconnect"
-                  : submitLabel ?? "Connect"}
+                  ? uiT("ui:messages.m_bf8a9eab9e7e141b")
+                  : submitLabel ?? uiT("ui:messages.m_1a2303ede07493ac")}
             </Button>
           </div>
         </form>

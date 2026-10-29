@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { Ref } from "react";
 import { AppLogo } from "@/pages/apps/AppLogo";
 import { UnverifiedServerBadge } from "@/pages/apps/UnverifiedServerBadge";
@@ -39,15 +40,13 @@ export function StepHeader({
           ) : null}
           <div>
             <h1 ref={headingRef} tabIndex={headingRef ? -1 : undefined} className="text-2xl font-bold tracking-tight outline-none">
-              {title ?? (appIdentity ? `Connect ${appIdentity.name}` : "Connect your own MCP server")}
+              {title ?? (appIdentity ? uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (appIdentity.name) }) : uiT("ui:messages.m_abb2409de6f9cc52"))}
             </h1>
             {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
             {unverifiedHost ? <UnverifiedServerBadge host={unverifiedHost} className="mt-2" /> : null}
           </div>
         </div>
-        {onCancel && <Button variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
-        </Button>}
+        {onCancel && <Button variant="ghost" size="sm" onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>}
       </div>
       {step !== "gallery" && labels.length > 1 && (
         // A landmark with stable hooks, so the step model can be read without

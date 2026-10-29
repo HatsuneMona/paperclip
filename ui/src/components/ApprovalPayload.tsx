@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { UserPlus, Lightbulb, ShieldAlert, ShieldCheck } from "lucide-react";
 import { MarkdownBody } from "./MarkdownBody";
 import { formatCents } from "../lib/utils";
@@ -66,7 +67,7 @@ function SkillList({ values }: { values: unknown }) {
 
   return (
     <div className="flex items-start gap-2">
-      <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs pt-0.5">Skills</span>
+      <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs pt-0.5">{uiT("ui:messages.m_66d0f523a379b2de")}</span>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <span
@@ -85,21 +86,21 @@ export function HireAgentPayload({ payload }: { payload: Record<string, unknown>
   return (
     <div className="mt-3 space-y-1.5 text-sm">
       <div className="flex items-center gap-2">
-        <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs">Name</span>
+        <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</span>
         <span className="font-medium">{String(payload.name ?? "—")}</span>
       </div>
-      <PayloadField label="Role" value={payload.role} />
-      <PayloadField label="Title" value={payload.title} />
-      <PayloadField label="Icon" value={payload.icon} />
+      <PayloadField label={uiT("ui:messages.m_14736a2eb9f4159f")} value={payload.role} />
+      <PayloadField label={uiT("ui:messages.m_7e8cd2056da73a7f")} value={payload.title} />
+      <PayloadField label={uiT("ui:messages.m_a35abcd6dac9a2e5")} value={payload.icon} />
       {!!payload.capabilities && (
         <div className="flex items-start gap-2">
-          <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs pt-0.5">Capabilities</span>
+          <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs pt-0.5">{uiT("ui:messages.m_9460f16ac9b5171e")}</span>
           <span className="text-muted-foreground">{String(payload.capabilities)}</span>
         </div>
       )}
       {!!payload.adapterType && (
         <div className="flex items-center gap-2">
-          <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs">Adapter</span>
+          <span className="text-muted-foreground w-20 sm:w-24 shrink-0 text-xs">{uiT("ui:messages.m_0252b84901033771")}</span>
           <span className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
             {String(payload.adapterType)}
           </span>
@@ -114,7 +115,7 @@ export function CeoStrategyPayload({ payload }: { payload: Record<string, unknow
   const plan = payload.plan ?? payload.description ?? payload.strategy ?? payload.text;
   return (
     <div className="mt-3 space-y-1.5 text-sm">
-      <PayloadField label="Title" value={payload.title} />
+      <PayloadField label={uiT("ui:messages.m_7e8cd2056da73a7f")} value={payload.title} />
       {!!plan && (
         <div className="mt-2 rounded-md bg-muted/40 px-3 py-2 text-sm text-muted-foreground whitespace-pre-wrap font-mono text-xs max-h-48 overflow-y-auto">
           {String(plan)}
@@ -134,9 +135,9 @@ export function BudgetOverridePayload({ payload }: { payload: Record<string, unk
   const observedAmount = typeof payload.observedAmount === "number" ? payload.observedAmount : null;
   return (
     <div className="mt-3 space-y-1.5 text-sm">
-      <PayloadField label="Scope" value={payload.scopeName ?? payload.scopeType} />
-      <PayloadField label="Window" value={payload.windowKind} />
-      <PayloadField label="Metric" value={payload.metric} />
+      <PayloadField label={uiT("ui:messages.m_b073f6c68ef87211")} value={payload.scopeName ?? payload.scopeType} />
+      <PayloadField label={uiT("ui:messages.m_19734a1b58cabc22")} value={payload.windowKind} />
+      <PayloadField label={uiT("ui:messages.m_2d275a74912cca2e")} value={payload.metric} />
       {(budgetAmount !== null || observedAmount !== null) ? (
         <div className="rounded-md bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
           Limit {budgetAmount !== null ? formatCents(budgetAmount) : "—"} · Observed {observedAmount !== null ? formatCents(observedAmount) : "—"}
@@ -187,13 +188,13 @@ function BoardApprovalPayloadContent({ payload }: { payload: Record<string, unkn
     <div className="mt-4 space-y-3.5 text-sm">
       {title && (
         <div className="space-y-1">
-          <p className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-label) text-muted-foreground">Title</p>
+          <p className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-label) text-muted-foreground">{uiT("ui:messages.m_7e8cd2056da73a7f")}</p>
           <p className="font-medium leading-6 text-foreground">{title}</p>
         </div>
       )}
       {summary && (
         <div className="space-y-1">
-          <p className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-label) text-muted-foreground">Summary</p>
+          <p className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-label) text-muted-foreground">{uiT("ui:messages.m_8e76a94ac8320d51")}</p>
           <MarkdownBody className="leading-6 text-foreground/90">{summary}</MarkdownBody>
         </div>
       )}

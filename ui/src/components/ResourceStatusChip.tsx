@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { brandChipBadge, type BrandChipColor } from "@/lib/status-colors";
@@ -33,14 +34,14 @@ interface VariantSpec {
 }
 
 const VARIANTS: Record<ResourceStatusVariant, VariantSpec> = {
-  ready: { color: "green", glyph: "●", label: "Ready", title: "Materialized and matches the shipped default" },
+  ready: { color: "green", glyph: "●", label: uiT("ui:messages.m_5fa7aac5375c5815"), title: "Materialized and matches the shipped default" },
   needs_setup: { color: "amber", glyph: "⚠", label: "Needs setup", title: "Present but not usable yet" },
   missing: { color: "amber", glyph: "⚠", label: "Missing", title: "Expected resource absent; reconcile will recreate it" },
-  error: { color: "red", glyph: "✕", label: "Error", title: "Failed to load or reconcile" },
+  error: { color: "red", glyph: "✕", label: uiT("ui:messages.m_54a0e8c17ebb21a1"), title: "Failed to load or reconcile" },
   update_available: {
     color: "blue",
     glyph: "↑",
-    label: "Update available",
+    label: uiT("ui:messages.m_ff8b555d818f0b25"),
     title: "Unedited — a newer shipped default can be applied",
   },
   drifted: {
@@ -55,11 +56,11 @@ const VARIANTS: Record<ResourceStatusVariant, VariantSpec> = {
     label: "Schedule off",
     title: "No background work runs until you enable it — costs zero tokens",
   },
-  schedule_on: { color: "green", glyph: "●", label: "Weekly", title: "Runs on the weekly schedule" },
+  schedule_on: { color: "green", glyph: "●", label: uiT("ui:messages.m_2975132481a7a695"), title: "Runs on the weekly schedule" },
   pending_approval: {
     color: "amber",
     glyph: "⚠",
-    label: "Pending approval",
+    label: uiT("ui:messages.m_bb33a7f41817b38d"),
     title: "Waiting on board hire approval before it can run",
   },
   proposal_pending: {

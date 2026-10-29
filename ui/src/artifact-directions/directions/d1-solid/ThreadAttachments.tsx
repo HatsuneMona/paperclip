@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
 import { Counts } from "./Counts";
@@ -86,7 +87,7 @@ export function ThreadAttachments({ artifacts }: { artifacts: LabArtifact[] }) {
   // Whatever has a picture goes first, so the two-row slabs start the grid and the files pack beside them.
   const ordered = [...artifacts.filter(hasThumbnail), ...artifacts.filter((a) => !hasThumbnail(a))];
   return (
-    <section data-solid="thread-attachments" aria-label="Attachments" className="flex w-full flex-col gap-2 py-1">
+    <section data-solid="thread-attachments" aria-label={uiT("ui:messages.m_634de114775082f0")} className="flex w-full flex-col gap-2 py-1">
       <p className={cn(META_TEXT, "px-1 text-muted-foreground")}>
         <Counts lead={plural(artifacts.length, "attachment")} parts={counts} of={artifacts} />
       </p>

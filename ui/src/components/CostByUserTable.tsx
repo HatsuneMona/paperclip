@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CostByUserReport } from "@paperclipai/shared";
 import { CostAmount } from "./CostAmount";
 import { Identity } from "./Identity";
@@ -15,11 +16,11 @@ export function CostByUserTable({ report }: { report: CostByUserReport }) {
           <table aria-label="Costs by user" className="w-full text-sm">
             <thead className="text-muted-foreground">
               <tr className="border-b border-border">
-                <th scope="col" className="py-2 pr-4 text-left font-medium">User</th>
-                <th scope="col" className="px-4 py-2 text-right font-medium">Runs</th>
-                <th scope="col" className="px-4 py-2 text-right font-medium">Input</th>
-                <th scope="col" className="px-4 py-2 text-right font-medium">Output</th>
-                <th scope="col" className="py-2 pl-4 text-right font-medium">Cost</th>
+                <th scope="col" className="py-2 pr-4 text-left font-medium">{uiT("ui:messages.m_b512d97e7cbf97c2")}</th>
+                <th scope="col" className="px-4 py-2 text-right font-medium">{uiT("ui:messages.m_848f54e89660cea4")}</th>
+                <th scope="col" className="px-4 py-2 text-right font-medium">{uiT("ui:messages.m_36ecb4f8669133ce")}</th>
+                <th scope="col" className="px-4 py-2 text-right font-medium">{uiT("ui:messages.m_b2439bcb8dee14b6")}</th>
+                <th scope="col" className="py-2 pl-4 text-right font-medium">{uiT("ui:messages.m_204a5eb2cd28bcfd")}</th>
               </tr>
             </thead>
             <tbody>
@@ -29,7 +30,7 @@ export function CostByUserTable({ report }: { report: CostByUserReport }) {
               {report.rows.map(row => (
                 <tr key={row.userId ?? "unattributed"} className="border-b border-border last:border-0">
                   <th scope="row" className="py-3 pr-4 text-left font-normal">
-                    {row.userId ? <Identity name={row.userName ?? "Unknown user"} avatarUrl={row.userImage} /> : "Unattributed"}
+                    {row.userId ? <Identity name={row.userName ?? "Unknown user"} avatarUrl={row.userImage} /> : uiT("ui:messages.m_a5c4e03c56e08f72")}
                   </th>
                   <td className="px-4 py-3 text-right tabular-nums">{row.runCount.toLocaleString()}</td>
                   <td className="px-4 py-3 text-right tabular-nums">

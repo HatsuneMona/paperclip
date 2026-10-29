@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import type { AgentInstructionsFileDetail } from "@paperclipai/shared";
@@ -62,9 +63,7 @@ export function InstructionHistory({
         variant="outline"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-      >
-        History
-      </Button>
+      >{uiT("ui:messages.m_0e76960093379060")}</Button>
       {open && (
         <div className="space-y-3">
           {history.isLoading && (

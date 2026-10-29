@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Project } from "@paperclipai/shared";
@@ -75,7 +76,7 @@ export function Projects() {
   const [sortDir, setSortDir] = useState<ProjectSortDir>("asc");
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Projects" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_04e2a9728af75840") }]);
   }, [setBreadcrumbs]);
 
   const { data: allProjects, isLoading, error } = useQuery({
@@ -154,7 +155,7 @@ export function Projects() {
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-medium">{label}</h2>
                   <span className="text-xs text-muted-foreground">
-                    {sectionProjects.length} project{sectionProjects.length === 1 ? "" : "s"}
+                    {sectionProjects.length}{uiT("ui:messages.m_c6e0c8d38fc71da5")}{sectionProjects.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                   </span>
                 </div>
                 <Card className="block py-0 overflow-hidden divide-y divide-border">
@@ -180,9 +181,9 @@ export function Projects() {
                             {project.visibility === "private" ? <Lock className="size-4 shrink-0 text-muted-foreground" aria-label="Private project" /> : null}
                             <span
                               className="hidden text-xs text-muted-foreground tabular-nums sm:inline"
-                              title={`${formatNumber(project.taskCount ?? 0)} task${(project.taskCount ?? 0) === 1 ? "" : "s"}`}
+                              title={uiT("ui:messages.m_56eab638fdf13822", { v0: (formatNumber(project.taskCount ?? 0)), v1: ((project.taskCount ?? 0) === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
                             >
-                              {formatNumber(project.taskCount ?? 0)} task{(project.taskCount ?? 0) === 1 ? "" : "s"}
+                              {formatNumber(project.taskCount ?? 0)}{uiT("ui:messages.m_3e7a7664eec2fc88")}{(project.taskCount ?? 0) === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                             </span>
                             {project.budget && (
                               <span className="hidden text-xs text-muted-foreground tabular-nums sm:inline">

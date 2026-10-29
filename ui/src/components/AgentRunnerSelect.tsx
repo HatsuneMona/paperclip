@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { AgentRunner, AgentRunnerChoice } from "@paperclipai/shared";
 import { Field } from "./agent-config-primitives";
 import { SelectPopover } from "./ui/select";
@@ -23,9 +24,9 @@ export function AgentRunnerSelect({
   onRetry?: () => void;
 }) {
   return (
-    <Field label="Runner">
+    <Field label={uiT("ui:messages.m_2184a4e3f4ce0f21")}>
       <SelectPopover
-        aria-label="Runner"
+        aria-label={uiT("ui:messages.m_2184a4e3f4ce0f21")}
         disabled={disabled}
         value={value}
         displayValue={value === "auto" ? (defaultRunner ? `${defaultRunner === "paperclip" ? "Paperclip Runner" : "Legacy runner"} (default)` : pending ? "Checking runner availability…" : "Automatic selection unavailable") : undefined}

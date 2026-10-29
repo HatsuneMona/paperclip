@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { LabGroup } from "../../kit";
 import { countLabel, daysOf, reviewCountOf } from "./gallery-model";
 import { GalleryItem } from "./GalleryItem";
@@ -41,10 +42,9 @@ function Summary({ group }: { group: LabGroup }) {
           <span className="font-medium text-foreground">
             <span className="font-mono text-(length:--tac-mono-scale)">{group.count}</span> {countLabel(group.count)}
           </span>
-          <span>
-            Updated <span className="font-mono text-(length:--tac-mono-scale)">{group.updatedLabel}</span>
+          <span>{uiT("ui:messages.m_a919c7c2d1a48683")}<span className="font-mono text-(length:--tac-mono-scale)">{group.updatedLabel}</span>
           </span>
-          {review > 0 ? <span className="sr-only">{review} to review</span> : null}
+          {review > 0 ? <span className="sr-only">{review}{uiT("ui:messages.m_343e792fcd38458d")}</span> : null}
         </p>
         <KindTally artifacts={group.artifacts} className="flex flex-wrap items-baseline gap-y-0.5 text-xs leading-4 text-(--tac-meta)" />
       </div>

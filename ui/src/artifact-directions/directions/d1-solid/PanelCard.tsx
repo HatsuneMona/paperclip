@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -119,7 +120,7 @@ export function PanelCard({ artifact, section }: { artifact: LabArtifact; sectio
           {artifact.commentCount != null ? (
             <button
               type="button"
-              aria-label={`${plural(artifact.commentCount, "comment")}: ${artifact.title}`}
+              aria-label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (plural(artifact.commentCount, "comment")), v1: (artifact.title) })}
               title={plural(artifact.commentCount, "comment")}
               className={cn(COUNT_BUTTON, artifact.commentCount > 0 ? "text-foreground" : null)}
             >

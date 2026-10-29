@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SecretStatus, UserSecretDefinition } from "@paperclipai/shared";
@@ -130,7 +131,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
       setDialogOpen(false);
     },
     onError: (err) =>
-      setError(err instanceof ApiError || err instanceof Error ? err.message : "Failed to save"),
+      setError(err instanceof ApiError || err instanceof Error ? err.message : uiT("ui:messages.m_2c07997249abaa76")),
   });
 
   const remove = useMutation({
@@ -173,9 +174,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
           <div className="flex items-center gap-2 py-4 text-sm text-destructive">
             <AlertCircle className="h-4 w-4" /> Failed to load definitions:{" "}
             {(definitionsQuery.error as Error).message}
-            <Button variant="ghost" size="sm" onClick={() => definitionsQuery.refetch()}>
-              Retry
-            </Button>
+            <Button variant="ghost" size="sm" onClick={() => definitionsQuery.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           </div>
         ) : definitions.length === 0 && !definitionsQuery.isPending ? (
           <EmptyState
@@ -244,7 +243,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Name</label>
+              <label className="text-xs font-medium text-foreground">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</label>
               <Input
                 value={form.name}
                 onChange={(event) => {
@@ -260,7 +259,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Key</label>
+              <label className="text-xs font-medium text-foreground">{uiT("ui:messages.m_99a52df3ff3d4994")}</label>
               <Input
                 value={form.key}
                 onChange={(event) => {
@@ -276,7 +275,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
               </p>
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Description</label>
+              <label className="text-xs font-medium text-foreground">{uiT("ui:messages.m_526e0087cc3f254d")}</label>
               <Input
                 value={form.description}
                 onChange={(event) =>
@@ -287,20 +286,20 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
             </div>
             <div className="space-y-1">
               <label className="text-xs font-medium text-foreground">
-                Usage guidance <span className="text-muted-foreground">(optional)</span>
+                Usage guidance <span className="text-muted-foreground">{uiT("ui:messages.m_0059798b7f7023e4")}</span>
               </label>
               <Textarea
                 value={form.usageGuidance}
                 onChange={(event) =>
                   setForm((current) => ({ ...current, usageGuidance: event.target.value }))
                 }
-                placeholder="Tell members how to create their token, required scopes, etc."
+                placeholder={uiT("ui:messages.m_2eecaea0c85e0847")}
                 className="min-h-(--sz-70px) text-sm"
               />
             </div>
             {editing ? (
               <div className="space-y-1">
-                <label className="text-xs font-medium text-foreground">Status</label>
+                <label className="text-xs font-medium text-foreground">{uiT("ui:messages.m_920e413c7d411b61")}</label>
                 <Select
                   value={form.status}
                   onValueChange={(status) =>
@@ -311,9 +310,9 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="disabled">Disabled</SelectItem>
-                    <SelectItem value="archived">Archived</SelectItem>
+                    <SelectItem value="active">{uiT("ui:messages.m_92340695899bd2d8")}</SelectItem>
+                    <SelectItem value="disabled">{uiT("ui:messages.m_75081b593d15cf6e")}</SelectItem>
+                    <SelectItem value="archived">{uiT("ui:messages.m_bdb86505f8062d15")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -322,11 +321,9 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
           </div>
 
           <DialogFooter>
-            <Button variant="ghost" onClick={() => setDialogOpen(false)} disabled={save.isPending}>
-              Cancel
-            </Button>
+            <Button variant="ghost" onClick={() => setDialogOpen(false)} disabled={save.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button onClick={() => save.mutate()} disabled={!canSave || save.isPending}>
-              {save.isPending ? "Saving…" : editing ? "Save changes" : "Create"}
+              {save.isPending ? uiT("ui:messages.m_23e39291d6135814") : editing ? uiT("ui:messages.m_dd0ae7a5cbcf2339") : uiT("ui:messages.m_4759498ac2a719c6")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -343,15 +340,13 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="ghost" onClick={() => setDeleteTarget(null)} disabled={remove.isPending}>
-              Cancel
-            </Button>
+            <Button variant="ghost" onClick={() => setDeleteTarget(null)} disabled={remove.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               variant="destructive"
               onClick={() => deleteTarget && remove.mutate(deleteTarget)}
               disabled={remove.isPending}
             >
-              {remove.isPending ? "Removing…" : "Remove"}
+              {remove.isPending ? uiT("ui:messages.m_d4b09919ec929f15") : uiT("ui:messages.m_c3812fc4acb861d5")}
             </Button>
           </DialogFooter>
         </DialogContent>

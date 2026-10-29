@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -93,8 +94,8 @@ function FilterOptionSearch({
       <Input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder={`Search ${label.toLowerCase()}...`}
-        aria-label={`Search ${label.toLowerCase()}`}
+        placeholder={uiT("ui:messages.m_9a2afa301658821d", { v0: (label.toLowerCase()) })}
+        aria-label={uiT("ui:messages.m_21c99ad49e64b72f", { v0: (label.toLowerCase()) })}
         className="h-8 pl-7 text-xs"
       />
     </div>
@@ -187,9 +188,9 @@ export function IssueFiltersPopover({
   const popover = (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant={buttonVariant} size={iconOnly ? "icon" : "sm"} className={`text-xs ${iconOnly ? "relative h-8 w-8 shrink-0" : ""} ${activeFilterCount > 0 ? "text-blue-600 dark:text-blue-400" : ""}`} title={iconOnly ? (activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : "Filter") : undefined}>
+        <Button variant={buttonVariant} size={iconOnly ? "icon" : "sm"} className={`text-xs ${iconOnly ? "relative h-8 w-8 shrink-0" : ""} ${activeFilterCount > 0 ? "text-blue-600 dark:text-blue-400" : ""}`} title={iconOnly ? (activeFilterCount > 0 ? uiT("ui:messages.m_50046a6d7685452a", { v0: (activeFilterCount) }) : uiT("ui:messages.m_638e249f4a15ebb8")) : undefined}>
           <Filter className={iconOnly ? "h-3.5 w-3.5" : "h-3.5 w-3.5 sm:h-3 sm:w-3 sm:mr-1"} />
-          {!iconOnly && <span className="hidden sm:inline">{activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : "Filter"}</span>}
+          {!iconOnly && <span className="hidden sm:inline">{activeFilterCount > 0 ? uiT("ui:messages.m_50046a6d7685452a", { v0: (activeFilterCount) }) : uiT("ui:messages.m_638e249f4a15ebb8")}</span>}
           {!iconOnly && activeFilterCount > 0 ? <span className="ml-0.5 text-(length:--text-nano) font-medium sm:hidden">{activeFilterCount}</span> : null}
           {iconOnly && activeFilterCount > 0 ? <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-blue-600 text-(length:--text-nano) font-bold text-white">{activeFilterCount}</span> : null}
           {!iconOnly && activeFilterCount > 0 ? (
@@ -204,7 +205,7 @@ export function IssueFiltersPopover({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        aria-label="Filters"
+        aria-label={uiT("ui:messages.m_546ebb8eb993ea56")}
         align="end"
         className={refreshed ? "task-filters-popover" : streamlined
           ? "w-(--sz-calc-10) max-h-(--sz-calc-9) overflow-y-auto overscroll-contain p-0"
@@ -212,15 +213,13 @@ export function IssueFiltersPopover({
       >
         {refreshed ? <IssueFilterPanel state={state} onChange={onChange} activeFilterCount={activeFilterCount} agents={agents} projects={projects} labels={labels} creators={creators} currentUserId={currentUserId} onClear={clearFilters} /> : <div className="space-y-3 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Filters</span>
+            <span className="text-sm font-medium">{uiT("ui:messages.m_546ebb8eb993ea56")}</span>
             {activeFilterCount > 0 ? (
               <button
                 type="button"
                 className="text-xs text-muted-foreground hover:text-foreground"
                 onClick={clearFilters}
-              >
-                Clear
-              </button>
+              >{uiT("ui:messages.m_83b12c2216efb4fd")}</button>
             ) : null}
           </div>
 
@@ -228,7 +227,7 @@ export function IssueFiltersPopover({
             <>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-1" data-filter-options="inbox-category">
-                  <span className="text-xs text-muted-foreground">Category</span>
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_292c06f0045a45d0")}</span>
                   <div className="space-y-0.5">
                     {INBOX_CATEGORY_OPTIONS.map(([value, label]) => {
                       const selected = inboxScopeFilters.category === value;
@@ -255,7 +254,7 @@ export function IssueFiltersPopover({
 
                 {inboxScopeFilters.showApprovalStatus ? (
                   <div className="space-y-1" data-filter-options="inbox-approval-status">
-                    <span className="text-xs text-muted-foreground">Approval status</span>
+                    <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_5a66175a2ba3931a")}</span>
                     <div className="space-y-0.5">
                       {INBOX_APPROVAL_STATUS_OPTIONS.map(([value, label]) => {
                         const selected = inboxScopeFilters.approvalStatus === value;
@@ -287,7 +286,7 @@ export function IssueFiltersPopover({
           ) : null}
 
           <div className="space-y-1.5">
-            <span className="text-xs text-muted-foreground">Quick filters</span>
+            <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_e01c5f270819f8ff")}</span>
             <div className="flex flex-wrap gap-1.5">
               {issueQuickFilterPresets.map((preset) => {
                 const isActive = issueFilterArraysEqual(state.statuses, preset.statuses);
@@ -314,7 +313,7 @@ export function IssueFiltersPopover({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="min-w-0 space-y-3">
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">Status</span>
+                <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_920e413c7d411b61")}</span>
                 <div className="space-y-0.5">
                   {issueStatusOrder.map((status) => (
                     <label key={status} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -332,7 +331,7 @@ export function IssueFiltersPopover({
               {/* PAP-411: Priority filter section hidden behind SHOW_TASK_PRIORITY_UI (filter state stays intact). */}
               {SHOW_TASK_PRIORITY_UI && (
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">Priority</span>
+                <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_d60dbba079223254")}</span>
                 <div className="space-y-0.5">
                   {issuePriorityOrder.map((priority) => (
                     <label key={priority} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -351,9 +350,9 @@ export function IssueFiltersPopover({
 
             <div className="min-w-0 space-y-3">
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">Responsible</span>
+                <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_bc110a6d0722098a")}</span>
                 {streamlined && (agents?.length ?? 0) + (currentUserId ? 2 : 1) > SEARCHABLE_FILTER_THRESHOLD ? (
-                  <FilterOptionSearch value={assigneeSearch} onChange={setAssigneeSearch} label="Responsible" />
+                  <FilterOptionSearch value={assigneeSearch} onChange={setAssigneeSearch} label={uiT("ui:messages.m_bc110a6d0722098a")} />
                 ) : null}
                 <div data-filter-options="responsible" className={streamlined ? "space-y-0.5" : "max-h-32 space-y-0.5 overflow-y-auto"}>
                   <label className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -361,7 +360,7 @@ export function IssueFiltersPopover({
                       checked={state.assignees.includes("__unassigned")}
                       onCheckedChange={() => onChange({ assignees: toggleIssueFilterValue(state.assignees, "__unassigned") })}
                     />
-                    <span className="text-sm">No responsible</span>
+                    <span className="text-sm">{uiT("ui:messages.m_15abdee5d453108e")}</span>
                   </label>
                   {currentUserId ? (
                     <label className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -370,7 +369,7 @@ export function IssueFiltersPopover({
                         onCheckedChange={() => onChange({ assignees: toggleIssueFilterValue(state.assignees, "__me") })}
                       />
                       <User className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-sm">Me</span>
+                      <span className="text-sm">{uiT("ui:messages.m_d30af076b0dc85cc")}</span>
                     </label>
                   ) : null}
                   {(streamlined ? visibleAgents : agents ?? []).map((agent) => (
@@ -387,7 +386,7 @@ export function IssueFiltersPopover({
 
               {creatorOptions.length > 0 ? (
                 <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground">Creator</span>
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_88447b83090cded5")}</span>
                   {selectedCreatorOptions.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
                       {selectedCreatorOptions.map((creator) => (
@@ -398,7 +397,7 @@ export function IssueFiltersPopover({
                             type="button"
                             className="rounded-full p-0.5 hover:bg-accent"
                             onClick={() => onChange({ creators: state.creators.filter((value) => value !== creator.id) })}
-                            aria-label={`Remove creator ${creator.label}`}
+                            aria-label={uiT("ui:messages.m_28a18ada40ab2477", { v0: (creator.label) })}
                           >
                             <X className="h-3 w-3" />
                           </button>
@@ -411,7 +410,7 @@ export function IssueFiltersPopover({
                     <Input
                       value={creatorSearch}
                       onChange={(event) => setCreatorSearch(event.target.value)}
-                      placeholder="Search creators..."
+                      placeholder={uiT("ui:messages.m_2294896cefc24368")}
                       className="h-8 pl-7 text-xs"
                     />
                   </div>
@@ -433,7 +432,7 @@ export function IssueFiltersPopover({
                         </button>
                       );
                     }) : (
-                      <div className="px-2 py-1 text-xs text-muted-foreground">No creators match.</div>
+                      <div className="px-2 py-1 text-xs text-muted-foreground">{uiT("ui:messages.m_e23e5a42b5572904")}</div>
                     )}
                   </div>
                 </div>
@@ -441,9 +440,9 @@ export function IssueFiltersPopover({
 
               {projects && projects.length > 0 ? (
                 <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground">Project</span>
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_9859597853197476")}</span>
                   {streamlined && projects.length > SEARCHABLE_FILTER_THRESHOLD ? (
-                    <FilterOptionSearch value={projectSearch} onChange={setProjectSearch} label="Projects" />
+                    <FilterOptionSearch value={projectSearch} onChange={setProjectSearch} label={uiT("ui:messages.m_04e2a9728af75840")} />
                   ) : null}
                   <div data-filter-options="projects" className={streamlined ? "space-y-0.5" : "max-h-32 space-y-0.5 overflow-y-auto"}>
                     {(streamlined ? visibleProjects : projects).map((project) => (
@@ -463,9 +462,9 @@ export function IssueFiltersPopover({
             <div className="min-w-0 space-y-3">
               {labels && labels.length > 0 ? (
                 <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground">Labels</span>
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_934b8899c3d918d4")}</span>
                   {streamlined && labels.length > SEARCHABLE_FILTER_THRESHOLD ? (
-                    <FilterOptionSearch value={labelSearch} onChange={setLabelSearch} label="Labels" />
+                    <FilterOptionSearch value={labelSearch} onChange={setLabelSearch} label={uiT("ui:messages.m_934b8899c3d918d4")} />
                   ) : null}
                   <div data-filter-options="labels" className={streamlined ? "space-y-0.5" : "max-h-32 space-y-0.5 overflow-y-auto"}>
                     {(streamlined ? visibleLabels : labels).map((label) => (
@@ -484,7 +483,7 @@ export function IssueFiltersPopover({
 
               {enableExternalObjectFilters ? (
                 <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground">External object status</span>
+                  <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_48bc2014d5fb4ce5")}</span>
                   <div className="space-y-0.5">
                     {externalObjectFilterOrder.map((value) => {
                       const iconCategory = value === "failed" ? "failed"
@@ -517,13 +516,13 @@ export function IssueFiltersPopover({
               ) : null}
 
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">Visibility</span>
+                <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_7448611d5f93aa8a")}</span>
                 <label className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
                   <Checkbox
                     checked={state.liveOnly}
                     onCheckedChange={(checked) => onChange({ liveOnly: checked === true })}
                   />
-                  <span className="text-sm">Live runs only</span>
+                  <span className="text-sm">{uiT("ui:messages.m_596632fc019ac3ae")}</span>
                 </label>
                 {enableAgentCreatedVisibilityFilter ? (
                   <label className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">

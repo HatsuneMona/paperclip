@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -242,7 +243,7 @@ const TRUST_META: Record<
   { label: string; tip: string; tone: string; Icon: typeof ShieldCheck }
 > = {
   markdown_only: {
-    label: "Markdown only",
+    label: uiT("ui:messages.m_f6e1f70299429863"),
     tip: "Contains only markdown and references. No executable content.",
     tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30",
     Icon: ShieldCheck,
@@ -292,9 +293,9 @@ const COMPAT_META: Record<
   CatalogTeamCompatibility,
   { label: string; tone: string }
 > = {
-  compatible: { label: "Compatible", tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
+  compatible: { label: uiT("ui:messages.m_04c72ef3388c185b"), tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
   unknown: { label: "Unknown compat", tone: "text-muted-foreground border-border" },
-  invalid: { label: "Invalid", tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
+  invalid: { label: uiT("ui:messages.m_96c34a0719eb565c"), tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
 };
 
 function CompatChip({ compatibility }: { compatibility: CatalogTeamCompatibility }) {
@@ -340,7 +341,7 @@ function RiskBanner({ team }: { team: CatalogTeam }) {
       <div className="flex items-center gap-2 text-sm font-medium">
         <AlertTriangle className="h-4 w-4" />
         This team references {unsafe.length} external source
-        {unsafe.length === 1 ? "" : "s"}
+        {unsafe.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
       </div>
       <ul className="mt-1.5 space-y-0.5 text-xs">
         {unsafe.map((s) => (
@@ -610,7 +611,7 @@ export function EnvInputsList({ inputs }: { inputs: CatalogTeamEnvInputSummary[]
               {input.kind}
             </Badge>
             {input.requirement === "required" && (
-              <Badge variant="outline" className="text-(length:--text-nano)">required</Badge>
+              <Badge variant="outline" className="text-(length:--text-nano)">{uiT("ui:messages.m_d0a3630555bbec7f")}</Badge>
             )}
           </li>
         ))}
@@ -650,10 +651,10 @@ export function ExternalSourcesList({ sources }: { sources: CatalogTeamSourceRef
                 <span className="font-mono text-xs truncate">{source.ref}</span>
                 <span className="ml-auto text-(length:--text-micro)">
                   {code === "ok" && (
-                    <span className="text-emerald-600 dark:text-emerald-300">Pinned</span>
+                    <span className="text-emerald-600 dark:text-emerald-300">{uiT("ui:messages.m_f20c879465551f0d")}</span>
                   )}
                   {code === "unpinned" && (
-                    <span className="text-amber-600 dark:text-amber-300">Unpinned</span>
+                    <span className="text-amber-600 dark:text-amber-300">{uiT("ui:messages.m_ebe3b5488bc6a5fd")}</span>
                   )}
                   {code === "unsupported_in_ui" && (
                     <span className="text-rose-600 dark:text-rose-300">Unsupported in browser install</span>
@@ -779,10 +780,10 @@ export function TeamDetailPane({
 
         {/* Summary grid */}
         <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-          <MetricTile label="Agents" value={team.counts.agents} Icon={Users2} />
-          <MetricTile label="Projects" value={team.counts.projects} Icon={FolderKanban} />
-          <MetricTile label="Routines" value={team.counts.routines} Icon={Repeat} />
-          <MetricTile label="Required skills" value={skillCount(team)} Icon={Boxes} />
+          <MetricTile label={uiT("ui:messages.m_279b44d2ab4b40c0")} value={team.counts.agents} Icon={Users2} />
+          <MetricTile label={uiT("ui:messages.m_04e2a9728af75840")} value={team.counts.projects} Icon={FolderKanban} />
+          <MetricTile label={uiT("ui:messages.m_61b7bb44e2b47b7c")} value={team.counts.routines} Icon={Repeat} />
+          <MetricTile label={uiT("ui:messages.m_dc7f3b37cfdab248")} value={skillCount(team)} Icon={Boxes} />
         </div>
 
         {/* Agent hierarchy */}
@@ -794,7 +795,7 @@ export function TeamDetailPane({
         {/* Projects */}
         {team.projectSlugs.length > 0 && (
           <div className="space-y-2">
-            <SectionHeader>Projects</SectionHeader>
+            <SectionHeader>{uiT("ui:messages.m_04e2a9728af75840")}</SectionHeader>
             <ul className="space-y-1">
               {team.projectSlugs.map((slug) => (
                 <li key={slug} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm">
@@ -809,7 +810,7 @@ export function TeamDetailPane({
 
         {/* Required skills */}
         <div className="space-y-2">
-          <SectionHeader>Required skills</SectionHeader>
+          <SectionHeader>{uiT("ui:messages.m_dc7f3b37cfdab248")}</SectionHeader>
           <RequiredSkillsList skills={team.requiredSkills} />
         </div>
 
@@ -821,7 +822,7 @@ export function TeamDetailPane({
 
         {/* File inventory */}
         <div className="space-y-2">
-          <SectionHeader>Files</SectionHeader>
+          <SectionHeader>{uiT("ui:messages.m_abc7e9892806b047")}</SectionHeader>
           <div className="rounded-md border border-border p-1.5">
             <TeamFileTree
               nodes={tree}
@@ -839,9 +840,7 @@ export function TeamDetailPane({
                   type="button"
                   className="text-xs text-muted-foreground hover:text-foreground"
                   onClick={() => onSelectFile(null)}
-                >
-                  Close
-                </button>
+                >{uiT("ui:messages.m_7d9eb7acb13e2462")}</button>
               </div>
               <div className="max-h-96 overflow-auto p-3">
                 {fileContent === null ? (
@@ -1288,8 +1287,7 @@ export function TeamInstallerDialog({
   const headerDescription =
     phase === "form" ? (
       <span className="flex items-center gap-2">
-        <span>
-          Step {stepIndex + 1} of {totalSteps} · {STEP_LABELS[currentStep]}
+        <span>{uiT("ui:messages.m_474a987f3bbe57fe")}{stepIndex + 1}{uiT("ui:messages.m_a4282e4b2298b90b")}{totalSteps} · {STEP_LABELS[currentStep]}
         </span>
         <span className="flex items-center gap-1" aria-hidden>
           {steps.map((s, i) => (
@@ -1386,15 +1384,15 @@ export function TeamInstallerDialog({
       <div className="flex items-center justify-between gap-3">
         <div>
           {stepIndex > 0 ? (
-            <Button variant="ghost" onClick={goBack}>Back</Button>
+            <Button variant="ghost" onClick={goBack}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
           ) : (
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           )}
         </div>
         <div className="flex items-center gap-3">
           {currentStep === "preview" && hasErrors && (
             <span className="text-xs text-rose-600 dark:text-rose-300">
-              Install blocked: {blockedCount} error{blockedCount === 1 ? "" : "s"}
+              Install blocked: {blockedCount} error{blockedCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
             </span>
           )}
           {currentStep === "preview" && !hasErrors && missingRequiredSecretCount > 0 && (
@@ -1420,13 +1418,13 @@ export function TeamInstallerDialog({
               </Button>
             )
           ) : (
-            <Button onClick={goNext} disabled={!canContinue(currentStep)}>Continue</Button>
+            <Button onClick={goNext} disabled={!canContinue(currentStep)}>{uiT("ui:messages.m_31fbef162594de01")}</Button>
           )}
         </div>
       </div>
     ) : phase === "error" ? (
       <div className="flex justify-end">
-        <Button variant="ghost" onClick={onClose}>Close</Button>
+        <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_7d9eb7acb13e2462")}</Button>
       </div>
     ) : null;
 
@@ -1508,9 +1506,9 @@ export function StepTargetManager({
         <div className="space-y-1.5" aria-describedby="target-manager-help">
           <SectionHeader>Target manager</SectionHeader>
           {agents.length === 0 ? <p role="status" className="rounded-md border border-border p-3 text-sm text-muted-foreground">No agents are available to manage this team. Create an agent in your company, then try again.</p> : <Command className="rounded-md border border-border">
-            <CommandInput placeholder="Search agents…" />
+            <CommandInput placeholder={uiT("ui:messages.m_e05cb78e973da372")} />
             <CommandList>
-              <CommandEmpty>No agents found.</CommandEmpty>
+              <CommandEmpty>{uiT("ui:messages.m_61666542b1caa1e2")}</CommandEmpty>
               <CommandGroup>
                 {agents.map((agent) => (
                   <CommandItem
@@ -1564,7 +1562,7 @@ export function StepSourcePolicy({
   return (
     <div className="space-y-4">
       <div role="alert" className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-sm text-amber-700 dark:text-amber-300">
-        This team references {external.length} external source{external.length === 1 ? "" : "s"}.
+        This team references {external.length} external source{external.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}.
         Review each one and decide what to allow before continuing.
       </div>
 
@@ -1603,20 +1601,20 @@ export function StepSourcePolicy({
 
       <div className="space-y-2.5 rounded-md border border-border p-3">
         <PolicyToggle
-          label="Allow external sources"
-          description="Resolve github/url skill and team sources at install time."
+          label={uiT("ui:messages.m_2535649cd2d6efe8")}
+          description={uiT("ui:messages.m_9392e168fb59eb14")}
           checked={allowExternalSources}
           onChange={(v) => onChange("external", v)}
         />
         <PolicyToggle
-          label="Allow unpinned optional sources"
-          description="Permit optional sources that are not pinned to a ref or checksum."
+          label={uiT("ui:messages.m_91c8e0b424e242f7")}
+          description={uiT("ui:messages.m_f7fa4b7b9f11f377")}
           checked={allowUnpinnedOptionalSources}
           onChange={(v) => onChange("unpinned", v)}
         />
         <PolicyToggle
-          label="Allow local-path sources"
-          description="Required for local_path / agent_package sources. Development use only."
+          label={uiT("ui:messages.m_cc80f883fbb7c40c")}
+          description={uiT("ui:messages.m_da8e57ccf27ced26")}
           checked={allowLocalPathSources}
           onChange={(v) => onChange("localPath", v)}
         />
@@ -1661,7 +1659,7 @@ const SKILL_ACTION_META: Record<
   already_in_package: { label: "Bundled in package", tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
   catalog_install_required: { label: "Will install from catalog", tone: "text-blue-600 dark:text-blue-300 border-blue-500/30" },
   external_import_required: { label: "Will import from source", tone: "text-amber-600 dark:text-amber-300 border-amber-500/30" },
-  blocked: { label: "Blocked", tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
+  blocked: { label: uiT("ui:messages.m_18f2a0947f9d6523"), tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
 };
 
 export function StepSkillPlan({
@@ -1814,8 +1812,7 @@ export function StepPreview({
           {error}
         </div>
         <Button variant="outline" onClick={onRetry}>
-          <RotateCcw className="h-4 w-4" /> Retry
-        </Button>
+          <RotateCcw className="h-4 w-4" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
       </div>
     );
   }
@@ -1830,18 +1827,18 @@ export function StepPreview({
     <div className="space-y-4">
       {/* Summary */}
       <div className="space-y-2">
-        <SectionHeader>Summary</SectionHeader>
+        <SectionHeader>{uiT("ui:messages.m_8e76a94ac8320d51")}</SectionHeader>
         <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
-          <SummaryCount label="Agents" value={plan.agentPlans.length} />
-          <SummaryCount label="Projects" value={plan.projectPlans.length} />
-          <SummaryCount label="Starter tasks" value={plan.issuePlans.length} />
-          <SummaryCount label="Required skills" value={result.skillPreparations.length} />
+          <SummaryCount label={uiT("ui:messages.m_279b44d2ab4b40c0")} value={plan.agentPlans.length} />
+          <SummaryCount label={uiT("ui:messages.m_04e2a9728af75840")} value={plan.projectPlans.length} />
+          <SummaryCount label={uiT("ui:messages.m_4df4effed4b47cfa")} value={plan.issuePlans.length} />
+          <SummaryCount label={uiT("ui:messages.m_dc7f3b37cfdab248")} value={result.skillPreparations.length} />
         </div>
       </div>
 
       {/* Collision strategy */}
       <div className="flex items-center gap-3">
-        <span className="text-sm font-medium">Collision strategy</span>
+        <span className="text-sm font-medium">{uiT("ui:messages.m_f2d126a181a16c44")}</span>
         <Select value={collisionStrategy} onValueChange={(v) => onCollisionStrategyChange(v as CompanyPortabilityCollisionStrategy)}>
           <SelectTrigger className="h-8 w-40">
             <SelectValue />
@@ -1872,7 +1869,7 @@ export function StepPreview({
 
       {/* Agents */}
       {plan.agentPlans.length > 0 && (
-        <PreviewSection title={`Agents · ${plan.agentPlans.length}`}>
+        <PreviewSection title={uiT("ui:messages.m_420b7a092e099c13", { v0: (plan.agentPlans.length) })}>
           {plan.agentPlans.map((p) => (
             <PlanRow
               key={p.slug}
@@ -1890,7 +1887,7 @@ export function StepPreview({
 
       {/* Projects */}
       {plan.projectPlans.length > 0 && (
-        <PreviewSection title={`Projects · ${plan.projectPlans.length}`}>
+        <PreviewSection title={uiT("ui:messages.m_e513fbd3106329be", { v0: (plan.projectPlans.length) })}>
           {plan.projectPlans.map((p) => (
             <PlanRow
               key={p.slug}
@@ -1908,7 +1905,7 @@ export function StepPreview({
 
       {/* Starter tasks */}
       {plan.issuePlans.length > 0 && (
-        <PreviewSection title={`Starter tasks · ${plan.issuePlans.length}`}>
+        <PreviewSection title={uiT("ui:messages.m_c1a390d9baaa30a7", { v0: (plan.issuePlans.length) })}>
           {plan.issuePlans.map((p) => (
             <PlanRow key={p.slug} slug={p.slug} action={p.action} plannedName={p.plannedTitle} reason={p.reason} canRename={false} />
           ))}
@@ -1917,7 +1914,7 @@ export function StepPreview({
 
       {/* Adapter selection — install schema accepts adapterOverrides (design §4.4) */}
       {manifestAgents.length > 0 && (
-        <PreviewSection title={`Adapter selection · ${manifestAgents.length}`}>
+        <PreviewSection title={uiT("ui:messages.m_8e3130f09c40807b", { v0: (manifestAgents.length) })}>
           {manifestAgents.map((agent) => {
             const selected = resolveTeamInstallAdapterType(
               adapterOverrides[agent.slug] ?? agent.adapterType,
@@ -1956,7 +1953,7 @@ export function StepPreview({
 
       {/* Env inputs */}
       {envInputs.length > 0 && (
-        <PreviewSection title={`Secrets & env inputs · ${envInputs.length}`}>
+        <PreviewSection title={uiT("ui:messages.m_181ab8fc541995c1", { v0: (envInputs.length) })}>
           {envInputs.map((input) => {
             const formKey = envInputFormKey(input);
             const visible = Boolean(visibleSecretKeys[formKey]);
@@ -1968,7 +1965,7 @@ export function StepPreview({
                   <span className="font-mono text-xs uppercase tracking-wide">{input.key}</span>
                   {input.description && <span className="truncate text-xs text-muted-foreground">{input.description}</span>}
                   {input.requirement === "required" && (
-                    <Badge variant="outline" className="text-(length:--text-nano)">required</Badge>
+                    <Badge variant="outline" className="text-(length:--text-nano)">{uiT("ui:messages.m_d0a3630555bbec7f")}</Badge>
                   )}
                   <Badge
                     variant="outline"
@@ -1982,7 +1979,7 @@ export function StepPreview({
                     type={visible ? "text" : "password"}
                     value={secretValues[formKey] ?? ""}
                     onChange={(event) => onSecretChange(formKey, event.target.value)}
-                    placeholder={input.requirement === "required" ? "Required" : "Optional"}
+                    placeholder={input.requirement === "required" ? uiT("ui:messages.m_4850b174b713d88c") : uiT("ui:messages.m_59be71333c960fd0")}
                     aria-label={`${input.key} value`}
                     aria-invalid={missingRequired || undefined}
                     className={cn("h-8 min-w-0", missingRequired && "border-rose-500/60 focus-visible:ring-rose-500/30")}
@@ -1995,7 +1992,7 @@ export function StepPreview({
                         size="icon-xs"
                         className="h-8 w-8"
                         onClick={() => onToggleSecretVisibility(formKey)}
-                        aria-label={visible ? `Hide ${input.key}` : `Show ${input.key}`}
+                        aria-label={visible ? uiT("ui:messages.m_1ed45f87ec268a9e", { v0: (input.key) }) : uiT("ui:messages.m_146f0e8dbe832d50", { v0: (input.key) })}
                       >
                         {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                       </Button>
@@ -2091,9 +2088,9 @@ export function ApplySuccess({
       </p>
       {result && (
         <ul className="divide-y divide-border/60 rounded-md border border-border px-3">
-          <ResultRow label="Agents imported" count={agentsCreated} />
-          <ResultRow label="Projects imported" count={projectsCreated} />
-          <ResultRow label="Skills resolved" count={skillsResolved} />
+          <ResultRow label={uiT("ui:messages.m_449a9caf3664a9bb")} count={agentsCreated} />
+          <ResultRow label={uiT("ui:messages.m_d8458892a690bfc2")} count={projectsCreated} />
+          <ResultRow label={uiT("ui:messages.m_363f2fa2e5983f37")} count={skillsResolved} />
         </ul>
       )}
       {warnings.length > 0 && (
@@ -2110,7 +2107,7 @@ export function ApplySuccess({
         <li><a className="text-primary hover:underline" href="/activity">View activity log →</a></li>
       </ul>
       <div className="flex justify-end">
-        <Button onClick={onClose}>Done</Button>
+        <Button onClick={onClose}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
       </div>
     </div>
   );
@@ -2151,7 +2148,7 @@ export function TeamRow({
           <Tooltip>
             <TooltipTrigger asChild>
               <span
-                aria-label="Update available"
+                aria-label={uiT("ui:messages.m_ff8b555d818f0b25")}
                 className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-300"
               >
                 <ChevronUp className="h-3 w-3" />
@@ -2171,8 +2168,7 @@ export function TeamRow({
       </div>
       <div className="flex items-center gap-1.5 text-(length:--text-micro) text-muted-foreground">
         <span>
-          {team.counts.agents}a · {team.counts.projects}p · {team.counts.routines}r · {skillCount(team)}s
-        </span>
+          {team.counts.agents}a · {team.counts.projects}p · {team.counts.routines}r · {skillCount(team)}{uiT("ui:messages.m_edef011be7f6b283")}</span>
         <TrustChip level={team.trustLevel} iconOnly />
       </div>
     </button>
@@ -2216,9 +2212,9 @@ export function TeamCard({
       <div className="space-y-0.5">
         <h3 className="text-sm font-semibold leading-snug">{team.name}</h3>
         <p className="text-xs text-muted-foreground">
-          {team.counts.agents} agent{team.counts.agents === 1 ? "" : "s"} ·{" "}
-          {team.counts.projects} project{team.counts.projects === 1 ? "" : "s"} ·{" "}
-          {team.counts.routines} routine{team.counts.routines === 1 ? "" : "s"}
+          {team.counts.agents}{uiT("ui:messages.m_02a0754fddbf1a03")}{team.counts.agents === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} ·{" "}
+          {team.counts.projects}{uiT("ui:messages.m_c6e0c8d38fc71da5")}{team.counts.projects === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} ·{" "}
+          {team.counts.routines}{uiT("ui:messages.m_2fe51c04cef6ae9d")}{team.counts.routines === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
         </p>
       </div>
 
@@ -2291,8 +2287,8 @@ export function TeamCatalog() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Org Chart", href: "/org" },
-      { label: "Teams", href: TEAM_CATALOG_ROUTE_ROOT },
+      { label: uiT("ui:messages.m_aab3e6c8a0d87c7d"), href: "/org" },
+      { label: uiT("ui:messages.m_1e1a1c078af2887a"), href: TEAM_CATALOG_ROUTE_ROOT },
     ]);
   }, [setBreadcrumbs]);
 
@@ -2397,13 +2393,13 @@ export function TeamCatalog() {
     <div className="flex h-full flex-col">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 border-b border-border px-5 py-3">
-        <h1 className="text-lg font-semibold">Teams</h1>
+        <h1 className="text-lg font-semibold">{uiT("ui:messages.m_1e1a1c078af2887a")}</h1>
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={q}
             onChange={(e) => setFilterParam("search", e.target.value)}
-            placeholder="Search teams"
+            placeholder={uiT("ui:messages.m_3ad7e221faf10419")}
             className="h-8 w-56 pl-8"
           />
         </div>
@@ -2412,16 +2408,16 @@ export function TeamCatalog() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-8">
               <Filter className="h-3.5 w-3.5" />
-              {kindFilter === "all" ? "All kinds" : kindFilter === "bundled" ? "Bundled" : "Optional"}
+              {kindFilter === "all" ? "All kinds" : kindFilter === "bundled" ? uiT("ui:messages.m_79d3a1f108e8d9c3") : uiT("ui:messages.m_59be71333c960fd0")}
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Kind</DropdownMenuLabel>
+            <DropdownMenuLabel>{uiT("ui:messages.m_f5387f9bb6ed7031")}</DropdownMenuLabel>
             <DropdownMenuRadioGroup value={kindFilter} onValueChange={(v) => setFilterParam("kind", v)}>
               <DropdownMenuRadioItem value="all">All kinds</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="bundled">Bundled</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="optional">Optional</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="bundled">{uiT("ui:messages.m_79d3a1f108e8d9c3")}</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="optional">{uiT("ui:messages.m_59be71333c960fd0")}</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -2430,14 +2426,14 @@ export function TeamCatalog() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-8">
-                {categoryFilter ? `Category · ${titleCase(categoryFilter)}` : "All categories"}
+                {categoryFilter ? `Category · ${titleCase(categoryFilter)}` : uiT("ui:messages.m_9d5097a837102a17")}
                 <ChevronDown className="h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuLabel>Category</DropdownMenuLabel>
+              <DropdownMenuLabel>{uiT("ui:messages.m_292c06f0045a45d0")}</DropdownMenuLabel>
               <DropdownMenuRadioGroup value={categoryFilter} onValueChange={(v) => setFilterParam("category", v)}>
-                <DropdownMenuRadioItem value="">All categories</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="">{uiT("ui:messages.m_9d5097a837102a17")}</DropdownMenuRadioItem>
                 {categories.map((cat) => (
                   <DropdownMenuRadioItem key={cat} value={cat}>{titleCase(cat)}</DropdownMenuRadioItem>
                 ))}
@@ -2449,17 +2445,17 @@ export function TeamCatalog() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-8">
-              {riskFilter === "any" ? "Any risk" : riskFilter === "safe" ? "Safe only" : riskFilter === "has_warnings" ? "Has warnings" : "Blocked"}
+              {riskFilter === "any" ? "Any risk" : riskFilter === "safe" ? "Safe only" : riskFilter === "has_warnings" ? "Has warnings" : uiT("ui:messages.m_18f2a0947f9d6523")}
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Risk</DropdownMenuLabel>
+            <DropdownMenuLabel>{uiT("ui:messages.m_0711a8d636e4c068")}</DropdownMenuLabel>
             <DropdownMenuRadioGroup value={riskFilter} onValueChange={(v) => setFilterParam("risk", v)}>
               <DropdownMenuRadioItem value="any">Any risk</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="safe">Safe only</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="has_warnings">Has warnings</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="blocked">Blocked</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="blocked">{uiT("ui:messages.m_18f2a0947f9d6523")}</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
             {anyFilterActive && (
               <>
@@ -2477,9 +2473,7 @@ export function TeamCatalog() {
         </DropdownMenu>
 
         {anyFilterActive && (
-          <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setSearchParams(new URLSearchParams())}>
-            Reset filters
-          </Button>
+          <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setSearchParams(new URLSearchParams())}>{uiT("ui:messages.m_10afa98480f2d06c")}</Button>
         )}
       </div>
 
@@ -2503,8 +2497,7 @@ export function TeamCatalog() {
                 Failed to load team catalog.
               </div>
               <Button variant="outline" size="sm" className="mt-3" onClick={() => catalogQuery.refetch()}>
-                <RotateCcw className="h-3.5 w-3.5" /> Retry
-              </Button>
+                <RotateCcw className="h-3.5 w-3.5" />{uiT("ui:messages.m_05f13fa670a2b286")}</Button>
             </div>
           ) : teams.length === 0 ? (
             <EmptyState icon={Users2} message="No team catalog configured." />
@@ -2519,8 +2512,7 @@ export function TeamCatalog() {
             <div>
               {grouped.bundled.length > 0 && (
                 <>
-                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                    Bundled · {grouped.bundled.length}
+                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_7a0fd1884580027b")}{grouped.bundled.length}
                   </div>
                   {grouped.bundled.map((team) => (
                     <TeamRow
@@ -2534,8 +2526,7 @@ export function TeamCatalog() {
               )}
               {grouped.optional.length > 0 && (
                 <>
-                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                    Optional · {grouped.optional.length}
+                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_1838b57323f66c74")}{grouped.optional.length}
                   </div>
                   {grouped.optional.map((team) => (
                     <TeamRow
@@ -2549,8 +2540,7 @@ export function TeamCatalog() {
               )}
               {grouped.installed.length > 0 && (
                 <>
-                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                    Installed · {grouped.installed.length}
+                  <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_3c16394f192cb9d0")}{grouped.installed.length}
                   </div>
                   {grouped.installed.map((team) => (
                     <TeamRow

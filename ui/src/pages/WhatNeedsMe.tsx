@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useCoordinatorWorkspaceEnabled } from "../hooks/useCoordinatorWorkspaceEnabled";
@@ -144,7 +145,7 @@ function ClassicWhatNeedsMe() {
   );
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Decisions" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_cfa6a08af3ed5871") }]);
   }, [setBreadcrumbs]);
 
   // Re-hydrate per-company preferences when the company changes.
@@ -445,7 +446,7 @@ function ClassicWhatNeedsMe() {
         body: item.subject.title ?? undefined,
         tone: "info",
         ttlMs: 8000,
-        action: { label: "Undo", onClick: () => handleUndoDismiss(item) },
+        action: { label: uiT("ui:messages.m_a8283ade31856f71"), onClick: () => handleUndoDismiss(item) },
       });
     },
     [dismiss, handleUndoDismiss, pushToast],
@@ -516,7 +517,7 @@ function ClassicWhatNeedsMe() {
   }, [handleDismiss, keyboardItems, navigate, selectedAttentionId]);
 
   if (!selectedCompanyId) {
-    return <p className="text-sm text-muted-foreground">Select an organization first.</p>;
+    return <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_0d7c81ffe0023b23")}</p>;
   }
 
   if (isLoading) {
@@ -528,7 +529,7 @@ function ClassicWhatNeedsMe() {
   return (
     <div ref={rootRef} className="max-w-3xl space-y-4">
       <div className="space-y-4">
-        <h1 className="text-xl font-bold">Decisions</h1>
+        <h1 className="text-xl font-bold">{uiT("ui:messages.m_cfa6a08af3ed5871")}</h1>
         <DecisionsToolbar
           query={searchQuery}
           onQueryChange={setSearchQuery}
@@ -745,7 +746,7 @@ function ClassicWhatNeedsMe() {
         </Curtain>
 
         <Curtain
-          label="Expired"
+          label={uiT("ui:messages.m_424a2551d356754c")}
           count={decisionHistoryCount(expiredDecisions?.length)}
           open={expiredOpen}
           onToggle={() => setExpiredOpen((prev) => !prev)}
@@ -806,7 +807,7 @@ export function DecisionBundleHeader({
         </span>
       )}
       {title && <span className="text-muted-foreground">· {title}</span>}
-      <span className="text-muted-foreground">· {count} pending</span>
+      <span className="text-muted-foreground">· {count}{uiT("ui:messages.m_f9ad5e1de7d0af51")}</span>
     </div>
   );
 }

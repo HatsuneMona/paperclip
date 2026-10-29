@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import type { AdapterConfigFieldsProps } from "../types";
 import {
@@ -32,7 +33,7 @@ export function ClaudeLocalConfigFields({
   return configFieldsForSection(section, (
     <>
       {!hideInstructionsFile && (
-        <Field label="Agent instructions file" hint={instructionsFileHint}>
+        <Field label={uiT("ui:messages.m_ce46e7f310ea3f64")} hint={instructionsFileHint}>
           <div className="flex items-center gap-2">
             <DraftInput
               value={
@@ -96,7 +97,7 @@ export function ClaudeLocalAdvancedFields({
         environment owns both, so the managed-sandbox-only policy hides them,
         the same way `runnerManaged` hides them for the Paperclip Runner.
       */}
-      {!managedSandboxOnly && <Field label="Execution engine" hint="Default uses ACP. If ACP is unavailable, the run fails with a setup error. Choose CLI explicitly to use it.">
+      {!managedSandboxOnly && <Field label={uiT("ui:messages.m_da96ed44c9414cb4")} hint={uiT("ui:messages.m_3c378609aa8d260f")}>
         <select
           className={inputClass}
           value={engine}
@@ -107,7 +108,7 @@ export function ClaudeLocalAdvancedFields({
               : mark("adapterConfig", "engine", value === "auto" ? undefined : value);
           }}
         >
-          <option value="auto">Default (ACP)</option>
+          <option value="auto">{uiT("ui:messages.m_db3da2a98fda28e7")}</option>
           <option value="cli">Claude CLI</option>
           <option value="acp">ACP</option>
         </select>
@@ -116,7 +117,7 @@ export function ClaudeLocalAdvancedFields({
         <>
           {!managedSandboxOnly && (
             <Field configSection="advanced"
-              label="ACP server command"
+              label={uiT("ui:messages.m_3a0d4f5f95706435")}
               hint="Optional override for the Claude ACP server command. Defaults to the package-local claude-agent-acp binary."
             >
               <DraftInput
@@ -136,7 +137,7 @@ export function ClaudeLocalAdvancedFields({
               />
             </Field>
           )}
-          <Field configSection="runPolicy" label="ACP session mode" hint="Persistent keeps ACP session state between runs. One-shot starts fresh each run.">
+          <Field configSection="runPolicy" label={uiT("ui:messages.m_6b7415b4b77c69fc")} hint={uiT("ui:messages.m_2f4fdb5f420f3e8a")}>
             <select
               className={inputClass}
               value={
@@ -151,13 +152,13 @@ export function ClaudeLocalAdvancedFields({
                   : mark("adapterConfig", "mode", value);
               }}
             >
-              <option value="persistent">Persistent</option>
-              <option value="oneshot">One-shot</option>
+              <option value="persistent">{uiT("ui:messages.m_f067b731a9eb7fda")}</option>
+              <option value="oneshot">{uiT("ui:messages.m_4c6e65c60f5bd2e3")}</option>
             </select>
           </Field>
           <Field
-            label="ACP non-interactive permissions"
-            hint="Fallback if the ACP agent asks for input outside an interactive session."
+            label={uiT("ui:messages.m_775568b9ccf2a097")}
+            hint={uiT("ui:messages.m_17fa0b5190ae8008")}
           >
             <select
               className={inputClass}
@@ -173,14 +174,14 @@ export function ClaudeLocalAdvancedFields({
                   : mark("adapterConfig", "nonInteractivePermissions", value);
               }}
             >
-              <option value="deny">Deny</option>
-              <option value="fail">Fail</option>
+              <option value="deny">{uiT("ui:messages.m_05a2d7332eb9d8bf")}</option>
+              <option value="fail">{uiT("ui:messages.m_09230b3dbc35635f")}</option>
             </select>
           </Field>
           {!managedSandboxOnly && (
             <Field
-              label="ACP state directory"
-              hint="Optional ACP session state directory. Defaults to Paperclip-managed organization/agent scoped storage."
+              label={uiT("ui:messages.m_519b9622e450f632")}
+              hint={uiT("ui:messages.m_7462217851683151")}
             >
               <div className="flex items-center gap-2">
                 <DraftInput
@@ -203,8 +204,8 @@ export function ClaudeLocalAdvancedFields({
             </Field>
           )}
           <Field configSection="runPolicy"
-            label="ACP warm process idle ms"
-            hint="Defaults to 0, which closes the ACP process after each run while retaining persistent session state."
+            label={uiT("ui:messages.m_4d464a532c7fafdb")}
+            hint={uiT("ui:messages.m_01653b2fd423ba51")}
           >
             {isCreate ? (
               <input

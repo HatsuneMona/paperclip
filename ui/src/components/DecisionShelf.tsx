@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Sun } from "lucide-react";
@@ -31,7 +32,7 @@ export function Curtain({
   return (
     <section className="space-y-2">
       <IssueGroupHeader
-        label={count == null ? label : `${label} (${count})`}
+        label={count == null ? label : uiT("ui:messages.m_43cdd46200eb5db2", { v0: (label), v1: (count) })}
         collapsible
         collapsed={!open}
         onToggle={onToggle}
@@ -91,7 +92,7 @@ export function AgingItemRow({
     <div className="space-y-1.5">
       <div className="flex items-center justify-between gap-2 px-1">
         <span className="text-(length:--text-nano) text-muted-foreground">
-          Idle {idleDays} {idleDays === 1 ? "day" : "days"}
+          Idle {idleDays} {idleDays === 1 ? uiT("ui:messages.m_944c27e5b97ab779") : uiT("ui:messages.m_ab51004e9d71a485")}
         </span>
         <Button
           type="button"

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { chatEndpointsApi } from "@/api/chatEndpoints";
 import { queryKeys } from "@/lib/queryKeys";
@@ -36,13 +37,13 @@ export function ChatDetailSidebar({
         >
           <NavItem
             to={`/apps/chat/${endpointId}/settings`}
-            label="Settings"
+            label={uiT("ui:messages.m_74a883a037bc227f")}
             icon={Settings}
             end
           />
           <NavItem
             to={`/apps/chat/${endpointId}/access`}
-            label="Access"
+            label={uiT("ui:messages.m_ec5ba0abb717da87")}
             icon={Users}
             end
           />
@@ -55,13 +56,13 @@ export function ChatDetailSidebar({
           )}
           <NavItem
             to={`/apps/chat/${endpointId}/conversations`}
-            label="Conversations"
+            label={uiT("ui:messages.m_1d432f58690c2b4a")}
             icon={MessageSquare}
             end
           />
           <NavItem
             to={`/apps/chat/${endpointId}/activity`}
-            label="Activity"
+            label={uiT("ui:messages.m_38da1505ca837328")}
             icon={Activity}
             end
           />

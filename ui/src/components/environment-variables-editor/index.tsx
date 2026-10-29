@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   forwardRef,
   useCallback,
@@ -450,8 +451,8 @@ export const EnvironmentVariablesEditor = forwardRef<EnvironmentVariablesEditorH
         <>
           {/* Header (desktop only) */}
           <div className="hidden gap-x-1.5 @[40rem]/env:grid @[40rem]/env:grid-cols-(--gtc-14)">
-            <span className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">Name</span>
-            <span className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">Value</span>
+            <span className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</span>
+            <span className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_8e37953d23daca5f")}</span>
             <span />
           </div>
 
@@ -495,9 +496,7 @@ export const EnvironmentVariablesEditor = forwardRef<EnvironmentVariablesEditorH
           disabled={disabled}
           className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
         >
-          <Plus className="size-3.5" />
-          Add variable
-        </button>
+          <Plus className="size-3.5" />{uiT("ui:messages.m_e10f539e38e1a105")}</button>
 
         {quickBind.length > 0 && !disabled ? (
           <div className="flex flex-wrap items-center gap-1.5">
@@ -529,7 +528,7 @@ export const EnvironmentVariablesEditor = forwardRef<EnvironmentVariablesEditorH
           <div className="flex min-w-0 flex-col gap-0.5">
             <div className="flex items-center gap-2 text-sm font-medium">
               <span className="size-2 rounded-full bg-amber-500 shadow-(--shadow-extract-13)" />
-              <span>Unsaved changes</span>
+              <span>{uiT("ui:messages.m_a710c2b90913b537")}</span>
             </div>
             {changeSummaryText ? (
               <p className="min-w-0 truncate pl-4 text-xs text-amber-950/80 dark:text-amber-100/80" title={changeSummaryText}>
@@ -551,9 +550,7 @@ export const EnvironmentVariablesEditor = forwardRef<EnvironmentVariablesEditorH
               onClick={saveDraft}
               className="inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              <Save className="size-4" />
-              Save
-            </button>
+              <Save className="size-4" />{uiT("ui:messages.m_1509f561f2416598")}</button>
           </div>
         </div>
       ) : null}

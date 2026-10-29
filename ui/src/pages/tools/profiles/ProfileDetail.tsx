@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArchiveRestore, Copy, Pencil, PlugZap, ShieldCheck, Trash2, UserMinus } from "lucide-react";
@@ -107,7 +108,7 @@ export function ProfileDetail({
     mutationFn: (input: Parameters<typeof toolsApi.updateProfile>[1]) => toolsApi.updateProfile(profileId, input),
     onSuccess: () => {
       invalidate();
-      pushToast({ title: "Profile updated", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_9c5551e87cb7333f"), tone: "success" });
     },
     onError: (error: unknown) => pushToast({ title: "Could not update profile", body: errorBody(error), tone: "error" }),
   });
@@ -161,12 +162,12 @@ export function ProfileDetail({
     onError: (error: unknown) => pushToast({ title: "Could not submit review", body: errorBody(error), tone: "error" }),
   });
 
-  if (data.profiles.isLoading) return <LoadingState label="Loading profile..." />;
+  if (data.profiles.isLoading) return <LoadingState label={uiT("ui:messages.m_4a47f12d23c4a6bf")} />;
   if (data.profiles.isError) return <ErrorState error={data.profiles.error} onRetry={() => data.profiles.refetch()} />;
   if (!profile) {
     return (
       <div className="space-y-4">
-        <ToolsPageHeader title="Profile not found" description="This access profile may have been deleted." />
+        <ToolsPageHeader title={uiT("ui:messages.m_999930725d061314")} description={uiT("ui:messages.m_865486063ec6caf2")} />
         <Button variant="outline" onClick={() => navigate("/apps/advanced/profiles")}>Back to profiles</Button>
       </div>
     );
@@ -179,54 +180,42 @@ export function ProfileDetail({
     <div className="space-y-6">
       <ToolsPageHeader
         title={profile.name}
-        description={profile.description ?? "No description yet."}
+        description={profile.description ?? uiT("ui:messages.m_6d962a3d4e519cf7")}
         actions={
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" disabled={archived} onClick={() => setDialog("edit")}>
-              <Pencil className="mr-1.5 h-4 w-4" />
-              Edit
-            </Button>
+              <Pencil className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_464c4ffd019e1e96")}</Button>
             <Button variant="outline" disabled={archived} onClick={() => setDialog("duplicate")}>
-              <Copy className="mr-1.5 h-4 w-4" />
-              Duplicate
-            </Button>
+              <Copy className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_02cdaabfca805d6a")}</Button>
             {archived ? (
               <Button variant="outline" onClick={() => setDialog("restore")}>
-                <ArchiveRestore className="mr-1.5 h-4 w-4" />
-                Restore
-              </Button>
+                <ArchiveRestore className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_a76e13b9839270eb")}</Button>
             ) : (
-              <Button variant="outline" onClick={() => setDialog("archive")}>Archive</Button>
+              <Button variant="outline" onClick={() => setDialog("archive")}>{uiT("ui:messages.m_66f4804ee23ddc09")}</Button>
             )}
             <Button variant="outline" className="text-destructive hover:text-destructive" onClick={() => setDialog("delete")}>
-              <Trash2 className="mr-1.5 h-4 w-4" />
-              Delete
-            </Button>
+              <Trash2 className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_e2d0a54968ead24e")}</Button>
           </div>
         }
       />
 
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <Badge variant={archived ? "outline" : "default"}>{STATUS_LABEL[profile.status]}</Badge>
-        <span className="text-muted-foreground">Updated <RelativeTime value={profile.updatedAt} /></span>
+        <span className="text-muted-foreground">{uiT("ui:messages.m_a919c7c2d1a48683")}<RelativeTime value={profile.updatedAt} /></span>
         <span className="text-muted-foreground">{allowsLabel(profile.summary)}</span>
       </div>
 
       {created ? (
         <div className="flex items-center justify-between gap-3 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3">
           <div>
-            <p className="text-sm font-medium text-foreground">Profile saved</p>
+            <p className="text-sm font-medium text-foreground">{uiT("ui:messages.m_ea278dbc0644d8bd")}</p>
             <p className="text-sm text-muted-foreground">
               {unassigned ? "Assign it to agents before it changes their access." : "Assignments are active now."}
             </p>
           </div>
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => navigate(`/apps/advanced/profiles/${profile.id}/edit?step=3`)}>
-              Assign
-            </Button>
-            <Button size="sm" variant="ghost" onClick={() => setSearchParams({})}>
-              Dismiss
-            </Button>
+            <Button size="sm" onClick={() => navigate(`/apps/advanced/profiles/${profile.id}/edit?step=3`)}>{uiT("ui:messages.m_8ece895c9b32c643")}</Button>
+            <Button size="sm" variant="ghost" onClick={() => setSearchParams({})}>{uiT("ui:messages.m_48845bff334a50a5")}</Button>
           </div>
         </div>
       ) : null}
@@ -259,9 +248,7 @@ export function ProfileDetail({
       <section className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-base font-semibold text-foreground">Who has it</h2>
-          <Button variant="outline" size="sm" disabled={archived} onClick={() => navigate(`/apps/advanced/profiles/${profile.id}/edit?step=3`)}>
-            Assign
-          </Button>
+          <Button variant="outline" size="sm" disabled={archived} onClick={() => navigate(`/apps/advanced/profiles/${profile.id}/edit?step=3`)}>{uiT("ui:messages.m_8ece895c9b32c643")}</Button>
         </div>
         <Assignments
           profile={profile}
@@ -345,7 +332,7 @@ function NewToolsReviewBanner({
         </p>
         <p className="text-amber-900/80">Choose which ones this profile should allow.</p>
       </div>
-      <Button size="sm" onClick={onReview}>Review</Button>
+      <Button size="sm" onClick={onReview}>{uiT("ui:messages.m_aff0766a5290e117")}</Button>
     </div>
   );
 }
@@ -383,7 +370,7 @@ function NewToolsReviewDialog({
           </DialogDescription>
         </DialogHeader>
         {loading ? (
-          <LoadingState label="Loading new tools..." />
+          <LoadingState label={uiT("ui:messages.m_f78da714306408d5")} />
         ) : error ? (
           <ErrorState error={error} onRetry={onRetry} />
         ) : tools.length === 0 ? (
@@ -415,9 +402,7 @@ function NewToolsReviewDialog({
                       name={`review-${tool.catalogEntryId}`}
                       checked={(decisions[tool.catalogEntryId] ?? "keep_blocked") === "allow"}
                       onChange={() => onDecision(tool.catalogEntryId, "allow")}
-                    />
-                    Allow
-                  </label>
+                    />{uiT("ui:messages.m_e213c161d5cefa52")}</label>
                   <label className="inline-flex items-center gap-1.5 text-sm">
                     <input
                       type="radio"
@@ -433,10 +418,8 @@ function NewToolsReviewDialog({
           </div>
         )}
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
-          <Button disabled={pending || loading || tools.length === 0} onClick={onSubmit}>
-            Submit review
-          </Button>
+          <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+          <Button disabled={pending || loading || tools.length === 0} onClick={onSubmit}>{uiT("ui:messages.m_cb81e6b1cd1a3f98")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -446,9 +429,7 @@ function NewToolsReviewDialog({
 function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-        This profile allows 0 tools. Agents with only this profile will not be able to use app tools.
-      </div>
+      <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950">{uiT("ui:messages.m_2977644d0dea06a7")}</div>
     );
   }
   return (
@@ -456,10 +437,10 @@ function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/40 text-left text-xs font-medium text-muted-foreground">
-            <th className="px-3 py-2 font-medium">Tool</th>
-            <th className="px-3 py-2 font-medium">App</th>
-            <th className="px-3 py-2 font-medium">Capabilities</th>
-            <th className="px-3 py-2 font-medium">Source</th>
+            <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_2e53bdcd0740867b")}</th>
+            <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_0d04bfeb7d64b71c")}</th>
+            <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_9460f16ac9b5171e")}</th>
+            <th className="px-3 py-2 font-medium">{uiT("ui:messages.m_0e570ca6fabe24f9")}</th>
           </tr>
         </thead>
         <tbody>
@@ -470,9 +451,7 @@ function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
                   <span className="font-medium text-foreground">{row.tool}</span>
                   {row.degraded ? (
                     <a className="mt-0.5 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline" href={`/apps/${row.connectionId}`}>
-                      <PlugZap className="h-3 w-3" />
-                      Reconnect
-                    </a>
+                      <PlugZap className="h-3 w-3" />{uiT("ui:messages.m_bf8a9eab9e7e141b")}</a>
                   ) : null}
                 </div>
               </td>
@@ -503,7 +482,7 @@ function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
         </p>
       ) : (
         <p className="border-t border-border px-3 py-2 text-xs text-muted-foreground">
-          Allows {rows.length} of {total} known tools.
+          Allows {rows.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{total} known tools.
         </p>
       )}
     </div>
@@ -545,9 +524,7 @@ function Assignments({
             </div>
           </div>
           <Button variant="ghost" size="sm" disabled={archived} onClick={() => onRemove(binding)}>
-            <UserMinus className="mr-1.5 h-4 w-4" />
-            Remove
-          </Button>
+            <UserMinus className="mr-1.5 h-4 w-4" />{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
         </div>
       ))}
     </div>
@@ -636,22 +613,20 @@ function ProfileDialogs({
       <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>{uiT("ui:messages.m_15c4aa13037eaf52")}</DialogTitle>
             <DialogDescription>Update the profile name and description.</DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="edit-profile-name">Name</Label>
+              <Label htmlFor="edit-profile-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
               <Input id="edit-profile-name" value={name} onChange={(e) => setName(e.target.value)} />
               {duplicateName ? <p className="text-xs text-destructive">Another profile already uses this name.</p> : null}
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="edit-profile-description">Description</Label>
+              <Label htmlFor="edit-profile-description">{uiT("ui:messages.m_526e0087cc3f254d")}</Label>
               <Textarea id="edit-profile-description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
             </div>
-            <button type="button" className="text-sm font-medium text-muted-foreground hover:text-foreground" onClick={() => setAdvancedOpen((v) => !v)}>
-              Advanced
-            </button>
+            <button type="button" className="text-sm font-medium text-muted-foreground hover:text-foreground" onClick={() => setAdvancedOpen((v) => !v)}>{uiT("ui:messages.m_9f088dbebd6c3c70")}</button>
             {advancedOpen ? (
               <div className="space-y-1.5">
                 <Label htmlFor="edit-profile-key">Identifier</Label>
@@ -660,10 +635,8 @@ function ProfileDialogs({
             ) : null}
           </div>
           <DialogFooter>
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
-            <Button disabled={!name.trim() || duplicateName || pending} onClick={() => onUpdate({ name: name.trim(), description: description.trim() || null, profileKey: profileKey.trim() })}>
-              Save
-            </Button>
+            <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+            <Button disabled={!name.trim() || duplicateName || pending} onClick={() => onUpdate({ name: name.trim(), description: description.trim() || null, profileKey: profileKey.trim() })}>{uiT("ui:messages.m_1509f561f2416598")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -680,7 +653,7 @@ function ProfileDialogs({
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="copy-profile-name">Name</Label>
+              <Label htmlFor="copy-profile-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
               <Input id="copy-profile-name" value={copyName} onChange={(e) => setCopyName(e.target.value)} />
               {duplicateCopyName ? <p className="text-xs text-destructive">Another profile already uses this name.</p> : null}
             </div>
@@ -690,10 +663,8 @@ function ProfileDialogs({
             </label>
           </div>
           <DialogFooter>
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
-            <Button disabled={!copyName.trim() || duplicateCopyName || pending} onClick={() => onDuplicate({ name: copyName.trim(), includeAssignments: copyAssignments })}>
-              Duplicate
-            </Button>
+            <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+            <Button disabled={!copyName.trim() || duplicateCopyName || pending} onClick={() => onDuplicate({ name: copyName.trim(), includeAssignments: copyAssignments })}>{uiT("ui:messages.m_02cdaabfca805d6a")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -738,8 +709,8 @@ function RemoveAssignmentDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
-          <Button disabled={pending} onClick={onConfirm}>Remove</Button>
+          <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+          <Button disabled={pending} onClick={onConfirm}>{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

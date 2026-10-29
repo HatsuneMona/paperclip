@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState, type ReactNode } from "react";
 import type { IssueExternalObjectGroup } from "../../hooks/useIssueExternalObjects";
 import {
@@ -113,7 +114,7 @@ function ExternalObjectPropertyValue({ group }: { group: IssueExternalObjectGrou
         liveness={pill.liveness}
         statusIconKey={externalObjectPropertyStatusIconKey(group)}
         sizeClassName="h-3.5 w-3.5"
-        label={`${providerLabel}: ${statusLabel}`}
+        label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (providerLabel), v1: (statusLabel) })}
       />
       <span className="min-w-0 truncate">{value}</span>
     </>
@@ -175,19 +176,15 @@ export function ExternalObjectRows({
 
   if (externalObjectsError) {
     return (
-      <PropertyRow label="External objects">
-        <span className="text-xs text-muted-foreground">
-          Couldn't load external objects.
-          {onRetryExternalObjects ? (
+      <PropertyRow label={uiT("ui:messages.m_9279c11de25294b9")}>
+        <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_42d33ac2522ca095")}{onRetryExternalObjects ? (
             <>
               {" "}
               <button
                 type="button"
                 className="text-primary underline-offset-2 hover:underline"
                 onClick={onRetryExternalObjects}
-              >
-                Retry
-              </button>
+              >{uiT("ui:messages.m_942087cc2d41e013")}</button>
             </>
           ) : null}
         </span>
@@ -197,7 +194,7 @@ export function ExternalObjectRows({
 
   if (externalObjectsLoading) {
     return (
-      <PropertyRow label="External objects">
+      <PropertyRow label={uiT("ui:messages.m_9279c11de25294b9")}>
         <span className="h-4 w-24 animate-pulse rounded bg-muted/40" />
       </PropertyRow>
     );
@@ -226,7 +223,7 @@ export function ExternalObjectRows({
           );
         })}
       {expanded || hiddenExternalObjectCount > 0 ? (
-        <PropertyRow label="References">
+        <PropertyRow label={uiT("ui:messages.m_69824d3b0e70ca6a")}>
           <ExpandRelationListButton
             hiddenCount={hiddenExternalObjectCount}
             expanded={expanded}

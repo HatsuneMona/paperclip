@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
@@ -117,10 +118,10 @@ export function ThreadAttachments({ artifacts }: { artifacts: LabArtifact[] }) {
   return (
     // The column, measured: like a row's tray, the full tray keeps 40rem in a wide column and fills a narrow one.
     <div className="@container/col w-full">
-      <section aria-label="Attachments" className={cn("relative flex flex-col gap-2 pt-1", full ? "w-full max-w-(--tac-tray-max) @max-3xl/col:max-w-none" : "w-fit max-w-full")}>
+      <section aria-label={uiT("ui:messages.m_634de114775082f0")} className={cn("relative flex flex-col gap-2 pt-1", full ? "w-full max-w-(--tac-tray-max) @max-3xl/col:max-w-none" : "w-fit max-w-full")}>
         <p className="flex gap-3 px-1 text-xs text-muted-foreground">
-          {images.length > 0 ? <Count label="Images" count={images.length} /> : null}
-          {files.length > 0 ? <Count label="Files" count={files.length} /> : null}
+          {images.length > 0 ? <Count label={uiT("ui:messages.m_be7e2f20129365c2")} count={images.length} /> : null}
+          {files.length > 0 ? <Count label={uiT("ui:messages.m_abc7e9892806b047")} count={files.length} /> : null}
         </p>
         <div className="relative">
           {/* Clips on the x axis: each place's ledge runs out to the tray's edges. */}

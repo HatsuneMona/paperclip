@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { PrimaryAgentIndicator } from "@/components/primary-agent/PrimaryAgentPresentation";
 import { AgentBulkRoster } from "@/components/agents/AgentBulkRoster";
 import { AgentAvatar } from "@/components/AgentAvatar";
@@ -57,15 +58,15 @@ interface EnvironmentDescriptor {
 }
 
 const localEnvironmentDescriptor: EnvironmentDescriptor = {
-  label: "Local",
+  label: uiT("ui:messages.m_8c31e6e7223097e2"),
   detail: "Paperclip host",
-  title: "Local - Paperclip host",
+  title: uiT("ui:messages.m_369767d8f0c4a3f6"),
 };
 
 const loadingEnvironmentDescriptor: EnvironmentDescriptor = {
   label: "—",
   detail: "Loading environment",
-  title: "Loading environment",
+  title: uiT("ui:messages.m_07bae8d39556bb5e"),
 };
 
 // Agents in these states never appear in the agents list — `terminated` is
@@ -142,9 +143,9 @@ function describeEnvironment(
 
 function describeMissingEnvironment(environmentId: string): EnvironmentDescriptor {
   return {
-    label: "Unknown environment",
+    label: uiT("ui:messages.m_ea7edbd56b1ce88c"),
     detail: environmentId.slice(0, 8),
-    title: `Unknown environment - ${environmentId}`,
+    title: uiT("ui:messages.m_de2820561e153f0d", { v0: (environmentId) }),
   };
 }
 
@@ -309,7 +310,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
   }, [agents, environmentsById, environmentCapabilities, instanceSettings?.defaultEnvironmentId]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Agents" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_279b44d2ab4b40c0") }]);
   }, [setBreadcrumbs]);
 
   useEffect(() => {
@@ -356,9 +357,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
               size="xs"
               variant="outline"
               onClick={() => setConfigureState(builtInState)}
-            >
-              Set up
-            </Button>
+            >{uiT("ui:messages.m_4da10f1fbb17cac2")}</Button>
           </span>
         )}
       </>
@@ -375,7 +374,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
         to={agentUrl(agent)}
         className="group py-3"
         leading={hasInvalidOrgChain ? (
-          <AlertTriangle className="h-3.5 w-3.5 text-amber-500" aria-label="Invalid reporting chain" />
+          <AlertTriangle className="h-3.5 w-3.5 text-amber-500" aria-label={uiT("ui:messages.m_bf9c6d9dc8a902fc")} />
         ) : (
           <AgentAvatar agent={agent} size={32} />
         )}
@@ -392,7 +391,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
         )}
         trailing={
           <div className="flex items-center gap-3">
-            {agentChat.enabled && <Button variant="ghost" size="sm" onClick={event => { event.preventDefault(); event.stopPropagation(); navigate(`/chats/${agentRouteRef(agent)}`); }}>Chat</Button>}
+            {agentChat.enabled && <Button variant="ghost" size="sm" onClick={event => { event.preventDefault(); event.stopPropagation(); navigate(`/chats/${agentRouteRef(agent)}`); }}>{uiT("ui:messages.m_460b3a7da007b7af")}</Button>}
             <div className="hidden sm:flex items-center gap-3">
               {liveRunByAgent.has(agent.id) && (
                 <LiveRunIndicator
@@ -452,9 +451,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
       )}
 
       {effectiveView === "org" && orgTree && orgTree.length === 0 && (
-        <p className="text-sm text-muted-foreground text-center py-8">
-          No organizational hierarchy defined.
-        </p>
+        <p className="text-sm text-muted-foreground text-center py-8">{uiT("ui:messages.m_7ac9886550455b61")}</p>
       )}
       {configureState && selectedCompanyId && (
         <Suspense fallback={null}>
@@ -506,7 +503,7 @@ function OrgTreeNode({
         className="group flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-accent/50 transition-colors w-full text-left no-underline text-inherit"
       >
         {hasInvalidOrgChain ? (
-          <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label="Invalid reporting chain" />
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label={uiT("ui:messages.m_bf9c6d9dc8a902fc")} />
         ) : (
           <AgentAvatar agent={agent ?? node} size={24} />
         )}
@@ -531,9 +528,7 @@ function OrgTreeNode({
                     e.stopPropagation();
                   }}
                 >
-                  <Button size="xs" variant="outline" onClick={() => onConfigureBuiltIn(builtInState)}>
-                    Set up
-                  </Button>
+                  <Button size="xs" variant="outline" onClick={() => onConfigureBuiltIn(builtInState)}>{uiT("ui:messages.m_4da10f1fbb17cac2")}</Button>
                 </span>
               )}
             </div>
@@ -667,8 +662,7 @@ function LiveRunIndicator({
         <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
       </span>
-      <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">
-        Live{liveCount > 1 ? ` (${liveCount})` : ""}
+      <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">{uiT("ui:messages.m_b64ac05f17e64d03")}{liveCount > 1 ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (liveCount) }) : ""}
       </span>
     </Link>
   );

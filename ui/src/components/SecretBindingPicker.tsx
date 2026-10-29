@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, KeyRound, Loader2, Plus, X } from "lucide-react";
@@ -193,7 +194,7 @@ export function SecretBindingPicker({
             }}
             disabled={disabled || secretsQuery.isPending}
           >
-            <option value="">{secretsQuery.isPending ? "Loading…" : placeholder}</option>
+            <option value="">{secretsQuery.isPending ? uiT("ui:messages.m_ba3bbbe10d8bef66") : placeholder}</option>
             {selectedMissing && value ? (
               <option value={value.secretId}>
                 {missingHint
@@ -221,9 +222,9 @@ export function SecretBindingPicker({
               onChange({ ...value, version: next });
             }}
             disabled={disabled || !value || !selectedSecret}
-            aria-label="Version"
+            aria-label={uiT("ui:messages.m_dd167905de0defca")}
           >
-            <option value={VERSION_LATEST}>latest</option>
+            <option value={VERSION_LATEST}>{uiT("ui:messages.m_5e1e2bcac305958b")}</option>
             {selectedSecret
               ? Array.from({ length: Math.max(0, selectedSecret.latestVersion) }, (_, index) => {
                   const version = selectedSecret.latestVersion - index;
@@ -243,7 +244,7 @@ export function SecretBindingPicker({
           size="sm"
           onClick={() => setCreateOpen(true)}
           disabled={disabled || !selectedCompanyId}
-          aria-label="Create secret"
+          aria-label={uiT("ui:messages.m_b72a982613b6b66e")}
         >
           <Plus className="h-3.5 w-3.5" />
         </Button>
@@ -289,23 +290,23 @@ export function SecretBindingPicker({
           </DialogHeader>
           <div className="space-y-3">
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-name">Name</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</label>
               <Input
                 id="secret-name"
                 value={createName}
                 onChange={(event) => setCreateName(event.target.value)}
-                placeholder="OPENAI_API_KEY"
+                placeholder={uiT("ui:messages.m_1bd0074c9fd82ff8")}
                 autoFocus
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-value">Value</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-value">{uiT("ui:messages.m_8e37953d23daca5f")}</label>
               <Textarea
                 id="secret-value"
                 value={createValue}
                 onChange={(event) => setCreateValue(event.target.value)}
                 rows={3}
-                placeholder="Paste the secret value"
+                placeholder={uiT("ui:messages.m_695e316ec6b59428")}
                 className="font-mono text-xs"
               />
               <p className="text-(length:--text-micro) text-muted-foreground mt-1">
@@ -313,18 +314,18 @@ export function SecretBindingPicker({
               </p>
             </div>
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-description">Description</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-description">{uiT("ui:messages.m_526e0087cc3f254d")}</label>
               <Input
                 id="secret-description"
                 value={createDescription}
                 onChange={(event) => setCreateDescription(event.target.value)}
-                placeholder="Optional notes (no values)"
+                placeholder={uiT("ui:messages.m_6c3c8a00014730e4")}
               />
             </div>
             {createError ? <p className="text-xs text-destructive">{createError}</p> : null}
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setCreateOpen(false)}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => setCreateOpen(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               type="button"
               onClick={() => createMutation.mutate()}

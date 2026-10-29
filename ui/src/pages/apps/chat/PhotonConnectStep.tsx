@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -47,8 +48,7 @@ export function PhotonConnectStep({
     <div className="space-y-5">
       <div className="space-y-2">
         <h1 className="text-xl font-bold">Connect iMessage Photon</h1>
-        <p className="text-sm text-muted-foreground">
-          Connect {agentName} to Photon Cloud. Pro supports direct messages through
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_3b887c9884f2c97a")}{agentName} to Photon Cloud. Pro supports direct messages through
           a shared line. Dedicated numbers also support individually enabled groups.
         </p>
         <p className="text-sm">
@@ -78,9 +78,7 @@ export function PhotonConnectStep({
           to reuse the saved connection.
         </p>
       )}
-      <label className="grid gap-2 text-sm font-medium">
-        Project ID
-        <Input
+      <label className="grid gap-2 text-sm font-medium">{uiT("ui:messages.m_e511470b21a90cea")}<Input
           value={projectId}
           autoComplete="off"
           disabled={pending || inspection.isPending || !!endpoint.botExternalId}
@@ -120,7 +118,7 @@ export function PhotonConnectStep({
       {inspection.data && (
         <fieldset className="space-y-3">
           <legend className="text-sm font-medium">
-            {inspection.data.allocation === "shared" ? "Shared DMs" : "Dedicated numbers"} in {inspection.data.projectName}
+            {inspection.data.allocation === "shared" ? "Shared DMs" : "Dedicated numbers"}{uiT("ui:messages.m_2eb9d0d30d4ceaac")}{inspection.data.projectName}
           </legend>
           {!inspection.data.eligible && (
             <p role="alert" className="text-sm text-destructive">
@@ -181,7 +179,7 @@ export function PhotonConnectStep({
           }
         >
           {pending
-            ? "Connecting…"
+            ? uiT("ui:messages.m_72021eb70e91b4d5")
             : repairing
               ? "Reconnect Photon"
               : inspection.data?.allocation === "shared" ? "Connect shared DMs" : "Connect selected number"}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AlertTriangle, Info, PauseCircle, User, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { AgentAvatar, type AvatarAgent } from "../AgentAvatar";
@@ -80,9 +81,7 @@ export function AssigneeChip({
       data-testid="handoff-assignee-chip"
       data-kind="unassigned"
     >
-      <span className="sr-only">No responsible — </span>
-      Unassigned
-    </span>
+      <span className="sr-only">No responsible — </span>{uiT("ui:messages.m_14d33bd014e6b4e7")}</span>
   );
 }
 

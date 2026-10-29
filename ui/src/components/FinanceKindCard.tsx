@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { FinanceByKind } from "@paperclipai/shared";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { financeEventKindDisplayName, formatCents } from "@/lib/utils";
@@ -25,7 +26,7 @@ export function FinanceKindCard({ rows }: FinanceKindCardProps) {
               <div className="min-w-0">
                 <div className="truncate text-sm font-medium">{financeEventKindDisplayName(row.eventKind)}</div>
                 <div className="text-xs text-muted-foreground">
-                  {row.eventCount} event{row.eventCount === 1 ? "" : "s"} · {row.billerCount} biller{row.billerCount === 1 ? "" : "s"}
+                  {row.eventCount} event{row.eventCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} · {row.billerCount} biller{row.billerCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                 </div>
               </div>
               <div className="text-right tabular-nums">

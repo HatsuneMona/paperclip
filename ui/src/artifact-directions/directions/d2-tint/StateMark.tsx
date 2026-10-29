@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
 
@@ -23,8 +24,8 @@ import type { LabArtifact } from "../../kit";
  */
 
 const STATES = {
-  needs_review: { label: "Review", marker: "border-2 border-(--status-task-icon-in_review)" },
-  changes_requested: { label: "Changes requested", marker: "bg-(--status-task-icon-blocked)" },
+  needs_review: { label: uiT("ui:messages.m_aff0766a5290e117"), marker: "border-2 border-(--status-task-icon-in_review)" },
+  changes_requested: { label: uiT("ui:messages.m_10a92a8ad3ee5891"), marker: "bg-(--status-task-icon-blocked)" },
 } as const;
 
 // Line-height after the size: tailwind-merge drops a leading that precedes a font size.
@@ -71,8 +72,7 @@ export function ReviewTally({ count, className }: { count: number; className?: s
     <p data-tally className={cn("flex shrink-0 items-center gap-1.5 text-xs font-medium leading-4 text-foreground", className)}>
       <StateDot review="needs_review" />
       <span>
-        <span className="font-mono text-(length:--text-micro)">{count}</span> to review
-      </span>
+        <span className="font-mono text-(length:--text-micro)">{count}</span>{uiT("ui:messages.m_343e792fcd38458d")}</span>
     </p>
   );
 }

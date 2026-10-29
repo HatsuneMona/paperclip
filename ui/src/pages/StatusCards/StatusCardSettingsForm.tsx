@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { StatusCardRefreshPolicy } from "@paperclipai/shared";
 import { ChevronDown } from "lucide-react";
 
@@ -123,17 +124,15 @@ export function StatusCardSettingsForm({
         <div className="space-y-2">
           <RadioRow
             selected={policy.mode === "manual"}
-            title="Manual only — updates when I press refresh"
+            title={uiT("ui:messages.m_8fa9137a839d384b")}
             badge={
-              <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">
-                Default
-              </span>
+              <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_21b111cbfe6e8fca")}</span>
             }
             onSelect={() => setMode("manual")}
           />
           <RadioRow
             selected={policy.mode === "interval"}
-            title="On a schedule, only if something changed"
+            title={uiT("ui:messages.m_6bf6009fd3745e4c")}
             onSelect={() => setMode("interval")}
           >
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -142,14 +141,13 @@ export function StatusCardSettingsForm({
                 value={String(policy.intervalMinutes ?? 15)}
                 onValueChange={(next) => setPolicy({ intervalMinutes: Number(next) })}
               >
-                <SelectTrigger size="sm" className="w-28" aria-label="Check interval">
+                <SelectTrigger size="sm" className="w-28" aria-label={uiT("ui:messages.m_9a5266be56b34cf2")}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {INTERVAL_OPTIONS.map((minutes) => (
                     <SelectItem key={minutes} value={String(minutes)}>
-                      {minutes} min
-                    </SelectItem>
+                      {minutes}{uiT("ui:messages.m_2e75737a6b582974")}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -157,23 +155,22 @@ export function StatusCardSettingsForm({
           </RadioRow>
           <RadioRow
             selected={policy.mode === "reactive"}
-            title="As soon as something changes (debounced)"
+            title={uiT("ui:messages.m_17e0acba57bf79cb")}
             onSelect={() => setMode("reactive")}
           >
             <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              <span>Wait</span>
+              <span>{uiT("ui:messages.m_26b83994dca8b4b4")}</span>
               <Select
                 value={String(policy.debounceSeconds ?? 60)}
                 onValueChange={(next) => setPolicy({ debounceSeconds: Number(next) })}
               >
-                <SelectTrigger size="sm" className="w-24" aria-label="Debounce">
+                <SelectTrigger size="sm" className="w-24" aria-label={uiT("ui:messages.m_539c9cb8300d84c5")}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {DEBOUNCE_OPTIONS.map((seconds) => (
                     <SelectItem key={seconds} value={String(seconds)}>
-                      {seconds}s
-                    </SelectItem>
+                      {seconds}{uiT("ui:messages.m_edef011be7f6b283")}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -185,7 +182,7 @@ export function StatusCardSettingsForm({
                 value={policy.maxUpdatesPerHour ?? 6}
                 onChange={(event) => setPolicy({ maxUpdatesPerHour: Math.max(1, Number(event.target.value) || 1) })}
                 className="h-8 w-16 text-sm"
-                aria-label="Max updates per hour"
+                aria-label={uiT("ui:messages.m_97ebccec8651c9f2")}
               />
               <span className="text-xs">updates/hour</span>
             </div>
@@ -200,9 +197,7 @@ export function StatusCardSettingsForm({
       */}
       {autoUpdating ? (
         <Collapsible className="rounded-md border border-border">
-          <CollapsibleTrigger className="group flex w-full items-center justify-between gap-2 px-3 py-2.5 text-sm font-semibold">
-            Advanced
-            <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+          <CollapsibleTrigger className="group flex w-full items-center justify-between gap-2 px-3 py-2.5 text-sm font-semibold">{uiT("ui:messages.m_9f088dbebd6c3c70")}<ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-6 border-t border-border px-3 py-3">
             <section className="space-y-2">
@@ -225,7 +220,7 @@ export function StatusCardSettingsForm({
             <section className="space-y-3">
               <h3 className="text-sm font-semibold">Guardrails</h3>
               <label className="flex items-start gap-2.5 text-sm">
-                <Checkbox checked={Boolean(activeHours)} onCheckedChange={(checked) => setActiveHoursEnabled(Boolean(checked))} className="mt-0.5" aria-label="Limit to active hours" />
+                <Checkbox checked={Boolean(activeHours)} onCheckedChange={(checked) => setActiveHoursEnabled(Boolean(checked))} className="mt-0.5" aria-label={uiT("ui:messages.m_044dd078d26b39fd")} />
                 <span>Only auto-update during active hours</span>
               </label>
               {activeHours ? (
@@ -235,7 +230,7 @@ export function StatusCardSettingsForm({
                     value={activeHours.start}
                     onChange={(event) => setPolicy({ activeHours: { ...activeHours, start: event.target.value } })}
                     className="h-8 w-32"
-                    aria-label="Active hours start"
+                    aria-label={uiT("ui:messages.m_375442a2a4456006")}
                   />
                   <span className="text-muted-foreground">–</span>
                   <Input
@@ -243,19 +238,19 @@ export function StatusCardSettingsForm({
                     value={activeHours.end}
                     onChange={(event) => setPolicy({ activeHours: { ...activeHours, end: event.target.value } })}
                     className="h-8 w-32"
-                    aria-label="Active hours end"
+                    aria-label={uiT("ui:messages.m_584b2ca37015651b")}
                   />
                   <Input
                     value={activeHours.timezone}
                     onChange={(event) => setPolicy({ activeHours: { ...activeHours, timezone: event.target.value } })}
                     className="h-8 w-40"
-                    placeholder="Timezone"
-                    aria-label="Active hours timezone"
+                    placeholder={uiT("ui:messages.m_4ceca1d52cede44d")}
+                    aria-label={uiT("ui:messages.m_0e86ace913c9d500")}
                   />
                 </div>
               ) : null}
               <div className="flex flex-wrap items-center gap-2 text-sm">
-                <span className="w-32 shrink-0">Daily token cap</span>
+                <span className="w-32 shrink-0">{uiT("ui:messages.m_1f33285142352d34")}</span>
                 <Input
                   type="number"
                   min={0}
@@ -266,8 +261,8 @@ export function StatusCardSettingsForm({
                     setPolicy({ dailyTokenCap: event.target.value === "" || parsed <= 0 ? undefined : parsed });
                   }}
                   className="h-8 w-36"
-                  placeholder="no cap"
-                  aria-label="Daily token cap"
+                  placeholder={uiT("ui:messages.m_0e4084b4cf48eb86")}
+                  aria-label={uiT("ui:messages.m_1f33285142352d34")}
                 />
               </div>
             </section>
@@ -276,7 +271,7 @@ export function StatusCardSettingsForm({
       ) : null}
 
       <div className="flex items-center gap-2 text-sm">
-        <span className="font-semibold">Estimated cost</span>
+        <span className="font-semibold">{uiT("ui:messages.m_9ccba222f889a6c0")}</span>
         <span className="text-muted-foreground">=</span>
         <Tooltip>
           <TooltipTrigger asChild>

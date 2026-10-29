@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   CircleCheck,
   CircleAlert,
@@ -22,7 +23,7 @@ const copy = {
     action: "Testing…",
   },
   pass: {
-    title: "Connection successful",
+    title: uiT("ui:messages.m_856dd8c8677b1f8f"),
     description: "Your runtime checks passed. Review the details below.",
     action: "Test again",
   },

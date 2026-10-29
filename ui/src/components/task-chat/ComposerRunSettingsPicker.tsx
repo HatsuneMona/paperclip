@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type Ref } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Check, ChevronDown, Plus, RotateCcw, Search, X, Zap } from "lucide-react";
@@ -205,11 +206,11 @@ export function ComposerRunSettingsPicker({
     rememberComposerEffort(companyId, null);
     onSettingsChange(DEFAULT_COMPOSER_RUN_SETTINGS);
   };
-  const closeButton = mobile ? <DialogClose asChild><button type="button" aria-label="Close picker" className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-accent"><X className="size-4" /></button></DialogClose> : null;
+  const closeButton = mobile ? <DialogClose asChild><button type="button" aria-label={uiT("ui:messages.m_ca62e10f555564e5")} className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-accent"><X className="size-4" /></button></DialogClose> : null;
   const Trigger = mobile ? DialogTrigger : PopoverTrigger;
   const modelTrigger = <button ref={allowAssigneeChange ? undefined : triggerRef} type="button" disabled={disabled} aria-label="Select model and effort" aria-haspopup="dialog" aria-expanded={open && view !== "agents"} onClick={() => { setView("settings"); if (allowAssigneeChange) setOpen(true); }}
     className="flex h-8 min-w-0 max-w-full items-center gap-1.5 rounded-full px-2.5 text-muted-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50">
-    <span data-testid="task-chat-composer-model-label" className="min-w-0 truncate">{open ? "Select model" : modelName || "Default"}</span>
+    <span data-testid="task-chat-composer-model-label" className="min-w-0 truncate">{open ? uiT("ui:messages.m_1d446005add35afa") : modelName || uiT("ui:messages.m_21b111cbfe6e8fca")}</span>
     {!open && effort ? <span className="hidden shrink-0 sm:inline">{effortLabel}</span> : null}
     <ChevronDown className="size-3 shrink-0" aria-hidden />
   </button>;
@@ -219,7 +220,7 @@ export function ComposerRunSettingsPicker({
       onClick={() => { setView("agents"); setHighlightedAssignee(0); }}
       className="flex h-8 min-w-0 max-w-full items-center gap-1.5 rounded-full px-2.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50">
       {renderAssigneeIdentity?.(assigneeValue, agent?.name ?? "Unassigned", "trigger")}
-      <span data-testid="task-chat-composer-assignee-label" className="min-w-0 truncate">{assigneeOptions.find((item) => item.id === assigneeValue)?.label ?? "Unassigned"}</span>
+      <span data-testid="task-chat-composer-assignee-label" className="min-w-0 truncate">{assigneeOptions.find((item) => item.id === assigneeValue)?.label ?? uiT("ui:messages.m_14d33bd014e6b4e7")}</span>
       {!modelSupported ? <ChevronDown className="size-3 shrink-0 text-muted-foreground" aria-hidden /> : null}
     </button></Trigger> : null}
     {modelSupported ? <>
@@ -229,26 +230,26 @@ export function ComposerRunSettingsPicker({
 
   const body = view === "settings" ? <div className="min-h-0 overflow-y-auto overscroll-contain touch-pan-y p-3" data-testid="composer-run-settings-view">
     <div className="flex items-center gap-2">
-      <AssigneeHeader type={allowAssigneeChange ? "button" : undefined} aria-label={allowAssigneeChange ? "Choose assignee" : undefined} onClick={allowAssigneeChange ? () => setView("agents") : undefined}
+      <AssigneeHeader type={allowAssigneeChange ? "button" : undefined} aria-label={allowAssigneeChange ? uiT("ui:messages.m_14513f02d1e81921") : undefined} onClick={allowAssigneeChange ? () => setView("agents") : undefined}
         className={cn("flex min-w-0 flex-1 items-center gap-2 rounded-md px-1 py-1 text-left", allowAssigneeChange && "hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring")}>
         {renderAssigneeIdentity?.(assigneeValue, agent?.name ?? "Unassigned", "option") ?? <span className="grid size-6 shrink-0 place-items-center rounded-md bg-secondary text-xs font-semibold text-secondary-foreground">{agent?.name.slice(0, 1) ?? "?"}</span>}
-        <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium">{agent?.name ?? options.find((item) => item.id === assigneeValue)?.label ?? "Unassigned"}</span><span className="block truncate text-xs text-muted-foreground">{harnessLabel(agent)}</span></span>
+        <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium">{agent?.name ?? options.find((item) => item.id === assigneeValue)?.label ?? uiT("ui:messages.m_14d33bd014e6b4e7")}</span><span className="block truncate text-xs text-muted-foreground">{harnessLabel(agent)}</span></span>
         {allowAssigneeChange ? <ChevronDown className="size-4 shrink-0 text-muted-foreground" aria-hidden /> : null}
       </AssigneeHeader>
-      {!choices.length && modelSupported ? <button type="button" aria-label="Reset to agent default" title="Reset to agent default" disabled={!changed} onClick={reset} className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-accent disabled:opacity-40"><RotateCcw className="size-4" /></button> : null}
+      {!choices.length && modelSupported ? <button type="button" aria-label={uiT("ui:messages.m_9566ecac1f010bbb")} title={uiT("ui:messages.m_9566ecac1f010bbb")} disabled={!changed} onClick={reset} className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-accent disabled:opacity-40"><RotateCcw className="size-4" /></button> : null}
       {closeButton}
     </div>
     {modelSupported ? <>
-      <button type="button" aria-label="Choose exact model" onClick={() => setView("models")} className="mt-3 flex w-full items-center gap-2 rounded-md px-1 py-1 text-left hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        <span className="min-w-0 flex-1"><span className="block text-xs text-muted-foreground">Model</span><span className="block truncate text-sm font-medium">{modelName || "Default"}</span></span><ChevronDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+      <button type="button" aria-label={uiT("ui:messages.m_d5b2dcef585f4ace")} onClick={() => setView("models")} className="mt-3 flex w-full items-center gap-2 rounded-md px-1 py-1 text-left hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <span className="min-w-0 flex-1"><span className="block text-xs text-muted-foreground">{uiT("ui:messages.m_5e2c614c23f02239")}</span><span className="block truncate text-sm font-medium">{modelName || uiT("ui:messages.m_21b111cbfe6e8fca")}</span></span><ChevronDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
       </button>
       {choices.length ? <div className="mt-3">
         <div className="flex items-center gap-2">
-          {fastAvailable ? <button type="button" aria-label="Fast mode" aria-pressed={selected.fast} title="Fast mode" onClick={() => onSettingsChange({ ...selected, fast: !selected.fast })} className={cn("grid size-8 shrink-0 place-items-center rounded-md hover:bg-accent", selected.fast ? "composer-run-settings-accent bg-accent" : "text-muted-foreground")}><Zap className="size-4" /></button> : <span className="size-8 shrink-0" aria-hidden />}
+          {fastAvailable ? <button type="button" aria-label={uiT("ui:messages.m_1b7f9ecb7cd6a212")} aria-pressed={selected.fast} title={uiT("ui:messages.m_1b7f9ecb7cd6a212")} onClick={() => onSettingsChange({ ...selected, fast: !selected.fast })} className={cn("grid size-8 shrink-0 place-items-center rounded-md hover:bg-accent", selected.fast ? "composer-run-settings-accent bg-accent" : "text-muted-foreground")}><Zap className="size-4" /></button> : <span className="size-8 shrink-0" aria-hidden />}
           <label htmlFor="composer-run-effort" data-testid="selected-effort" className="composer-run-settings-accent min-w-0 flex-1 text-center text-sm font-medium">{effortLabel}</label>
-          <button type="button" aria-label="Reset to agent default" title="Reset to agent default" disabled={!changed} onClick={reset} className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-accent disabled:opacity-40"><RotateCcw className="size-4" /></button>
+          <button type="button" aria-label={uiT("ui:messages.m_9566ecac1f010bbb")} title={uiT("ui:messages.m_9566ecac1f010bbb")} disabled={!changed} onClick={reset} className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-accent disabled:opacity-40"><RotateCcw className="size-4" /></button>
         </div>
-        <input id="composer-run-effort" type="range" min={0} max={choices.length} step={1} value={effortIndex} aria-label={agent?.adapterType === "pi_local" ? "Thinking" : "Effort"} aria-valuetext={effortLabel}
+        <input id="composer-run-effort" type="range" min={0} max={choices.length} step={1} value={effortIndex} aria-label={agent?.adapterType === "pi_local" ? uiT("ui:messages.m_a20d12c5e9c428c3") : uiT("ui:messages.m_4387e5d3966fc436")} aria-valuetext={effortLabel}
           onChange={(event) => {
             const nextEffort = Number(event.target.value) === 0 ? null : choices[Number(event.target.value) - 1]!;
             rememberComposerEffort(companyId, nextEffort);
@@ -258,20 +259,20 @@ export function ComposerRunSettingsPicker({
       </div> : null}
     </> : agent ? <div className="mt-3 rounded-md bg-muted/40 px-3 py-2 text-xs text-muted-foreground" data-testid="model-unavailable">{unavailableModelReason(agent)}</div> : null}
   </div> : view === "agents" ? <div className="composer-run-settings-list-view p-2">
-    <div className="flex items-center gap-2 px-1 py-1.5"><span className="min-w-0 flex-1 text-xs font-semibold">Choose assignee</span>{closeButton}</div>
-    <div className="relative mt-2"><Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-muted-foreground" aria-hidden /><input autoFocus type="search" aria-label="Search assignees" placeholder="Search assignees…" value={assigneeSearch} onChange={(event) => { setAssigneeSearch(event.target.value); setHighlightedAssignee(0); }} onKeyDown={(event) => {
+    <div className="flex items-center gap-2 px-1 py-1.5"><span className="min-w-0 flex-1 text-xs font-semibold">{uiT("ui:messages.m_14513f02d1e81921")}</span>{closeButton}</div>
+    <div className="relative mt-2"><Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-muted-foreground" aria-hidden /><input autoFocus type="search" aria-label={uiT("ui:messages.m_15966cf215ba4f3d")} placeholder={uiT("ui:messages.m_12019555b7b48d70")} value={assigneeSearch} onChange={(event) => { setAssigneeSearch(event.target.value); setHighlightedAssignee(0); }} onKeyDown={(event) => {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") { event.preventDefault(); setHighlightedAssignee((current) => filteredAgents.length ? (current + (event.key === "ArrowDown" ? 1 : -1) + filteredAgents.length) % filteredAgents.length : 0); }
       if (event.key === "Enter" && filteredAgents.length) { event.preventDefault(); chooseAssignee(filteredAgents[Math.min(highlightedAssignee, filteredAgents.length - 1)]!.id); }
     }} className="h-9 w-full rounded-md border border-border bg-background pl-8 pr-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring" /></div>
-    <div className="mt-2 min-h-0 max-h-60 overflow-y-auto overscroll-contain touch-pan-y" role="listbox" aria-label="Assignees">{filteredAgents.map((item, index) => {
+    <div className="mt-2 min-h-0 max-h-60 overflow-y-auto overscroll-contain touch-pan-y" role="listbox" aria-label={uiT("ui:messages.m_9bbf8c4b3c61f7d1")}>{filteredAgents.map((item, index) => {
       const optionAgent = agents.get(item.id.startsWith("agent:") ? item.id.slice(6) : "");
       return <button key={item.id} type="button" role="option" aria-selected={item.id === assigneeValue} onMouseEnter={() => setHighlightedAssignee(index)} onClick={() => chooseAssignee(item.id)} className={cn("flex w-full items-center gap-2 rounded-md px-2 py-2 text-left focus-visible:outline-none", highlightedAssignee === index ? "bg-accent" : "hover:bg-accent")}>{renderAssigneeIdentity?.(item.id, item.label, "option")}<span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium">{item.label}</span>{optionAgent ? <span className="block truncate text-xs text-muted-foreground">{optionAgent.role}</span> : null}</span>{optionAgent ? <span className="truncate text-xs text-muted-foreground">{harnessLabel(optionAgent)}</span> : null}{item.id === assigneeValue ? <Check className="composer-run-settings-accent size-4" /> : null}</button>;
-    })}{!filteredAgents.length ? <p className="px-2 py-2 text-xs text-muted-foreground">No matches.</p> : null}</div>
+    })}{!filteredAgents.length ? <p className="px-2 py-2 text-xs text-muted-foreground">{uiT("ui:messages.m_d6572bd2e77380ce")}</p> : null}</div>
   </div> : <div className="composer-run-settings-list-view p-2">
-    <div className="flex items-center gap-2 px-1 py-1.5"><button type="button" aria-label="Back to selection" onClick={() => setView("settings")} className="grid size-7 place-items-center rounded-md hover:bg-accent"><ArrowLeft className="size-4" /></button><span className="min-w-0 flex-1"><span className="block text-xs font-semibold">Choose model</span><span className="block truncate text-xs text-muted-foreground">{harnessLabel(agent)}</span></span>{closeButton}</div>
-    <div className="relative mt-2"><Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-muted-foreground" aria-hidden /><input autoFocus type="search" aria-label="Search or paste a model ID" placeholder="Search or paste a model ID" value={modelSearch} onChange={(event) => setModelSearch(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && manualValid && !exactMatch) chooseModel(query); }} className="h-9 w-full rounded-md border border-border bg-background pl-8 pr-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring" /></div>
-    <div className="mt-2 min-h-0 max-h-60 overflow-y-auto overscroll-contain touch-pan-y" role="listbox" aria-label="Models">
-      {!query ? <button type="button" role="option" aria-selected={selected.model === null} onClick={() => chooseModel(null)} className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left hover:bg-accent"><span className="min-w-0 flex-1"><span className="block text-sm font-medium">Use agent default</span><span className="block truncate text-xs text-muted-foreground">{models.find((item) => item.id === configuredModel)?.label || configuredModel || "Default"}</span></span>{selected.model === null ? <Check className="composer-run-settings-accent size-4" /> : null}</button> : null}
+    <div className="flex items-center gap-2 px-1 py-1.5"><button type="button" aria-label={uiT("ui:messages.m_3dadc4096c93fa93")} onClick={() => setView("settings")} className="grid size-7 place-items-center rounded-md hover:bg-accent"><ArrowLeft className="size-4" /></button><span className="min-w-0 flex-1"><span className="block text-xs font-semibold">Choose model</span><span className="block truncate text-xs text-muted-foreground">{harnessLabel(agent)}</span></span>{closeButton}</div>
+    <div className="relative mt-2"><Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-muted-foreground" aria-hidden /><input autoFocus type="search" aria-label={uiT("ui:messages.m_a38cd2700cc44392")} placeholder={uiT("ui:messages.m_a38cd2700cc44392")} value={modelSearch} onChange={(event) => setModelSearch(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && manualValid && !exactMatch) chooseModel(query); }} className="h-9 w-full rounded-md border border-border bg-background pl-8 pr-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring" /></div>
+    <div className="mt-2 min-h-0 max-h-60 overflow-y-auto overscroll-contain touch-pan-y" role="listbox" aria-label={uiT("ui:messages.m_d17d2d78d76e6a6c")}>
+      {!query ? <button type="button" role="option" aria-selected={selected.model === null} onClick={() => chooseModel(null)} className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left hover:bg-accent"><span className="min-w-0 flex-1"><span className="block text-sm font-medium">{uiT("ui:messages.m_e8be37887c64bd7d")}</span><span className="block truncate text-xs text-muted-foreground">{models.find((item) => item.id === configuredModel)?.label || configuredModel || uiT("ui:messages.m_21b111cbfe6e8fca")}</span></span>{selected.model === null ? <Check className="composer-run-settings-accent size-4" /> : null}</button> : null}
       {filteredModels.map((item) => <button type="button" role="option" aria-selected={selected.model === item.id} key={item.id} onClick={() => chooseModel(item.id)} className="flex w-full items-center gap-3 rounded-md px-2.5 py-2 text-left text-sm transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"><span className="min-w-0 flex-1"><span className="block truncate font-medium">{item.label}</span><span className="block truncate font-mono text-xs text-muted-foreground">{item.id}</span></span>{item.detail || item.id === configuredModel ? <span className="shrink-0 text-xs text-muted-foreground">{item.detail ?? "Agent default"}</span> : null}{selected.model === item.id ? <Check className="composer-run-settings-accent size-4 shrink-0" /> : null}</button>)}
       {catalogPending ? <p className="px-2.5 py-2 text-xs text-muted-foreground">Loading models…</p> : null}
       {!catalogPending && !filteredModels.length && query ? <p className="px-2.5 py-2 text-xs text-muted-foreground">No catalog match.</p> : null}

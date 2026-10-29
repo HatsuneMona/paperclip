@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link, useCaseHref } from "@/lib/router";
@@ -44,7 +45,7 @@ export function CaseChildrenTree({
             >
               <CaseCopyableToken
                 value={child.identifier}
-                label="case ID"
+                label={uiT("ui:messages.m_9c869d6f7ed1f0c6")}
                 className="shrink-0 font-mono text-xs text-muted-foreground"
                 containerClassName="shrink-0"
                 stopPropagation
@@ -64,9 +65,7 @@ export function CaseChildrenTree({
           className="h-7 gap-1 px-2 text-xs text-muted-foreground"
           onClick={() => setExpanded(true)}
         >
-          <ChevronDown className="h-3.5 w-3.5" />
-          Show {hiddenCount} more
-        </Button>
+          <ChevronDown className="h-3.5 w-3.5" />{uiT("ui:messages.m_dd0fcd29c826bed1")}{hiddenCount}{uiT("ui:messages.m_226ba18bbcdb7518")}</Button>
       ) : null}
     </div>
   );

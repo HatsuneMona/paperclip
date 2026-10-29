@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { memo, useMemo } from "react";
 import { Link } from "@/lib/router";
@@ -160,7 +161,7 @@ export function ActiveAgentsPanel({
           <Link to="/dashboard/live" className="hover:text-foreground hover:underline">
             {hiddenRunCount > 0
               ? `${hiddenRunCount} more active/recent run${hiddenRunCount === 1 ? "" : "s"}`
-              : "View all runs"}
+              : uiT("ui:messages.m_346de5a03a7af536")}
           </Link>
         </div>
       )}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { ArrowUpRight, ChevronRight, Loader2, Lock } from "lucide-react";
@@ -115,16 +116,14 @@ function KeySection({
         <div className="flex items-start gap-3">
           <Lock className="mt-0.5 h-4 w-4 text-muted-foreground" />
           <div>
-            <h2 className="text-sm font-medium text-foreground">Reconnect</h2>
+            <h2 className="text-sm font-medium text-foreground">{uiT("ui:messages.m_bf8a9eab9e7e141b")}</h2>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {canReplace ? "Replace the stored credential." : unavailableMessage}
             </p>
           </div>
         </div>
         {canReplace && !open && (
-          <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
-            Reconnect
-          </Button>
+          <Button size="sm" variant="outline" onClick={() => setOpen(true)}>{uiT("ui:messages.m_bf8a9eab9e7e141b")}</Button>
         )}
       </div>
       {open && (
@@ -235,7 +234,7 @@ export function ReconnectCard({
             </Link>
           </Button>
         ) : onReconnect ? (
-          <Button size="sm" variant="outline" onClick={onReconnect}>Reconnect</Button>
+          <Button size="sm" variant="outline" onClick={onReconnect}>{uiT("ui:messages.m_bf8a9eab9e7e141b")}</Button>
         ) : managedByVercel && !oauth ? (
           <div className="flex items-center gap-2">
             <Button type="button" size="sm" variant="outline" asChild>
@@ -261,7 +260,7 @@ export function ReconnectCard({
             onClick={() => reconnectOAuth.mutate()}
           >
             {reconnectOAuth.isPending && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
-            {reconnectOAuth.isPending ? "Opening sign-in…" : "Reconnect"}
+            {reconnectOAuth.isPending ? "Opening sign-in…" : uiT("ui:messages.m_bf8a9eab9e7e141b")}
           </Button>
         ) : (
           <ReconnectForm connection={connection} galleryEntry={galleryEntry} onReconnected={onReconnected} />
@@ -298,7 +297,7 @@ function ReconnectForm({
     .filter((ref) => ref.placement === "header" || ref.placement === "url")
     .map((ref) => ({
       configPath: connectionCredentialConfigPath(ref),
-      label: ref.placement === "url" ? "MCP server URL" : ref.prefix === "Bearer " ? "App key" : ref.key ?? ref.name,
+      label: ref.placement === "url" ? uiT("ui:messages.m_4f5aff033a99aafc") : ref.prefix === "Bearer " ? uiT("ui:messages.m_e9ba76956424f762") : ref.key ?? ref.name,
       helpUrl: "",
       required: true,
     }));
@@ -381,7 +380,7 @@ function ReconnectForm({
       ) : (
         <Input
           type="password"
-          aria-label="App key"
+          aria-label={uiT("ui:messages.m_e9ba76956424f762")}
           autoComplete="off"
           value={single}
           onChange={(e) => setSingle(e.target.value)}
@@ -392,12 +391,10 @@ function ReconnectForm({
       <div className="flex items-center gap-2">
         <Button size="sm" disabled={!filled || reconnect.isPending} onClick={() => reconnect.mutate()}>
           {reconnect.isPending && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
-          {reconnect.isPending ? "Checking..." : "Check & reconnect"}
+          {reconnect.isPending ? uiT("ui:messages.m_2e5f79bb94a8c40b") : "Check & reconnect"}
         </Button>
         {onCancel && (
-          <Button size="sm" variant="ghost" onClick={onCancel} disabled={reconnect.isPending}>
-            Cancel
-          </Button>
+          <Button size="sm" variant="ghost" onClick={onCancel} disabled={reconnect.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
         )}
       </div>
     </div>
@@ -411,7 +408,7 @@ function TechnicalDetails({ connection }: { connection: ToolConnection }) {
       <section>
         <CollapsibleTrigger asChild>
           <button type="button" className="flex w-full items-center gap-3 py-1 text-left">
-            <span className="min-w-0 flex-1 text-sm font-medium text-foreground">Connection details</span>
+            <span className="min-w-0 flex-1 text-sm font-medium text-foreground">{uiT("ui:messages.m_51bfffbcdbcfbc00")}</span>
             <ChevronRight
               className={cn("h-4 w-4 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")}
             />
@@ -419,9 +416,9 @@ function TechnicalDetails({ connection }: { connection: ToolConnection }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <dl className="mt-4 grid gap-2 pb-2 text-xs sm:grid-cols-(--gtc-59)">
-            <dt className="text-muted-foreground">Address</dt>
+            <dt className="text-muted-foreground">{uiT("ui:messages.m_56ef8f20955f2564")}</dt>
             <dd className="break-all font-mono text-foreground">{connectionAddress(connection)}</dd>
-            <dt className="text-muted-foreground">Type</dt>
+            <dt className="text-muted-foreground">{uiT("ui:messages.m_baaddf70fb5d432b")}</dt>
             <dd className="text-foreground">{connectionTransportLabel(connection.transport)}</dd>
           </dl>
         </CollapsibleContent>
@@ -490,7 +487,7 @@ export function DangerZone({
             type="button"
             className="flex w-full items-center gap-3 py-1 text-left"
           >
-            <span className="min-w-0 flex-1 text-sm font-medium text-destructive">Danger zone</span>
+            <span className="min-w-0 flex-1 text-sm font-medium text-destructive">{uiT("ui:messages.m_fd8b8dae44216610")}</span>
             <ChevronRight
               className={cn("h-4 w-4 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")}
             />
@@ -527,7 +524,7 @@ export function DangerZone({
             {connection?.authKind === "oauth" && !methodUnavailable && (onReconnectIdentity || !canReplaceCredential) ? (
               <div className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
-                  <p className="text-sm font-medium text-foreground">Reconnect</p>
+                  <p className="text-sm font-medium text-foreground">{uiT("ui:messages.m_bf8a9eab9e7e141b")}</p>
                   <p className="text-xs text-muted-foreground">
                     {canReplaceCredential
                       ? `Sign in to ${identityProviderName} again.`
@@ -541,9 +538,7 @@ export function DangerZone({
                     disabled={identityActionPending}
                     onClick={onReconnectIdentity}
                   >
-                    {identityActionPending ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-                    Reconnect
-                  </Button>
+                    {identityActionPending ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}{uiT("ui:messages.m_bf8a9eab9e7e141b")}</Button>
                 ) : null}
               </div>
             ) : null}
@@ -562,9 +557,7 @@ export function DangerZone({
                     variant="destructive"
                     size="sm"
                     onClick={() => setRevokeTarget(identityGrant)}
-                  >
-                    Revoke
-                  </Button>
+                  >{uiT("ui:messages.m_87e6d00bbf53ec5a")}</Button>
                 </div>
             ) : null}
 
@@ -577,9 +570,7 @@ export function DangerZone({
               </div>
               {confirming ? (
                 <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="sm" onClick={() => setConfirming(false)} disabled={removing}>
-                    Cancel
-                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => setConfirming(false)} disabled={removing}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                   <Button variant="destructive" size="sm" onClick={onRemove} disabled={removing}>
                     {removing && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
                     Yes, remove it

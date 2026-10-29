@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import type {
   ExternalObjectLivenessState,
@@ -151,7 +152,7 @@ export function ExternalObjectPill({
         liveness={object.liveness}
         statusIconKey={statusIconKey}
         sizeClassName="h-3 w-3"
-        label={`${providerLabel}: ${statusLabel}`}
+        label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (providerLabel), v1: (statusLabel) })}
       />
       <span className="max-w-(--sz-16rem) truncate font-medium">{valueLabel}</span>
     </>

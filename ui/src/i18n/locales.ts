@@ -1,4 +1,6 @@
 import type { Resource } from "i18next";
+import uiEnglish from "./messages/en.json";
+import uiChinese from "./messages/zh-CN.json";
 
 import { assertValidLocaleMessages } from "./locale-validation";
 
@@ -32,10 +34,14 @@ for (const [locale, messages] of Object.entries(localeMessages)) {
   }
 }
 
+// Supplementary UI copy is separate from upstream's complete translation catalogs.
+assertValidLocaleMessages(uiChinese, uiEnglish);
+const uiMessages: Record<string, unknown> = { en: uiEnglish, "zh-CN": uiChinese };
+
 export const supportedLocales = Object.keys(localeMessages);
 
 export const i18nextResources: Resource = Object.fromEntries(
-  Object.entries(localeMessages).map(([locale, messages]) => [locale, { translation: messages }]),
+  Object.entries(localeMessages).map(([locale, messages]) => [locale, { translation: messages, ...(uiMessages[locale] ? { ui: uiMessages[locale] } : {}) }]),
 ) as Resource;
 
 export type SupportedLocale = keyof typeof localeMessages;

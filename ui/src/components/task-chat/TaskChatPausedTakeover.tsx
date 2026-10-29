@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId } from "react";
 import { Loader2, Pause, Play } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -35,7 +36,7 @@ export function TaskChatPausedTakeover({
         <Pause aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-(--status-task-icon-todo)" />
         <div className="flex min-w-0 flex-col gap-1">
           <h2 id={headingId} className="text-sm font-medium text-foreground">
-            {subtree ? "Subtree is paused." : "Task is paused."}
+            {subtree ? uiT("ui:messages.m_f9ebf72d55c38755") : uiT("ui:messages.m_fb9c04c93b5e4f5a")}
           </h2>
           <p className="text-sm text-muted-foreground">
             {subtree
@@ -55,7 +56,7 @@ export function TaskChatPausedTakeover({
         ) : null}
         {resumeHref ? (
           <Button asChild size="sm" className="bg-(--status-agent-paused) text-foreground hover:bg-(--status-agent-paused)/80 dark:text-background">
-            <Link to={resumeHref}><Play aria-hidden="true" />Resume subtree</Link>
+            <Link to={resumeHref}><Play aria-hidden="true" />{uiT("ui:messages.m_b38209885d3237c7")}</Link>
           </Button>
         ) : (
           <Button
@@ -65,7 +66,7 @@ export function TaskChatPausedTakeover({
             className="bg-(--status-agent-paused) text-foreground hover:bg-(--status-agent-paused)/80 dark:text-background"
           >
             {pending ? <Loader2 aria-hidden="true" className="animate-spin" /> : <Play aria-hidden="true" />}
-            {pending ? "Resuming…" : subtree ? "Resume subtree" : "Resume task"}
+            {pending ? uiT("ui:messages.m_c494e3ca3e3b04a3") : subtree ? uiT("ui:messages.m_b38209885d3237c7") : "Resume task"}
           </Button>
         )}
       </div>

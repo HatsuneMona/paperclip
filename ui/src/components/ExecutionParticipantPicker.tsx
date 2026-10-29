@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState } from "react";
 import type { Agent, Issue } from "@paperclipai/shared";
@@ -92,7 +93,7 @@ export function ExecutionParticipantPicker({
     updatePolicy(next);
   };
 
-  const label = stageType === "review" ? "Reviewers" : "Approvers";
+  const label = stageType === "review" ? uiT("ui:messages.m_06499a309e358869") : uiT("ui:messages.m_97ecaec16a965f31");
   const Icon = stageType === "review" ? Eye : ShieldCheck;
 
   if (!policyAvailable) {
@@ -123,7 +124,7 @@ export function ExecutionParticipantPicker({
       <PopoverContent className="p-1 w-56" align="start" collisionPadding={16}>
         <input
           className="w-full px-2 py-1.5 text-xs bg-transparent outline-none border-b border-border mb-1 placeholder:text-muted-foreground/50"
-          placeholder={`Search ${label.toLowerCase()}...`}
+          placeholder={uiT("ui:messages.m_9a2afa301658821d", { v0: (label.toLowerCase()) })}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           autoFocus
@@ -135,8 +136,7 @@ export function ExecutionParticipantPicker({
               values.length === 0 && "bg-accent",
             )}
             onClick={() => updatePolicy([])}
-          >
-            No {label.toLowerCase()}
+          >{uiT("ui:messages.m_05f8bb36f8813cd8")}{label.toLowerCase()}
           </button>
           {currentUserId && (
             <button
@@ -146,9 +146,7 @@ export function ExecutionParticipantPicker({
               )}
               onClick={() => toggle(`user:${currentUserId}`)}
             >
-              <User className="h-3 w-3 shrink-0 text-muted-foreground" />
-              Assign to me
-            </button>
+              <User className="h-3 w-3 shrink-0 text-muted-foreground" />{uiT("ui:messages.m_9dd977a40985e4cf")}</button>
           )}
           {issue.createdByUserId && issue.createdByUserId !== currentUserId && (
             <button
@@ -159,7 +157,7 @@ export function ExecutionParticipantPicker({
               onClick={() => toggle(`user:${issue.createdByUserId}`)}
             >
               <User className="h-3 w-3 shrink-0 text-muted-foreground" />
-              {creatorUserLabel ?? "Requester"}
+              {creatorUserLabel ?? uiT("ui:messages.m_b5687cf04af300e4")}
             </button>
           )}
           {otherUserOptions

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties, ReactNode } from "react";
 import type { To } from "react-router-dom";
 import { Link } from "@/lib/router";
@@ -147,7 +148,7 @@ export function ArtifactRow({ subject, to, href, external = false, onClick, expa
       </span>
     </>
   );
-  const label = `Open ${name}`;
+  const label = uiT("ui:messages.m_afaef5c34f443c02", { v0: (name) });
   const control = to ? (
     <Link to={to} aria-label={label} data-testid={`${testId}-open`} className={CONTROL_CLASS}>
       {content}

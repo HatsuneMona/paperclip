@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { RefreshCw, Star, Unplug } from "lucide-react";
 import type { ConnectionGrant } from "@paperclipai/shared";
@@ -43,11 +44,11 @@ export function AiConnectionAccountControls({
       )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0 text-sm">
-          <p className="break-words text-xs text-muted-foreground">{account.method === "subscription" ? "Subscription" : "API key"}{account.accountLabel ? ` · ${account.accountLabel}` : ""}</p>
+          <p className="break-words text-xs text-muted-foreground">{account.method === "subscription" ? uiT("ui:messages.m_4999c6c6c7badf45") : uiT("ui:messages.m_16f0ee47f993d627")}{account.accountLabel ? ` · ${account.accountLabel}` : ""}</p>
         </div>
         {!readOnly && grant.capabilities?.canRevoke && (
           <div className="flex flex-wrap items-center gap-2">
-            {<Button variant="outline" size="sm" onClick={onReconnect}><RefreshCw className="size-4" aria-hidden />Reconnect</Button>}
+            {<Button variant="outline" size="sm" onClick={onReconnect}><RefreshCw className="size-4" aria-hidden />{uiT("ui:messages.m_bf8a9eab9e7e141b")}</Button>}
             {account.status !== "revoked" && <Button variant="ghost" size="sm" className="text-destructive" onClick={() => setRevoking(true)}><Unplug className="size-4" aria-hidden />Revoke identity</Button>}
           </div>
         )}

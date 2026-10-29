@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 /**
  * One way to render a read.
  *
@@ -149,7 +150,7 @@ export function QueryErrorState({ error, size = "panel", action, onRetry, retryi
       disabled={retrying}
     >
       <RefreshCcw aria-hidden="true" className={cn(retrying && "animate-spin")} />
-      {retrying ? "Retrying…" : "Retry"}
+      {retrying ? uiT("ui:messages.m_a16c8b1c95956fba") : uiT("ui:messages.m_942087cc2d41e013")}
     </Button>
   ) : null;
 

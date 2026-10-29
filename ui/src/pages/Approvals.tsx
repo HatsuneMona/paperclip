@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { describeError } from "../api/errors";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "@/lib/router";
@@ -28,7 +29,7 @@ export function Approvals() {
   const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Approvals" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_2bfc3471571e5c00") }]);
   }, [setBreadcrumbs]);
 
   const { data, isLoading, error } = useQuery({
@@ -77,7 +78,7 @@ export function Approvals() {
   ).length;
 
   if (!selectedCompanyId) {
-    return <p className="text-sm text-muted-foreground">Select an organization first.</p>;
+    return <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_0d7c81ffe0023b23")}</p>;
   }
 
   if (isLoading) {
@@ -89,7 +90,7 @@ export function Approvals() {
       <div className="flex items-center justify-between">
         <Tabs value={statusFilter} onValueChange={(v) => navigate(`/approvals/${v}`)}>
           <PageTabBar items={[
-            { value: "pending", label: <>Pending{pendingCount > 0 && (
+            { value: "pending", label: <>{uiT("ui:messages.m_331551b0de4157c9")}{pendingCount > 0 && (
               <Badge variant="ghost" className={cn(
                 "ml-1.5 px-1.5 text-(length:--text-nano)",
                 "bg-yellow-500/20 text-yellow-500"
@@ -97,7 +98,7 @@ export function Approvals() {
                 {pendingCount}
               </Badge>
             )}</> },
-            { value: "all", label: "All" },
+            { value: "all", label: uiT("ui:messages.m_a52ace420f2175d0") },
           ]} />
         </Tabs>
       </div>
@@ -109,7 +110,7 @@ export function Approvals() {
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <ShieldCheck className="h-8 w-8 text-muted-foreground/30 mb-3" />
           <p className="text-sm text-muted-foreground">
-            {statusFilter === "pending" ? "No pending approvals." : "No approvals yet."}
+            {statusFilter === "pending" ? uiT("ui:messages.m_bac0662a619b4f21") : uiT("ui:messages.m_0e967ef975fe865e")}
           </p>
         </div>
       )}

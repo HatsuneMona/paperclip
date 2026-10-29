@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { SkillsPageNavigation } from "@/components/skill-studio/SkillsNavigationTabs";
 import { interactionReadinessRefetchInterval } from "@/lib/issue-thread-interactions";
 import { SkillBinaryFile } from "../components/SkillBinaryFile";
@@ -312,18 +313,18 @@ export function SkillStudio() {
     setBreadcrumbs(
       isCreateMode
         ? [
-            { label: "Skills", href: "/skills" },
+            { label: uiT("ui:messages.m_66d0f523a379b2de"), href: "/skills" },
             { label: "Studio", href: "/skills/studio" },
-            { label: "New skill" },
+            { label: uiT("ui:messages.m_9bf06a86c934b7de") },
           ]
         : skill
         ? [
-            { label: "Skills", href: "/skills" },
+            { label: uiT("ui:messages.m_66d0f523a379b2de"), href: "/skills" },
             { label: "Studio", href: "/skills/studio" },
             { label: skill.name },
           ]
         : [
-            { label: "Skills", href: "/skills" },
+            { label: uiT("ui:messages.m_66d0f523a379b2de"), href: "/skills" },
             { label: "Studio" },
           ],
     );
@@ -423,7 +424,7 @@ function StudioCreateMode({
             skills={skills}
             loading={skillsLoading}
             onSelectSkill={onSelectSkill}
-            emptyLabel="New skill"
+            emptyLabel={uiT("ui:messages.m_9bf06a86c934b7de")}
           />
         </header>
         <SkillsPageNavigation activeView="authored" />
@@ -492,7 +493,7 @@ function StudioNewSkillPanel({
       await queryClient.invalidateQueries({ queryKey: queryKeys.companySkills.list(companyId) });
       toast?.pushToast({
         tone: "success",
-        title: skill.forkedFromSkillId ? "Skill fork created" : "Skill created",
+        title: skill.forkedFromSkillId ? uiT("ui:messages.m_7806f0fc7194ca33") : uiT("ui:messages.m_b25ab5d5e2a5af58"),
         body: `${skill.name} is now editable in the Paperclip workspace.`,
       });
       navigate(skillStudioRoute(skill.id));
@@ -536,33 +537,28 @@ function StudioNewSkillPanel({
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6">
       <div className="space-y-1">
         <h1 className="text-lg font-semibold text-foreground">
-          {draft.forkedFromSkillId ? "Fork skill" : "Create a new skill"}
+          {draft.forkedFromSkillId ? uiT("ui:messages.m_fa941eb0ebcedd63") : uiT("ui:messages.m_334c7dd95ab433ad")}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Create an editable organization skill and open it directly in Studio.
-        </p>
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_deec896561ffdbfc")}</p>
       </div>
 
       {draft.forkedFromName ? (
         <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
-          <GitFork className="h-4 w-4" />
-          Forking {draft.forkedFromName}
+          <GitFork className="h-4 w-4" />{uiT("ui:messages.m_f22a16ea5fcbb129")}{draft.forkedFromName}
         </div>
       ) : forkError ? (
         <div className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          <AlertTriangle className="h-4 w-4" />
-          Fork source not found. You can still create a blank skill.
-        </div>
+          <AlertTriangle className="h-4 w-4" />{uiT("ui:messages.m_e993a0331e068b6e")}</div>
       ) : null}
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Basics</h2>
-          <p className="text-xs text-muted-foreground">Name the skill and set the route-safe slug.</p>
+          <h2 className="text-sm font-medium text-foreground">{uiT("ui:messages.m_8fdd2ee8475e29bc")}</h2>
+          <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_0701145e12e7a307")}</p>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="skill-name">Name</Label>
+            <Label htmlFor="skill-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
             <Input
               id="skill-name"
               value={draft.name}
@@ -576,11 +572,11 @@ function StudioNewSkillPanel({
                     : draft.markdown,
                 });
               }}
-              placeholder="Code review"
+              placeholder={uiT("ui:messages.m_3d2006711d4cf001")}
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="skill-slug">Slug</Label>
+            <Label htmlFor="skill-slug">{uiT("ui:messages.m_d15387ecc6c5e22d")}</Label>
             <Input
               id="skill-slug"
               value={draft.slug}
@@ -609,7 +605,7 @@ function StudioNewSkillPanel({
                   : draft.markdown,
               });
             }}
-            placeholder="Review repository changes for correctness, tests, and maintainability."
+            placeholder={uiT("ui:messages.m_1ca7c5025827d113")}
             className="min-h-20"
           />
         </div>
@@ -617,18 +613,18 @@ function StudioNewSkillPanel({
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Appearance</h2>
+          <h2 className="text-sm font-medium text-foreground">{uiT("ui:messages.m_3907fa7f80722a6f")}</h2>
           <p className="text-xs text-muted-foreground">Tune how the skill appears in the store and Studio switcher.</p>
         </div>
         <div className="flex items-center gap-3">
           <SkillCardIcon card={previewCard} size={48} />
           <div className="min-w-0">
             <div className="truncate text-sm font-medium">{previewCard.name}</div>
-            <div className="truncate text-xs text-muted-foreground">{draft.tagline || "No tagline yet."}</div>
+            <div className="truncate text-xs text-muted-foreground">{draft.tagline || uiT("ui:messages.m_8e4cf121c0a33902")}</div>
           </div>
         </div>
         <div className="space-y-2">
-          <Label>Color</Label>
+          <Label>{uiT("ui:messages.m_6b73191a0a4b6742")}</Label>
           <div className="flex flex-wrap items-center gap-2">
             {SKILL_CREATE_ACCENTS.map((color) => (
               <button
@@ -640,11 +636,11 @@ function StudioNewSkillPanel({
                   draft.color === color ? "border-foreground" : "border-border",
                 )}
                 style={{ backgroundColor: color }}
-                aria-label={`Use ${color}`}
+                aria-label={uiT("ui:messages.m_4a3ba369d7ae6c1f", { v0: (color) })}
               />
             ))}
             <Input
-              aria-label="Hex color"
+              aria-label={uiT("ui:messages.m_91f4e4b13e5701e3")}
               value={draft.color}
               onChange={(event) => patchDraft({ color: event.target.value })}
               className="h-7 w-28 font-mono text-xs"
@@ -652,20 +648,20 @@ function StudioNewSkillPanel({
           </div>
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="skill-categories">Categories</Label>
+          <Label htmlFor="skill-categories">{uiT("ui:messages.m_b8b1d894c6837252")}</Label>
           <Input
             id="skill-categories"
             value={categoryDraft}
             onChange={(event) => setCategoryDraft(event.target.value)}
-            placeholder="engineering, review, memory"
+            placeholder={uiT("ui:messages.m_60bdd3ca934986f7")}
           />
         </div>
       </section>
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Sharing</h2>
-          <p className="text-xs text-muted-foreground">Choose who can discover this skill inside Paperclip.</p>
+          <h2 className="text-sm font-medium text-foreground">{uiT("ui:messages.m_bbedc70e985fe0b6")}</h2>
+          <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_4522d7745d48efc6")}</p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3">
           {(["company", "private"] as const).map((scope) => (
@@ -678,9 +674,9 @@ function StudioNewSkillPanel({
                 draft.sharingScope === scope ? "border-foreground bg-accent/50" : "border-border",
               )}
             >
-              <span className="block font-medium">{scope === "company" ? "Organization" : "Private"}</span>
+              <span className="block font-medium">{scope === "company" ? uiT("ui:messages.m_d764d42592fc9687") : uiT("ui:messages.m_c63eb6720c6e8849")}</span>
               <span className="mt-1 block text-xs text-muted-foreground">
-                {scope === "company" ? "Visible inside this organization." : "Only visible in your library."}
+                {scope === "company" ? uiT("ui:messages.m_07a1e6d8eaf2c1c9") : uiT("ui:messages.m_efbca2276ff1f738")}
               </span>
             </button>
           ))}
@@ -689,8 +685,8 @@ function StudioNewSkillPanel({
             disabled
             className="rounded-md border border-dashed border-border px-3 py-2 text-left text-sm text-muted-foreground"
           >
-            <span className="block font-medium">Public</span>
-            <span className="mt-1 block text-xs">Coming later.</span>
+            <span className="block font-medium">{uiT("ui:messages.m_591935b15b1c88e2")}</span>
+            <span className="mt-1 block text-xs">{uiT("ui:messages.m_3ff09ef158dc5fa2")}</span>
           </button>
         </div>
       </section>
@@ -705,12 +701,10 @@ function StudioNewSkillPanel({
       </details>
 
       <div className="flex items-center justify-end gap-2 border-t border-border pt-4">
-        <Button variant="ghost" onClick={() => navigate("/skills/studio")} disabled={createSkill.isPending}>
-          Cancel
-        </Button>
+        <Button variant="ghost" onClick={() => navigate("/skills/studio")} disabled={createSkill.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
         <Button onClick={() => createSkill.mutate()} disabled={createSkill.isPending || !nameValid}>
           <FilePlus className="h-4 w-4" />
-          {createSkill.isPending ? "Creating..." : draft.forkedFromSkillId ? "Create fork" : "Create skill"}
+          {createSkill.isPending ? uiT("ui:messages.m_def70944c9bb9c3b") : draft.forkedFromSkillId ? uiT("ui:messages.m_d217b73b9ff2c740") : uiT("ui:messages.m_1a9030082a20b6d9")}
         </Button>
       </div>
     </div>
@@ -745,7 +739,7 @@ function StudioEmptyState({
             skills={skills}
             loading={skillsLoading}
             onSelectSkill={onSelectSkill}
-            emptyLabel="Select skill"
+            emptyLabel={uiT("ui:messages.m_4511ad1cfc1d1341")}
           />
         </header>
         <SkillsPageNavigation activeView="authored" />
@@ -819,25 +813,23 @@ function StudioLanding({
             skills={skills}
             loading={skillsLoading}
             onSelectSkill={onSelectSkill}
-            emptyLabel="Select skill"
+            emptyLabel={uiT("ui:messages.m_4511ad1cfc1d1341")}
           />
           <Button variant="ghost" size="sm" className="ml-auto" onClick={onCreateNew}>
-            <Plus className="mr-1.5 h-3.5 w-3.5" />
-            New skill
-          </Button>
+            <Plus className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_9bf06a86c934b7de")}</Button>
         </header>
         <SkillsPageNavigation activeView="authored" />
         <div className="min-h-0 flex-1 overflow-auto">
           <div className="mx-auto w-full max-w-3xl space-y-8 px-4 py-8">
             {visited.length > 0 ? (
               <StudioLandingSection
-                title="Recently visited"
+                title={uiT("ui:messages.m_b3f3bc0459891f92")}
                 skills={visited}
                 onSelectSkill={onSelectSkill}
               />
             ) : null}
             <StudioLandingSection
-              title="Recently updated"
+              title={uiT("ui:messages.m_474b2a869ac1477d")}
               skills={updated}
               onSelectSkill={onSelectSkill}
             />
@@ -897,8 +889,7 @@ function StudioLandingRow({
           <span className="truncate text-xs text-muted-foreground">{skill.tagline}</span>
         ) : null}
       </span>
-      <span className="shrink-0 text-xs text-muted-foreground">
-        updated {relativeTime(skill.updatedAt)}
+      <span className="shrink-0 text-xs text-muted-foreground">{uiT("ui:messages.m_53961930ab4482d8")}{relativeTime(skill.updatedAt)}
       </span>
       {editor ? (
         <Tooltip>
@@ -1158,10 +1149,10 @@ function StudioHeader({
   const copyShareLink = useCallback(() => {
     const href = typeof window !== "undefined" ? window.location.href : "";
     void copyTextToClipboard(href)
-      .then(() => toast?.pushToast({ tone: "success", title: "Link copied", body: "Skill Studio link copied to clipboard." }))
+      .then(() => toast?.pushToast({ tone: "success", title: uiT("ui:messages.m_d12860c21e78baa5"), body: "Skill Studio link copied to clipboard." }))
       .catch((error) => toast?.pushToast({
         tone: "error",
-        title: "Copy failed",
+        title: uiT("ui:messages.m_5b50e7a693fee952"),
         body: error instanceof Error ? error.message : "Could not copy the link.",
       }));
   }, [toast]);
@@ -1181,7 +1172,7 @@ function StudioHeader({
         <Badge variant="secondary">Unsaved edits</Badge>
       ) : null}
       {!skill.editable ? (
-        <Badge variant="secondary">Read-only</Badge>
+        <Badge variant="secondary">{uiT("ui:messages.m_72bb90897ab1eadc")}</Badge>
       ) : null}
       {skill.forkedFromSkillId ? (
         <SkillLineageChip
@@ -1192,12 +1183,10 @@ function StudioHeader({
       <AgentsUsingSkillBadge companyId={companyId} skill={skill} />
       <div className="ml-auto flex items-center gap-1">
         <Button variant="ghost" size="sm" onClick={onOpenVersions}>
-          <History className="mr-1.5 h-3.5 w-3.5" />
-          Version history
-        </Button>
+          <History className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_a6df11e706c514f1")}</Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label="Studio menu">
+            <Button variant="ghost" size="icon-sm" aria-label={uiT("ui:messages.m_b7bc60e8f9c3844e")}>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -1246,10 +1235,10 @@ function SkillSwitcher({
       value={skill?.id ?? ""}
       groups={groups}
       loading={loading}
-      loadingMessage="Loading skills..."
+      loadingMessage={uiT("ui:messages.m_7cf5fa27969286cf")}
       placeholder={emptyLabel}
-      searchPlaceholder="Search skills..."
-      emptyMessage="No matching skills."
+      searchPlaceholder={uiT("ui:messages.m_65104bc415b31398")}
+      emptyMessage={uiT("ui:messages.m_18f3ee30c2ff2bf6")}
       onValueChange={(value) => {
         if (value !== skill?.id) onSelectSkill(value);
       }}
@@ -1347,7 +1336,7 @@ function SkillPane({
     if (
       dirty
       && typeof window !== "undefined"
-      && !window.confirm("Discard unsaved edits and switch files?")
+      && !window.confirm(uiT("ui:messages.m_8f639fa507ef75af"))
     ) {
       return;
     }
@@ -1504,17 +1493,14 @@ function SkillPane({
             <div className="min-w-0 flex-1">
               <p>
                 {skill.metadata?.skillSourceId ? "This skill is synced from GitHub and is read-only." : skill.editableReason ?? "This skill is read-only because it comes from an external source."}
-                {" "}Make an editable copy to change it — the original stays untouched.
-              </p>
+                {" "}{uiT("ui:messages.m_12741dd950f49823")}</p>
               <Button
                 type="button"
                 size="sm"
                 className="mt-2"
                 onClick={onEditACopy}
               >
-                <GitFork className="mr-1.5 h-3.5 w-3.5" />
-                Make a copy
-              </Button>
+                <GitFork className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_e61974e66c687ec1")}</Button>
             </div>
           </div>
         )}
@@ -1525,7 +1511,7 @@ function SkillPane({
           </span>
           <div className="flex items-center gap-2">
             {readOnly ? (
-              <Badge variant="secondary">Read-only</Badge>
+              <Badge variant="secondary">{uiT("ui:messages.m_72bb90897ab1eadc")}</Badge>
             ) : (
               <>
                 {dirty && <Badge variant="secondary">Unsaved</Badge>}
@@ -1534,7 +1520,7 @@ function SkillPane({
                   disabled={!dirty || saveMutation.isPending}
                   onClick={() => saveMutation.mutate()}
                 >
-                  {saveMutation.isPending ? "Saving…" : "Save"}
+                  {saveMutation.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_1509f561f2416598")}
                 </Button>
               </>
             )}
@@ -1639,7 +1625,7 @@ function folderSeedFile(folderPath: string) {
 }
 
 function folderSeedContent(folderPath: string) {
-  const label = folderPath.split("/").filter(Boolean).at(-1) ?? "Folder";
+  const label = folderPath.split("/").filter(Boolean).at(-1) ?? uiT("ui:messages.m_74ccd43303847f26");
   return `# ${label}\n`;
 }
 
@@ -1680,22 +1666,22 @@ function SkillFileActions({
       <Tooltip>
         <TooltipTrigger asChild>
           <span>
-            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onAddFile} aria-label="Add file">
+            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onAddFile} aria-label={uiT("ui:messages.m_2c83c00f0e83b39c")}>
               <FilePlus className="h-4 w-4" />
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>Add file</TooltipContent>
+        <TooltipContent>{uiT("ui:messages.m_2c83c00f0e83b39c")}</TooltipContent>
       </Tooltip>
       <Tooltip>
         <TooltipTrigger asChild>
           <span>
-            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onAddFolder} aria-label="Add folder">
+            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onAddFolder} aria-label={uiT("ui:messages.m_5bbfc5a69b25b49c")}>
               <FolderPlus className="h-4 w-4" />
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>Add folder</TooltipContent>
+        <TooltipContent>{uiT("ui:messages.m_5bbfc5a69b25b49c")}</TooltipContent>
       </Tooltip>
       <Tooltip>
         <TooltipTrigger asChild>
@@ -1705,27 +1691,27 @@ function SkillFileActions({
               size="icon-sm"
               disabled={deleteDisabled}
               onClick={() => {
-                if (typeof window === "undefined" || window.confirm(`Delete ${selectedFile}?`)) {
+                if (typeof window === "undefined" || window.confirm(uiT("ui:messages.m_a19801bb38d73ed2", { v0: (selectedFile) }))) {
                   onDeleteFile();
                 }
               }}
-              aria-label="Delete file"
+              aria-label={uiT("ui:messages.m_28e18dc9db382d81")}
             >
               <Trash2 className="h-4 w-4" />
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>{canDeleteFile ? "Delete file" : "SKILL.md cannot be deleted"}</TooltipContent>
+        <TooltipContent>{canDeleteFile ? uiT("ui:messages.m_28e18dc9db382d81") : "SKILL.md cannot be deleted"}</TooltipContent>
       </Tooltip>
       <Tooltip>
         <TooltipTrigger asChild>
           <span>
-            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onDeleteFolder} aria-label="Delete folder">
+            <Button variant="ghost" size="icon-sm" disabled={disabled} onClick={onDeleteFolder} aria-label={uiT("ui:messages.m_39f35f2d44d61152")}>
               <FolderMinus className="h-4 w-4" />
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>Delete folder</TooltipContent>
+        <TooltipContent>{uiT("ui:messages.m_39f35f2d44d61152")}</TooltipContent>
       </Tooltip>
     </div>
   );
@@ -1759,19 +1745,19 @@ function SkillPathDialog({
     setError(null);
   }, [currentFolder, mode, open]);
 
-  const title = mode === "folder" ? "Add folder" : "Add file";
-  const label = mode === "folder" ? "Folder path" : "File path";
+  const title = mode === "folder" ? uiT("ui:messages.m_5bbfc5a69b25b49c") : uiT("ui:messages.m_2c83c00f0e83b39c");
+  const label = mode === "folder" ? uiT("ui:messages.m_98bca2fab915abe0") : uiT("ui:messages.m_2fb6d38632ea2c06");
 
   function submit() {
     if (!mode) return;
     const normalized = normalizeStudioPath(pathValue);
     if (!normalized) {
-      setError(`${label} is required.`);
+      setError(uiT("ui:messages.m_22ce83a7342f3fd9", { v0: (label) }));
       return;
     }
     if (mode === "file") {
       if (existingPaths.has(normalized)) {
-        setError("A file already exists at that path.");
+        setError(uiT("ui:messages.m_036ff1df1f6187ce"));
         return;
       }
       onSubmit(normalized, "");
@@ -1780,7 +1766,7 @@ function SkillPathDialog({
 
     const folderPath = normalized.replace(/\/+$/, "");
     if ([...existingPaths].some((path) => path.startsWith(`${folderPath}/`))) {
-      setError("A folder already exists at that path.");
+      setError(uiT("ui:messages.m_df1b81d8ee950e1e"));
       return;
     }
     onSubmit(folderSeedFile(folderPath), folderSeedContent(folderPath));
@@ -1804,20 +1790,16 @@ function SkillPathDialog({
               setPathValue(event.target.value);
               setError(null);
             }}
-            placeholder={mode === "folder" ? "references/examples" : "references/examples.md"}
+            placeholder={mode === "folder" ? uiT("ui:messages.m_b6247462a3893513") : uiT("ui:messages.m_ef82de067f639b47")}
           />
           {mode === "folder" ? (
-            <p className="text-xs text-muted-foreground">A README.md seed file is created so the folder appears in the file tree.</p>
+            <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_07f10711eadb62e3")}</p>
           ) : null}
           {error ? <p className="text-xs text-destructive">{error}</p> : null}
         </div>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button disabled={pending} onClick={submit}>
-            Create
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+          <Button disabled={pending} onClick={submit}>{uiT("ui:messages.m_4759498ac2a719c6")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -1851,12 +1833,12 @@ function DeleteFolderDialog({
   function submit() {
     const normalized = normalizeStudioPath(pathValue).replace(/\/+$/, "");
     if (!normalized) {
-      setError("Folder path is required.");
+      setError(uiT("ui:messages.m_91bac2fff87c1d86"));
       return;
     }
     const matchingFiles = [...existingPaths].filter((path) => path.startsWith(`${normalized}/`));
     if (matchingFiles.length === 0) {
-      setError("No files exist under that folder.");
+      setError(uiT("ui:messages.m_358bb187bc3a82f8"));
       return;
     }
     if (matchingFiles.includes("SKILL.md")) {
@@ -1870,13 +1852,13 @@ function DeleteFolderDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete folder</DialogTitle>
+          <DialogTitle>{uiT("ui:messages.m_39f35f2d44d61152")}</DialogTitle>
           <DialogDescription>
             This removes every skill file under the folder and saves the result as the next version.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-2">
-          <Label htmlFor="skill-folder-delete">Folder path</Label>
+          <Label htmlFor="skill-folder-delete">{uiT("ui:messages.m_98bca2fab915abe0")}</Label>
           <Input
             id="skill-folder-delete"
             value={pathValue}
@@ -1884,17 +1866,13 @@ function DeleteFolderDialog({
               setPathValue(event.target.value);
               setError(null);
             }}
-            placeholder="references/examples"
+            placeholder={uiT("ui:messages.m_b6247462a3893513")}
           />
           {error ? <p className="text-xs text-destructive">{error}</p> : null}
         </div>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button variant="destructive" disabled={pending} onClick={submit}>
-            Delete
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+          <Button variant="destructive" disabled={pending} onClick={submit}>{uiT("ui:messages.m_e2d0a54968ead24e")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -1982,7 +1960,7 @@ function InputPane({
     if (!dirty) return true;
     return (
       typeof window === "undefined"
-      || window.confirm("Discard unsaved changes to this input?")
+      || window.confirm(uiT("ui:messages.m_f3dcc461481fa4fa"))
     );
   }, [dirty]);
 
@@ -2039,7 +2017,7 @@ function InputPane({
                 type="button"
                 variant="ghost"
                 size="icon-xs"
-                aria-label={collapsed ? "Expand input" : "Collapse input"}
+                aria-label={collapsed ? uiT("ui:messages.m_8999b91a9b7602e9") : uiT("ui:messages.m_55720f6ca31fc250")}
                 onClick={() => setCollapsed((current) => !current)}
               >
                 {collapsed ? (
@@ -2049,20 +2027,20 @@ function InputPane({
                 )}
               </Button>
             </TooltipTrigger>
-            <TooltipContent>{collapsed ? "Expand input" : "Collapse input"}</TooltipContent>
+            <TooltipContent>{collapsed ? uiT("ui:messages.m_8999b91a9b7602e9") : uiT("ui:messages.m_55720f6ca31fc250")}</TooltipContent>
           </Tooltip>
-          <span>Input</span>
+          <span>{uiT("ui:messages.m_36ecb4f8669133ce")}</span>
         </span>
       }
       action={
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon-sm" onClick={selectAdHocInput} aria-label="New input">
+              <Button variant="ghost" size="icon-sm" onClick={selectAdHocInput} aria-label={uiT("ui:messages.m_6ab4b7742a1a3561")}>
                 <Plus className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>New input</TooltipContent>
+            <TooltipContent>{uiT("ui:messages.m_6ab4b7742a1a3561")}</TooltipContent>
           </Tooltip>
         </div>
       }
@@ -2074,14 +2052,14 @@ function InputPane({
           onClick={() => setCollapsed(false)}
         >
           <ChevronRight className="h-3.5 w-3.5" />
-          <span>Input folded</span>
+          <span>{uiT("ui:messages.m_32c15719fd6c491f")}</span>
         </button>
       ) : (
         <div className="flex min-h-0 flex-1 flex-col">
           {loading || inputs.length > 0 ? (
             <div className="max-h-(--sz-11_75rem) overflow-auto border-b border-border p-1">
               {loading ? (
-                <div className="p-3 text-xs text-muted-foreground">Loading inputs…</div>
+                <div className="p-3 text-xs text-muted-foreground">{uiT("ui:messages.m_828e10622494186b")}</div>
               ) : (
                 <>
                   {adHocMode && (
@@ -2114,7 +2092,7 @@ function InputPane({
                           <DropdownMenuTrigger asChild>
                             <button
                               className="rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
-                              aria-label={`Input actions for ${node.name}`}
+                              aria-label={uiT("ui:messages.m_f369a85860a7a954", { v0: (node.name) })}
                               onClick={(e) => e.stopPropagation()}
                             >
                               <MoreHorizontal className="h-3.5 w-3.5" />
@@ -2150,15 +2128,15 @@ function InputPane({
             <textarea
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              placeholder="Paste text - treated as a new issue description."
-              aria-label="Skill test input"
+              placeholder={uiT("ui:messages.m_7be6c2fbad6fdd4c")}
+              aria-label={uiT("ui:messages.m_b36f6be0a6f9ed5c")}
               className="min-h-0 flex-1 resize-none border-0 bg-transparent px-3 py-3 text-sm leading-6 outline-none placeholder:text-muted-foreground focus-visible:ring-0"
             />
           </div>
           <div className="flex items-center gap-2 border-t border-border px-3 py-2">
             <div className="mr-auto flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
               <span className="truncate">
-                {selectedInput ? selectedInput.name : adHocMode ? "New input" : "No input selected"}
+                {selectedInput ? selectedInput.name : adHocMode ? uiT("ui:messages.m_6ab4b7742a1a3561") : uiT("ui:messages.m_60e878f72164d458")}
               </span>
               {dirty ? <Badge variant="secondary">Unsaved</Badge> : null}
             </div>
@@ -2182,7 +2160,7 @@ function InputPane({
                   disabled={!canSaveSelectedInput || updateMutation.isPending}
                   onClick={() => updateMutation.mutate({ content: draft })}
                 >
-                  {updateMutation.isPending ? "Saving..." : "Save changes"}
+                  {updateMutation.isPending ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}
                 </Button>
               </>
             ) : null}
@@ -2267,17 +2245,17 @@ function SaveInputDialog({
         </DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label htmlFor="input-name">Name</Label>
+            <Label htmlFor="input-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
             <Input
               id="input-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="onboarding/happy-path"
+              placeholder={uiT("ui:messages.m_252f373d4465c3c2")}
             />
             <p className="text-xs text-muted-foreground">Use “/” for folders, e.g. onboarding/happy-path</p>
           </div>
           <div className="space-y-1">
-            <Label htmlFor="input-content">Content</Label>
+            <Label htmlFor="input-content">{uiT("ui:messages.m_47bd29075f8b8019")}</Label>
             <Textarea
               id="input-content"
               value={content}
@@ -2287,15 +2265,11 @@ function SaveInputDialog({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             disabled={!name.trim() || !content.trim() || createMutation.isPending}
             onClick={() => createMutation.mutate()}
-          >
-            Save
-          </Button>
+          >{uiT("ui:messages.m_1509f561f2416598")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -2431,7 +2405,7 @@ function RunsPane({
       });
       toast?.pushToast({
         tone: "success",
-        title: "Template saved",
+        title: uiT("ui:messages.m_1b34f8ff69d42e9b"),
         body: `${template.name} is ready for Skills Studio runs.`,
       });
     },
@@ -2451,7 +2425,7 @@ function RunsPane({
       });
       toast?.pushToast({
         tone: "success",
-        title: "Template updated",
+        title: uiT("ui:messages.m_cc9213d2617d81c9"),
         body: `${template.name} is ready for Skills Studio runs.`,
       });
     },
@@ -2470,7 +2444,7 @@ function RunsPane({
       });
       toast?.pushToast({
         tone: "success",
-        title: "Template deleted",
+        title: uiT("ui:messages.m_8fa9d4a8b8272f35"),
         body: `${template.name} was removed from Skills Studio runs.`,
       });
     },
@@ -2526,7 +2500,7 @@ function RunsPane({
 
   return (
     <PaneScaffold
-      title="Test runs"
+      title={uiT("ui:messages.m_70b86f32d7b06f92")}
       action={
         <div className="flex items-center gap-2">
           <AgentPicker
@@ -2569,7 +2543,7 @@ function RunsPane({
           onDeleteTemplate={(template) => {
             if (
               typeof window !== "undefined"
-              && !window.confirm(`Delete run template "${template.name}"?`)
+              && !window.confirm(uiT("ui:messages.m_dad148aae3e0ea51", { v0: (template.name) }))
             ) {
               return;
             }
@@ -2585,7 +2559,7 @@ function RunsPane({
         {filterInput && (
           <div className="px-3 pt-2">
             <FilterBar
-              filters={[{ key: "input", label: "Input", value: filterInput.name }]}
+              filters={[{ key: "input", label: uiT("ui:messages.m_36ecb4f8669133ce"), value: filterInput.name }]}
               onRemove={onClearFilter}
               onClear={onClearFilter}
             />
@@ -2593,7 +2567,7 @@ function RunsPane({
         )}
         <div className="min-h-0 flex-1 overflow-auto p-3">
           {runsQuery.isLoading ? (
-            <div className="text-xs text-muted-foreground">Loading runs…</div>
+            <div className="text-xs text-muted-foreground">{uiT("ui:messages.m_8438ea394d1520d9")}</div>
           ) : runs.length === 0 ? (
             <EmptyState icon={FlaskConical} message="No test runs yet. Pick an agent and Run." />
           ) : (
@@ -2678,8 +2652,8 @@ function RunTemplateAdvancedPanel({
     const noTemplateOption: RunTemplateOption = {
       key: "no-template",
       value: NO_TEST_RUN_TEMPLATE_STORAGE_VALUE,
-      label: "No template",
-      title: "No template",
+      label: uiT("ui:messages.m_46b57ee92f038c97"),
+      title: uiT("ui:messages.m_46b57ee92f038c97"),
       description: "Run only the input text.",
       builtIn: true,
       searchText: "no template plain input",
@@ -2696,8 +2670,8 @@ function RunTemplateAdvancedPanel({
     const builtIn = templates.filter((template) => template.builtIn).map(toOption);
     const custom = templates.filter((template) => !template.builtIn).map(toOption);
     return [
-      { id: "built-in", label: "Built in", options: [noTemplateOption, ...builtIn] },
-      ...(custom.length > 0 ? [{ id: "custom", label: "Custom", options: custom }] : []),
+      { id: "built-in", label: uiT("ui:messages.m_78a6a8fe9be5ec07"), options: [noTemplateOption, ...builtIn] },
+      ...(custom.length > 0 ? [{ id: "custom", label: uiT("ui:messages.m_494ca78f7374e46f"), options: custom }] : []),
     ];
   }, [templates]);
 
@@ -2719,23 +2693,23 @@ function RunTemplateAdvancedPanel({
         ) : (
           <ChevronRight className="h-3.5 w-3.5" />
         )}
-        <span className="font-semibold uppercase tracking-wide">Advanced</span>
+        <span className="font-semibold uppercase tracking-wide">{uiT("ui:messages.m_9f088dbebd6c3c70")}</span>
         <span className="ml-auto truncate">{selectedTemplateName}</span>
       </button>
       {open ? (
         <div className="space-y-3 px-3 pb-3 pt-1">
           <div className="flex items-end gap-2">
             <div className="min-w-0 flex-1 space-y-1">
-              <Label>Run template</Label>
+              <Label>{uiT("ui:messages.m_b940a3fbe1da598b")}</Label>
               <SearchableSelect<string, RunTemplateOption>
                 value={selectedValue}
                 groups={templateGroups}
                 loading={templatesLoading}
                 disabled={templatesLoading || templatesError}
-                loadingMessage="Loading templates..."
-                placeholder="Select template"
-                searchPlaceholder="Search templates..."
-                emptyMessage="No templates."
+                loadingMessage={uiT("ui:messages.m_8b31692427def1ca")}
+                placeholder={uiT("ui:messages.m_8e56330b72291e92")}
+                searchPlaceholder={uiT("ui:messages.m_79760c54dcedf91c")}
+                emptyMessage={uiT("ui:messages.m_1c9dddadddb3b9fd")}
                 contentClassName="w-(--sz-320px)"
                 onValueChange={(value) => onSelectTemplate(runTemplateSelectionFromOption(value))}
                 renderValue={(option) => option?.label ?? selectedTemplateName}
@@ -2743,7 +2717,7 @@ function RunTemplateAdvancedPanel({
                   <span className="flex min-w-0 flex-col">
                     <span className={cn("truncate", selected && "font-medium")}>{option.label}</span>
                     <span className="truncate text-(length:--text-micro) text-muted-foreground">
-                      {option.description ?? (option.builtIn ? "Built in" : "Custom")}
+                      {option.description ?? (option.builtIn ? uiT("ui:messages.m_78a6a8fe9be5ec07") : uiT("ui:messages.m_494ca78f7374e46f"))}
                     </span>
                   </span>
                 )}
@@ -2755,14 +2729,14 @@ function RunTemplateAdvancedPanel({
                   type="button"
                   variant="outline"
                   size="icon-sm"
-                  aria-label="Create run template"
+                  aria-label={uiT("ui:messages.m_1306b1ea628075b9")}
                   disabled={actionPending}
                   onClick={onCreateTemplate}
                 >
                   <Plus />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Create run template</TooltipContent>
+              <TooltipContent>{uiT("ui:messages.m_1306b1ea628075b9")}</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -2771,7 +2745,7 @@ function RunTemplateAdvancedPanel({
                     type="button"
                     variant="ghost"
                     size="icon-sm"
-                    aria-label="Edit run template"
+                    aria-label={uiT("ui:messages.m_2842f471425cfe04")}
                     disabled={!canEdit || actionPending}
                     onClick={() => selectedTemplate && onEditTemplate(selectedTemplate)}
                   >
@@ -2779,7 +2753,7 @@ function RunTemplateAdvancedPanel({
                   </Button>
                 </span>
               </TooltipTrigger>
-              <TooltipContent>Edit custom template</TooltipContent>
+              <TooltipContent>{uiT("ui:messages.m_72b92d094d8b176f")}</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -2788,7 +2762,7 @@ function RunTemplateAdvancedPanel({
                     type="button"
                     variant="ghost"
                     size="icon-sm"
-                    aria-label="Duplicate run template"
+                    aria-label={uiT("ui:messages.m_d75ef08f8c129a78")}
                     disabled={!canDuplicate || actionPending}
                     onClick={() => selectedTemplate && onDuplicateTemplate(selectedTemplate)}
                   >
@@ -2797,7 +2771,7 @@ function RunTemplateAdvancedPanel({
                 </span>
               </TooltipTrigger>
               <TooltipContent>
-                {selectedTemplate?.builtIn ? "Duplicate built-in template" : "Duplicate template"}
+                {selectedTemplate?.builtIn ? uiT("ui:messages.m_4b61c8e828540db5") : uiT("ui:messages.m_b876040a89849eb5")}
               </TooltipContent>
             </Tooltip>
             <Tooltip>
@@ -2807,7 +2781,7 @@ function RunTemplateAdvancedPanel({
                     type="button"
                     variant="ghost"
                     size="icon-sm"
-                    aria-label="Delete run template"
+                    aria-label={uiT("ui:messages.m_de584e7040923133")}
                     className="text-destructive hover:text-destructive"
                     disabled={!canDelete || actionPending || deletingTemplateId === selectedTemplate?.id}
                     onClick={() => selectedTemplate && onDeleteTemplate(selectedTemplate)}
@@ -2816,7 +2790,7 @@ function RunTemplateAdvancedPanel({
                   </Button>
                 </span>
               </TooltipTrigger>
-              <TooltipContent>Delete custom template</TooltipContent>
+              <TooltipContent>{uiT("ui:messages.m_08edc0924dda0d99")}</TooltipContent>
             </Tooltip>
           </div>
 
@@ -2836,7 +2810,7 @@ function RunTemplateAdvancedPanel({
               </pre>
             </div>
           ) : (
-            <p className="text-xs text-muted-foreground">Loading template...</p>
+            <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_f687834dd2b9e00a")}</p>
           )}
         </div>
       ) : null}
@@ -2868,10 +2842,10 @@ function RunTemplateDialog({
   }, [source, state]);
 
   const title = state?.mode === "edit"
-    ? "Edit run template"
+    ? uiT("ui:messages.m_2842f471425cfe04")
     : source?.builtIn
-      ? "Duplicate built-in template"
-      : "Create run template";
+      ? uiT("ui:messages.m_4b61c8e828540db5")
+      : uiT("ui:messages.m_1306b1ea628075b9");
   const descriptionText = state?.mode === "edit"
     ? "Update the custom run instructions used by Skills Studio."
     : "Save reusable run instructions for Skills Studio.";
@@ -2885,25 +2859,25 @@ function RunTemplateDialog({
         </DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label htmlFor="run-template-name">Name</Label>
+            <Label htmlFor="run-template-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
             <Input
               id="run-template-name"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="Focused smoke"
+              placeholder={uiT("ui:messages.m_791d5c0fcd15c6ee")}
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="run-template-description">Description</Label>
+            <Label htmlFor="run-template-description">{uiT("ui:messages.m_526e0087cc3f254d")}</Label>
             <Input
               id="run-template-description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              placeholder="Short instructions for common skill checks"
+              placeholder={uiT("ui:messages.m_d03d6192cf93d6e5")}
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="run-template-body">Body</Label>
+            <Label htmlFor="run-template-body">{uiT("ui:messages.m_6ccaa6415b5ee449")}</Label>
             <Textarea
               id="run-template-body"
               value={body}
@@ -2916,9 +2890,7 @@ function RunTemplateDialog({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             disabled={!name.trim() || !body.trim() || pending}
             onClick={() =>
@@ -2929,7 +2901,7 @@ function RunTemplateDialog({
               })
             }
           >
-            {pending ? "Saving..." : "Save template"}
+            {pending ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_47f72a2f3e91d32d")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -2990,9 +2962,9 @@ function AgentPicker({
       </PopoverTrigger>
       <PopoverContent align="end" className="w-64 p-0">
         <Command>
-          <CommandInput placeholder="Search agents…" />
+          <CommandInput placeholder={uiT("ui:messages.m_e05cb78e973da372")} />
           <CommandList>
-            <CommandEmpty>No agents.</CommandEmpty>
+            <CommandEmpty>{uiT("ui:messages.m_04e3179bbc03e72c")}</CommandEmpty>
             <CommandGroup>
               {agents.map((agent) => {
                 const selectable = isAgentSelectable(agent);
@@ -3017,9 +2989,7 @@ function AgentPicker({
                     />
                     <AgentIdentity agent={agent} size="xs" />
                     {!selectable && (
-                      <Badge variant="secondary" className="ml-auto">
-                        Paused
-                      </Badge>
+                      <Badge variant="secondary" className="ml-auto">{uiT("ui:messages.m_e159b06187d369a0")}</Badge>
                     )}
                   </CommandItem>
                 );
@@ -3116,14 +3086,14 @@ function RunDetailView({
 
   if (detailQuery.isLoading) {
     return (
-      <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
-        <div className="p-3 text-xs text-muted-foreground">Loading run…</div>
+      <PaneScaffold title={uiT("ui:messages.m_00d60e31a4e6b834")} action={<BackButton onBack={onBack} />}>
+        <div className="p-3 text-xs text-muted-foreground">{uiT("ui:messages.m_ad8b3027693b8553")}</div>
       </PaneScaffold>
     );
   }
   if (!detail) {
     return (
-      <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
+      <PaneScaffold title={uiT("ui:messages.m_00d60e31a4e6b834")} action={<BackButton onBack={onBack} />}>
         <div className="p-3 text-xs text-muted-foreground">Run not found.</div>
       </PaneScaffold>
     );
@@ -3138,7 +3108,7 @@ function RunDetailView({
   const taskLink = testTaskLinkState(detail);
 
   return (
-    <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
+    <PaneScaffold title={uiT("ui:messages.m_00d60e31a4e6b834")} action={<BackButton onBack={onBack} />}>
       <div className="min-h-0 flex-1 space-y-3 overflow-auto p-3">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={runBadgeStatus(detail.status)} />
@@ -3154,17 +3124,17 @@ function RunDetailView({
 
         {/* snapshot property block */}
         <div className="rounded-md border border-border text-xs">
-          <PropRow label="Input" value={detail.inputId ? "saved input" : "ad-hoc paste"} />
-          <PropRow label="Template" value={detail.templateName ?? "No template"} />
-          <PropRow label="Skill version" value={`v${detail.skillVersion.revisionNumber}`} />
-          <PropRow label="Created" value={relativeTime(detail.createdAt)} />
+          <PropRow label={uiT("ui:messages.m_36ecb4f8669133ce")} value={detail.inputId ? "saved input" : "ad-hoc paste"} />
+          <PropRow label={uiT("ui:messages.m_0575f29df888a27e")} value={detail.templateName ?? "No template"} />
+          <PropRow label={uiT("ui:messages.m_4ba072982170dfa7")} value={`v${detail.skillVersion.revisionNumber}`} />
+          <PropRow label={uiT("ui:messages.m_d70b9e24bca26b40")} value={relativeTime(detail.createdAt)} />
         </div>
 
         {showRunErrorCard(detail.status) && (
           <Card className="border-destructive/50">
             <CardHeader className="flex-row items-center gap-2 space-y-0 pb-2">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
-              <span className="text-sm font-medium">Run failed</span>
+              <span className="text-sm font-medium">{uiT("ui:messages.m_97fddf2d43e8dfc8")}</span>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
               {detail.error ?? "The test task ended with an error."}
@@ -3179,7 +3149,7 @@ function RunDetailView({
               {outputMode === "draft" ? "Draft at failure" : "Output snapshot"}
             </h3>
             <div className="rounded-md border border-border p-3">
-              <MarkdownBody>{detail.outputBody || "_No output_"}</MarkdownBody>
+              <MarkdownBody>{detail.outputBody || uiT("ui:messages.m_f136184631ca6d83")}</MarkdownBody>
             </div>
           </section>
         ) : outputMode === "pending" ? (
@@ -3252,9 +3222,7 @@ function RunDetailView({
               size="sm"
               disabled={cancelMutation.isPending}
               onClick={() => cancelMutation.mutate()}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           ) : (
             <Button
               variant="ghost"
@@ -3314,7 +3282,7 @@ function RunDocumentsSection({ documents }: { documents: IssueDocument[] }) {
     <section className="space-y-2">
       <div className="flex items-center gap-2">
         <FileText className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
-        <h3 className="text-sm font-medium text-muted-foreground">Documents</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">{uiT("ui:messages.m_b4e929d8bcfe0418")}</h3>
         <span className="text-xs text-muted-foreground">{documents.length}</span>
       </div>
       <div className="space-y-2">
@@ -3386,9 +3354,7 @@ function InteractionSection({
 
   return (
     <section>
-      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        Interactions
-      </h3>
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{uiT("ui:messages.m_9089e4b79eb7fd01")}</h3>
       <div className="space-y-2">
         {detail.interactions.map((summary) => {
           const inline = routeInteraction(summary.kind) === "inline";
@@ -3490,11 +3456,11 @@ function VersionHistorySheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="left" className="w-full sm:max-w-(--sz-560px)">
         <SheetHeader>
-          <SheetTitle>Version history</SheetTitle>
+          <SheetTitle>{uiT("ui:messages.m_a6df11e706c514f1")}</SheetTitle>
         </SheetHeader>
         <div className="mt-3 space-y-2 overflow-auto">
           {versionsQuery.isLoading ? (
-            <div className="text-xs text-muted-foreground">Loading versions…</div>
+            <div className="text-xs text-muted-foreground">{uiT("ui:messages.m_9780e2c99c1b82b2")}</div>
           ) : versions.length === 0 ? (
             <EmptyState icon={History} message="No versions yet. Save changes to create the first." />
           ) : (
@@ -3503,7 +3469,7 @@ function VersionHistorySheet({
                 <EntityRow
                   key={v.id}
                   identifier={`v${v.revisionNumber}`}
-                  title={v.label ?? `Version ${v.revisionNumber}`}
+                  title={v.label ?? uiT("ui:messages.m_be51d2b646444afd", { v0: (v.revisionNumber) })}
                   subtitle={relativeTime(v.createdAt)}
                   selected={v.id === leftId || v.id === rightId}
                   onClick={() => {
@@ -3615,9 +3581,9 @@ function MobileTabs({
   return (
     <Tabs defaultValue="skill" className="flex flex-1 flex-col">
       <TabsList variant="line" className="px-3">
-        <TabsTrigger value="skill">Skill</TabsTrigger>
-        <TabsTrigger value="input">Input</TabsTrigger>
-        <TabsTrigger value="runs">Runs</TabsTrigger>
+        <TabsTrigger value="skill">{uiT("ui:messages.m_6df1bb18a59ab97d")}</TabsTrigger>
+        <TabsTrigger value="input">{uiT("ui:messages.m_36ecb4f8669133ce")}</TabsTrigger>
+        <TabsTrigger value="runs">{uiT("ui:messages.m_848f54e89660cea4")}</TabsTrigger>
       </TabsList>
       <TabsContent value="skill" className="min-h-0 flex-1">
         {skill}

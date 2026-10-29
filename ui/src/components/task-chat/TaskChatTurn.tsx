@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useStreamlinedTaskChatPresentation } from "./presentation-mode";
@@ -104,8 +105,8 @@ export function TaskChatTurn({
             {item.summary.durationLabel
               ? `${item.summary.failed ? "Stopped" : "Worked"} for ${item.summary.durationLabel}`
               : item.summary.failed
-                ? "Stopped"
-                : "Worked"}
+                ? uiT("ui:messages.m_1a4f630ac1b69fd0")
+                : uiT("ui:messages.m_e7f93aad5026eeaf")}
           </span> : null}
         </div> : null}
         {item.items.length > 0 ? (
@@ -206,11 +207,11 @@ export function TaskChatTurn({
         <SummaryIcon className="h-3.5 w-3.5 shrink-0" />
       ) : null}
       <span>
-        {item.historical ? "Activity" : item.standaloneHeader && item.summary.durationLabel
+        {item.historical ? uiT("ui:messages.m_38da1505ca837328") : item.standaloneHeader && item.summary.durationLabel
           ? `${item.summary.failed ? "Stopped" : "Worked"} for ${item.summary.durationLabel}`
           : item.summary.failed
-            ? "Stopped"
-            : "Worked"}
+            ? uiT("ui:messages.m_1a4f630ac1b69fd0")
+            : uiT("ui:messages.m_e7f93aad5026eeaf")}
       </span>
       {!item.standaloneHeader && turnSummaryMetrics(item.summary) ? (
         // Time/tools/tokens is demoted, not deleted (PAP-502): it stays in the

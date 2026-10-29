@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AppLogo } from "@/pages/apps/AppLogo";
 import { ConnectionChoiceList } from "@/features/connections/ConnectionChoiceList";
 import { Button } from "@/components/ui/button";
@@ -110,7 +111,7 @@ export function AiConnectionPicker({
             selectedId={value?.mode === "responsible_user" ? "responsible_user" : value?.connectionId}
             choices={[
               { id: "responsible_user", name: "Responsible user’s connection", description: <>
-                <span className="block">For you: {personalDefault?.name ?? "Not connected"}</span>
+                <span className="block">For you: {personalDefault?.name ?? uiT("ui:messages.m_0303e18246708180")}</span>
                 <span className="block">Other users’ tasks use their own {AI_PROVIDERS[requirement.provider].name} connection.</span>
               </> },
               ...compatible.filter((connection) => connection.ownership === "shared").map((connection) => ({

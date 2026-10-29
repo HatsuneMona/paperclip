@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import type { Agent } from "@paperclipai/shared";
 import { decisionsApi } from "@/api/decisions";
@@ -25,7 +26,7 @@ export function TaskDecisionRecord({ companyId, issueId, viewerId, agentMap }: {
   return <section id={anchor!} aria-label="Decision record" className="space-y-3 rounded-xl border border-border bg-card p-4">
     <h2 className="text-sm font-medium">Decision record</h2>
     {record.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading decision…</p> : record.isError ? (
-      <div role="alert" className="text-sm"><p>Could not load this decision.</p><Button size="sm" variant="ghost" onClick={() => void record.refetch()}>Retry</Button></div>
+      <div role="alert" className="text-sm"><p>Could not load this decision.</p><Button size="sm" variant="ghost" onClick={() => void record.refetch()}>{uiT("ui:messages.m_942087cc2d41e013")}</Button></div>
     ) : !matchesTask ? <p role="alert" className="text-sm text-muted-foreground">This decision is not available in this task.</p> : <>
       {decision.status !== "open" ? <dl className="space-y-2 text-sm">
         <div><dt className="text-muted-foreground">Recorded choice</dt><dd>{choice?.label ?? (decision.chosenOptionId === "dismissed" ? "Dismissed" : decision.status)}</dd></div>

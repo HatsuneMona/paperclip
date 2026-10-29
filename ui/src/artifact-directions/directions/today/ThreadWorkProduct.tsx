@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { TaskChatProtocolCard } from "@/components/task-chat/TaskChatProtocolCard";
 import { RichWorkProductCard } from "@/components/task-chat/RichWorkProductCard";
 import { workProductHref } from "@/lib/issue-artifacts";
@@ -20,7 +21,7 @@ export function ThreadWorkProduct({ artifact }: { artifact: LabArtifact }) {
           surface: "resource",
           resourceKind: "document",
           title: artifact.title,
-          subtitle: `Document · rev ${artifact.revision}`,
+          subtitle: uiT("ui:messages.m_7f9d0745c328aacb", { v0: (artifact.revision) }),
           href: documentHref(artifact),
         }}
       />

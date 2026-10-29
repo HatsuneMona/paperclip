@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { AdapterModel } from "../../api/agents";
 import type { Issue, Project } from "@paperclipai/shared";
 import { extractProviderIdWithFallback } from "../../lib/model-utils";
@@ -55,19 +56,19 @@ export function toDateTimeLocalValue(value: string | null | undefined) {
 
 export const ISSUE_THINKING_EFFORT_OPTIONS = {
   claude_local: [
-    { value: "", label: "Default" },
-    { value: "low", label: "Low" },
-    { value: "medium", label: "Medium" },
-    { value: "high", label: "High" },
+    { value: "", label: uiT("ui:messages.m_21b111cbfe6e8fca") },
+    { value: "low", label: uiT("ui:messages.m_f793de205ead5ac3") },
+    { value: "medium", label: uiT("ui:messages.m_8e588cd187741f1c") },
+    { value: "high", label: uiT("ui:messages.m_c4ebc6d4a5832cd9") },
   ],
   opencode_local: [
-    { value: "", label: "Default" },
-    { value: "minimal", label: "Minimal" },
-    { value: "low", label: "Low" },
-    { value: "medium", label: "Medium" },
-    { value: "high", label: "High" },
-    { value: "xhigh", label: "X-High" },
-    { value: "max", label: "Max" },
+    { value: "", label: uiT("ui:messages.m_21b111cbfe6e8fca") },
+    { value: "minimal", label: uiT("ui:messages.m_057b5de48d7b90f1") },
+    { value: "low", label: uiT("ui:messages.m_f793de205ead5ac3") },
+    { value: "medium", label: uiT("ui:messages.m_8e588cd187741f1c") },
+    { value: "high", label: uiT("ui:messages.m_c4ebc6d4a5832cd9") },
+    { value: "xhigh", label: uiT("ui:messages.m_393d3e4bf2eea43a") },
+    { value: "max", label: uiT("ui:messages.m_a1a5936d3b0f8a69") },
   ],
 } as const;
 

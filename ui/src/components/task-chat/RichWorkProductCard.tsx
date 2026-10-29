@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
 import { isTextAttachment } from "@/lib/issue-attachments";
 import { getAttachmentArtifactWorkProductMetadata } from "@paperclipai/shared";
@@ -300,18 +301,18 @@ export function RichWorkProductCard({ workProduct, href, variant = "card" }: Ric
           <button
             type="button"
             onClick={() => openText!(textMetadata!.attachmentId, textMetadata!.originalFilename ?? workProduct.title)}
-            aria-label={`Open in tab: ${workProduct.title}`}
+            aria-label={uiT("ui:messages.m_837748dd6f065274", { v0: (workProduct.title) })}
             className="inline-flex items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
           >
-            {compact ? null : <span className="hidden @sm:inline">Open in tab</span>}<FileText aria-hidden className="h-3 w-3" />
+            {compact ? null : <span className="hidden @sm:inline">{uiT("ui:messages.m_0e5d95967de31cb2")}</span>}<FileText aria-hidden className="h-3 w-3" />
           </button>
         ) : null}
         {mediaPath ? (
-          <button type="button" onClick={openGallery} aria-label={`${action}: ${workProduct.title}`} className="inline-flex items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring">
+          <button type="button" onClick={openGallery} aria-label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action), v1: (workProduct.title) })} className="inline-flex items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring">
             {compact ? null : <span className="hidden @sm:inline">{action}</span>}<Maximize2 aria-hidden className="h-3 w-3" />
           </button>
         ) : actionHref ? (
-          <a href={actionHref} aria-label={`${action}: ${workProduct.title}`} className={cn("inline-flex items-center gap-1 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", canOpenText ? "relative z-10" : "after:absolute after:inset-0 after:rounded-md focus-visible:after:ring-2 focus-visible:after:ring-ring")} target={actionHref.startsWith("http") ? "_blank" : undefined} rel={actionHref.startsWith("http") ? "noreferrer" : undefined}>
+          <a href={actionHref} aria-label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action), v1: (workProduct.title) })} className={cn("inline-flex items-center gap-1 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", canOpenText ? "relative z-10" : "after:absolute after:inset-0 after:rounded-md focus-visible:after:ring-2 focus-visible:after:ring-ring")} target={actionHref.startsWith("http") ? "_blank" : undefined} rel={actionHref.startsWith("http") ? "noreferrer" : undefined}>
             {compact ? null : <span className="hidden @sm:inline">{action}</span>}<ExternalLink aria-hidden className="h-3 w-3" />
           </a>
         ) : expandable ? (
@@ -322,7 +323,7 @@ export function RichWorkProductCard({ workProduct, href, variant = "card" }: Ric
             aria-expanded={detailsOpen}
             className="inline-flex cursor-pointer items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
           >
-            <span>{detailsOpen ? "Hide details" : "Show details"}</span>
+            <span>{detailsOpen ? uiT("ui:messages.m_c9722a7a962a8435") : "Show details"}</span>
             <ChevronDown aria-hidden className={cn("h-4 w-4", detailsOpen && "rotate-180")} />
           </button>
         ) : null}

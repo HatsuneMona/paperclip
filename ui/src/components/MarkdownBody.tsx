@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { MarkdownWordStreaming, rehypeStreamingWords } from "./MarkdownWordStreaming";
 import { isValidElement, memo, useContext, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -245,7 +246,7 @@ function MarkdownCaseLink({
       to={caseHref(identifier)}
       data-mention-kind="case"
       className={cn("paperclip-markdown-case-ref", "font-normal underline")}
-      aria-label={`Case ${identifier}`}
+      aria-label={uiT("ui:messages.m_e2a35e6f675f587b", { v0: (identifier) })}
     >
       {children}
     </Link>
@@ -290,7 +291,7 @@ function MarkdownExternalLink({
         category={reference.statusCategory}
         liveness={reference.liveness}
         statusIconKey={reference.statusIconKey}
-        label={`${displayKey}: ${statusLabel}`}
+        label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (displayKey), v1: (statusLabel) })}
         inline
       />
       {children}
@@ -724,7 +725,7 @@ function CodeBlock({
         <button
           type="button"
           onClick={handleCopy}
-          aria-label="Copy code"
+          aria-label={uiT("ui:messages.m_49a0053f3b0d5045")}
           title={copyLabel}
           className="paperclip-markdown-codeblock-action paperclip-markdown-codeblock-copy"
           style={codeBlockActionStyle}
@@ -881,7 +882,7 @@ function MarkdownBodyImpl({
       </blockquote>
     ),
     table: ({ node: _node, style: tableStyle, children: tableChildren, ...tableProps }) => (
-      <div className="paperclip-markdown-table-scroll" role="region" aria-label="Scrollable table" tabIndex={0}>
+      <div className="paperclip-markdown-table-scroll" role="region" aria-label={uiT("ui:messages.m_92d78d88918e2a9e")} tabIndex={0}>
         <table {...tableProps} style={tableStyle as React.CSSProperties | undefined}>
           {tableChildren}
         </table>
@@ -1033,7 +1034,7 @@ function MarkdownBodyImpl({
     if (mediaMode === "reference") {
       map.img = ({ src, alt, title }) => (
         <span data-markdown-image-reference title={title}>
-          Image: {alt || "Untitled image"}{src ? ` (${src})` : ""}
+          Image: {alt || "Untitled image"}{src ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (src) }) : ""}
         </span>
       );
     } else if (resolveImageSrc || onImageClick) {

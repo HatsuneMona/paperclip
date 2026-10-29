@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
@@ -85,7 +86,7 @@ export function CompanySettingsSidebar() {
   return (
     <ContextualSidebarFrame
       surface="settings"
-      title="Settings"
+      title={uiT("ui:messages.m_74a883a037bc227f")}
       showHeader={false}
       className={primarySidebarStyles.surface}
     >
@@ -98,16 +99,16 @@ export function CompanySettingsSidebar() {
         </div>
       </div>
       <nav
-        aria-label="Settings"
+        aria-label={uiT("ui:messages.m_74a883a037bc227f")}
         data-slot="contextual-sidebar-nav"
         className={primarySidebarStyles.nav}
       >
         <div data-slot="contextual-sidebar-group" className={primarySidebarStyles.group}>
-          <SidebarNavItem to="/company/settings" label="General" icon={SlidersHorizontal} end />
+          <SidebarNavItem to="/company/settings" label={uiT("ui:messages.m_c910d474dcd724bf")} icon={SlidersHorizontal} end />
           {showPage("instance.profile") && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/profile`}
-              label="Profile"
+              label={uiT("ui:messages.m_d696a35bdd1883da")}
               icon={UserRoundPen}
               end
             />
@@ -115,7 +116,7 @@ export function CompanySettingsSidebar() {
           {showPage("company.members") && (
             <SidebarNavItem
               to="/company/settings/members"
-              label="Members"
+              label={uiT("ui:messages.m_1044a4c056d0d685")}
               icon={Users}
               badge={badges?.joinRequests ?? 0}
               end
@@ -133,42 +134,42 @@ export function CompanySettingsSidebar() {
               />
             ))}
           {showPage("company.secrets") && (
-            <SidebarNavItem to="/company/settings/secrets" label="Secrets" icon={KeyRound} end />
+            <SidebarNavItem to="/company/settings/secrets" label={uiT("ui:messages.m_d8707d411d997657")} icon={KeyRound} end />
           )}
           {showPage("instance.environments") && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/environments`}
-              label="Environments"
+              label={uiT("ui:messages.m_07437cd651bed86e")}
               icon={MonitorCog}
               end
             />
           )}
-          <SidebarNavItem to="/company/settings/connections" label="Connections" icon={Link2} end />
+          <SidebarNavItem to="/company/settings/connections" label={uiT("ui:messages.m_dc273117482b4429")} icon={Link2} end />
           {showPage("instance.access") && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/access`}
-              label="Access"
+              label={uiT("ui:messages.m_ec5ba0abb717da87")}
               icon={Shield}
               end
             />
           )}
           {showPage("company.export") && (
-            <SidebarNavItem to="/company/export" label="Export" icon={Download} />
+            <SidebarNavItem to="/company/export" label={uiT("ui:messages.m_3664895579f0a7e6")} icon={Download} />
           )}
           {!isCloud && showPage("company.import") && (
-            <SidebarNavItem to="/company/import" label="Import" icon={Upload} end />
+            <SidebarNavItem to="/company/import" label={uiT("ui:messages.m_2cff9baabf56ca00")} icon={Upload} end />
           )}
           {showPage("instance.experimental") && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/experimental`}
-              label="Experimental"
+              label={uiT("ui:messages.m_3dc9f569422dcfda")}
               icon={FlaskConical}
             />
           )}
           {showPlugins && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/plugins`}
-              label="Plugins"
+              label={uiT("ui:messages.m_9514b7ff4860ead7")}
               icon={Puzzle}
             />
           )}
@@ -196,7 +197,7 @@ export function CompanySettingsSidebar() {
           {showPage("instance.adapters") && (
             <SidebarNavItem
               to={`${INSTANCE_SETTINGS_PATH_PREFIX}/adapters`}
-              label="Adapters"
+              label={uiT("ui:messages.m_d20547a8145f719f")}
               icon={Cpu}
             />
           )}

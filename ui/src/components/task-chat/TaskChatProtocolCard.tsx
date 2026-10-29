@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
@@ -235,7 +236,7 @@ function CardShell({
 function PlanSteps({ steps }: { steps: TaskChatProtocolStep[] }) {
   if (steps.length === 0) return null;
   return (
-    <ol className="flex flex-col gap-1.5" aria-label="Plan steps">
+    <ol className="flex flex-col gap-1.5" aria-label={uiT("ui:messages.m_3fa02f98189b8323")}>
       {steps.map((step) => (
         <li key={step.id} className="flex items-start gap-2 text-sm">
           <StatusIcon status={step.status} className="mt-0.5 shrink-0" />
@@ -275,7 +276,7 @@ function ProviderActivityCard({
     >
       {item.steps.length > 0 ? <PlanSteps steps={item.steps} /> : null}
       {item.children.length > 0 ? (
-        <ul className="flex flex-col gap-2" aria-label="Delegated agents">
+        <ul className="flex flex-col gap-2" aria-label={uiT("ui:messages.m_a3a4ad04fa0db247")}>
           {item.children.map((child) => (
             <li
               key={child.id}
@@ -308,7 +309,7 @@ function ProviderActivityCard({
         </ul>
       ) : null}
       {item.links.length > 0 ? (
-        <ul className="flex flex-col gap-2" aria-label="Research sources">
+        <ul className="flex flex-col gap-2" aria-label={uiT("ui:messages.m_6891cd2295ca833c")}>
           {item.links.map((link) => (
             <li key={link.href}>
               <a
@@ -406,7 +407,7 @@ function WorkspaceChangeCard({ item }: { item: TaskChatWorkspaceChangeItem }) {
     <>
       <CardShell
         icon={GitBranch}
-        title="Workspace changes"
+        title={uiT("ui:messages.m_1ac656d5ef1eac07")}
         status={item.complete ? "completed" : "running"}
         summary={summary}
         testId="task-chat-workspace-change"
@@ -474,7 +475,7 @@ function WorkspaceChangeCard({ item }: { item: TaskChatWorkspaceChangeItem }) {
           {item.files.length > 1 ? (
             <div
               className="flex max-w-full gap-1 overflow-x-auto pb-1"
-              aria-label="Changed files"
+              aria-label={uiT("ui:messages.m_5d4041aa7af3b4ad")}
             >
               {item.files.map((file) => (
                 <Button
@@ -547,9 +548,7 @@ function WorkspaceFileCard({ item }: { item: TaskChatWorkspaceFileItem }) {
             size="sm"
             variant="outline"
             onClick={() => setOpen(true)}
-          >
-            Preview
-          </Button>
+          >{uiT("ui:messages.m_324b134f57c70c72")}</Button>
         </div>
       </CardShell>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -673,7 +672,7 @@ function RuntimeQuestionReceipt({
       <div className="pb-3 pl-7 pr-1">
         <div className="mb-3">
           <p className="text-sm font-medium text-foreground">
-            {item.questionSet?.title ?? "Runtime input"}
+            {item.questionSet?.title ?? uiT("ui:messages.m_b73049f7628de94a")}
           </p>
           <p className="mt-1 text-sm text-muted-foreground">{item.prompt}</p>
         </div>
@@ -705,8 +704,8 @@ function RuntimeRequestCard({
   const title =
     item.questionSet?.title ??
     (item.requestType === "permission"
-      ? "Runtime permission"
-      : "Runtime input");
+      ? uiT("ui:messages.m_b2e85aec1fcf9d07")
+      : uiT("ui:messages.m_b73049f7628de94a"));
   const fields =
     item.fields.length > 0
       ? item.fields
@@ -855,9 +854,7 @@ function RuntimeRequestCard({
                 variant="outline"
                 disabled={!onDecision || submitting}
                 onClick={() => void submit({ action: "decline" })}
-              >
-                Deny
-              </Button>
+              >{uiT("ui:messages.m_05a2d7332eb9d8bf")}</Button>
             ) : null}
             {presentation === "timeline" ? (
               <Button
@@ -866,9 +863,7 @@ function RuntimeRequestCard({
                 variant="outline"
                 disabled={!onDecision || submitting}
                 onClick={() => void submit({ action: "cancel" })}
-              >
-                Cancel
-              </Button>
+              >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             ) : null}
           </div>
         </form>
@@ -948,7 +943,7 @@ function ResultCard({
   return (
     <CardShell
       icon={PackageCheck}
-      title="Run result"
+      title={uiT("ui:messages.m_916788b6b2b08f8c")}
       status={item.disposition}
       summary={item.summary}
       testId="task-chat-run-result"
@@ -966,7 +961,7 @@ function ResultCard({
           {item.verification.length > 0 ? (
             <ul
               className="flex flex-col gap-1"
-              aria-label="Verification results"
+              aria-label={uiT("ui:messages.m_14a01310ac6ab318")}
             >
               {item.verification.map((check, index) => (
                 <li
@@ -1027,7 +1022,7 @@ function TerminalCard({
   return (
     <CardShell
       icon={TerminalSquare}
-      title="Run ended"
+      title={uiT("ui:messages.m_65ad5d9043739bda")}
       status={item.runState}
       summary={[item.disposition.replaceAll("_", " "), item.stopReason]
         .filter(Boolean)

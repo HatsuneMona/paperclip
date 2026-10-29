@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { AlertTriangle, CircleHelp, ExternalLink, Loader2 } from "lucide-react";
 import type { ChatEndpoint } from "@/api/chatEndpoints";
@@ -23,7 +24,7 @@ export function GitHubConnectionRecoveryNotice({ endpoint }: { endpoint: ChatEnd
         </div>
         <Button asChild><Link to={`/apps/chat/connect?provider=github&resume=${endpoint.id}&reconnect=1`}>Reconnect GitHub</Link></Button>
         {(endpoint.lastError || endpoint.healthMessage) && <details className="text-sm">
-          <summary className="cursor-pointer text-muted-foreground">Connection details</summary>
+          <summary className="cursor-pointer text-muted-foreground">{uiT("ui:messages.m_51bfffbcdbcfbc00")}</summary>
           <p className="mt-2 break-words">{endpoint.lastError ?? endpoint.healthMessage}</p>
         </details>}
       </div>
@@ -38,7 +39,7 @@ export type GitHubAppCredentials = { appId: string; privateKey: string; webhookS
 function CredentialLabel({ id, label, help }: { id: string; label: string; help: string }) {
   return <div className="flex items-center gap-1.5">
     <Label htmlFor={id}>{label}</Label>
-    <Tooltip><TooltipTrigger asChild><button type="button" aria-label={`Help with ${label}`} className="rounded-sm text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">
+    <Tooltip><TooltipTrigger asChild><button type="button" aria-label={uiT("ui:messages.m_99385c23eda6dadb", { v0: (label) })} className="rounded-sm text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">
       <CircleHelp className="size-3.5" aria-hidden="true" />
     </button></TooltipTrigger><TooltipContent className="max-w-xs">{help}</TooltipContent></Tooltip>
   </div>;
@@ -131,7 +132,7 @@ export function GitHubAppRecovery({ endpoint, reconnect, credentialFields, requi
         finally { setPending(false); }
       }}>Check saved secret status</Button>}
       {rotationSecret && !rotationUncertain && <div className="space-y-2">
-        <Label htmlFor="github-rotation-secret">New webhook secret</Label>
+        <Label htmlFor="github-rotation-secret">{uiT("ui:messages.m_2c422ebf28420ddc")}</Label>
         <Input id="github-rotation-secret" type="password" autoComplete="off" disabled={pending} readOnly value={rotationSecret} />
         {!pending && <CopyText text={rotationSecret} ariaLabel="Copy webhook secret" className="text-sm underline">Copy webhook secret</CopyText>}
       </div>}
@@ -152,13 +153,13 @@ export function GitHubAppRecovery({ endpoint, reconnect, credentialFields, requi
         {credentialFields && <p className="text-muted-foreground">Enter the requested credentials below. Other saved credentials stay in place.</p>}
       </div>
       {needsPrivateKey && <div className="space-y-2">
-        <CredentialLabel id="github-app-id" label="App ID" help="The numeric App ID on the GitHub App’s settings page. This is different from its Client ID or installation ID." />
-        <p id="github-app-id-help" className="text-sm text-muted-foreground">Copy <strong>App ID</strong> from the App’s settings page. {reconnect && "The saved ID is filled in when available."}</p>
+        <CredentialLabel id="github-app-id" label={uiT("ui:messages.m_3c2f1e20ab373892")} help="The numeric App ID on the GitHub App’s settings page. This is different from its Client ID or installation ID." />
+        <p id="github-app-id-help" className="text-sm text-muted-foreground">Copy <strong>{uiT("ui:messages.m_3c2f1e20ab373892")}</strong> from the App’s settings page. {reconnect && "The saved ID is filled in when available."}</p>
         <Input id="github-app-id" aria-describedby="github-app-id-help" inputMode="numeric" value={credentials.appId} disabled={pending} aria-invalid={appIdInvalid} onChange={event => setCredentials({ ...credentials, appId: event.target.value })} />
         {appIdInvalid && <p role="alert" className="text-sm text-destructive">Use the numeric App ID, not the Client ID.</p>}
       </div>}
       {needsPrivateKey && <div className="space-y-2">
-        <CredentialLabel id="github-private-key" label="Private key" help="Upload the .pem file downloaded from this GitHub App, or paste its entire contents, including the BEGIN and END lines." />
+        <CredentialLabel id="github-private-key" label={uiT("ui:messages.m_477bf990a2b3a489")} help="Upload the .pem file downloaded from this GitHub App, or paste its entire contents, including the BEGIN and END lines." />
         <ol id="github-private-key-help" className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
           <li>In the same App’s settings, open <strong>Credentials → Key pairs → New key</strong>. On the older settings page, use <strong>Private keys → Generate a private key</strong>.</li>
           <li>Upload the downloaded <strong>.pem</strong> file below, or paste its entire contents.</li>
@@ -183,7 +184,7 @@ export function GitHubAppRecovery({ endpoint, reconnect, credentialFields, requi
         <a className="inline-flex items-center gap-1 text-sm underline" href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps" target="_blank" rel="noreferrer">GitHub’s private key instructions<ExternalLink className="size-3.5" /></a>
       </div>}
       {needsWebhookSecret && <div className="space-y-2">
-        <CredentialLabel id="github-webhook-secret" label="Webhook secret" help="The secret configured for this App’s webhook. It must match GitHub exactly." />
+        <CredentialLabel id="github-webhook-secret" label={uiT("ui:messages.m_342da97208cceb8a")} help="The secret configured for this App’s webhook. It must match GitHub exactly." />
         <p className="text-sm text-muted-foreground">Use the secret saved when you configured this App’s webhook. If you no longer have it, change the webhook secret in GitHub App settings and enter the same value here.</p>
         <Input id="github-webhook-secret" type="password" autoComplete="off" disabled={pending} value={credentials.webhookSecret} onChange={event => setCredentials({ ...credentials, webhookSecret: event.target.value })} />
       </div>}
@@ -195,7 +196,7 @@ export function GitHubAppRecovery({ endpoint, reconnect, credentialFields, requi
     <SetupWizardFooter onSaveExit={onExit} disabled={pending}>
       <Button aria-label={actionLabel} disabled={pending || incomplete || rotationUncertain || (rotateWebhookSecret && !rotationSecret && !rotationAlreadyCommitted)} onClick={() => void connect()}>
         {pending && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}
-        <span className="sm:hidden" aria-hidden="true">{pending ? "Checking…" : reconnect ? "Reconnect" : "Connect"}</span>
+        <span className="sm:hidden" aria-hidden="true">{pending ? uiT("ui:messages.m_ec963ffc911b8401") : reconnect ? uiT("ui:messages.m_bf8a9eab9e7e141b") : uiT("ui:messages.m_1a2303ede07493ac")}</span>
         <span className="hidden sm:inline" aria-hidden="true">{actionLabel}</span>
       </Button>
     </SetupWizardFooter>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ArrowUpDown, Check } from "lucide-react";
 import { COMPANY_SEARCH_SORTS, type CompanySearchSort } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ export function SearchSortMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel className="text-xs text-muted-foreground">Sort by</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-xs text-muted-foreground">{uiT("ui:messages.m_c9129025bd3ff652")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {COMPANY_SEARCH_SORTS.map((sort) => (
           <DropdownMenuItem key={sort} onSelect={() => onChange(sort)} className="gap-2 text-sm">

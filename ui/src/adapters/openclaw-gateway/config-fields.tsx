@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -144,7 +145,7 @@ export function OpenClawGatewayConfigFields({
 
   return configFieldsForSection(section, (
     <>
-      <Field label="Gateway URL" hint={help.webhookUrl}>
+      <Field label={uiT("ui:messages.m_3d06950825de7452")} hint={help.webhookUrl}>
         <DraftInput
           value={
             isCreate
@@ -158,7 +159,7 @@ export function OpenClawGatewayConfigFields({
           }
           immediate
           className={inputClass}
-          placeholder="ws://127.0.0.1:18789"
+          placeholder={uiT("ui:messages.m_0edbee82f0824a1e")}
         />
       </Field>
 
@@ -172,7 +173,7 @@ export function OpenClawGatewayConfigFields({
 
       {/* Auth and Identity - available in both create and edit modes */}
       <SecretField
-        label="Gateway auth token"
+        label={uiT("ui:messages.m_a31b5be38953f120")}
         value={
           isCreate
             ? values!.authToken ?? ""
@@ -186,7 +187,7 @@ export function OpenClawGatewayConfigFields({
         placeholder="OpenClaw gateway token"
       />
 
-      <Field label="Agent ID">
+      <Field label={uiT("ui:messages.m_510bce732db77286")}>
         <DraftInput
           value={
             isCreate
@@ -204,7 +205,7 @@ export function OpenClawGatewayConfigFields({
         />
       </Field>
 
-      <Field label="Session strategy">
+      <Field label={uiT("ui:messages.m_1747233af5908171")}>
         <select
           value={
             isCreate
@@ -225,7 +226,7 @@ export function OpenClawGatewayConfigFields({
       </Field>
 
       {(isCreate ? values!.sessionKeyStrategy ?? "fixed" : sessionStrategy) === "fixed" && (
-        <Field label="Session key">
+        <Field label={uiT("ui:messages.m_2319ec27475054a2")}>
           <DraftInput
             value={
               isCreate
@@ -239,7 +240,7 @@ export function OpenClawGatewayConfigFields({
             }
             immediate
             className={inputClass}
-            placeholder="paperclip"
+            placeholder={uiT("ui:messages.m_670d47ccb9a6cdef")}
           />
         </Field>
       )}
@@ -256,10 +257,10 @@ export function OpenClawGatewayConfigFields({
             ? set!({ password: v })
             : mark("adapterConfig", "password", v || undefined)
         }
-        placeholder="Gateway shared password"
+        placeholder={uiT("ui:messages.m_6a063dc23bfc8757")}
       />
 
-      <Field label="Role">
+      <Field label={uiT("ui:messages.m_14736a2eb9f4159f")}>
         <DraftInput
           value={
             isCreate
@@ -273,11 +274,11 @@ export function OpenClawGatewayConfigFields({
           }
           immediate
           className={inputClass}
-          placeholder="operator"
+          placeholder={uiT("ui:messages.m_06e55b633481f7bb")}
         />
       </Field>
 
-      <Field label="Scopes (comma-separated)">
+      <Field label={uiT("ui:messages.m_79d74bdb4faffb62")}>
         <DraftInput
           value={
             isCreate
@@ -297,7 +298,7 @@ export function OpenClawGatewayConfigFields({
           }}
           immediate
           className={inputClass}
-          placeholder="operator.admin"
+          placeholder={uiT("ui:messages.m_2cbaf865b61199b1")}
         />
       </Field>
 
@@ -327,7 +328,7 @@ export function OpenClawGatewayConfigFields({
         />
       </Field>
 
-      <Field configSection="runPolicy" label="Timeout (seconds)">
+      <Field configSection="runPolicy" label={uiT("ui:messages.m_1f966032d11151c8")}>
         <DraftInput
           value={
             isCreate
@@ -349,7 +350,7 @@ export function OpenClawGatewayConfigFields({
         />
       </Field>
 
-      <Field label="Headers JSON">
+      <Field label={uiT("ui:messages.m_2899a831dbe0b032")}>
         <HeadersJsonTextarea
           isCreate={isCreate}
           createDraft={isCreate ? values!.headersJson ?? "" : ""}
@@ -375,7 +376,7 @@ export function OpenClawGatewayConfigFields({
       </Field>
 
       {!isCreate && (
-        <Field label="Claimed API key path">
+        <Field label={uiT("ui:messages.m_be223b29f7982acb")}>
           <DraftInput
             value={eff("adapterConfig", "claimedApiKeyPath", String(config.claimedApiKeyPath ?? ""))}
             onCommit={(v) => mark("adapterConfig", "claimedApiKeyPath", v || undefined)}
@@ -386,7 +387,7 @@ export function OpenClawGatewayConfigFields({
         </Field>
       )}
 
-      <Field configSection="runPolicy" label="Wait timeout (ms)">
+      <Field configSection="runPolicy" label={uiT("ui:messages.m_9e6598176b0ed394")}>
         <DraftInput
           value={
             isCreate
@@ -410,7 +411,7 @@ export function OpenClawGatewayConfigFields({
         />
       </Field>
 
-      <Field label="Disable device auth">
+      <Field label={uiT("ui:messages.m_9ce197720896bf45")}>
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
@@ -429,7 +430,7 @@ export function OpenClawGatewayConfigFields({
         </label>
       </Field>
 
-      <Field label="Auto-pair on first connect">
+      <Field label={uiT("ui:messages.m_7d491d768fa4dc81")}>
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
@@ -448,7 +449,7 @@ export function OpenClawGatewayConfigFields({
         </label>
       </Field>
 
-      <Field label="Device auth">
+      <Field label={uiT("ui:messages.m_6fc25a19873431c0")}>
         <div className="text-xs text-muted-foreground leading-relaxed">
           When enabled, Paperclip persists a device key during onboarding so pairing approvals
           remain stable across runs.

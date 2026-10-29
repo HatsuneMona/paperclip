@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { CircleHelp, Lock } from "lucide-react";
 import type { IssueLockedStub } from "@paperclipai/shared";
 import { cn } from "../lib/utils";
@@ -32,7 +33,7 @@ export function LockedIssueChip({
   // Identifier is the only viewer-safe field on the stub. When the server
   // withheld even that, fall back to a neutral "Private" label so the chip
   // still reads as a locked reference rather than an empty box.
-  const label = identifier ?? (unavailable ? "Unavailable" : "Private");
+  const label = identifier ?? (unavailable ? "Unavailable" : uiT("ui:messages.m_c63eb6720c6e8849"));
   const Icon = unavailable ? CircleHelp : Lock;
   return (
     <span

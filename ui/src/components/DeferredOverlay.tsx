@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Component, Suspense, useState, type ReactNode } from "react";
 import { captureBrowserException } from "../lib/sentry";
 import { PaperclipLoading } from "./AnimatedPaperclipIcon";
@@ -18,7 +19,7 @@ function OverlayNotice({ title, onClose, failed = false }: Pick<DeferredOverlayP
       {failed
         ? <p className="text-sm text-muted-foreground">Close this window to keep working. Reload the page before trying again.</p>
         : <PaperclipLoading className="min-h-0" />}
-      <div className="flex justify-end"><Button variant="outline" onClick={onClose}>{failed ? "Close" : "Cancel"}</Button></div>
+      <div className="flex justify-end"><Button variant="outline" onClick={onClose}>{failed ? uiT("ui:messages.m_7d9eb7acb13e2462") : uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button></div>
     </DialogContent>
   </Dialog>;
 }

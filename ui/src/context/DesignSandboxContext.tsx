@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { FlyoutAppearanceProvider } from "@/components/ui/flyout";
@@ -33,7 +34,7 @@ export function DesignSandboxProvider({ children }: { children: ReactNode }) {
           const next = !selected;
           setSelected(next);
           try { localStorage.setItem(storageKey, next ? "on" : "off"); } catch { /* Session-only when storage is unavailable. */ }
-        }}>Design proposals: {enabled ? "On" : "Off"}</Button>
+        }}>Design proposals: {enabled ? uiT("ui:messages.m_130011756125313c") : uiT("ui:messages.m_ca7981b46ecf2c17")}</Button>
       </div> : null}
     </FlyoutAppearanceProvider>
   </DesignSandboxContext.Provider>;

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ExecutionProjection } from "@paperclipai/shared";
 import type {
   ReasoningMessagePart,
@@ -939,7 +940,7 @@ export function buildAssistantPartsFromTranscript(entries: readonly IssueChatTra
         family: entry.family ?? "provider_notice",
         eventType: entry.eventType ?? "provider.notice.recorded",
         status: entry.status ?? "informational",
-        title: entry.title ?? "Provider activity",
+        title: entry.title ?? uiT("ui:messages.m_2cb218eaaaf3aefc"),
         summary: entry.summary ?? "",
         payload: entry.payload ?? {},
       });

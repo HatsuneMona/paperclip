@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import type { BudgetIncident } from "@paperclipai/shared";
 import { AlertOctagon, AlertTriangle, ArrowUpRight, PauseCircle } from "lucide-react";
@@ -91,16 +92,14 @@ export function BudgetIncidentCard({
             <PauseCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <div>
               {incident.scopeType === "project"
-                ? "Project execution is paused. New work in this project will not start until you resolve the budget incident."
-                : "This scope is paused. New heartbeats will not start until you resolve the budget incident."}
+                ? uiT("ui:messages.m_113584630aa29e30")
+                : uiT("ui:messages.m_04b4ec4cf32c964a")}
             </div>
           </div>
         )}
 
         <div className="rounded-xl border border-border/60 bg-background/60 p-3">
-          <label className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">
-            New budget (USD)
-          </label>
+          <label className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_99dd3774b5bec80b")}</label>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <Input
               value={draftAmount}
@@ -116,19 +115,17 @@ export function BudgetIncidentCard({
               }}
             >
               <ArrowUpRight className="h-4 w-4" />
-              {isMutating ? "Applying..." : isWarning ? "Raise budget" : "Raise budget & resume"}
+              {isMutating ? uiT("ui:messages.m_dba1ddefd778ad65") : isWarning ? "Raise budget" : uiT("ui:messages.m_ecf70616e43a55dc")}
             </Button>
           </div>
           {parsed !== null && parsed <= incident.amountObserved ? (
-            <p className="mt-2 text-xs text-red-700 dark:text-red-200/80">
-              The new budget must exceed current observed spend.
-            </p>
+            <p className="mt-2 text-xs text-red-700 dark:text-red-200/80">{uiT("ui:messages.m_a9af346c9817a37e")}</p>
           ) : null}
         </div>
 
         <div className="flex justify-end">
           <Button variant="ghost" className="text-muted-foreground" disabled={isMutating} onClick={onKeepPaused}>
-            {isWarning ? "Dismiss warning" : "Keep paused"}
+            {isWarning ? "Dismiss warning" : uiT("ui:messages.m_686b908d5611e297")}
           </Button>
         </div>
       </CardContent>

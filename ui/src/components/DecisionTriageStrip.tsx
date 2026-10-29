@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlarmClock, CalendarClock, ChevronDown, Loader2, Plus, UserPlus, X } from "lucide-react";
@@ -27,9 +28,9 @@ const DAY_MS = 24 * HOUR_MS;
 
 /** Snooze presets shared with the row menu, resolved at click time. */
 const SNOOZE_PRESETS: ReadonlyArray<{ label: string; resolve: () => string }> = [
-  { label: "1 hour", resolve: () => new Date(Date.now() + HOUR_MS).toISOString() },
-  { label: "4 hours", resolve: () => new Date(Date.now() + 4 * HOUR_MS).toISOString() },
-  { label: "Tomorrow", resolve: () => {
+  { label: uiT("ui:messages.m_f8b8883f0c9d8d82"), resolve: () => new Date(Date.now() + HOUR_MS).toISOString() },
+  { label: uiT("ui:messages.m_e5bc99278849514d"), resolve: () => new Date(Date.now() + 4 * HOUR_MS).toISOString() },
+  { label: uiT("ui:messages.m_456a73bbcefb1def"), resolve: () => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
     d.setHours(9, 0, 0, 0);
@@ -238,9 +239,7 @@ export function DecisionTriageStrip({ item, companyId, agents }: DecisionTriageS
               className="text-muted-foreground hover:text-foreground"
               disabled={pending}
               onClick={() => setSnooze.mutate(null)}
-            >
-              Clear
-            </button>
+            >{uiT("ui:messages.m_83b12c2216efb4fd")}</button>
           </span>
         ) : (
           <DropdownMenu>
@@ -366,13 +365,9 @@ function QueuePicker({
               className="w-full rounded-sm border border-border bg-background px-2 py-1 text-xs"
             />
             <div className="flex justify-end gap-1">
-              <Button type="button" variant="ghost" size="xs" onClick={() => setCreating(false)}>
-                Cancel
-              </Button>
+              <Button type="button" variant="ghost" size="xs" onClick={() => setCreating(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button type="button" size="xs" disabled={!title.trim() || create.isPending} onClick={() => create.mutate(title)}>
-                {create.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-                Create
-              </Button>
+                {create.isPending && <Loader2 className="h-3 w-3 animate-spin" />}{uiT("ui:messages.m_4759498ac2a719c6")}</Button>
             </div>
           </div>
         ) : (

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useCallback, useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -79,7 +80,7 @@ export function FingerprintChip({
           .then(() => pushToast({ title: "Fingerprint copied", tone: "success" }))
           .catch(() => pushToast({ title: "Couldn’t copy fingerprint", tone: "error" }));
       }}
-      title={`Copy full digest — ${full}`}
+      title={uiT("ui:messages.m_efd2ea461af97982", { v0: (full) })}
       className={cn(
         "inline-flex items-center gap-1 font-mono hover:text-foreground",
         className,
@@ -419,7 +420,7 @@ function ApproveDialog({
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
-                    <Label htmlFor="approve-folder">Folder</Label>
+                    <Label htmlFor="approve-folder">{uiT("ui:messages.m_74ccd43303847f26")}</Label>
                     <Input
                       id="approve-folder"
                       value={draft.folder}
@@ -429,7 +430,7 @@ function ApproveDialog({
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="approve-name">Name</Label>
+                    <Label htmlFor="approve-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
                     <Input
                       id="approve-name"
                       value={draft.leaf}
@@ -451,18 +452,18 @@ function ApproveDialog({
                 </p>
 
                 <div className="space-y-1">
-                  <Label htmlFor="approve-description">Description</Label>
+                  <Label htmlFor="approve-description">{uiT("ui:messages.m_526e0087cc3f254d")}</Label>
                   <Input
                     id="approve-description"
                     value={draft.description}
                     onChange={(event) => onChange({ ...draft, description: event.target.value })}
-                    placeholder="Optional"
+                    placeholder={uiT("ui:messages.m_59be71333c960fd0")}
                   />
                 </div>
 
                 {localConfigs.length > 0 ? (
                   <div className="space-y-1">
-                    <Label htmlFor="approve-provider-config">Provider vault</Label>
+                    <Label htmlFor="approve-provider-config">{uiT("ui:messages.m_8bb8c5d18a315972")}</Label>
                     <select
                       id="approve-provider-config"
                       value={draft.providerConfigId}
@@ -471,7 +472,7 @@ function ApproveDialog({
                       }
                       className="h-9 w-full rounded-md border border-input bg-transparent px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                     >
-                      <option value="">Deployment default</option>
+                      <option value="">{uiT("ui:messages.m_d9bdc394a15e55e1")}</option>
                       {localConfigs.map((config) => (
                         <option key={config.id} value={config.id}>
                           {config.displayName}
@@ -499,12 +500,10 @@ function ApproveDialog({
             ) : null}
 
             <DialogFooter>
-              <Button variant="ghost" onClick={onCancel} disabled={pending}>
-                Cancel
-              </Button>
+              <Button variant="ghost" onClick={onCancel} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button onClick={onConfirm} disabled={pending || !canConfirm}>
                 {pending
-                  ? "Approving…"
+                  ? uiT("ui:messages.m_e99dcb0a97a2320d")
                   : isSecret
                     ? "Approve & create"
                     : draft.cascade
@@ -533,7 +532,7 @@ function BindingApproveBody({
     <div className="space-y-3 text-sm">
       <div className="space-y-2 rounded-md border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs text-muted-foreground">Target agent</span>
+          <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_d539091489783f89")}</span>
           {proposal.target ? (
             <AgentRefChip agent={proposal.target} className="text-sm font-medium" />
           ) : (
@@ -548,7 +547,7 @@ function BindingApproveBody({
           </span>
         </div>
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs text-muted-foreground">Secret</span>
+          <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_7e32a729b1226ed1")}</span>
           <span className="flex items-center gap-1.5">
             <KeyRound className="size-3.5 text-muted-foreground" />
             <span className="font-medium">{secret.name}</span>
@@ -564,10 +563,9 @@ function BindingApproveBody({
             checked={draft.cascade}
             onCheckedChange={(checked) => onChange({ ...draft, cascade: checked === true })}
             className="mt-0.5"
-            aria-label="Also approve the proposed secret"
+            aria-label={uiT("ui:messages.m_1ef5afe2320abaaa")}
           />
-          <span className="text-foreground/90">
-            Also approve the proposed secret{" "}
+          <span className="text-foreground/90">{uiT("ui:messages.m_1ef5afe2320abaaa")}{" "}
             <span className="font-medium">{secret.name}</span> and create it in the same step. The
             binding can’t land without it.
           </span>
@@ -613,14 +611,14 @@ function RejectDialog({
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-1">
-              <Label htmlFor="reject-reason">Reason</Label>
+              <Label htmlFor="reject-reason">{uiT("ui:messages.m_f81ab834de5f8491")}</Label>
               <Textarea
                 id="reject-reason"
                 value={reason}
                 onChange={(event) => onReasonChange(event.target.value)}
                 rows={3}
                 autoFocus
-                placeholder="Why is this being rejected?"
+                placeholder={uiT("ui:messages.m_1fa2a42938c56711")}
               />
             </div>
             {error ? (
@@ -629,11 +627,9 @@ function RejectDialog({
               </p>
             ) : null}
             <DialogFooter>
-              <Button variant="ghost" onClick={onCancel} disabled={pending}>
-                Cancel
-              </Button>
+              <Button variant="ghost" onClick={onCancel} disabled={pending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button variant="destructive" onClick={onConfirm} disabled={pending || !canConfirm}>
-                {pending ? "Rejecting…" : "Reject"}
+                {pending ? uiT("ui:messages.m_09868524d9262e41") : uiT("ui:messages.m_ab604a360777735f")}
               </Button>
             </DialogFooter>
           </>
@@ -668,9 +664,7 @@ export function ProposalActions({
       className={heightClass}
       disabled={disabled || blocked}
       onClick={() => onApprove(proposal)}
-    >
-      Approve
-    </Button>
+    >{uiT("ui:messages.m_6007acbe30b2cd98")}</Button>
   );
   return (
     <div className="flex items-center gap-1.5">
@@ -694,9 +688,7 @@ export function ProposalActions({
         className={heightClass}
         disabled={disabled}
         onClick={() => onReject(proposal)}
-      >
-        Reject
-      </Button>
+      >{uiT("ui:messages.m_ab604a360777735f")}</Button>
     </div>
   );
 }

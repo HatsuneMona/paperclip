@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { GithubIcon } from "@/components/icons/github-icon";
 import { Compass, Library, PencilRuler } from "lucide-react";
 import { useLocation } from "@/lib/router";
@@ -24,21 +25,21 @@ export function SkillsContextualSidebar() {
   return (
     <ContextualSidebarFrame
       surface="skills"
-      title="Skills"
+      title={uiT("ui:messages.m_66d0f523a379b2de")}
       icon={Library}
       fallbackTo="/dashboard"
       showHeader={false}
       className="border-r border-border bg-background"
     >
       <nav
-        aria-label="Skills"
+        aria-label={uiT("ui:messages.m_66d0f523a379b2de")}
         data-slot="contextual-sidebar-nav"
         className={contextualSidebarStyles.nav}
       >
         <div data-slot="contextual-sidebar-group" className={contextualSidebarStyles.group}>
           <SidebarNavItem
             to={SKILLS_NAVIGATION_HREFS.installed}
-            label="Installed"
+            label={uiT("ui:messages.m_f8b32f4e92bd84ce")}
             icon={Library}
             active={activeView === "installed"}
             end
@@ -50,16 +51,14 @@ export function SkillsContextualSidebar() {
             active={activeView === "discover"}
             end
           />
-          <SidebarNavItem to={SKILLS_NAVIGATION_HREFS.sources} label="Sources" icon={GithubIcon} active={activeView === "sources"} />
+          <SidebarNavItem to={SKILLS_NAVIGATION_HREFS.sources} label={uiT("ui:messages.m_caf85b0888d78f1f")} icon={GithubIcon} active={activeView === "sources"} />
         </div>
 
         <div data-slot="contextual-sidebar-section" className={contextualSidebarStyles.section}>
           <div
             data-slot="contextual-sidebar-section-label"
             className={contextualSidebarStyles.sectionLabel}
-          >
-            Author
-          </div>
+          >{uiT("ui:messages.m_d95082a2ee57f3e4")}</div>
           <p
             data-slot="contextual-sidebar-section-description"
             className={contextualSidebarStyles.sectionDescription}
@@ -69,7 +68,7 @@ export function SkillsContextualSidebar() {
           <div data-slot="contextual-sidebar-group" className={contextualSidebarStyles.group}>
             <SidebarNavItem
               to={SKILLS_NAVIGATION_HREFS.authored}
-              label="My Skills"
+              label={uiT("ui:messages.m_ea424d66243dffe9")}
               icon={PencilRuler}
               active={activeView === "authored"}
             />

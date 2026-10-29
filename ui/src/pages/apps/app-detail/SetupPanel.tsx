@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import type { ToolCatalogEntry, ToolConnection } from "@paperclipai/shared";
@@ -37,9 +38,9 @@ export function SetupPanel({
   return (
     <div className="space-y-10">
       {identities}
-      <SetupLinkSection title="Agents" summary={agentsSummary} onClick={onOpenPermissions} />
+      <SetupLinkSection title={uiT("ui:messages.m_279b44d2ab4b40c0")} summary={agentsSummary} onClick={onOpenPermissions} />
       <SetupLinkSection
-        title="Actions"
+        title={uiT("ui:messages.m_ff8059dc6752afdd")}
         summary={permissionsLoading ? "Loading permissions…" : permissionsSummary ?? "Manage permissions"}
         onClick={onOpenPermissions}
       />
@@ -199,9 +200,7 @@ function GoogleSheetsAllowlistSection({
                   disabled={disabled || ids.length <= 1}
                   title={ids.length <= 1 ? "Add another sheet before removing this one." : undefined}
                   onClick={() => saveIds(ids.filter((current) => current !== id))}
-                >
-                  Remove
-                </Button>
+                >{uiT("ui:messages.m_c3812fc4acb861d5")}</Button>
               </div>
             );
           })
@@ -261,7 +260,7 @@ export function QuarantinedActionsReview({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="text-sm font-semibold text-amber-800 dark:text-amber-200">
-            Review {count} new {count === 1 ? "action" : "actions"}
+            Review {count} new {count === 1 ? uiT("ui:messages.m_bd938c688f49b77c") : uiT("ui:messages.m_2b0dcdd40016096b")}
           </div>
           <p className="mt-1 text-xs text-amber-700 dark:text-amber-300">
             Turn on the actions agents may use. Anything left off stays blocked when you save.
@@ -317,10 +316,10 @@ export function QuarantinedActionsReview({
       </div>
       <div className="flex items-center justify-between gap-3">
         <span className="text-xs text-amber-700 dark:text-amber-300">
-          {selectedIds.length} of {count} will be on
+          {selectedIds.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{count} will be on
         </span>
         <Button size="sm" disabled={disabled} onClick={() => onSubmit(selectedIds)}>
-          {disabled ? "Saving…" : "Save choices"}
+          {disabled ? uiT("ui:messages.m_23e39291d6135814") : "Save choices"}
         </Button>
       </div>
     </section>

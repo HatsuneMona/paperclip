@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useState } from "react";
 import {
   CalendarClock,
@@ -170,7 +171,7 @@ export function RoutineTriggerWizard({
           saveAndExit();
         },
       },
-      { label: "Add trigger" },
+      { label: uiT("ui:messages.m_58fd308928ddaee3") },
     ]);
   }, [saveAndExit, setBreadcrumbs, routineTitle, routineId]);
   const schedule = draft.kind === "schedule";
@@ -202,7 +203,7 @@ export function RoutineTriggerWizard({
           ? "Set a schedule"
           : "Review your schedule"
         : draft.step === 1
-          ? `Connect ${github ? "GitHub" : "your app"}`
+          ? uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (github ? "GitHub" : uiT("ui:messages.m_4696a33536d73ae6")) })
           : "Check your connection";
   const subtitle =
     draft.step === 0
@@ -217,9 +218,7 @@ export function RoutineTriggerWizard({
   const selectClass =
     "w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
   const goBack = (
-    <Button variant="outline" onClick={() => patch({ step: draft.step - 1 })}>
-      Back
-    </Button>
+    <Button variant="outline" onClick={() => patch({ step: draft.step - 1 })}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
   );
   return (
     <div className="min-w-0 w-full max-w-2xl space-y-6">
@@ -304,9 +303,9 @@ export function RoutineTriggerWizard({
                   value={draft.frequency}
                   onChange={(event) => patch({ frequency: event.target.value })}
                 >
-                  <option value="daily">Every day</option>
+                  <option value="daily">{uiT("ui:messages.m_c4e42b974c335dc5")}</option>
                   <option value="weekdays">Weekdays (Monday–Friday)</option>
-                  <option value="weekly">Every week</option>
+                  <option value="weekly">{uiT("ui:messages.m_1b7e18513af4abe9")}</option>
                 </select>
               </div>
               <div className="space-y-2">
@@ -343,7 +342,7 @@ export function RoutineTriggerWizard({
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="timezone">Time zone</Label>
+              <Label htmlFor="timezone">{uiT("ui:messages.m_b9fe1464783e1c0d")}</Label>
               <select
                 id="timezone"
                 className={selectClass}
@@ -448,7 +447,7 @@ export function RoutineTriggerWizard({
               />
             )}
             <CopyField
-              label={github ? "Payload URL" : "Webhook URL"}
+              label={github ? uiT("ui:messages.m_1de5cdcfa7cac062") : uiT("ui:messages.m_84805a7574a82052")}
               value={webhookUrl}
             />
             {!github && draft.signingMode !== "bearer" && (
@@ -462,7 +461,7 @@ export function RoutineTriggerWizard({
             )}
             {webhookSecret ? (
               <CopyField
-                label={github ? "Secret" : draft.signingMode === "bearer" ? "Authorization header value" : "Secret key"}
+                label={github ? uiT("ui:messages.m_7e32a729b1226ed1") : draft.signingMode === "bearer" ? uiT("ui:messages.m_39a91b3db30e7a70") : uiT("ui:messages.m_f47a99ebcf29c1db")}
                 value={!github && draft.signingMode === "bearer" ? `Bearer ${webhookSecret}` : webhookSecret}
               />
             ) : (
@@ -492,7 +491,7 @@ export function RoutineTriggerWizard({
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">
-                Send an event from {github ? "GitHub" : "your app"}
+                Send an event from {github ? "GitHub" : uiT("ui:messages.m_4696a33536d73ae6")}
               </p>
               <p className="text-sm text-muted-foreground">
                 {github
@@ -542,7 +541,7 @@ export function RoutineTriggerWizard({
                   Check that the webhook is enabled in your sending app and that
                   its URL matches. Scripts must send POST with a JSON body.
                 </p>
-                <CopyField label="Webhook URL" value={webhookUrl} />
+                <CopyField label={uiT("ui:messages.m_84805a7574a82052")} value={webhookUrl} />
               </div>
             </details>
           </div>
@@ -555,10 +554,7 @@ export function RoutineTriggerWizard({
           </p>
         )}
         {schedule && draft.step === 2 && !routineActive && (
-          <p className="text-sm text-muted-foreground">
-            The routine is paused. Enable its automatic triggers when you’re
-            ready to use this schedule.
-          </p>
+          <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_28f907214665c335")}</p>
         )}
         {saveError && (
           <p role="alert" className="text-sm text-destructive">
@@ -568,9 +564,7 @@ export function RoutineTriggerWizard({
         <SetupWizardFooter onSaveExit={saveAndExit}>
           {draft.step > 0 && goBack}
           {draft.step === 0 ? (
-            <Button disabled={draft.kind === "choose"} onClick={advance}>
-              Continue
-            </Button>
+            <Button disabled={draft.kind === "choose"} onClick={advance}>{uiT("ui:messages.m_31fbef162594de01")}</Button>
           ) : schedule ? (
             draft.step === 1 ? (
               <Button disabled={!draft.time} onClick={advance}>
@@ -586,7 +580,7 @@ export function RoutineTriggerWizard({
           ) : (
             <Button onClick={() => void perform(() => onFinish(draft))}>
               {checkResult === "received"
-                ? "Finish setup"
+                ? uiT("ui:messages.m_bc01ae77f37cf304")
                 : "Finish without checking"}
             </Button>
           )}

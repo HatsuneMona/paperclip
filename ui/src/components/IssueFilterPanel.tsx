@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState, type ComponentProps, type CSSProperties, type ReactNode } from "react";
 import { Bot, Search, User } from "lucide-react";
 import type { IssueFiltersPopover } from "./IssueFiltersPopover";
@@ -17,7 +18,7 @@ function FilterGroup({ title, searchLabel, query, onQueryChange, children, optio
     <section className="task-filter-group" aria-labelledby={headingId}>
       <h3 id={headingId}>{title}</h3>
       <div className="task-filter-group-body">
-        {searchLabel ? <div className="task-filter-search"><Search aria-hidden /><Input aria-label={`Search ${searchLabel}`} placeholder={`Search ${searchLabel}...`} value={query} onChange={event => onQueryChange?.(event.target.value)} /></div> : null}
+        {searchLabel ? <div className="task-filter-search"><Search aria-hidden /><Input aria-label={uiT("ui:messages.m_21c99ad49e64b72f", { v0: (searchLabel) })} placeholder={uiT("ui:messages.m_9a2afa301658821d", { v0: (searchLabel) })} value={query} onChange={event => onQueryChange?.(event.target.value)} /></div> : null}
         <div className="task-filter-options" data-filter-options={optionsKey}>{children}</div>
       </div>
     </section>
@@ -38,24 +39,24 @@ export function IssueFilterPanel({ state, onChange, activeFilterCount, agents = 
   const visibleAssignees = searchIssueFilterOptions(assignees, queries.assignees, option => option.name);
   const visibleLabels = searchIssueFilterOptions(labels, queries.labels, option => option.name);
   return <>
-    <FlyoutHeader className="task-filters-header"><span>Filters</span>{activeFilterCount ? <Button variant="ghost" onClick={() => { onClear(); setQueries({ projects: "", creators: "", assignees: "", labels: "" }); }}>Clear</Button> : null}</FlyoutHeader>
+    <FlyoutHeader className="task-filters-header"><span>{uiT("ui:messages.m_546ebb8eb993ea56")}</span>{activeFilterCount ? <Button variant="ghost" onClick={() => { onClear(); setQueries({ projects: "", creators: "", assignees: "", labels: "" }); }}>{uiT("ui:messages.m_83b12c2216efb4fd")}</Button> : null}</FlyoutHeader>
     <div className="task-filters-grid">
-      <FilterGroup title="Status" optionsKey="statuses">
+      <FilterGroup title={uiT("ui:messages.m_920e413c7d411b61")} optionsKey="statuses">
         {issueStatusOrder.map(status => <FilterRow key={status} label={issueFilterLabel(status)} checked={state.statuses.includes(status)} onToggle={() => onChange({ statuses: toggleIssueFilterValue(state.statuses, status) })} icon={<StatusIcon status={status} />} />)}
       </FilterGroup>
-      <FilterGroup title="Project" optionsKey="projects" searchLabel="projects" query={queries.projects} onQueryChange={search("projects")}>
+      <FilterGroup title={uiT("ui:messages.m_9859597853197476")} optionsKey="projects" searchLabel="projects" query={queries.projects} onQueryChange={search("projects")}>
         {visibleProjects.map(project => <FilterRow key={project.id} label={project.name} checked={state.projects.includes(project.id)} onToggle={() => onChange({ projects: toggleIssueFilterValue(state.projects, project.id) })} />)}
         {!visibleProjects.length ? <p className="task-filter-empty">{queries.projects ? "No projects match." : "No projects available."}</p> : null}
       </FilterGroup>
-      <FilterGroup title="Creator" optionsKey="creators" searchLabel="creators" query={queries.creators} onQueryChange={search("creators")}>
+      <FilterGroup title={uiT("ui:messages.m_88447b83090cded5")} optionsKey="creators" searchLabel="creators" query={queries.creators} onQueryChange={search("creators")}>
         {visibleCreators.map(creator => <FilterRow key={creator.id} label={creator.label} checked={state.creators.includes(creator.id)} onToggle={() => onChange({ creators: toggleIssueFilterValue(state.creators, creator.id) })} icon={creator.kind === "agent" ? <Bot /> : <User />} />)}
-        {!visibleCreators.length ? <p className="task-filter-empty">{queries.creators ? "No creators match." : "No creators available."}</p> : null}
+        {!visibleCreators.length ? <p className="task-filter-empty">{queries.creators ? uiT("ui:messages.m_e23e5a42b5572904") : "No creators available."}</p> : null}
       </FilterGroup>
-      <FilterGroup title="Assignee" optionsKey="responsible" searchLabel="assignees" query={queries.assignees} onQueryChange={search("assignees")}>
+      <FilterGroup title={uiT("ui:messages.m_5e20d20e3978dcf8")} optionsKey="responsible" searchLabel="assignees" query={queries.assignees} onQueryChange={search("assignees")}>
         {visibleAssignees.map(assignee => <FilterRow key={assignee.id} label={assignee.name} checked={state.assignees.includes(assignee.id)} onToggle={() => onChange({ assignees: toggleIssueFilterValue(state.assignees, assignee.id) })} icon={assignee.icon} />)}
         {!visibleAssignees.length ? <p className="task-filter-empty">No assignees match.</p> : null}
       </FilterGroup>
-      <FilterGroup title="Label" optionsKey="labels" searchLabel="labels" query={queries.labels} onQueryChange={search("labels")}>
+      <FilterGroup title={uiT("ui:messages.m_0e66373f45dcf3dd")} optionsKey="labels" searchLabel="labels" query={queries.labels} onQueryChange={search("labels")}>
         {visibleLabels.map(label => <FilterRow key={label.id} label={label.name} checked={state.labels.includes(label.id)} onToggle={() => onChange({ labels: toggleIssueFilterValue(state.labels, label.id) })} icon={<span className="task-filter-label-dot" style={{ "--task-filter-label-color": label.color } as CSSProperties} />} />)}
         {!visibleLabels.length ? <p className="task-filter-empty">{queries.labels ? "No labels match." : "No labels available."}</p> : null}
       </FilterGroup>

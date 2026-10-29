@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ToolConnection } from "@paperclipai/shared";
@@ -27,7 +28,7 @@ export function ExecutorManagementSetup({ connection, onClose }: { connection: T
     <form className="space-y-4" onSubmit={event => { event.preventDefault(); save.mutate(); }}>
       <div className="space-y-2"><Label htmlFor="executor-console-url">Console URL</Label><Input id="executor-console-url" type="url" required value={url} onChange={event => setUrl(event.target.value)} /></div>
       {save.isError ? <p role="alert" className="text-sm text-destructive">{save.error.message}</p> : null}
-      <DialogFooter className="sm:justify-between"><Button type="button" variant="ghost" onClick={onClose} disabled={save.isPending}>Cancel</Button><Button type="submit" disabled={!settled || save.isPending || !url.trim()}>{save.isPending ? "Saving…" : "Save"}</Button></DialogFooter>
+      <DialogFooter className="sm:justify-between"><Button type="button" variant="ghost" onClick={onClose} disabled={save.isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button><Button type="submit" disabled={!settled || save.isPending || !url.trim()}>{save.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_1509f561f2416598")}</Button></DialogFooter>
     </form>
   </DialogContent></Dialog>;
 }

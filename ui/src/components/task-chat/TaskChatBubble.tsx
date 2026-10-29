@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { CoordinatorRelativeTime } from "@/components/coordinator/CoordinatorRelativeTime";
 import { useCoordinatorPresentation } from "@/components/coordinator/CoordinatorPresentation";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
@@ -296,7 +297,7 @@ function TaskChatBubbleContent({
                   key={ref.url}
                   type="button"
                   className="group aspect-video min-w-0 overflow-hidden rounded-md bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-label={`Open ${ref.name || `image ${index + 1}`}`}
+                  aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (ref.name || `image ${index + 1}`) })}
                   onClick={() => openImage(ref.url)}
                 >
                   <img
@@ -311,7 +312,7 @@ function TaskChatBubbleContent({
               <button
                 type="button"
                 className="aspect-video min-w-0 rounded-md bg-muted text-sm font-semibold text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={`Open ${imageRefs.length - 3} more screenshots`}
+                aria-label={uiT("ui:messages.m_491fd0d0d0dbbc44", { v0: (imageRefs.length - 3) })}
                 onClick={() => openImage(imageRefs[3].url)}
               >
                 +{imageRefs.length - 3}
@@ -348,7 +349,7 @@ function TaskChatBubbleContent({
                     </AttachmentDescription>
                   </AttachmentContent>
                   <AttachmentTrigger
-                    aria-label={`Open ${ref.name}`}
+                    aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (ref.name) })}
                     onClick={video ? () => openImage(ref.url) : undefined}
                     render={video ? <button type="button" /> :
                       <a
@@ -397,7 +398,7 @@ function TaskChatBubbleContent({
       {coordinator && recordedTimestamp && attachedTurn ? <span className="px-1 text-(length:--text-micro) text-muted-foreground"><CoordinatorRelativeTime value={recordedTimestamp!} /></span> : null}
       {item.optimistic ? (
         <span className="flex items-center gap-1 px-1 text-(length:--text-micro) text-muted-foreground">
-          <span>{item.optimistic === "queued" ? "Queued" : "Sending…"}</span>
+          <span>{item.optimistic === "queued" ? uiT("ui:messages.m_661ff40a07e037bb") : uiT("ui:messages.m_b8ed5279e897be5d")}</span>
           {item.optimistic === "queued" ? queuedAction : null}
         </span>
       ) : attachedTurn ? (
@@ -435,7 +436,7 @@ function TaskChatBubbleContent({
       ) : timestamp || sentFromIMessage ? (
         // Timestamps are always visible (round 9) — no longer hover-revealed.
         <span className="px-1 text-(length:--text-micro) text-muted-foreground">
-          {sentFromIMessage ? "Sent from iMessage" : null}
+          {sentFromIMessage ? uiT("ui:messages.m_01ad7f21003806d7") : null}
           {sentFromIMessage && timestamp ? " · " : null}
           {timestamp}
         </span>

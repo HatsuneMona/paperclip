@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties, ReactNode } from "react";
 import { Maximize2, Minimize2, PanelRightClose, PanelRightOpen, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -131,7 +132,7 @@ export function SidePanelToggleButton({
         </Button>
       </TooltipTrigger>
       <TooltipContent side="bottom">
-        {shortcut ? `${label} (${shortcut})` : label}
+        {shortcut ? uiT("ui:messages.m_43cdd46200eb5db2", { v0: (label), v1: (shortcut) }) : label}
       </TooltipContent>
     </Tooltip>
   );

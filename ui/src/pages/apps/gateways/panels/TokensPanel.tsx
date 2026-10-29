@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Copy, KeyRound, Plus } from "lucide-react";
@@ -69,9 +70,9 @@ function ExpiryValue({ token }: { token: ToolMcpGatewayToken }) {
   const expiresAt = toDate(token.expiresAt);
   if (!expiresAt) return <>No expiry</>;
   if (expiresAt.getTime() <= Date.now()) {
-    return <><span className="font-medium text-foreground">Expired</span> <RelativeTime value={token.expiresAt} /></>;
+    return <><span className="font-medium text-foreground">{uiT("ui:messages.m_424a2551d356754c")}</span> <RelativeTime value={token.expiresAt} /></>;
   }
-  return <>Expires <RelativeTime value={token.expiresAt} /></>;
+  return <>{uiT("ui:messages.m_d970e4fd1080c607")}<RelativeTime value={token.expiresAt} /></>;
 }
 
 export function TokensPanel({
@@ -159,10 +160,10 @@ export function TokensPanel({
   async function copyToken(value: string) {
     try {
       await copyTextToClipboard(value);
-      pushToast({ title: "Copied", body: "Access token", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_8d525e5f158b9afe"), body: "Access token", tone: "success" });
     } catch (error) {
       pushToast({
-        title: "Copy failed",
+        title: uiT("ui:messages.m_5b50e7a693fee952"),
         body: error instanceof Error ? error.message : "Clipboard access is unavailable.",
         tone: "error",
       });
@@ -199,9 +200,7 @@ export function TokensPanel({
           </p>
         </div>
         <Button size="sm" onClick={startIssuing}>
-          <Plus className="mr-1.5 h-3.5 w-3.5" />
-          Issue token
-        </Button>
+          <Plus className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_3f03f9be7b13c89b")}</Button>
       </div>
 
       {minting ? (
@@ -213,7 +212,7 @@ export function TokensPanel({
               <span className="text-xs text-muted-foreground">Also used as the client label.</span>
             </label>
             <label className="space-y-1.5 text-sm">
-              <span className="text-xs font-medium text-muted-foreground">Expires</span>
+              <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_f6725f3af08a06a2")}</span>
               <Input type="date" value={expiresAt} onChange={(event) => setExpiresAt(event.target.value)} required />
             </label>
           </div>
@@ -222,15 +221,13 @@ export function TokensPanel({
             <Input
               value={ownerNote}
               onChange={(event) => setOwnerNote(event.target.value)}
-              placeholder="Who uses this token or why it exists"
+              placeholder={uiT("ui:messages.m_cbea111f14f8e1a8")}
             />
           </label>
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" size="sm" onClick={() => setMinting(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => setMinting(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button type="submit" size="sm" disabled={createMutation.isPending || !name.trim()}>
-              {createMutation.isPending ? "Issuing…" : "Issue token"}
+              {createMutation.isPending ? "Issuing…" : uiT("ui:messages.m_3f03f9be7b13c89b")}
             </Button>
           </div>
         </form>
@@ -245,9 +242,7 @@ export function TokensPanel({
                 It is now available in Client snippets for a copy-ready configuration.
               </div>
             </div>
-            <Button variant="ghost" size="sm" onClick={() => setCreated(null)} aria-label="Dismiss new token">
-              Dismiss
-            </Button>
+            <Button variant="ghost" size="sm" onClick={() => setCreated(null)} aria-label={uiT("ui:messages.m_53b2c778311f295f")}>{uiT("ui:messages.m_48845bff334a50a5")}</Button>
           </div>
           <div className="flex items-center gap-2">
             <code className="min-w-0 flex-1 truncate rounded bg-muted px-3 py-2 font-mono text-xs text-foreground">
@@ -255,11 +250,9 @@ export function TokensPanel({
             </code>
             {revealed ? (
               <Button variant="outline" size="sm" onClick={() => void copyToken(created.token)}>
-                <Copy className="mr-1 h-3.5 w-3.5" />
-                Copy
-              </Button>
+                <Copy className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_e21f935f11d7e966")}</Button>
             ) : (
-              <Button variant="outline" size="sm" onClick={() => setRevealed(true)}>Show</Button>
+              <Button variant="outline" size="sm" onClick={() => setRevealed(true)}>{uiT("ui:messages.m_0df6f1cad36c49da")}</Button>
             )}
           </div>
         </div>
@@ -285,12 +278,12 @@ export function TokensPanel({
                 <table className="w-full min-w-(--sz-44rem) text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                      <th className="px-4 py-2.5">Token</th>
-                      <th className="px-4 py-2.5">Owner</th>
-                      <th className="px-4 py-2.5">Created</th>
-                      <th className="px-4 py-2.5">Last used</th>
-                      <th className="px-4 py-2.5">Expiry</th>
-                      <th className="px-4 py-2.5">Status</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_d2089be672953d11")}</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_4b1b8aa3608a26da")}</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_d70b9e24bca26b40")}</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_830ec7f812f9d862")}</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_6956d81401b84d01")}</th>
+                      <th className="px-4 py-2.5">{uiT("ui:messages.m_920e413c7d411b61")}</th>
                       <th className="px-4 py-2.5 text-right" />
                     </tr>
                   </thead>
@@ -317,9 +310,7 @@ export function TokensPanel({
                                 size="sm"
                                 className="h-7 px-2 text-xs text-destructive hover:text-destructive"
                                 onClick={() => startRevoke(token)}
-                              >
-                                Revoke
-                              </Button>
+                              >{uiT("ui:messages.m_87e6d00bbf53ec5a")}</Button>
                             ) : null}
                           </td>
                         </tr>
@@ -342,10 +333,10 @@ export function TokensPanel({
                         <StatusBadge status={status} />
                       </div>
                       <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <TokenField label="Owner" value={token.clientLabel || token.ownerNote || "—"} />
-                        <TokenField label="Created" value={<RelativeTime value={token.createdAt} />} />
-                        <TokenField label="Last used" value={token.lastUsedAt ? <RelativeTime value={token.lastUsedAt} /> : "—"} />
-                        <TokenField label="Expiry" value={<ExpiryValue token={token} />} />
+                        <TokenField label={uiT("ui:messages.m_4b1b8aa3608a26da")} value={token.clientLabel || token.ownerNote || "—"} />
+                        <TokenField label={uiT("ui:messages.m_d70b9e24bca26b40")} value={<RelativeTime value={token.createdAt} />} />
+                        <TokenField label={uiT("ui:messages.m_830ec7f812f9d862")} value={token.lastUsedAt ? <RelativeTime value={token.lastUsedAt} /> : "—"} />
+                        <TokenField label={uiT("ui:messages.m_6956d81401b84d01")} value={<ExpiryValue token={token} />} />
                       </dl>
                       {status !== "revoked" ? (
                         <Button
@@ -353,9 +344,7 @@ export function TokensPanel({
                           size="sm"
                           className="mt-3 w-full text-xs text-destructive hover:text-destructive"
                           onClick={() => startRevoke(token)}
-                        >
-                          Revoke
-                        </Button>
+                        >{uiT("ui:messages.m_87e6d00bbf53ec5a")}</Button>
                       ) : null}
                     </div>
                   );
@@ -365,15 +354,14 @@ export function TokensPanel({
               {pageCount > 1 ? (
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-xs text-muted-foreground">
-                    Page {historyPage} of {pageCount} · {tokens.length} tokens
-                  </p>
+                    Page {historyPage}{uiT("ui:messages.m_a4282e4b2298b90b")}{pageCount} · {tokens.length}{uiT("ui:messages.m_da61a22badf88871")}</p>
                   <div className="flex items-center gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
                       disabled={historyPage === 1}
                       onClick={() => setHistoryPage((page) => Math.max(1, page - 1))}
-                      aria-label="Previous token page"
+                      aria-label={uiT("ui:messages.m_df6458a506029de5")}
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </Button>
@@ -382,7 +370,7 @@ export function TokensPanel({
                       size="sm"
                       disabled={historyPage === pageCount}
                       onClick={() => setHistoryPage((page) => Math.min(pageCount, page + 1))}
-                      aria-label="Next token page"
+                      aria-label={uiT("ui:messages.m_e41e004cc2e103d6")}
                     >
                       <ChevronRight className="h-4 w-4" />
                     </Button>
@@ -408,7 +396,7 @@ export function TokensPanel({
               value={revokeName}
               onChange={(event) => setRevokeName(event.target.value)}
               placeholder={confirmToken.name}
-              aria-label="Type the token name to confirm"
+              aria-label={uiT("ui:messages.m_108c2424af42b259")}
               autoFocus
             />
             <div className="flex justify-end gap-2">
@@ -419,16 +407,14 @@ export function TokensPanel({
                   setConfirmToken(null);
                   setRevokeName("");
                 }}
-              >
-                Cancel
-              </Button>
+              >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button
                 variant="destructive"
                 size="sm"
                 disabled={revokeName.trim() !== confirmToken.name || revokeMutation.isPending}
                 onClick={() => revokeMutation.mutate(confirmToken.id)}
               >
-                {revokeMutation.isPending ? "Revoking…" : "Revoke token"}
+                {revokeMutation.isPending ? "Revoking…" : uiT("ui:messages.m_14683b379324a82a")}
               </Button>
             </div>
           </div>

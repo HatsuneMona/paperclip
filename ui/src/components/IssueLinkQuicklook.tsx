@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import * as React from "react";
 import { useMemo } from "react";
 import * as RouterDom from "react-router-dom";
@@ -445,7 +446,7 @@ export const IssueLinkQuicklook = React.forwardRef<
             <div className="h-4 w-full rounded bg-accent/40" />
             <div className="h-4 w-3/4 rounded bg-accent/30" />
             {!isLoading ? (
-              <p className="text-xs text-muted-foreground">Unable to load task preview.</p>
+              <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_491693be20fd7542")}</p>
             ) : null}
           </div>
         )}

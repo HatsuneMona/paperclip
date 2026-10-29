@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "../components/AgentIdentity";
 import { TaskSummaryList } from "../components/TaskSummaryList";
 import { useDesignSandbox } from "../context/DesignSandboxContext";
@@ -159,7 +160,7 @@ export function Dashboard() {
   }, [shouldOpenOnboarding, selectedCompanyId, openOnboarding]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Dashboard" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_67b696468610b879") }]);
   }, [setBreadcrumbs]);
 
   const dashboardQueryKey = queryKeys.dashboard(selectedCompanyId!);
@@ -332,7 +333,7 @@ export function Dashboard() {
         <InlineBanner
           tone="warning"
           icon={PauseCircle}
-          title={`${pausedImportedCount} imported agent${pausedImportedCount === 1 ? " is" : "s are"} paused and will not run.`}
+          title={uiT("ui:messages.m_69fbdede596df26d", { v0: (pausedImportedCount), v1: (pausedImportedCount === 1 ? uiT("ui:messages.m_a8bdfde11f2443a1") : uiT("ui:messages.m_9cdade103bc6384a")) })}
           actions={
             <Button
               size="sm"
@@ -340,41 +341,33 @@ export function Dashboard() {
               disabled={resumeImportedAgents.isPending}
               data-testid="dashboard-resume-imported-agents"
             >
-              {resumeImportedAgents.isPending ? "Resuming…" : "Resume all"}
+              {resumeImportedAgents.isPending ? uiT("ui:messages.m_c494e3ca3e3b04a3") : uiT("ui:messages.m_43e673c5503d43df")}
             </Button>
           }
-        >
-          Agents from an organization import arrive paused as a safety default. Resume them so assigned tasks can start.
-        </InlineBanner>
+        >{uiT("ui:messages.m_c23636748a7780bc")}</InlineBanner>
       ) : pausedBanner?.kind === "all-paused" ? (
         <InlineBanner
           tone="warning"
           icon={PauseCircle}
-          title="All agents in this organization are paused — nothing will run."
+          title={uiT("ui:messages.m_b048943699134a76")}
           actions={
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/agents">Review agents</Link>
+              <Link to="/agents">{uiT("ui:messages.m_13c1e3e0b6b00c0c")}</Link>
             </Button>
           }
-        >
-          Resume at least one agent to let assigned tasks start.
-        </InlineBanner>
+        >{uiT("ui:messages.m_e3f2dc7d3663a348")}</InlineBanner>
       ) : null}
 
       {hasNoAgents && (
         <div className="flex items-center justify-between gap-3 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 dark:border-amber-500/25 dark:bg-amber-950/60">
           <div className="flex items-center gap-2.5">
             <Bot className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-            <p className="text-sm text-amber-900 dark:text-amber-100">
-              You have no agents.
-            </p>
+            <p className="text-sm text-amber-900 dark:text-amber-100">{uiT("ui:messages.m_6461ce7cef79538b")}</p>
           </div>
           <button
             onClick={() => openOnboarding({ initialStep: 3, companyId: selectedCompanyId! })}
             className="text-sm font-medium text-amber-700 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100 underline underline-offset-2 shrink-0"
-          >
-            Create one here
-          </button>
+          >{uiT("ui:messages.m_8c89c0c5dc3ed282")}</button>
         </div>
       )}
 
@@ -388,16 +381,13 @@ export function Dashboard() {
                 <PauseCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-700 dark:text-red-300" />
                 <div>
                   <p className="text-sm font-medium text-red-950 dark:text-red-50">
-                    {data.budgets.activeIncidents} active budget incident{data.budgets.activeIncidents === 1 ? "" : "s"}
+                    {data.budgets.activeIncidents}{uiT("ui:messages.m_4cb19c9ab4cd15d1")}{data.budgets.activeIncidents === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
                   </p>
                   <p className="text-xs text-red-900/70 dark:text-red-100/70">
-                    {data.budgets.pausedAgents} agents paused · {data.budgets.pausedProjects} projects paused · {data.budgets.pendingApprovals} pending budget approvals
-                  </p>
+                    {data.budgets.pausedAgents}{uiT("ui:messages.m_fbaa317b12240217")}{data.budgets.pausedProjects}{uiT("ui:messages.m_fb1c7459daad4c74")}{data.budgets.pendingApprovals}{uiT("ui:messages.m_c3cd74b19f4a9658")}</p>
                 </div>
               </div>
-              <Link to="/costs" className="text-sm underline underline-offset-2 text-red-900 dark:text-red-100">
-                Open budgets
-              </Link>
+              <Link to="/costs" className="text-sm underline underline-offset-2 text-red-900 dark:text-red-100">{uiT("ui:messages.m_f5376c2582f72e20")}</Link>
             </div>
           ) : null}
 
@@ -406,40 +396,38 @@ export function Dashboard() {
               appearance={designSandbox ? "card" : "plain"}
               icon={Bot}
               value={data.agents.active + data.agents.running + data.agents.paused + data.agents.error}
-              label="Agents Enabled"
+              label={uiT("ui:messages.m_868836bd07e6cc5c")}
               to="/agents"
               description={
                 <span>
-                  {data.agents.running} running{", "}
-                  {data.agents.paused} paused{", "}
-                  {data.agents.error} errors
-                </span>
+                  {data.agents.running}{uiT("ui:messages.m_934b35e4b1b32d98")}{", "}
+                  {data.agents.paused}{uiT("ui:messages.m_b64980c3bb043c17")}{", "}
+                  {data.agents.error}{uiT("ui:messages.m_ffb2f0afdfc4edd2")}</span>
               }
             />
             <MetricCard
               appearance={designSandbox ? "card" : "plain"}
               icon={CircleDot}
               value={data.tasks.inProgress}
-              label="Tasks In Progress"
+              label={uiT("ui:messages.m_63bf7d342080af7f")}
               to="/issues"
               description={
                 <span>
-                  {data.tasks.open} open{", "}
-                  {data.tasks.blocked} blocked
-                </span>
+                  {data.tasks.open}{uiT("ui:messages.m_dee82cf50f327f84")}{", "}
+                  {data.tasks.blocked}{uiT("ui:messages.m_1b30e46cb30f0b9b")}</span>
               }
             />
             <MetricCard
               appearance={designSandbox ? "card" : "plain"}
               icon={DollarSign}
               value={formatCents(data.costs.monthSpendCents)}
-              label="Month Spend"
+              label={uiT("ui:messages.m_b10177a40c608f41")}
               to="/costs"
               description={
                 <span>
                   {data.costs.monthBudgetCents > 0
-                    ? `${data.costs.monthUtilizationPercent}% of ${formatCents(data.costs.monthBudgetCents)} budget`
-                    : "Unlimited budget"}
+                    ? uiT("ui:messages.m_ac8c7ad3677da6df", { v0: (data.costs.monthUtilizationPercent), v1: (formatCents(data.costs.monthBudgetCents)) })
+                    : uiT("ui:messages.m_3c7719943f33a6ed")}
                 </span>
               }
             />
@@ -447,13 +435,13 @@ export function Dashboard() {
               appearance={designSandbox ? "card" : "plain"}
               icon={ShieldCheck}
               value={data.pendingApprovals + data.budgets.pendingApprovals}
-              label="Pending Approvals"
+              label={uiT("ui:messages.m_495aae902643b78a")}
               to="/approvals"
               description={
                 <span>
                   {data.budgets.pendingApprovals > 0
-                    ? `${data.budgets.pendingApprovals} budget overrides awaiting board review`
-                    : "Awaiting board review"}
+                    ? uiT("ui:messages.m_b061080d421da1e7", { v0: (data.budgets.pendingApprovals) })
+                    : uiT("ui:messages.m_19d0be454cbc0740")}
                 </span>
               }
             />
@@ -462,19 +450,19 @@ export function Dashboard() {
           <SmokeLabDashboardCard companyId={selectedCompanyId!} />
 
           <div className={cn("grid grid-cols-2 gap-4", SHOW_TASK_PRIORITY_UI ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
-            <ChartCard title="Run Activity" subtitle="Last 14 days">
+            <ChartCard title={uiT("ui:messages.m_fe11724808acbe9c")} subtitle={uiT("ui:messages.m_d9f1e16176a55479")}>
               <RunActivityChart activity={data.runActivity} />
             </ChartCard>
             {/* PAP-411: "Tasks by Priority" chart hidden behind SHOW_TASK_PRIORITY_UI. */}
             {SHOW_TASK_PRIORITY_UI && (
-              <ChartCard title="Tasks by Priority" subtitle="Last 14 days">
+              <ChartCard title={uiT("ui:messages.m_19d3129acccc328c")} subtitle={uiT("ui:messages.m_d9f1e16176a55479")}>
                 <PriorityChart issues={issues ?? []} />
               </ChartCard>
             )}
-            <ChartCard title="Tasks by Status" subtitle="Last 14 days">
+            <ChartCard title={uiT("ui:messages.m_4b4be15a426db912")} subtitle={uiT("ui:messages.m_d9f1e16176a55479")}>
               <IssueStatusChart issues={issues ?? []} />
             </ChartCard>
-            <ChartCard title="Success Rate" subtitle="Last 14 days">
+            <ChartCard title={uiT("ui:messages.m_5068c6c343ffda3e")} subtitle={uiT("ui:messages.m_d9f1e16176a55479")}>
               <SuccessRateChart activity={data.runActivity} />
             </ChartCard>
           </div>
@@ -491,9 +479,7 @@ export function Dashboard() {
             {/* Recent Activity */}
             {recentActivity.length > 0 && (
               <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                  Recent Activity
-                </h3>
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{uiT("ui:messages.m_9ef7d438ce5b0a38")}</h3>
                 <Card className="@container block py-0 divide-y divide-border overflow-hidden">
                   {designSandbox ? <ActivityList events={recentActivity} agentMap={agentMap} userProfileMap={userProfileMap} entityNameMap={entityNameMap} entityTitleMap={entityTitleMap} rowClassName={event => animatedActivityIds.has(event.id) ? "activity-row-enter" : undefined} /> : recentActivity.map((event) => (
                     <ActivityRow
@@ -512,12 +498,10 @@ export function Dashboard() {
 
             {/* Recent Tasks */}
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                Recent Tasks
-              </h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">{uiT("ui:messages.m_49a027ddc61602c1")}</h3>
               {recentIssues.length === 0 ? (
                 <Card className="block p-4">
-                  <p className="text-sm text-muted-foreground">No tasks yet.</p>
+                  <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_5a889457d27958e3")}</p>
                 </Card>
               ) : (
                 designSandbox ? <Card className="block overflow-hidden py-0">

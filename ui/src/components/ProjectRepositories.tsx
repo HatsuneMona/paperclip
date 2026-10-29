@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { LegacyProjectRepository } from "./LegacyProjectRepository";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -34,12 +35,12 @@ export function ProjectRepositories({ project }: { project: Project }) {
     {project.workspaces.filter((workspace) => workspace.repoUrl && !workspace.metadata?.githubRepositoryId).map((workspace) => <LegacyProjectRepository key={workspace.id} workspace={workspace} projectRef={project.urlKey} />)}
     <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border pt-4">
       {save.isError && <p role="alert" className="mr-auto text-sm text-destructive">{save.error.message}</p>}
-      {save.isSuccess && <span role="status" className="mr-auto text-sm text-muted-foreground">Changes saved</span>}
-      {draft && <Button type="button" variant="ghost" disabled={save.isPending} onClick={() => { setDraft(null); save.reset(); }}>Discard changes</Button>}
-      <Button type="button" disabled={!draft || save.isPending} onClick={() => save.mutate()}>{save.isPending ? "Saving…" : "Save changes"}</Button>
+      {save.isSuccess && <span role="status" className="mr-auto text-sm text-muted-foreground">{uiT("ui:messages.m_16bf144aa29f54ed")}</span>}
+      {draft && <Button type="button" variant="ghost" disabled={save.isPending} onClick={() => { setDraft(null); save.reset(); }}>{uiT("ui:messages.m_f9bfa3dc7c8fcdea")}</Button>}
+      <Button type="button" disabled={!draft || save.isPending} onClick={() => save.mutate()}>{save.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}</Button>
     </div>
     <Dialog open={connecting} onOpenChange={setConnecting}><DialogContent showCloseButton={false} aria-describedby={undefined} className="max-h-(--sz-calc-18) overflow-y-auto sm:max-w-2xl">
-      <DialogTitle className="sr-only">Connect GitHub</DialogTitle>
+      <DialogTitle className="sr-only">{uiT("ui:messages.m_4027e5b24418520f")}</DialogTitle>
       <ConnectionSetupFlow host="dialog" serviceSlug="github" forceNewConnection onCancel={() => setConnecting(false)} onComplete={() => {
         void client.invalidateQueries({ queryKey: repositoryOptionsKey(project.companyId) });
         setConnecting(false);

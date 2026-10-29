@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { CalendarClock, Plus, Webhook } from "lucide-react";
@@ -143,12 +144,10 @@ export function RoutineTriggers() {
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
           {routine.triggers.length}{" "}
-          {routine.triggers.length === 1 ? "trigger" : "triggers"}
+          {routine.triggers.length === 1 ? uiT("ui:messages.m_683259feabbf5eb3") : "triggers"}
         </p>
         <Button size="sm" onClick={() => startSetup("new")}>
-          <Plus className="mr-1.5 h-3.5 w-3.5" />
-          Add trigger
-        </Button>
+          <Plus className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_58fd308928ddaee3")}</Button>
       </div>
       {(error || statusError) && (
         <p role="alert" className="text-sm text-destructive">
@@ -163,10 +162,10 @@ export function RoutineTriggers() {
         >
           <span className="flex-1">
             {trigger.kind === "schedule"
-              ? "Schedule"
+              ? uiT("ui:messages.m_f4830a1dae298044")
               : trigger.kind === "api"
-                ? "API trigger"
-                : "Webhook"}{" "}
+                ? uiT("ui:messages.m_ef556ef20b278966")
+                : uiT("ui:messages.m_4814f62c108d82de")}{" "}
             removed.
           </span>
           <Button
@@ -183,9 +182,7 @@ export function RoutineTriggers() {
                 );
               })
             }
-          >
-            Undo
-          </Button>
+          >{uiT("ui:messages.m_a8283ade31856f71")}</Button>
         </div>
       ))}
       {ctx.secretMessage && (
@@ -193,13 +190,11 @@ export function RoutineTriggers() {
           <p className="text-sm font-medium">{ctx.secretMessage.title}</p>
           {ctx.secretMessage.entries.map((entry) => (
             <div key={entry.webhookUrl} className="space-y-3">
-              <CopyField label="Webhook URL" value={entry.webhookUrl} />
-              <CopyField label="Secret key" value={entry.webhookSecret} />
+              <CopyField label={uiT("ui:messages.m_84805a7574a82052")} value={entry.webhookUrl} />
+              <CopyField label={uiT("ui:messages.m_f47a99ebcf29c1db")} value={entry.webhookSecret} />
             </div>
           ))}
-          <Button variant="outline" onClick={() => ctx.setSecretMessage(null)}>
-            Done
-          </Button>
+          <Button variant="outline" onClick={() => ctx.setSecretMessage(null)}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
         </div>
       )}
       {routine.triggers.length === 0 && (
@@ -227,12 +222,12 @@ export function RoutineTriggers() {
             }
             title={
               trigger.kind === "schedule"
-                ? (describeCron(trigger.cronExpression) ?? "Schedule")
+                ? (describeCron(trigger.cronExpression) ?? uiT("ui:messages.m_f4830a1dae298044"))
                 : trigger.kind === "api"
-                  ? "API trigger"
+                  ? uiT("ui:messages.m_ef556ef20b278966")
                   : trigger.signingMode === "github_hmac"
-                    ? "GitHub webhook"
-                    : "Webhook"
+                    ? uiT("ui:messages.m_62487aeb41d3310b")
+                    : uiT("ui:messages.m_4814f62c108d82de")
             }
             summary={
               trigger.setupPending
@@ -462,9 +457,7 @@ function ScheduleSettings({
         onChange={setCron}
         onValidityChange={setValid}
       />
-      <Label>
-        Time zone
-        <Input
+      <Label>{uiT("ui:messages.m_b9fe1464783e1c0d")}<Input
           value={timezone}
           onChange={(event) => setTimezone(event.target.value)}
         />
@@ -492,12 +485,8 @@ function ScheduleSettings({
               setBusy(false);
             }
           }}
-        >
-          Save schedule
-        </Button>
-        <Button variant="outline" onClick={onCancel}>
-          Cancel
-        </Button>
+        >{uiT("ui:messages.m_387f355f83e2679c")}</Button>
+        <Button variant="outline" onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
       </div>
     </fieldset>
   );
@@ -536,15 +525,15 @@ function WebhookSettings({
           )}
         />
       )}
-      <CopyField label="Webhook URL" value={trigger.webhookUrl ?? ""} />
+      <CopyField label={uiT("ui:messages.m_84805a7574a82052")} value={trigger.webhookUrl ?? ""} />
       {trigger.signingMode !== "none" && (
         <div className="space-y-2">
           {secret ? (
             <CopyField
               label={
                 trigger.signingMode === "bearer"
-                  ? "Authorization header value"
-                  : "Secret key"
+                  ? uiT("ui:messages.m_39a91b3db30e7a70")
+                  : uiT("ui:messages.m_f47a99ebcf29c1db")
               }
               value={
                 trigger.signingMode === "bearer" ? `Bearer ${secret}` : secret

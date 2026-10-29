@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import {
   Component,
   createContext,
@@ -601,9 +602,7 @@ function LauncherModalShell({
             size="sm"
             className="ml-auto"
             onClick={() => void closeLauncher(instance.key, { reason: "programmatic" })}
-          >
-            Close
-          </Button>
+          >{uiT("ui:messages.m_7d9eb7acb13e2462")}</Button>
         </div>
         <div
           className={cn(

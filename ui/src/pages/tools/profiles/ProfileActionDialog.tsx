@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AlertTriangle } from "lucide-react";
 import type { ToolProfileWithDetails } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,7 @@ export function ProfileActionDialog({
           </div>
         ) : null}
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button variant="ghost" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             variant={kind === "delete" ? "destructive" : "default"}
             disabled={pending || defaultDeleteBlocked}

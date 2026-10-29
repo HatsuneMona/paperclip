@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { Link } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
@@ -89,7 +90,7 @@ export function Org() {
   const { setBreadcrumbs } = useBreadcrumbs();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Org Chart" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_aab3e6c8a0d87c7d") }]);
   }, [setBreadcrumbs]);
 
   const { data, isLoading, error } = useQuery({

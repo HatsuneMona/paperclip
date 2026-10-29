@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Loader2, Send } from "lucide-react";
@@ -55,11 +56,11 @@ export function SlackTestMessageButton({ endpointId }: { endpointId: string }) {
   return <div className="space-y-2">
       <Button variant="outline" disabled={send.isPending || sent || Boolean(pendingConnection && !invitationExpired)} onClick={startTest}>
         {send.isPending ? <Loader2 className="size-4 animate-spin" /> : sent ? <Check className="size-4" /> : <Send className="size-4" />}
-        {send.isPending ? "Sending…" : sent ? "Test message sent" : invitationExpired ? "Request a new invitation" : pendingConnection ? "Waiting for Slack connection…" : "Send me a test message"}
+        {send.isPending ? uiT("ui:messages.m_b8ed5279e897be5d") : sent ? "Test message sent" : invitationExpired ? "Request a new invitation" : pendingConnection ? "Waiting for Slack connection…" : "Send me a test message"}
       </Button>
     {pendingConnection && <p role="status" className="text-sm text-muted-foreground">{invitationExpired ? "The Slack invitation expired." : "Open the invitation in Slack to connect your account."}</p>}
     {send.isError && <div role="alert" className="max-w-sm text-sm text-destructive">
-      {send.error.message} <button className="underline" onClick={reset}>Dismiss</button>
+      {send.error.message} <button className="underline" onClick={reset}>{uiT("ui:messages.m_48845bff334a50a5")}</button>
     </div>}
     <Dialog open={accounts !== null} onOpenChange={(open) => { if (!open && !send.isPending) setAccounts(null); }}>
       <DialogContent>
@@ -79,7 +80,7 @@ export function SlackTestMessageButton({ endpointId }: { endpointId: string }) {
         {nextCursor && <Button variant="ghost" disabled={send.isPending} onClick={() => send.mutate({ accountCursor: nextCursor })}>Load more Slack accounts</Button>}
         {send.isError && <p role="alert" className="text-sm text-destructive">{send.error.message}</p>}
         <div className="flex items-center justify-between gap-3">
-          <Button variant="ghost" disabled={send.isPending} onClick={() => setAccounts(null)}>Cancel</Button>
+          <Button variant="ghost" disabled={send.isPending} onClick={() => setAccounts(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button disabled={!selected || send.isPending} onClick={() => send.mutate({ slackUserId: selected })}>{send.isPending ? "Sending invitation…" : "Send connection invitation"}</Button>
         </div>
       </DialogContent>

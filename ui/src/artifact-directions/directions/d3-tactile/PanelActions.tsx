@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Download, ExternalLink, Maximize2, MessageSquare, PanelRight, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -28,7 +29,7 @@ const OVER_SLOT = "@3xs/desk:after:absolute @3xs/desk:after:inset-y-0 @3xs/desk:
 export const BUTTON_RING = cn("focus-visible:border-transparent", RING, RING_ON.desk);
 
 function TextAction({ action, title, primary, overSlot }: { action: ArtifactAction; title: string; primary: boolean; overSlot: boolean }) {
-  const label = `${action.label}: ${title}`;
+  const label = uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action.label), v1: (title) });
   const className = cn("h-7 px-2.5", BUTTON_RING, primary ? overSlot && OVER_SLOT : "relative text-(--tac-meta) hover:text-foreground");
   const content = (
     <>
@@ -47,7 +48,7 @@ function IconAction({ action, title }: { action: ArtifactAction; title: string }
   const Icon = ICON[action.icon];
   return (
     <Button asChild variant="ghost" size="icon-xs" className={cn("relative text-(--tac-meta) hover:text-foreground", BUTTON_RING)}>
-      <a href={action.href} aria-label={`${action.label}: ${title}`} title={action.label}>
+      <a href={action.href} aria-label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action.label), v1: (title) })} title={action.label}>
         <Icon aria-hidden />
       </a>
     </Button>

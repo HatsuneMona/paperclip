@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Link } from "@/lib/router";
 import { Menu, PanelRightClose, PanelRightOpen } from "lucide-react";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
@@ -104,7 +105,7 @@ export function BreadcrumbBar({ taskDetailLayout = false }: { taskDetailLayout?:
       size="icon-sm"
       className="mr-2 shrink-0"
       onClick={toggleSidebar}
-      aria-label="Open sidebar"
+      aria-label={uiT("ui:messages.m_45609089ee73fb94")}
     >
       <Menu className="h-5 w-5" />
     </Button>
@@ -236,8 +237,8 @@ export function BreadcrumbBar({ taskDetailLayout = false }: { taskDetailLayout?:
           size="icon-sm"
           className="ml-5 size-9 shrink-0 text-muted-foreground"
           onClick={toggleTaskPanel}
-          aria-label={taskPanelOpen ? "Hide properties" : "Show properties"}
-          title={taskPanelOpen ? "Hide properties" : "Show properties"}
+          aria-label={taskPanelOpen ? uiT("ui:messages.m_dd66dbf97ac54e03") : uiT("ui:messages.m_ae4293fcd7425916")}
+          title={taskPanelOpen ? uiT("ui:messages.m_dd66dbf97ac54e03") : uiT("ui:messages.m_ae4293fcd7425916")}
         >
           {taskPanelOpen ? <PanelRightClose className="h-4 w-4" /> : <PanelRightOpen className="h-4 w-4" />}
         </Button>

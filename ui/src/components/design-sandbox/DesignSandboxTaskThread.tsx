@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { TaskChatShimmerScope } from "../task-chat/TaskChatShimmer";
 import { revealWords, wordCount } from "./word-reveal";
 import { MarkdownWordStreaming } from "../MarkdownWordStreaming";
@@ -144,7 +145,7 @@ function PreviewCase({ example, header, agentName, agent, replay, streamlined }:
       /> : <TaskChatShimmerScope items={items}>
         <TaskChatLiveRunPill status={status} startedAtMs={status === "queued" ? null : startedAt.current} finishedAtMs={terminal ? startedAt.current + 40_000 : null} toolSummary={toolCountSummaryFromEntries(scenario.entries)} />
         <MarkdownWordStreaming.Provider value={replay}><TaskChatLiveTail items={items} emptyMessage={scenario.emptyMessage ?? "Waiting for transcript…"} onRuntimeRequestDecision={runtimeDecision} /></MarkdownWordStreaming.Provider>
-        {failed ? <TaskChatThreadView items={[{ id: "synthetic-run-stop", kind: "marker", variant: "interrupted", tone: status === "cancelled" ? "neutral" : "error", collapsible: true, label: status === "cancelled" ? "Run cancelled" : status === "timed_out" ? "Run timed out" : "Run failed", detail: status === "cancelled" ? "The synthetic run was stopped; no saved task was changed." : "Synthetic provider failure: the test process stopped before a final reply was available." }]} scroll={false} /> : null}
+        {failed ? <TaskChatThreadView items={[{ id: "synthetic-run-stop", kind: "marker", variant: "interrupted", tone: status === "cancelled" ? "neutral" : "error", collapsible: true, label: status === "cancelled" ? uiT("ui:messages.m_2d34c9f19f5402b3") : status === "timed_out" ? uiT("ui:messages.m_7b73d2f741cdb3ab") : "Run failed", detail: status === "cancelled" ? "The synthetic run was stopped; no saved task was changed." : "Synthetic provider failure: the test process stopped before a final reply was available." }]} scroll={false} /> : null}
       </TaskChatShimmerScope>}
     </> : null} />
     {showComposer ? <TaskChatComposerDock mobile={false} streamlined={streamlined}>

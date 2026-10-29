@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "../../lib/utils";
 
 /**
@@ -133,8 +134,7 @@ export function Stepper({
         );
       })}
       {/* Out of flow, so it neither takes a row nor picks up the gap. */}
-      <span className="sr-only">
-        Step {step} of {total}
+      <span className="sr-only">{uiT("ui:messages.m_474a987f3bbe57fe")}{step}{uiT("ui:messages.m_a4282e4b2298b90b")}{total}
       </span>
     </div>
   );

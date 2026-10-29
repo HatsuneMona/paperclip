@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { Check, FolderOpen, Loader2, Plus, X } from "lucide-react";
 import { Button } from "./ui/button";
@@ -46,14 +47,14 @@ export function AllowedProjectsEditor({ projects, projectIds, canManage, agentNa
             onCheckedChange={checked => { setAdded(current => checked ? [...new Set([...current, project.id])] : current.filter(id => id !== project.id)); setSaved(false); }} />
           <span className="min-w-0 text-sm">{project.name}{projectIds.includes(project.id) && <span className="block text-xs text-muted-foreground">Already allowed</span>}</span>
         </label>)}</div>
-        {!matches.length && <p className="text-sm text-muted-foreground">No projects found.</p>}
-        <Button variant="secondary" size="sm" className="w-full" onClick={() => setOpen(false)}>Done</Button>
+        {!matches.length && <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_26e92309ba5b0ca9")}</p>}
+        <Button variant="secondary" size="sm" className="w-full" onClick={() => setOpen(false)}>{uiT("ui:messages.m_11a6767d5674c7e4")}</Button>
       </PopoverContent></Popover>}
     </div>
     {visibleIds.length ? <ul aria-label="Allowed projects" className="divide-y divide-border rounded-lg border">
       {visibleIds.map(id => <li key={id} className="flex items-center gap-3 p-4">
         <FolderOpen className="size-4 shrink-0 text-muted-foreground" aria-hidden /><span className="min-w-0 flex-1 break-words text-sm font-medium">{name(id)}</span>
-        {projectIds.includes(id) ? <span className="inline-flex items-center gap-1 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden />Allowed</span>
+        {projectIds.includes(id) ? <span className="inline-flex items-center gap-1 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden />{uiT("ui:messages.m_1bb201d188352e9b")}</span>
           : <><span className="text-xs text-muted-foreground">To add</span><Button variant="ghost" size="icon-sm" disabled={saving} aria-label={`Undo adding ${name(id)}`} onClick={() => setAdded(current => current.filter(value => value !== id))}><X className="size-4" aria-hidden /></Button></>}
       </li>)}
     </ul> : <p className="text-sm text-muted-foreground">No projects allowed yet.</p>}
@@ -65,7 +66,7 @@ export function AllowedProjectsEditor({ projects, projectIds, canManage, agentNa
     {error && <p role="alert" className="text-sm text-destructive">Couldn’t save project access. Your selection is kept. {error}</p>}
     {saved && <p role="status" className="inline-flex items-center gap-2 text-sm"><Check className="size-4" aria-hidden />Project access saved. Return to your task to retry.</p>}
     {canManage && <div className="flex items-center justify-between gap-3 border-t pt-4">
-      <Button variant="ghost" disabled={saving || !pending.length} onClick={() => { setAdded([]); setError(null); setSaved(false); }}>Cancel</Button>
+      <Button variant="ghost" disabled={saving || !pending.length} onClick={() => { setAdded([]); setError(null); setSaved(false); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
       <Button disabled={saving || !pending.length} onClick={() => void save()}>{saving && <Loader2 className="size-4 animate-spin" aria-hidden />}{saving ? "Saving access…" : error ? "Try saving again" : "Save project access"}</Button>
     </div>}
   </section>;

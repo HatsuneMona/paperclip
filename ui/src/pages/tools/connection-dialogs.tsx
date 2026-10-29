@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Stethoscope, Trash2, Vault } from "lucide-react";
@@ -240,7 +241,7 @@ export function AddConnectionDialog({
     },
     onError: (err) =>
       pushToast({
-        title: "Probe failed",
+        title: uiT("ui:messages.m_450e4a86d32cc996"),
         body: err instanceof ApiError ? err.message : String(err),
         tone: "error",
       }),
@@ -296,7 +297,7 @@ export function AddConnectionDialog({
           {step === 1 && !locked ? (
             <>
               <div className="space-y-1.5">
-                <Label>Application</Label>
+                <Label>{uiT("ui:messages.m_e7ad522ea327e5ba")}</Label>
                 <Select value={applicationMode} onValueChange={(v) => setApplicationMode(v as "existing" | "new")}>
                   <SelectTrigger>
                     <SelectValue />
@@ -313,7 +314,7 @@ export function AddConnectionDialog({
                   <Label>Existing application</Label>
                   <Select value={applicationId} onValueChange={setApplicationId}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select an application" />
+                      <SelectValue placeholder={uiT("ui:messages.m_0633c481c5e2c932")} />
                     </SelectTrigger>
                     <SelectContent>
                       {(apps.data?.applications ?? []).map((a) => (
@@ -351,7 +352,7 @@ export function AddConnectionDialog({
               ) : null}
 
               <div className="space-y-1.5">
-                <Label htmlFor="conn-name">Connection name</Label>
+                <Label htmlFor="conn-name">{uiT("ui:messages.m_686d4d5d8ecd1a79")}</Label>
                 <Input
                   id="conn-name"
                   value={name}
@@ -362,7 +363,7 @@ export function AddConnectionDialog({
               </div>
 
               <div className="space-y-1.5">
-                <Label>Transport</Label>
+                <Label>{uiT("ui:messages.m_aaead4abf5d0fd5e")}</Label>
                 <Select
                   value={transport}
                   onValueChange={(v) => setTransport(v as "mcp_remote" | "local_stdio")}
@@ -461,11 +462,9 @@ export function AddConnectionDialog({
                         onChange={(e) => setPendingHeader(e.target.value)}
                         placeholder="Header"
                         className="w-32"
-                        aria-label="Header name"
+                        aria-label={uiT("ui:messages.m_c1dcc8fb31f6ee89")}
                       />
-                      <Button type="button" size="sm" variant="outline" onClick={addCred} disabled={!pendingSecretId}>
-                        Add
-                      </Button>
+                      <Button type="button" size="sm" variant="outline" onClick={addCred} disabled={!pendingSecretId}>{uiT("ui:messages.m_9fd728c66c9a256b")}</Button>
                     </div>
                     {pendingSecretId ? (
                       <p className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
@@ -533,18 +532,12 @@ export function AddConnectionDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={onClose}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           {step === 1 && !locked ? (
-            <Button disabled={!appChoiceValid} onClick={() => setStep(2)}>
-              Continue
-            </Button>
+            <Button disabled={!appChoiceValid} onClick={() => setStep(2)}>{uiT("ui:messages.m_31fbef162594de01")}</Button>
           ) : !locked ? (
             <>
-              <Button variant="outline" onClick={() => setStep(1)}>
-                Back
-              </Button>
+              <Button variant="outline" onClick={() => setStep(1)}>{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
               <Button disabled={!canCreate} onClick={() => create.mutate()}>
                 {create.isPending ? "Creating draft…" : "Create & probe"}
               </Button>
@@ -556,7 +549,7 @@ export function AddConnectionDialog({
                 {probe.isPending ? "Probing…" : "Re-probe"}
               </Button>
               <Button disabled={activate.isPending || probe.isPending} onClick={() => draft && activate.mutate(draft.id)}>
-                {activate.isPending ? "Activating…" : "Activate"}
+                {activate.isPending ? "Activating…" : uiT("ui:messages.m_24433c70eba5b153")}
               </Button>
             </>
           )}

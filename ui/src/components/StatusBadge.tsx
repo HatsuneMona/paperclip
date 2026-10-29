@@ -1,3 +1,4 @@
+import { statusText } from "@/i18n";
 import type { CSSProperties } from "react";
 import { cn } from "../lib/utils";
 import {
@@ -19,7 +20,7 @@ function scStyle(cssVar: string): CSSProperties {
 /** "in_review" → "In review" (sentence case). */
 function sentenceCaseStatus(status: string): string {
   const s = status.replace(/_/g, " ");
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  return statusText(status, s.charAt(0).toUpperCase() + s.slice(1));
 }
 
 /**
@@ -36,7 +37,7 @@ export function StatusBadge({ status, label, className }: { status: string; labe
         className
       )}
     >
-      {label ?? status.replace(/[_-]/g, " ")}
+      {label ?? statusText(status)}
     </span>
   );
 }
@@ -54,7 +55,7 @@ export function AgentStatusBadge({ status }: { status: string }) {
       className="status-chip inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium leading-none whitespace-nowrap shrink-0"
       style={scStyle(cssVar)}
     >
-      {label.replace(/_/g, " ")}
+      {statusText(label)}
     </span>
   );
 }

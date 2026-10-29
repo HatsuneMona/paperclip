@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, Layers, Plus, Pencil, Trash2, Link2, ShieldCheck } from "lucide-react";
@@ -60,18 +61,18 @@ import {
 } from "./shared";
 
 const SELECTOR_TYPES: Array<{ value: ToolProfileEntrySelectorType; label: string }> = [
-  { value: "tool_name", label: "Tool name" },
-  { value: "risk_level", label: "Risk level" },
-  { value: "application", label: "Application" },
-  { value: "connection", label: "Connection" },
+  { value: "tool_name", label: uiT("ui:messages.m_c506c98fabda7bb0") },
+  { value: "risk_level", label: uiT("ui:messages.m_d4419ea33b84fa50") },
+  { value: "application", label: uiT("ui:messages.m_e7ad522ea327e5ba") },
+  { value: "connection", label: uiT("ui:messages.m_639a40e82b9a96f0") },
   { value: "catalog_entry", label: "Catalog entry ID" },
 ];
 
 const TARGET_TYPES: Array<{ value: ToolProfileBindingTargetType; label: string }> = [
-  { value: "company", label: "Company" },
-  { value: "agent", label: "Agent" },
-  { value: "project", label: "Project" },
-  { value: "routine", label: "Routine" },
+  { value: "company", label: uiT("ui:messages.m_de4743c879734dc3") },
+  { value: "agent", label: uiT("ui:messages.m_11b39c93777e8f1f") },
+  { value: "project", label: uiT("ui:messages.m_9859597853197476") },
+  { value: "routine", label: uiT("ui:messages.m_0b5baf309897ec7e") },
   { value: "issue", label: "Issue ID" },
 ];
 
@@ -400,16 +401,16 @@ function EntryFields({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="include">Include</SelectItem>
-            <SelectItem value="exclude">Exclude</SelectItem>
+            <SelectItem value="exclude">{uiT("ui:messages.m_5b76f62e1ba0401f")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
       {selectorType === "application" ? (
         <div className="space-y-1.5 sm:col-span-2">
-          <Label>Application</Label>
+          <Label>{uiT("ui:messages.m_e7ad522ea327e5ba")}</Label>
           <Select value={applicationId} onValueChange={setApplicationId}>
             <SelectTrigger>
-              <SelectValue placeholder="Select an application" />
+              <SelectValue placeholder={uiT("ui:messages.m_0633c481c5e2c932")} />
             </SelectTrigger>
             <SelectContent>
               {applications.map((app) => (
@@ -423,10 +424,10 @@ function EntryFields({
       ) : null}
       {selectorType === "connection" ? (
         <div className="space-y-1.5 sm:col-span-2">
-          <Label>Connection</Label>
+          <Label>{uiT("ui:messages.m_639a40e82b9a96f0")}</Label>
           <Select value={connectionId} onValueChange={setConnectionId}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a connection" />
+              <SelectValue placeholder={uiT("ui:messages.m_7c87405a47b9ad71")} />
             </SelectTrigger>
             <SelectContent>
               {connections.map((conn) => (
@@ -446,13 +447,13 @@ function EntryFields({
       ) : null}
       {selectorType === "tool_name" ? (
         <div className="space-y-1.5 sm:col-span-2">
-          <Label htmlFor="tool-name">Tool name</Label>
-          <Input id="tool-name" value={toolName} onChange={(event) => setToolName(event.target.value)} placeholder="e.g. send_email or slack.list_*" />
+          <Label htmlFor="tool-name">{uiT("ui:messages.m_c506c98fabda7bb0")}</Label>
+          <Input id="tool-name" value={toolName} onChange={(event) => setToolName(event.target.value)} placeholder={uiT("ui:messages.m_150aa7f6b0eca439")} />
         </div>
       ) : null}
       {selectorType === "risk_level" ? (
         <div className="space-y-1.5 sm:col-span-2">
-          <Label>Risk level</Label>
+          <Label>{uiT("ui:messages.m_d4419ea33b84fa50")}</Label>
           <Select value={riskLevel} onValueChange={(value) => setRiskLevel(value as ToolRiskLevel)}>
             <SelectTrigger>
               <SelectValue />
@@ -484,7 +485,7 @@ export function EffectiveAgentPanel({ companyId, agentOptions }: { companyId: st
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="space-y-1.5">
-        <Label>Agent</Label>
+        <Label>{uiT("ui:messages.m_11b39c93777e8f1f")}</Label>
         <AgentSelect agents={agentOptions} value={agentId} onChange={setAgentId} />
       </div>
       {!agentId ? (
@@ -492,7 +493,7 @@ export function EffectiveAgentPanel({ companyId, agentOptions }: { companyId: st
           Pick an agent to see what it can use right now.
         </div>
       ) : effective.isLoading ? (
-        <LoadingState label="Checking access..." />
+        <LoadingState label={uiT("ui:messages.m_705975faaaf54eb4")} />
       ) : effective.error ? (
         <ErrorState error={effective.error} onRetry={() => effective.refetch()} />
       ) : (
@@ -517,7 +518,7 @@ export function EffectiveAgentPanel({ companyId, agentOptions }: { companyId: st
             )}
           </div>
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-foreground">Access profiles</h3>
+            <h3 className="text-sm font-semibold text-foreground">{uiT("ui:messages.m_2471292ff715cc6a")}</h3>
             {(effective.data?.profiles ?? []).length === 0 ? (
               <div className="rounded-lg border border-dashed border-border px-4 py-5 text-sm text-muted-foreground">
                 No active profile applies to this agent.
@@ -528,7 +529,7 @@ export function EffectiveAgentPanel({ companyId, agentOptions }: { companyId: st
                   <div key={profile.id} className="flex items-center justify-between gap-3 px-3 py-2.5">
                     <span className="min-w-0 truncate text-sm font-medium text-foreground">{profile.name}</span>
                     {profile.summary.isCompanyDefault ? (
-                      <Badge variant="secondary">Organization default</Badge>
+                      <Badge variant="secondary">{uiT("ui:messages.m_804a1f086aecaf75")}</Badge>
                     ) : null}
                   </div>
                 ))}
@@ -567,7 +568,7 @@ function AllowList({ rows, catalogLoading }: { rows: AllowListRow[]; catalogLoad
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h4 className="text-sm font-semibold text-foreground">Allow list</h4>
         <p className="text-xs text-muted-foreground">
-          {rows.length} tool{rows.length === 1 ? "" : "s"}
+          {rows.length} tool{rows.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
           {explicitCount > 0 ? ` · ${explicitCount} explicit` : ""}
           {patternCount > 0 ? ` · ${patternCount} via pattern` : ""}
           {defaultCount > 0 ? ` · ${defaultCount} via default` : ""}
@@ -585,11 +586,11 @@ function AllowList({ rows, catalogLoading }: { rows: AllowListRow[]; catalogLoad
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
-                  <th className="px-3 py-2.5 font-medium">Tool</th>
-                  <th className="px-3 py-2.5 font-medium">Application</th>
-                  <th className="px-3 py-2.5 font-medium">Capabilities</th>
-                  <th className="px-3 py-2.5 font-medium">Risk</th>
-                  <th className="px-3 py-2.5 font-medium">Source</th>
+                  <th className="px-3 py-2.5 font-medium">{uiT("ui:messages.m_2e53bdcd0740867b")}</th>
+                  <th className="px-3 py-2.5 font-medium">{uiT("ui:messages.m_e7ad522ea327e5ba")}</th>
+                  <th className="px-3 py-2.5 font-medium">{uiT("ui:messages.m_9460f16ac9b5171e")}</th>
+                  <th className="px-3 py-2.5 font-medium">{uiT("ui:messages.m_0711a8d636e4c068")}</th>
+                  <th className="px-3 py-2.5 font-medium">{uiT("ui:messages.m_0e570ca6fabe24f9")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -743,7 +744,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
       invalidateProfiles();
       setEditProfile(null);
       resetProfileForm();
-      pushToast({ title: "Profile updated", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_9c5551e87cb7333f"), tone: "success" });
     },
     onError: (error) => pushToast({
       title: "Could not update profile",
@@ -910,13 +911,11 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
   return (
     <div className="space-y-4">
       <ToolsPageHeader
-        title="Access profiles"
-        description="Reusable bundles of allowed applications, connections, and tools, assignable to agents, projects, routines, or issues."
+        title={uiT("ui:messages.m_2471292ff715cc6a")}
+        description={uiT("ui:messages.m_0a513750e0ff2027")}
         actions={
           <Button size="sm" onClick={() => setCreateOpen(true)}>
-            <Plus className="mr-1 h-4 w-4" />
-            New profile
-          </Button>
+            <Plus className="mr-1 h-4 w-4" />{uiT("ui:messages.m_fcf4f3f4d5f73ef8")}</Button>
         }
       />
 
@@ -926,7 +925,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
         <EmptyState
           icon={Layers}
           message="No access profiles yet"
-          description="Create a profile to group tool selectors, then bind it to the organization or a specific agent."
+          description={uiT("ui:messages.m_61e7d38403897c9b")}
           action="New profile"
           onAction={() => setCreateOpen(true)}
         />
@@ -963,7 +962,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
                           ) : null}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          {toolCount} tool{toolCount === 1 ? "" : "s"} · {bindingsSubtitle(profile.bindings)}
+                          {toolCount} tool{toolCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} · {bindingsSubtitle(profile.bindings)}
                         </span>
                       </button>
                     </li>
@@ -1010,7 +1009,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
       }}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{editProfile ? "Edit profile" : "New profile"}</DialogTitle>
+            <DialogTitle>{editProfile ? uiT("ui:messages.m_15c4aa13037eaf52") : uiT("ui:messages.m_fcf4f3f4d5f73ef8")}</DialogTitle>
             <DialogDescription>
               Profile rules are enforced by the tool gateway policy service.
             </DialogDescription>
@@ -1018,7 +1017,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
           <div className="space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <Label htmlFor="profile-name">Name</Label>
+                <Label htmlFor="profile-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
                 <Input
                   id="profile-name"
                   value={name}
@@ -1026,21 +1025,21 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
                     setName(event.target.value);
                     if (!editProfile && !profileKey.trim()) setProfileKey(slugifyProfileKey(event.target.value));
                   }}
-                  placeholder="Engineering write tools"
+                  placeholder={uiT("ui:messages.m_0d0246f8ae5f5178")}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="profile-key">Key</Label>
+                <Label htmlFor="profile-key">{uiT("ui:messages.m_99a52df3ff3d4994")}</Label>
                 <Input id="profile-key" value={profileKey} onChange={(event) => setProfileKey(event.target.value)} />
               </div>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="profile-description">Description</Label>
+              <Label htmlFor="profile-description">{uiT("ui:messages.m_526e0087cc3f254d")}</Label>
               <Textarea
                 id="profile-description"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                placeholder="Optional context for reviewers."
+                placeholder={uiT("ui:messages.m_490a34adf82fb196")}
               />
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -1057,15 +1056,15 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label>Status</Label>
+                <Label>{uiT("ui:messages.m_920e413c7d411b61")}</Label>
                 <Select value={status} onValueChange={(value) => setStatus(value as ToolProfileStatus)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="disabled">Disabled</SelectItem>
-                    <SelectItem value="archived">Archived</SelectItem>
+                    <SelectItem value="active">{uiT("ui:messages.m_92340695899bd2d8")}</SelectItem>
+                    <SelectItem value="disabled">{uiT("ui:messages.m_75081b593d15cf6e")}</SelectItem>
+                    <SelectItem value="archived">{uiT("ui:messages.m_bdb86505f8062d15")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1097,11 +1096,9 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
               setEditProfile(null);
               resetProfileForm();
               resetEntryForm();
-            }}>
-              Cancel
-            </Button>
+            }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button disabled={!name.trim() || createProfile.isPending || updateProfile.isPending} onClick={saveProfile}>
-              {editProfile ? "Save" : createProfile.isPending ? "Creating..." : "Create"}
+              {editProfile ? uiT("ui:messages.m_1509f561f2416598") : createProfile.isPending ? uiT("ui:messages.m_def70944c9bb9c3b") : uiT("ui:messages.m_4759498ac2a719c6")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1137,7 +1134,7 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
             connections={connectionOptions}
           />
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEntryProfile(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setEntryProfile(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button disabled={addEntry.isPending} onClick={saveEntry}>
               Add entry
             </Button>
@@ -1171,15 +1168,15 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
             </div>
             {targetType === "agent" ? (
               <div className="space-y-1.5">
-                <Label>Agent</Label>
+                <Label>{uiT("ui:messages.m_11b39c93777e8f1f")}</Label>
                 <AgentSelect agents={agentOptions} value={targetAgentId} onChange={setTargetAgentId} />
               </div>
             ) : null}
             {targetType === "project" ? (
               <div className="space-y-1.5">
-                <Label>Project</Label>
+                <Label>{uiT("ui:messages.m_9859597853197476")}</Label>
                 <Select value={targetProjectId} onValueChange={setTargetProjectId}>
-                  <SelectTrigger><SelectValue placeholder="Select a project" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_dd18e6f08d5e0eea")} /></SelectTrigger>
                   <SelectContent>
                     {projectOptions.map((project) => <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>)}
                   </SelectContent>
@@ -1188,9 +1185,9 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
             ) : null}
             {targetType === "routine" ? (
               <div className="space-y-1.5">
-                <Label>Routine</Label>
+                <Label>{uiT("ui:messages.m_0b5baf309897ec7e")}</Label>
                 <Select value={targetRoutineId} onValueChange={setTargetRoutineId}>
-                  <SelectTrigger><SelectValue placeholder="Select a routine" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={uiT("ui:messages.m_29f3689a4ece4637")} /></SelectTrigger>
                   <SelectContent>
                     {routineOptions.map((routine) => <SelectItem key={routine.id} value={routine.id}>{routine.title}</SelectItem>)}
                   </SelectContent>
@@ -1204,12 +1201,12 @@ export function ProfilesTab({ companyId }: { companyId: string }) {
               </div>
             ) : null}
             <div className="space-y-1.5">
-              <Label htmlFor="profile-priority">Priority</Label>
+              <Label htmlFor="profile-priority">{uiT("ui:messages.m_d60dbba079223254")}</Label>
               <Input id="profile-priority" type="number" min={0} max={10000} value={priority} onChange={(event) => setPriority(event.target.value)} />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setBindProfileFor(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setBindProfileFor(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button disabled={bind.isPending} onClick={saveBinding}>
               Bind
             </Button>
@@ -1275,15 +1272,12 @@ function ProfileDetail({
             {profile.description ? (
               <p className="mt-1 text-sm text-muted-foreground">{profile.description}</p>
             ) : null}
-            <p className="mt-1 text-xs text-muted-foreground">
-              updated <RelativeTime value={profile.updatedAt} />
+            <p className="mt-1 text-xs text-muted-foreground">{uiT("ui:messages.m_53961930ab4482d8")}<RelativeTime value={profile.updatedAt} />
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-1.5">
             <Button size="sm" variant="outline" onClick={onEdit}>
-              <Pencil className="mr-1 h-3.5 w-3.5" />
-              Edit
-            </Button>
+              <Pencil className="mr-1 h-3.5 w-3.5" />{uiT("ui:messages.m_464c4ffd019e1e96")}</Button>
             <Button size="sm" variant="outline" onClick={onAddEntry}>
               <Plus className="mr-1 h-3.5 w-3.5" />
               Entry
@@ -1310,7 +1304,7 @@ function ProfileDetail({
                   type="button"
                   className="rounded p-0.5 text-muted-foreground hover:text-destructive"
                   onClick={() => onUnbind(binding)}
-                  aria-label={`Remove ${binding.targetType} binding`}
+                  aria-label={uiT("ui:messages.m_ff9aba00e9b25ac3", { v0: (binding.targetType) })}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
@@ -1353,7 +1347,7 @@ function ProfileDetail({
                   type="button"
                   className="rounded p-0.5 text-muted-foreground hover:text-destructive"
                   onClick={() => onDeleteEntry(entry.id)}
-                  aria-label={`Delete ${entry.selectorType} entry`}
+                  aria-label={uiT("ui:messages.m_17e592c483c8d629", { v0: (entry.selectorType) })}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

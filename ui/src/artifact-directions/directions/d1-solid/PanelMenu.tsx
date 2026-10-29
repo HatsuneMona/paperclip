@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Ellipsis } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import type { LabArtifact } from "../../kit";
@@ -15,7 +16,7 @@ export function PanelMenu({ actions, artifact }: { actions: SolidAction[]; artif
   if (actions.length === 0) return null;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger data-secondary aria-label={`More actions: ${artifact.title}`} title="More actions" className={ICON_BUTTON}>
+      <DropdownMenuTrigger data-secondary aria-label={`More actions: ${artifact.title}`} title={uiT("ui:messages.m_f8d46c2570e70736")} className={ICON_BUTTON}>
         <Ellipsis aria-hidden className="size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

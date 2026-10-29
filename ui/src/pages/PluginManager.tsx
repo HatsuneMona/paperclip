@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 /**
  * @fileoverview Plugin Manager page — admin UI for discovering,
  * installing, enabling/disabling, and uninstalling plugins.
@@ -63,9 +64,7 @@ function ExperimentalBadge() {
     <Badge
       variant="outline"
       className="border-amber-500/30 bg-amber-500/10 text-amber-700 hover:bg-amber-500/10 dark:text-amber-200"
-    >
-      Experimental
-    </Badge>
+    >{uiT("ui:messages.m_3dc9f569422dcfda")}</Badge>
   );
 }
 
@@ -100,9 +99,9 @@ export function PluginManager() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Organization", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Plugins" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_d764d42592fc9687"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_74a883a037bc227f"), href: "/company/settings" },
+      { label: uiT("ui:messages.m_9514b7ff4860ead7") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -132,10 +131,10 @@ export function PluginManager() {
       invalidatePluginQueries();
       setInstallDialogOpen(false);
       setInstallPackage("");
-      pushToast({ title: "Plugin installed successfully", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_bdc72b12c043a579"), tone: "success" });
     },
     onError: (err: Error) => {
-      pushToast({ title: "Failed to install plugin", body: err.message, tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_3a078590c1e20801"), body: err.message, tone: "error" });
     },
   });
 
@@ -143,10 +142,10 @@ export function PluginManager() {
     mutationFn: (pluginId: string) => pluginsApi.uninstall(pluginId),
     onSuccess: () => {
       invalidatePluginQueries();
-      pushToast({ title: "Plugin uninstalled successfully", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_d77e15c14904fd7a"), tone: "success" });
     },
     onError: (err: Error) => {
-      pushToast({ title: "Failed to uninstall plugin", body: err.message, tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_633e573dbad1a7a8"), body: err.message, tone: "error" });
     },
   });
 
@@ -154,10 +153,10 @@ export function PluginManager() {
     mutationFn: (pluginId: string) => pluginsApi.enable(pluginId),
     onSuccess: () => {
       invalidatePluginQueries();
-      pushToast({ title: "Plugin enabled", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_4ca803ee7c291a70"), tone: "success" });
     },
     onError: (err: Error) => {
-      pushToast({ title: "Failed to enable plugin", body: err.message, tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_71e15485a3ea888d"), body: err.message, tone: "error" });
     },
   });
 
@@ -165,10 +164,10 @@ export function PluginManager() {
     mutationFn: (pluginId: string) => pluginsApi.disable(pluginId),
     onSuccess: () => {
       invalidatePluginQueries();
-      pushToast({ title: "Plugin disabled", tone: "info" });
+      pushToast({ title: uiT("ui:messages.m_a7600976da827cce"), tone: "info" });
     },
     onError: (err: Error) => {
-      pushToast({ title: "Failed to disable plugin", body: err.message, tone: "error" });
+      pushToast({ title: uiT("ui:messages.m_ceb9e4f939859073"), body: err.message, tone: "error" });
     },
   });
 
@@ -190,7 +189,7 @@ export function PluginManager() {
   );
 
   if (isLoading || pluginsView.kind === "reconnecting") {
-    return <div className="p-4 text-sm text-muted-foreground">Loading plugins...</div>;
+    return <div className="p-4 text-sm text-muted-foreground">{uiT("ui:messages.m_336bfcb060987f9d")}</div>;
   }
   if (pluginsView.kind === "error") {
     return (
@@ -209,26 +208,22 @@ export function PluginManager() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Puzzle className="h-6 w-6 text-muted-foreground" />
-          <h1 className="text-xl font-semibold">Plugin Manager</h1>
+          <h1 className="text-xl font-semibold">{uiT("ui:messages.m_112d5581ed3187eb")}</h1>
         </div>
         
         <Dialog open={installDialogOpen} onOpenChange={setInstallDialogOpen}>
           <DialogTrigger asChild>
             <Button size="sm" className="gap-2">
-              <Plus className="h-4 w-4" />
-              Install Plugin
-            </Button>
+              <Plus className="h-4 w-4" />{uiT("ui:messages.m_70720c526fa27619")}</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Install Plugin</DialogTitle>
-              <DialogDescription>
-                Enter the npm package name of the plugin you wish to install.
-              </DialogDescription>
+              <DialogTitle>{uiT("ui:messages.m_70720c526fa27619")}</DialogTitle>
+              <DialogDescription>{uiT("ui:messages.m_c920321046ea46a9")}</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="packageName">npm Package Name</Label>
+                <Label htmlFor="packageName">{uiT("ui:messages.m_f207940a3b4fcf3d")}</Label>
                 <Input
                   id="packageName"
                   placeholder="@paperclipai/plugin-example"
@@ -238,12 +233,12 @@ export function PluginManager() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setInstallDialogOpen(false)}>Cancel</Button>
+              <Button variant="outline" onClick={() => setInstallDialogOpen(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button
                 onClick={() => installMutation.mutate({ packageName: installPackage })}
                 disabled={!installPackage || installMutation.isPending}
               >
-                {installMutation.isPending ? "Installing..." : "Install"}
+                {installMutation.isPending ? uiT("ui:messages.m_07ae7fd684564e68") : uiT("ui:messages.m_569ca49f4aaf7846")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -254,10 +249,8 @@ export function PluginManager() {
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
           <div className="space-y-1 text-sm">
-            <p className="font-medium text-foreground">Plugins are alpha.</p>
-            <p className="text-muted-foreground">
-              The plugin runtime and API surface are still changing. Expect breaking changes while this feature settles.
-            </p>
+            <p className="font-medium text-foreground">{uiT("ui:messages.m_db0437508f7b7606")}</p>
+            <p className="text-muted-foreground">{uiT("ui:messages.m_8c8321130a92e532")}</p>
           </div>
         </div>
       </div>
@@ -265,8 +258,8 @@ export function PluginManager() {
       <section className="space-y-3">
         <div className="flex items-center gap-2">
           <FlaskConical className="h-5 w-5 text-muted-foreground" />
-          <h2 className="text-base font-semibold">Available Plugins</h2>
-          <Badge variant="outline">Bundled</Badge>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_cbc75f52cd091a19")}</h2>
+          <Badge variant="outline">{uiT("ui:messages.m_79d3a1f108e8d9c3")}</Badge>
         </div>
 
         {installErrorMessage && (
@@ -276,7 +269,7 @@ export function PluginManager() {
         )}
 
         {bundledQuery.isLoading || bundledView.kind === "reconnecting" ? (
-          <div className="text-sm text-muted-foreground">Loading bundled plugins...</div>
+          <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_c450a4bd670fc549")}</div>
         ) : bundledView.kind === "error" ? (
           <QueryErrorState
             error={bundledQuery.error}
@@ -285,9 +278,7 @@ export function PluginManager() {
             retrying={bundledView.isFetching}
           />
         ) : bundledPlugins.length === 0 ? (
-          <div className="rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground">
-            No bundled plugins were found in this checkout.
-          </div>
+          <div className="rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground">{uiT("ui:messages.m_c6230ee90e286690")}</div>
         ) : (
           <Card className="block py-0">
           <ul className="divide-y">
@@ -305,7 +296,7 @@ export function PluginManager() {
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-medium">{bundledPlugin.displayName}</span>
                         <Badge variant="outline">
-                          {bundledPlugin.tag === "first-party" ? "First-party" : "Example"}
+                          {bundledPlugin.tag === "first-party" ? uiT("ui:messages.m_ee374836b96dbc01") : uiT("ui:messages.m_d029f87e3d80f8fd")}
                         </Badge>
                         {isExperimentalPluginIdentity({
                           packageName: bundledPlugin.packageName,
@@ -320,13 +311,13 @@ export function PluginManager() {
                             {installedPlugin.status}
                           </Badge>
                         ) : (
-                          <Badge variant="secondary">Not installed</Badge>
+                          <Badge variant="secondary">{uiT("ui:messages.m_d177cdc09a4ea3f3")}</Badge>
                         )}
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">{bundledPlugin.description}</p>
                       <p className="mt-1 text-xs text-muted-foreground">{bundledPlugin.packageName}</p>
                       {installPending && !bundledPlugin.hasBuiltEntrypoints && (
-                        <p className="mt-2 text-xs text-muted-foreground">Building plugin...</p>
+                        <p className="mt-2 text-xs text-muted-foreground">{uiT("ui:messages.m_3476dbbfb78f50f1")}</p>
                       )}
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
@@ -338,13 +329,11 @@ export function PluginManager() {
                               size="sm"
                               disabled={enableMutation.isPending}
                               onClick={() => enableMutation.mutate(installedPlugin.id)}
-                            >
-                              Enable
-                            </Button>
+                            >{uiT("ui:messages.m_5342e09f2729fbc6")}</Button>
                           )}
                           <Button variant="outline" size="sm" asChild>
                             <Link to={`/company/settings/instance/plugins/${installedPlugin.id}`}>
-                              {installedPlugin.status === "ready" ? "Open Settings" : "Review"}
+                              {installedPlugin.status === "ready" ? uiT("ui:messages.m_3f940108cb1ecd9c") : uiT("ui:messages.m_aff0766a5290e117")}
                             </Link>
                           </Button>
                         </>
@@ -359,7 +348,7 @@ export function PluginManager() {
                             })
                           }
                         >
-                          {installPending ? "Installing..." : "Install"}
+                          {installPending ? uiT("ui:messages.m_07ae7fd684564e68") : uiT("ui:messages.m_569ca49f4aaf7846")}
                         </Button>
                       )}
                     </div>
@@ -375,17 +364,15 @@ export function PluginManager() {
       <section className="space-y-3">
         <div className="flex items-center gap-2">
           <Puzzle className="h-5 w-5 text-muted-foreground" />
-          <h2 className="text-base font-semibold">Installed Plugins</h2>
+          <h2 className="text-base font-semibold">{uiT("ui:messages.m_15c826069645c629")}</h2>
         </div>
 
         {!installedPlugins.length ? (
           <Card className="bg-muted/30">
             <CardContent className="flex flex-col items-center justify-center py-10">
               <Puzzle className="h-10 w-10 text-muted-foreground mb-4" />
-              <p className="text-sm font-medium">No plugins installed</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Install a plugin to extend functionality.
-              </p>
+              <p className="text-sm font-medium">{uiT("ui:messages.m_1411b824310b9a07")}</p>
+              <p className="text-xs text-muted-foreground mt-1">{uiT("ui:messages.m_b6cb35a2d4a919a7")}</p>
             </CardContent>
           </Card>
         ) : (
@@ -406,8 +393,8 @@ export function PluginManager() {
                       {bundledByPackageName.has(plugin.packageName) && (
                         <Badge variant="outline">
                           {bundledByPackageName.get(plugin.packageName)?.tag === "first-party"
-                            ? "First-party"
-                            : "Example"}
+                            ? uiT("ui:messages.m_ee374836b96dbc01")
+                            : uiT("ui:messages.m_d029f87e3d80f8fd")}
                         </Badge>
                       )}
                       {isExperimentalPluginIdentity({
@@ -423,7 +410,7 @@ export function PluginManager() {
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground truncate mt-0.5" title={plugin.manifestJson.description}>
-                      {plugin.manifestJson.description || "No description provided."}
+                      {plugin.manifestJson.description || uiT("ui:messages.m_2527a18acbadb69e")}
                     </p>
                     {plugin.status === "error" && (
                       <div className="mt-3 rounded-md border border-red-500/25 bg-red-500/[0.06] px-3 py-2">
@@ -431,7 +418,7 @@ export function PluginManager() {
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2 text-sm font-medium text-red-700 dark:text-red-300">
                               <AlertTriangle className="h-4 w-4 shrink-0" />
-                              <span>Plugin error</span>
+                              <span>{uiT("ui:messages.m_ba1be93089864a83")}</span>
                             </div>
                             <p
                               className="mt-1 text-sm text-red-700/90 dark:text-red-200/90 break-words"
@@ -445,9 +432,7 @@ export function PluginManager() {
                             size="sm"
                             className="border-red-500/30 bg-background/60 text-red-700 hover:bg-red-500/10 hover:text-red-800 dark:text-red-200 dark:hover:text-red-100"
                             onClick={() => setErrorDetailsPlugin(plugin)}
-                          >
-                            View full error
-                          </Button>
+                          >{uiT("ui:messages.m_2a64ebe088c4ba12")}</Button>
                         </div>
                       </div>
                     )}
@@ -474,7 +459,7 @@ export function PluginManager() {
                           variant="outline"
                           size="icon-sm"
                           className="h-8 w-8"
-                          title={plugin.status === "ready" ? "Disable" : "Enable"}
+                          title={plugin.status === "ready" ? uiT("ui:messages.m_b7e3e4aa4257b9a1") : uiT("ui:messages.m_5342e09f2729fbc6")}
                           onClick={() => {
                             if (plugin.status === "ready") {
                               disableMutation.mutate(plugin.id);
@@ -490,7 +475,7 @@ export function PluginManager() {
                           variant="outline"
                           size="icon-sm"
                           className="h-8 w-8 text-destructive hover:text-destructive"
-                          title="Uninstall"
+                          title={uiT("ui:messages.m_fe199528850a4e24")}
                           onClick={() => {
                             setUninstallPluginId(plugin.id);
                             setUninstallPluginName(plugin.manifestJson.displayName ?? plugin.packageName);
@@ -502,9 +487,7 @@ export function PluginManager() {
                       </div>
                       <Button variant="outline" size="sm" className="mt-2 h-8" asChild>
                         <Link to={`/company/settings/instance/plugins/${plugin.id}`}>
-                          <Settings className="h-4 w-4" />
-                          Configure
-                        </Link>
+                          <Settings className="h-4 w-4" />{uiT("ui:messages.m_6defafa2caa65304")}</Link>
                       </Button>
                     </div>
                   </div>
@@ -522,13 +505,12 @@ export function PluginManager() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Uninstall Plugin</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to uninstall <strong>{uninstallPluginName}</strong>? This action cannot be undone.
+            <DialogTitle>{uiT("ui:messages.m_6bac25dc7bc81ab6")}</DialogTitle>
+            <DialogDescription>{uiT("ui:messages.m_14629ea2a9db7bee")}<strong>{uninstallPluginName}</strong>? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setUninstallPluginId(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setUninstallPluginId(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               variant="destructive"
               disabled={uninstallMutation.isPending}
@@ -540,7 +522,7 @@ export function PluginManager() {
                 }
               }}
             >
-              {uninstallMutation.isPending ? "Uninstalling..." : "Uninstall"}
+              {uninstallMutation.isPending ? uiT("ui:messages.m_67c43c3364c63834") : uiT("ui:messages.m_fe199528850a4e24")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -552,36 +534,31 @@ export function PluginManager() {
       >
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Error Details</DialogTitle>
+            <DialogTitle>{uiT("ui:messages.m_674c0b62eba94a34")}</DialogTitle>
             <DialogDescription>
-              {errorDetailsPlugin?.manifestJson.displayName ?? errorDetailsPlugin?.packageName ?? "Plugin"} hit an error state.
-            </DialogDescription>
+              {errorDetailsPlugin?.manifestJson.displayName ?? errorDetailsPlugin?.packageName ?? uiT("ui:messages.m_ab1173eed1d477d9")}{uiT("ui:messages.m_0760eb6bd3aebb34")}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="rounded-md border border-red-500/25 bg-red-500/[0.06] px-4 py-3">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-700 dark:text-red-300" />
                 <div className="space-y-1 text-sm">
-                  <p className="font-medium text-red-700 dark:text-red-300">
-                    What errored
-                  </p>
+                  <p className="font-medium text-red-700 dark:text-red-300">{uiT("ui:messages.m_118242fa3c0d6245")}</p>
                   <p className="text-red-700/90 dark:text-red-200/90 break-words">
-                    {errorDetailsPlugin ? getPluginErrorSummary(errorDetailsPlugin) : "No error summary available."}
+                    {errorDetailsPlugin ? getPluginErrorSummary(errorDetailsPlugin) : uiT("ui:messages.m_1acf66ff9eb7deba")}
                   </p>
                 </div>
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-sm font-medium">Full error output</p>
+              <p className="text-sm font-medium">{uiT("ui:messages.m_414e8495f202750c")}</p>
               <pre className="max-h-(--sz-50vh) overflow-auto rounded-md border bg-muted/40 p-3 text-xs leading-5 whitespace-pre-wrap break-words">
                 {errorDetailsPlugin?.lastError ?? "No stored error message."}
               </pre>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setErrorDetailsPlugin(null)}>
-              Close
-            </Button>
+            <Button variant="outline" onClick={() => setErrorDetailsPlugin(null)}>{uiT("ui:messages.m_7d9eb7acb13e2462")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

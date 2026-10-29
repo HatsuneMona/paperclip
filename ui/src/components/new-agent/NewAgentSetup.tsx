@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { COPILOT_MODEL_DISCOVERY_QUERY_OPTIONS } from "@/lib/copilot-task-model-catalog";
 import { ExternalAgentInviteDialog } from "./ExternalAgentInviteDialog";
 import { useConnectionModels } from "../ai-connections/useConnectionModels";
@@ -86,9 +87,7 @@ export function NewAgentSetup() {
   const navigate = useNavigate();
   if (!selectedCompanyId)
     return (
-      <p className="text-sm text-muted-foreground">
-        Select an organization to create an agent.
-      </p>
+      <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_28b980d2331ceb2e")}</p>
     );
   if (params.get("adapterType") === "muse" || params.get("runnerProvider") === "muse") return <ExternalAgentInviteDialog companyId={selectedCompanyId} initialPreset="muse" initialMuseName={params.get("name") ?? ""} onClose={() => navigate("/agents/all")} onBack={() => navigate("/agents/all")} />;
   return (
@@ -577,7 +576,7 @@ function Setup({
       setCreated(agent);
       cache.setQueryData(queryKeys.agents.detail(agent.id), agent);
       void cache.invalidateQueries({ queryKey: queryKeys.agents.list(companyId) });
-    }).catch(cause => setError(cause instanceof Error ? cause.message : "Could not create the agent."))
+    }).catch(cause => setError(cause instanceof Error ? cause.message : uiT("ui:messages.m_31a0a736b93a8d32")))
       .finally(() => { creating.current = false; });
   }, [name, adapterType, companyId, connectionSettingsReady, creationAttempt, createdAgentId, setupAgentId, savedAgent.isError, created]);
 
@@ -718,7 +717,7 @@ function Setup({
     } catch (cause) {
       if (run === generation.current) {
         setError(
-          cause instanceof Error ? cause.message : "Could not test the agent.",
+          cause instanceof Error ? cause.message : uiT("ui:messages.m_c7631b525000a002"),
         );
         setTestState("fail");
       }
@@ -790,7 +789,7 @@ function Setup({
       ]);
     } catch (cause) {
       setError(
-        cause instanceof Error ? cause.message : "Could not create the agent.",
+        cause instanceof Error ? cause.message : uiT("ui:messages.m_31a0a736b93a8d32"),
       );
     } finally {
       void cache.invalidateQueries({
@@ -810,8 +809,8 @@ function Setup({
         className="text-sm text-muted-foreground"
       >
         {savedAgent.error
-          ? "Could not load the created agent. Return to Agents to view it."
-          : "Loading your agent…"}
+          ? uiT("ui:messages.m_07abe0b11e9461b8")
+          : uiT("ui:messages.m_48046357d49e459c")}
       </p>
     );
   if (!name || !adapterType || created?.metadata?.setupAdapterPending === true)
@@ -831,7 +830,7 @@ function Setup({
     );
   if (!created && connectionSettingsReady) return <div className="space-y-4">
     <p role={error ? "alert" : "status"}>{error ?? "Creating your agent…"}</p>
-    {error && <Button onClick={() => setCreationAttempt(value => value + 1)}>Retry</Button>}
+    {error && <Button onClick={() => setCreationAttempt(value => value + 1)}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>}
   </div>;
   const steps = [
     ...(connectionAdapter ? ["connect" as const] : []),
@@ -890,8 +889,8 @@ function Setup({
                 <span>
                   ·{" "}
                   {runnerProvider === "codex"
-                    ? "Native app server runner"
-                    : "Paperclip Runner"}
+                    ? uiT("ui:messages.m_6254c5e60349e936")
+                    : uiT("ui:messages.m_aacfc564be2ab279")}
                 </span>
               )}
             </div>
@@ -921,20 +920,15 @@ function Setup({
           </p>
         )}
         {adapterInventory.data && !available && (
-          <p role="alert" className="text-sm text-destructive">
-            This adapter is unavailable. Choose an enabled adapter.
-          </p>
+          <p role="alert" className="text-sm text-destructive">{uiT("ui:messages.m_36fcb6b4dee1b3d0")}</p>
         )}
         {(managedOnly || forced.forced) &&
           !envs.isPending &&
           !environmentId && (
-            <p role="alert" className="text-sm text-destructive">
-              No managed environment is available. Configure an environment
-              before continuing.
-            </p>
+            <p role="alert" className="text-sm text-destructive">{uiT("ui:messages.m_3dcfbcb90a7bf121")}</p>
           )}
         <div className="flex flex-col gap-8 md:flex-row">
-          <nav aria-label="Agent setup steps" className="shrink-0 md:w-44">
+          <nav aria-label={uiT("ui:messages.m_1f28c3a9138a01ad")} className="shrink-0 md:w-44">
             <ol className="flex flex-wrap gap-2 md:flex-col">
               {steps.map((step, index) => (
                 <li key={step}>
@@ -975,7 +969,7 @@ function Setup({
                   <OnboardingCard className="mx-auto">
                     <div className="mb-8">
                       <OnboardingHeading
-                        title="Connect a model"
+                        title={uiT("ui:messages.m_87bdaaf8ac10de0f")}
                         center
                       />
                     </div>
@@ -1035,7 +1029,7 @@ function Setup({
                       }}
                     /></fieldset> : <p role="status" className="text-sm text-muted-foreground">Loading connection settings…</p>}
                     {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="mt-5 space-y-3">
-                      <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                      <summary className="cursor-pointer text-sm text-muted-foreground">{uiT("ui:messages.m_9f088dbebd6c3c70")}</summary>
                       <AgentRunnerSelect value={runner} disabled={busy}
                         pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
                         defaultRunner={adapters.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -1049,27 +1043,27 @@ function Setup({
                       <h2 className="flex items-center gap-3 text-lg font-semibold">
                         <Check className="size-5" />
                         {created.status === "pending_approval"
-                          ? "Agent submitted for approval"
-                          : isDot ? "Your Dot agent has been created" : "Your agent is ready"}
+                          ? uiT("ui:messages.m_9357fe166529b09a")
+                          : isDot ? "Your Dot agent has been created" : uiT("ui:messages.m_bf213d4f14f8cecc")}
                       </h2>
                       <dl className="grid grid-cols-2 gap-4 text-sm">
-                        <dt className="text-muted-foreground">Adapter</dt>
+                        <dt className="text-muted-foreground">{uiT("ui:messages.m_0252b84901033771")}</dt>
                         <dd>{getAdapterDisplay(isDot ? "openai_dot" : adapterType).label}</dd>
                         {showModel && (
                           <>
-                            <dt className="text-muted-foreground">Model</dt>
+                            <dt className="text-muted-foreground">{uiT("ui:messages.m_5e2c614c23f02239")}</dt>
                             <dd className="break-all">
                               {String(confirmationModel)}
                             </dd>
                           </>
                         )}
-                        <dt className="text-muted-foreground">Environment</dt>
+                        <dt className="text-muted-foreground">{uiT("ui:messages.m_9e471951a1b4106e")}</dt>
                         <dd>{environmentLabel}</dd>
                       </dl>
                       <p className="text-sm text-muted-foreground">
                         {created.status === "pending_approval"
-                          ? "An organization administrator must approve this agent before it can work."
-                          : isDot ? "Pair your Dot and test event delivery in configuration before assigning work." : "Assign a task when you’re ready for this agent to work."}
+                          ? uiT("ui:messages.m_77d7c0fff464d622")
+                          : isDot ? "Pair your Dot and test event delivery in configuration before assigning work." : uiT("ui:messages.m_adbf2c57694b3da1")}
                       </p>
                     </div>
                     <div className="flex flex-wrap justify-between gap-3">
@@ -1078,7 +1072,7 @@ function Setup({
                         onClick={() => navigate(isDot ? "/agents/all" : `${agentUrl(created)}/runtime`)}
                       >
                         <Settings2 className="size-4" />
-                        {isDot ? "Back to Agents" : "Edit configuration"}
+                        {isDot ? "Back to Agents" : uiT("ui:messages.m_3076810095c3d8be")}
                       </Button>
                       <Button
                         disabled={created.status === "pending_approval"}
@@ -1100,9 +1094,7 @@ function Setup({
                       void finish();
                     }}
                   >
-                    <h2 className="text-xl font-semibold">
-                      Configure your agent
-                    </h2>
+                    <h2 className="text-xl font-semibold">{uiT("ui:messages.m_be9ca645b7c107ce")}</h2>
                     <fieldset disabled={busy} className="space-y-8">
                       <section className="space-y-5">
                         {isDot && <>
@@ -1117,7 +1109,7 @@ function Setup({
                               if (brandType === "copilot_runtime" && hashKey([aiBinding ?? null]) === hashKey([binding ?? null])) void refreshCopilotModels();
                             }} />
                         )}
-                        {(connectionModels ? connectionModels.error : models.error) && <p role="alert" className="text-sm text-destructive">Could not load models. Retry or enter a model ID manually.</p>}
+                        {(connectionModels ? connectionModels.error : models.error) && <p role="alert" className="text-sm text-destructive">{uiT("ui:messages.m_c8cad4cf31602f08")}</p>}
                         {((showModel && !usingKimiApi) ||
                           efforts.length > 0) && (
                           <div className="grid items-start gap-5 sm:grid-cols-2">
@@ -1160,18 +1152,18 @@ function Setup({
                               />
                             )}
                             {efforts.length > 0 && (
-                              <Field label="Thinking effort">
-                                {brandType === "codex_local" ? <SelectPopover aria-label="Thinking effort" value={effort}
+                              <Field label={uiT("ui:messages.m_264c28cbf01ce9fa")}>
+                                {brandType === "codex_local" ? <SelectPopover aria-label={uiT("ui:messages.m_264c28cbf01ce9fa")} value={effort}
                                   onValueChange={value => { setEffort(value); resetTest(); }}
-                                  options={[{ value: "", label: "Auto" }, ...efforts.map(value => ({ value, label: value }))]} /> : <NativeSelect
-                                  aria-label="Thinking effort"
+                                  options={[{ value: "", label: uiT("ui:messages.m_0286249762f7c943") }, ...efforts.map(value => ({ value, label: value }))]} /> : <NativeSelect
+                                  aria-label={uiT("ui:messages.m_264c28cbf01ce9fa")}
                                   value={effort}
                                   onChange={(event) => {
                                     setEffort(event.target.value);
                                     resetTest();
                                   }}
                                 >
-                                  <option value="">Auto</option>
+                                  <option value="">{uiT("ui:messages.m_0286249762f7c943")}</option>
                                   {efforts.map((value) => (
                                     <option key={value} value={value}>
                                       {value}
@@ -1190,9 +1182,9 @@ function Setup({
                         {hasCredentialField && !aiBinding && (
                           <div className="grid gap-5 sm:grid-cols-2">
                             {chooseProvider && (
-                              <Field label="API key provider">
+                              <Field label={uiT("ui:messages.m_d8551dcfa9b4cad2")}>
                                 <select
-                                  aria-label="API key provider"
+                                  aria-label={uiT("ui:messages.m_d8551dcfa9b4cad2")}
                                   className={controlClass}
                                   value={provider}
                                   onChange={(event) => {
@@ -1206,11 +1198,11 @@ function Setup({
                                   {Object.keys(providerKeys).map((key) => (
                                     <option key={key} value={key}>
                                       {key === "openrouter"
-                                        ? "OpenRouter"
+                                        ? uiT("ui:messages.m_eb70c3bc14fa7ae1")
                                         : key === "openai"
-                                          ? "OpenAI"
+                                          ? uiT("ui:messages.m_8b7d1a3187ab355d")
                                           : key === "anthropic"
-                                            ? "Anthropic"
+                                            ? uiT("ui:messages.m_744205e43529c1fc")
                                             : ({
                                                 google: "Google",
                                                 xai: "xAI",
@@ -1243,13 +1235,13 @@ function Setup({
                                     }}
                                     placeholder={
                                       selectedBinding
-                                        ? "Using saved key"
+                                        ? uiT("ui:messages.m_57220904acdbbea4")
                                         : [
                                               "cursor_cloud",
                                               "hermes_gateway",
                                             ].includes(adapterType)
-                                          ? "Required"
-                                          : "Optional if already configured"
+                                          ? uiT("ui:messages.m_4850b174b713d88c")
+                                          : uiT("ui:messages.m_74f784d771ed6761")
                                     }
                                   />
                                   {adapterType === "cursor_cloud" && (
@@ -1258,9 +1250,7 @@ function Setup({
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className="shrink-0 text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                                    >
-                                      get api key
-                                    </a>
+                                    >{uiT("ui:messages.m_b2384483ca1f2377")}</a>
                                   )}
                                 </div>
                               </Field>
@@ -1271,7 +1261,7 @@ function Setup({
                                   chooseProvider ? "sm:col-span-2" : undefined
                                 }
                               >
-                                <Field label="Or use an organization secret">
+                                <Field label={uiT("ui:messages.m_961df787a0b10638")}>
                                   <SecretPicker
                                     secretId={
                                       selectedBinding &&
@@ -1295,17 +1285,14 @@ function Setup({
                                 </Field>
                               </div>
                             )}
-                            <p className="text-xs text-muted-foreground sm:col-span-2">
-                              New keys are saved as organization secrets when
-                              you finish setup.
-                              {multiProvider && ` Use a ${provider}/model ID.`}
+                            <p className="text-xs text-muted-foreground sm:col-span-2">{uiT("ui:messages.m_ff961302d9271c92")}{multiProvider && uiT("ui:messages.m_4b45ae2f96992ca4", { v0: (provider) })}
                             </p>
                           </div>
                         )}
                         {adapterType === "hermes_gateway" && (
-                          <Field label="Hermes API base URL">
+                          <Field label={uiT("ui:messages.m_ccec8cd458fb93f6")}>
                             <Input
-                              aria-label="Hermes API base URL"
+                              aria-label={uiT("ui:messages.m_ccec8cd458fb93f6")}
                               value={gatewayUrl}
                               onChange={(event) => {
                                 setGatewayUrl(event.target.value);
@@ -1317,20 +1304,20 @@ function Setup({
                         )}
                         {usingKimiApi && (
                           <div className="grid gap-5 sm:grid-cols-2">
-                            <Field label="Kimi API model name">
+                            <Field label={uiT("ui:messages.m_d880c2be9c0434c9")}>
                               <Input
-                                aria-label="Kimi API model name"
+                                aria-label={uiT("ui:messages.m_d880c2be9c0434c9")}
                                 value={kimiModel}
                                 onChange={(event) => {
                                   setKimiModel(event.target.value);
                                   resetTest();
                                 }}
-                                placeholder="kimi-for-coding"
+                                placeholder={uiT("ui:messages.m_a856fb3d089962f7")}
                               />
                             </Field>
-                            <Field label="Kimi API protocol">
+                            <Field label={uiT("ui:messages.m_2fd46541e58944c0")}>
                               <select
-                                aria-label="Kimi API protocol"
+                                aria-label={uiT("ui:messages.m_2fd46541e58944c0")}
                                 className={controlClass}
                                 value={kimiProtocol}
                                 onChange={(event) => {
@@ -1346,26 +1333,26 @@ function Setup({
                               </select>
                             </Field>
                             <Field
-                              label="Kimi API base URL"
-                              hint="Optional override for your provider endpoint."
+                              label={uiT("ui:messages.m_b46e77c4df79ef57")}
+                              hint={uiT("ui:messages.m_1f92d2d49e09f477")}
                             >
                               <Input
-                                aria-label="Kimi API base URL"
+                                aria-label={uiT("ui:messages.m_b46e77c4df79ef57")}
                                 value={kimiBaseUrl}
                                 onChange={(event) => {
                                   setKimiBaseUrl(event.target.value);
                                   resetTest();
                                 }}
-                                placeholder="Provider default"
+                                placeholder={uiT("ui:messages.m_352a25678fb9c8a3")}
                               />
                             </Field>
                           </div>
                         )}
                         {adapterType === "cursor_cloud" && (
                           <div className="grid gap-5 sm:grid-cols-2">
-                            <Field label="GitHub repository">
+                            <Field label={uiT("ui:messages.m_505554929de39d80")}>
                               <Input
-                                aria-label="GitHub repository"
+                                aria-label={uiT("ui:messages.m_505554929de39d80")}
                                 value={repository}
                                 onChange={(event) => {
                                   setRepository(event.target.value);
@@ -1374,10 +1361,10 @@ function Setup({
                                 placeholder="https://github.com/your-org/repo"
                               />
                             </Field>
-                            <Field label="Branch">
+                            <Field label={uiT("ui:messages.m_52656e8104eef3fd")}>
                               <Input
-                                aria-label="Branch"
-                                placeholder="Repository default"
+                                aria-label={uiT("ui:messages.m_52656e8104eef3fd")}
+                                placeholder={uiT("ui:messages.m_e88cba3b99d1e596")}
                                 value={branch}
                                 onChange={(event) => {
                                   setBranch(event.target.value);
@@ -1388,7 +1375,7 @@ function Setup({
                           </div>
                         )}
                         {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-                          <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                          <summary className="cursor-pointer text-sm text-muted-foreground">{uiT("ui:messages.m_9f088dbebd6c3c70")}</summary>
                           <AgentRunnerSelect value={runner} disabled={busy}
                             pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
                             defaultRunner={adapters.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -1400,9 +1387,9 @@ function Setup({
                         adapterType,
                       ) && (
                         <section className="space-y-5">
-                          <h3 className="text-sm font-semibold">Environment</h3>
+                          <h3 className="text-sm font-semibold">{uiT("ui:messages.m_9e471951a1b4106e")}</h3>
                           <select
-                            aria-label="Environment"
+                            aria-label={uiT("ui:messages.m_9e471951a1b4106e")}
                             className={controlClass}
                             value={environmentOverride}
                             disabled={forced.forced}
@@ -1410,8 +1397,7 @@ function Setup({
                               void changeEnvironment(event.target.value);
                             }}
                           >
-                            <option value="">
-                              Default: {environmentLabel}
+                            <option value="">{uiT("ui:messages.m_c1f818833ef4227e")}{environmentLabel}
                             </option>
                             {(envs.data ?? [])
                               .filter((env) => env.status === "active" && (!managedOnly || env.driver !== "local"))
@@ -1442,7 +1428,7 @@ function Setup({
                     {environmentSaveError && !environmentSelectionSaved && <Button disabled={busy} onClick={() => void changeEnvironment()}>Retry saving environment</Button>}
                     <div className="flex justify-between border-t border-border py-5">
                       <div className="flex items-center gap-3">
-                        <Button type="button" variant="ghost" disabled={busy} onClick={() => void saveAndExit()}>Save & exit</Button>
+                        <Button type="button" variant="ghost" disabled={busy} onClick={() => void saveAndExit()}>{uiT("ui:messages.m_0bd63bf3d32e9119")}</Button>
                       {connectionAdapter ? (
                         <Button
                           type="button"
@@ -1450,9 +1436,7 @@ function Setup({
                           disabled={busy}
                           onClick={editConnection}
                         >
-                          <ArrowLeft className="size-4" />
-                          Connection
-                        </Button>
+                          <ArrowLeft className="size-4" />{uiT("ui:messages.m_639a40e82b9a96f0")}</Button>
                       ) : (
                         null
                       )}
@@ -1473,7 +1457,7 @@ function Setup({
                           Boolean(connectionAdapter && !connection)
                         }
                       >
-                        {saving ? "Saving…" : "Finish setup"}
+                        {saving ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_bc01ae77f37cf304")}
                         <Check className="size-4" />
                       </Button>}
                     </div>

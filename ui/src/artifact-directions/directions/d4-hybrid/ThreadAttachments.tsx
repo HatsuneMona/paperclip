@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { LabArtifact } from "../../kit";
@@ -61,7 +62,7 @@ function Cell({ artifact }: { artifact: LabArtifact }) {
         <Picture artifact={artifact} label="md" className={PICTURE_BOX} onError={() => setFailed(true)} />
       )}
       <Words artifact={artifact} tall={picture} />
-      <a href={`#attachment-${artifact.id}`} aria-label={`Open ${name}`} title={name} className={`absolute inset-0 rounded-lg ${FOCUS_RING}`} />
+      <a href={`#attachment-${artifact.id}`} aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (name) })} title={name} className={`absolute inset-0 rounded-lg ${FOCUS_RING}`} />
     </li>
   );
 }

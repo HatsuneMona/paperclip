@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Agent, AcceptedPlanDecompositionSummary } from "@paperclipai/shared";
@@ -17,16 +18,12 @@ function StatusBadge({ status }: { status: AcceptedPlanDecompositionSummary["sta
   if (status === "completed") {
     return (
       <span className="inline-flex items-center gap-1 rounded-sm border border-emerald-500/50 bg-emerald-500/10 px-2 py-0.5 text-(length:--text-micro) font-medium text-emerald-900 dark:text-emerald-100">
-        <CheckCircle2 className="h-3 w-3" />
-        Completed
-      </span>
+        <CheckCircle2 className="h-3 w-3" />{uiT("ui:messages.m_22a970d2e5b1cc23")}</span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1 rounded-sm border border-amber-500/50 bg-amber-500/10 px-2 py-0.5 text-(length:--text-micro) font-medium text-amber-900 dark:text-amber-100">
-      <Loader2 className="h-3 w-3 animate-spin" />
-      In flight
-    </span>
+      <Loader2 className="h-3 w-3 animate-spin" />{uiT("ui:messages.m_b65abbf5920b271c")}</span>
   );
 }
 
@@ -46,9 +43,9 @@ export function IssuePlanDecompositionsSection({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-medium text-muted-foreground">Plan decomposition</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">{uiT("ui:messages.m_b574bd1cca199767")}</h3>
         <span className="text-(length:--text-micro) text-muted-foreground/80">
-          {items.length === 1 ? "1 accepted plan revision" : `${items.length} accepted plan revisions`}
+          {items.length === 1 ? uiT("ui:messages.m_991dbe78cf4363cd") : uiT("ui:messages.m_21f4e77848ad7240", { v0: (items.length) })}
         </span>
       </div>
 
@@ -90,42 +87,36 @@ export function IssuePlanDecompositionsSection({
             >
               <div className="flex flex-wrap items-center gap-2">
                 <StatusBadge status={record.status} />
-                <span className="text-xs text-muted-foreground">
-                  Plan {revisionLabel}
+                <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_af56fe657b853c0e")}{revisionLabel}
                 </span>
                 <span className="text-xs text-muted-foreground/70">·</span>
                 <span className="inline-flex items-center gap-1 text-xs text-foreground">
                   <GitBranch className="h-3 w-3 text-muted-foreground" />
-                  {created} of {requested} child {requested === 1 ? "task" : "tasks"} created
-                </span>
+                  {created}{uiT("ui:messages.m_a4282e4b2298b90b")}{requested}{uiT("ui:messages.m_fafb919f7708003d")}{requested === 1 ? uiT("ui:messages.m_0ebb429fa86d481c") : uiT("ui:messages.m_085154084c742759")}{uiT("ui:messages.m_244de782ca928663")}</span>
                 {record.status === "completed" && requested > 0 ? (
                   <span
                     className="inline-flex items-center gap-1 rounded-sm border border-sky-500/40 bg-sky-500/10 px-1.5 py-0.5 text-(length:--text-nano) font-medium text-sky-900 dark:text-sky-100"
-                    title="Repeat attempts with this fingerprint reuse this record instead of creating new children"
+                    title={uiT("ui:messages.m_0c407f0aaf6203b2")}
                   >
-                    <Repeat className="h-3 w-3" />
-                    Idempotent claim
-                  </span>
+                    <Repeat className="h-3 w-3" />{uiT("ui:messages.m_33d4ffdad20c0b00")}</span>
                 ) : null}
               </div>
 
               <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-(length:--text-micro) text-muted-foreground">
-                {ownerName ? <span>Owner: {ownerName}</span> : null}
+                {ownerName ? <span>{uiT("ui:messages.m_60d5bbcba717b837")}{ownerName}</span> : null}
                 {startedAt ? (
-                  <span title={formatDateTime(startedAt)}>Started {relativeTime(startedAt)}</span>
+                  <span title={formatDateTime(startedAt)}>{uiT("ui:messages.m_fdc85156a1e21f7b")}{relativeTime(startedAt)}</span>
                 ) : null}
                 {completedAt ? (
-                  <span title={formatDateTime(completedAt)}>Completed {relativeTime(completedAt)}</span>
+                  <span title={formatDateTime(completedAt)}>{uiT("ui:messages.m_c6af4d5c4f15188b")}{relativeTime(completedAt)}</span>
                 ) : updatedAt ? (
-                  <span title={formatDateTime(updatedAt)}>Updated {relativeTime(updatedAt)}</span>
+                  <span title={formatDateTime(updatedAt)}>{uiT("ui:messages.m_a919c7c2d1a48683")}{relativeTime(updatedAt)}</span>
                 ) : null}
                 {issueIdentifier ? (
                   <Link
                     to={`/issues/${issueIdentifier}#document-plan`}
                     className="underline-offset-2 hover:underline"
-                  >
-                    Plan document
-                  </Link>
+                  >{uiT("ui:messages.m_f0f6f3502007e534")}</Link>
                 ) : null}
               </div>
 

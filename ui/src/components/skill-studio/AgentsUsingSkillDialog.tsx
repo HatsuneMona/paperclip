@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Plus, Trash2, Users } from "lucide-react";
@@ -72,7 +73,7 @@ export function AgentsUsingSkillBadge({
         )}
       >
         <Users className="h-3.5 w-3.5" aria-hidden="true" />
-        {count} {count === 1 ? "agent" : "agents"}
+        {count} {count === 1 ? uiT("ui:messages.m_d4f0bc5a29de06b5") : uiT("ui:messages.m_8c70b25cbbbe8e79")}
       </button>
       <AgentsUsingSkillDialog
         open={open}
@@ -204,7 +205,7 @@ export function AgentsUsingSkillDialog({
       const message = error instanceof Error ? error.message : "Failed to update agent skills.";
       toast?.pushToast({
         tone: "error",
-        title: "Update failed",
+        title: uiT("ui:messages.m_e58282fd73fb8580"),
         body: message.includes("403") ? "You don't have permission to change this agent's skills." : message,
       });
     },
@@ -353,8 +354,7 @@ function AgentRow({
             }
             className="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground disabled:opacity-60"
           >
-            <option value={LATEST_VALUE}>
-              Latest{latestRevision !== null ? ` (v${latestRevision})` : ""}
+            <option value={LATEST_VALUE}>{uiT("ui:messages.m_8730d3c2022abf1f")}{latestRevision !== null ? ` (v${latestRevision})` : ""}
             </option>
             {versions.map((version) => (
               <option key={version.id} value={version.id}>
@@ -372,7 +372,7 @@ function AgentRow({
         )}
         {behindLatest > 0 ? (
           <span className="text-(length:--text-nano) text-amber-500">
-            {behindLatest} version{behindLatest === 1 ? "" : "s"} behind latest
+            {behindLatest} version{behindLatest === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} behind latest
           </span>
         ) : null}
       </div>
@@ -385,13 +385,11 @@ function AgentRow({
               size="sm"
               onClick={onRemove}
               disabled={busy}
-              aria-label={`Confirm removing this skill from ${agent.name}`}
+              aria-label={uiT("ui:messages.m_f4b232bea290ce88", { v0: (agent.name) })}
             >
-              {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Remove"}
+              {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : uiT("ui:messages.m_c3812fc4acb861d5")}
             </Button>
-            <Button variant="ghost" size="sm" onClick={onCancelRemove} disabled={busy}>
-              Cancel
-            </Button>
+            <Button variant="ghost" size="sm" onClick={onCancelRemove} disabled={busy}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           </div>
         ) : (
           <Button
@@ -400,7 +398,7 @@ function AgentRow({
             onClick={onRequestRemove}
             disabled={busy}
             className="shrink-0 text-muted-foreground hover:text-destructive"
-            aria-label={`Remove this skill from ${agent.name}`}
+            aria-label={uiT("ui:messages.m_da51706d88af516f", { v0: (agent.name) })}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -439,10 +437,10 @@ function AddAgentPicker({
       value=""
       groups={groups}
       loading={loading}
-      loadingMessage="Loading agents..."
-      placeholder="Add agent…"
-      searchPlaceholder="Search agents..."
-      emptyMessage="All eligible agents already have this skill."
+      loadingMessage={uiT("ui:messages.m_a4e0608f9963b613")}
+      placeholder={uiT("ui:messages.m_51189bf03b3a84f3")}
+      searchPlaceholder={uiT("ui:messages.m_32f4468b0b6f9410")}
+      emptyMessage={uiT("ui:messages.m_e8e90b54634e2f11")}
       disabled={disabled}
       onValueChange={(_value, option) => {
         onSelect(option.agent);
@@ -452,9 +450,7 @@ function AddAgentPicker({
       contentClassName="w-72"
       renderValue={() => (
         <span className="flex items-center gap-1.5 text-muted-foreground">
-          <Plus className="h-3.5 w-3.5" aria-hidden="true" />
-          Add agent…
-        </span>
+          <Plus className="h-3.5 w-3.5" aria-hidden="true" />{uiT("ui:messages.m_51189bf03b3a84f3")}</span>
       )}
       renderOption={(option) => (
         <span className="flex min-w-0 flex-col">

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
@@ -119,7 +120,7 @@ export function PluginPage() {
       return;
     }
     setBreadcrumbs([
-      { label: "Plugins", href: "/company/settings/instance/plugins" },
+      { label: uiT("ui:messages.m_9514b7ff4860ead7"), href: "/company/settings/instance/plugins" },
       { label: pageSlot.pluginDisplayName },
     ]);
   }, [pageSlot, pluginRouteSplat, setBreadcrumbs, routeSidebarActive]);
@@ -136,7 +137,7 @@ export function PluginPage() {
   }
 
   if (!contributions) {
-    return <div className="text-sm text-muted-foreground">Loading…</div>;
+    return <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_ba3bbbe10d8bef66")}</div>;
   }
 
   if (!pluginId && pluginRoutePath) {
@@ -169,9 +170,7 @@ export function PluginPage() {
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" asChild>
             <Link to={companyPrefix ? `/${companyPrefix}/dashboard` : "/dashboard"}>
-              <ArrowLeft className="h-4 w-4 mr-1" />
-              Back
-            </Link>
+              <ArrowLeft className="h-4 w-4 mr-1" />{uiT("ui:messages.m_76900f1bfd16c8d4")}</Link>
           </Button>
         </div>
       )}

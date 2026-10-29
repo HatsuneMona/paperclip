@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -80,7 +81,7 @@ function SecretField({
           type="button"
           onClick={() => setVisible((v) => !v)}
           className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground/50 hover:text-muted-foreground transition-colors"
-          aria-label={visible ? `Hide ${label}` : `Show ${label}`}
+          aria-label={visible ? uiT("ui:messages.m_1ed45f87ec268a9e", { v0: (label) }) : uiT("ui:messages.m_146f0e8dbe832d50", { v0: (label) })}
         >
           {visible ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
         </button>
@@ -156,7 +157,7 @@ export function HermesGatewayConfigFields({
       </Field>
 
       <SecretField
-        label="API key"
+        label={uiT("ui:messages.m_16f0ee47f993d627")}
         value={isCreate ? String(readCreateValue(values, "apiKey", "") ?? "") : editApiKeyValue}
         onCommit={(v) => writeValue("apiKey", v || undefined)}
         placeholder="Hermes API_SERVER_KEY, not PAPERCLIP_API_KEY"
@@ -188,7 +189,7 @@ export function HermesGatewayConfigFields({
           <option value="issue">Issue scoped</option>
           <option value="agent">Agent scoped</option>
           <option value="run">Run scoped</option>
-          <option value="none">None</option>
+          <option value="none">{uiT("ui:messages.m_dc937b59892604f5")}</option>
         </select>
       </Field>
 
@@ -241,7 +242,7 @@ export function HermesGatewayConfigFields({
         />
       </Field>
 
-      <Field label="Instructions" hint="Optional stable Hermes instructions sent separately from the wake input.">
+      <Field label={uiT("ui:messages.m_934652dce41d62d3")} hint="Optional stable Hermes instructions sent separately from the wake input.">
         <DraftTextarea
           value={instructions}
           onCommit={(v) => writeValue("instructions", v || undefined)}

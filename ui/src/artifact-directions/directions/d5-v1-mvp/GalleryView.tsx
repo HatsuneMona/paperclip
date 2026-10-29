@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { ArrowLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -21,11 +22,11 @@ type Filter = "tasks" | "all" | MediaKind;
 const FILTERS: Array<{ id: Filter; label: string }> = [
   { id: "tasks", label: "Tasks" },
   { id: "all", label: "All files" },
-  { id: "image", label: "Images" },
-  { id: "video", label: "Videos" },
-  { id: "document", label: "Documents" },
-  { id: "text", label: "Text" },
-  { id: "file", label: "Files" },
+  { id: "image", label: uiT("ui:messages.m_be7e2f20129365c2") },
+  { id: "video", label: uiT("ui:messages.m_c9a9639463c21952") },
+  { id: "document", label: uiT("ui:messages.m_b4e929d8bcfe0418") },
+  { id: "text", label: uiT("ui:messages.m_71988c4d8e0803ba") },
+  { id: "file", label: uiT("ui:messages.m_abc7e9892806b047") },
 ];
 
 const newestFirst = (a: LabArtifact, b: LabArtifact) => b.updatedAt.localeCompare(a.updatedAt);
@@ -39,7 +40,7 @@ function Toolbar({ filter, onFilter }: { filter: Filter; onFilter: (filter: Filt
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="relative w-full sm:max-w-sm">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input readOnly className="h-9 pl-9 pr-9 text-sm" placeholder="Search artifacts..." aria-label="Search artifacts" />
+        <Input readOnly className="h-9 pl-9 pr-9 text-sm" placeholder={uiT("ui:messages.m_59aadbdf0d35a2f9")} aria-label={uiT("ui:messages.m_c71436cce0eb861d")} />
       </div>
       <div role="tablist" aria-label="Show artifacts by task or by type" className="flex flex-wrap items-center gap-1.5">
         {FILTERS.map(({ id, label }) => (

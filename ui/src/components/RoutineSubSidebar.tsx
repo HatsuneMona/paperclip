@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useRef } from "react";
 import {
   Activity as ActivityIcon,
@@ -40,21 +41,21 @@ type NavGroup = {
 
 const NAV_GROUPS: NavGroup[] = [
   {
-    label: "Routine",
+    label: uiT("ui:messages.m_0b5baf309897ec7e"),
     items: [
-      { key: "overview", label: "Overview", icon: Circle },
-      { key: "triggers", label: "Triggers", icon: Clock3 },
-      { key: "variables", label: "Variables", icon: LayoutGrid },
-      { key: "secrets", label: "Secrets", icon: KeyRound },
-      { key: "delivery", label: "Delivery", icon: Send },
+      { key: "overview", label: uiT("ui:messages.m_d4b1ea5708dd5329"), icon: Circle },
+      { key: "triggers", label: uiT("ui:messages.m_e62f2148a64d96bb"), icon: Clock3 },
+      { key: "variables", label: uiT("ui:messages.m_02db55bac5e3f7ce"), icon: LayoutGrid },
+      { key: "secrets", label: uiT("ui:messages.m_d8707d411d997657"), icon: KeyRound },
+      { key: "delivery", label: uiT("ui:messages.m_52bfe584a5fc4505"), icon: Send },
     ],
   },
   {
-    label: "Operate",
+    label: uiT("ui:messages.m_58c3939c4ce986c8"),
     items: [
-      { key: "runs", label: "Runs", icon: Play },
-      { key: "activity", label: "Activity", icon: ActivityIcon },
-      { key: "history", label: "History", icon: HistoryIcon },
+      { key: "runs", label: uiT("ui:messages.m_848f54e89660cea4"), icon: Play },
+      { key: "activity", label: uiT("ui:messages.m_38da1505ca837328"), icon: ActivityIcon },
+      { key: "history", label: uiT("ui:messages.m_0e76960093379060"), icon: HistoryIcon },
     ],
   },
 ];
@@ -152,7 +153,7 @@ export function RoutineSubSidebar({
                   <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500 motion-safe:animate-pulse" />
                 ) : dirty ? (
                   <span
-                    aria-label="Unsaved changes"
+                    aria-label={uiT("ui:messages.m_a710c2b90913b537")}
                     className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500 ring-2 ring-background"
                   />
                 ) : null}

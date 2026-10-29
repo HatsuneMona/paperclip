@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Link } from "@/lib/router";
 import type { ExecutionWorkspace } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -65,8 +66,7 @@ export function ProjectWorkspaceSummaryCard({
               <Badge variant="outline" className="border-border bg-background px-2.5 py-1 text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
                 {workspaceKindLabel(summary.kind)}
               </Badge>
-              <Badge variant="outline" className="border-border/70 bg-background px-2.5 py-1 text-muted-foreground">
-                Updated {timeAgo(summary.lastUpdatedAt)}
+              <Badge variant="outline" className="border-border/70 bg-background px-2.5 py-1 text-muted-foreground">{uiT("ui:messages.m_a919c7c2d1a48683")}{timeAgo(summary.lastUpdatedAt)}
               </Badge>
               {summary.serviceCount > 0 ? (
                 <Badge variant="outline"
@@ -140,7 +140,7 @@ export function ProjectWorkspaceSummaryCard({
                   status: summary.executionWorkspaceStatus!,
                 })}
               >
-                {summary.executionWorkspaceStatus === "cleanup_failed" ? "Retry close" : "Close workspace"}
+                {summary.executionWorkspaceStatus === "cleanup_failed" ? "Retry close" : uiT("ui:messages.m_e5086f0455d55b20")}
               </Button>
             ) : null}
           </div>
@@ -152,7 +152,7 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <GitBranch className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Branch</div>
+                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_52656e8104eef3fd")}</div>
                   <div className="flex items-start gap-2">
                     <CopyText
                       text={summary.branchName}
@@ -212,7 +212,7 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0">
-                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Service</div>
+                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_d677190e0a9990e7")}</div>
                   <a
                     href={summary.primaryServiceUrl}
                     target="_blank"
@@ -234,9 +234,7 @@ export function ProjectWorkspaceSummaryCard({
 
         {summary.issues.length > 0 ? (
           <div className="space-y-2">
-            <div className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Linked tasks
-            </div>
+            <div className="text-(length:--text-micro) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_f0b70ce5a7ed4103")}</div>
             <div className="flex flex-wrap gap-2">
               {visibleIssues.map((issue) => (
                 <IssuePill key={issue.id} issue={issue} />
@@ -246,8 +244,7 @@ export function ProjectWorkspaceSummaryCard({
                   to={workspaceHref}
                   className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
                 >
-                  +{hiddenIssueCount} more
-                </Link>
+                  +{hiddenIssueCount}{uiT("ui:messages.m_226ba18bbcdb7518")}</Link>
               ) : null}
             </div>
           </div>

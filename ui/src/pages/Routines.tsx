@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -193,7 +194,7 @@ export function buildRoutineGroups(
       })
       .map((key) => ({
         key,
-        label: key === "__unfiled" ? "Unfiled" : (folderById.get(key)?.name ?? "Unknown folder"),
+        label: key === "__unfiled" ? uiT("ui:messages.m_d64dc9ae400c2871") : (folderById.get(key)?.name ?? uiT("ui:messages.m_29223804c8c16938")),
         items: groups[key]!,
       }));
   }
@@ -208,7 +209,7 @@ export function buildRoutineGroups(
       })
       .map((key) => ({
         key,
-        label: key === "__no_project" ? "No project" : (projectById.get(key)?.name ?? "Unknown project"),
+        label: key === "__no_project" ? uiT("ui:messages.m_f34c2be0d1c5f562") : (projectById.get(key)?.name ?? uiT("ui:messages.m_ed51cfeff0d96984")),
         items: groups[key]!,
       }));
   }
@@ -222,7 +223,7 @@ export function buildRoutineGroups(
     })
     .map((key) => ({
       key,
-      label: key === "__unassigned" ? "Unassigned" : (agentById.get(key)?.name ?? "Unknown agent"),
+      label: key === "__unassigned" ? uiT("ui:messages.m_14d33bd014e6b4e7") : (agentById.get(key)?.name ?? uiT("ui:messages.m_342b4ab21e2eb31a")),
       items: groups[key]!,
     }));
 }
@@ -244,7 +245,7 @@ export function buildRoutineSections(
     .filter((group) => group.items.length > 0)
     .map((group) => (
       builtInRoutines.length > 0 && groupByValue === "none" && group.key === "__all"
-        ? { ...group, label: "Custom routines" }
+        ? { ...group, label: uiT("ui:messages.m_9454c52303759a42") }
         : group
     ));
 
@@ -254,7 +255,7 @@ export function buildRoutineSections(
     ...customGroups,
     {
       key: builtInRoutineGroupKey,
-      label: "Built-in routines",
+      label: uiT("ui:messages.m_f81d47affaac37b1"),
       items: builtInRoutines,
     },
   ];
@@ -364,7 +365,7 @@ export function Routines() {
   const folderSelection = normalizeFolderSelection(searchParams.get("folder"));
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Routines" }]);
+    setBreadcrumbs([{ label: uiT("ui:messages.m_61b7bb44e2b47b7c") }]);
   }, [setBreadcrumbs]);
 
   useEffect(() => {
@@ -448,7 +449,7 @@ export function Routines() {
       setAdvancedOpen(false);
       await queryClient.invalidateQueries({ queryKey: queryKeys.routines.list(selectedCompanyId!) });
       pushToast({
-        title: "Routine created",
+        title: uiT("ui:messages.m_73aa781897d2168d"),
         body: routine.assigneeAgentId
           ? "Add the first trigger to turn it into a live workflow."
           : "Draft saved. Add a default agent before enabling automation.",
@@ -477,7 +478,7 @@ export function Routines() {
           ]);
         } catch (moveError) {
           pushToast({
-            title: "Folder created, move failed",
+            title: uiT("ui:messages.m_cc944912a7387787"),
             body: moveError instanceof Error ? moveError.message : "Paperclip could not move the selected routines.",
             tone: "error",
           });
@@ -486,11 +487,11 @@ export function Routines() {
       } else {
         setFolderSelection(folder.id);
       }
-      pushToast({ title: "Folder created", body: folder.name, tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_b1dfe0e9670cba07"), body: folder.name, tone: "success" });
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Failed to save folder",
+        title: uiT("ui:messages.m_64879e714ac971fa"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not save the folder.",
         tone: "error",
       });
@@ -506,7 +507,7 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Folder save failed",
+        title: uiT("ui:messages.m_b0b2fe03ac2afae4"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not update the folder.",
         tone: "error",
       });
@@ -521,11 +522,11 @@ export function Routines() {
         queryClient.invalidateQueries({ queryKey: queryKeys.routines.list(selectedCompanyId!) }),
         queryClient.invalidateQueries({ queryKey: queryKeys.folders.list(selectedCompanyId!, "routine") }),
       ]);
-      pushToast({ title: "Folder deleted", body: "Items moved to Unfiled.", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_796dc50ba898b20e"), body: "Items moved to Unfiled.", tone: "success" });
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Folder delete failed",
+        title: uiT("ui:messages.m_cdb83bbddabd2dff"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not delete the folder.",
         tone: "error",
       });
@@ -542,7 +543,7 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Move failed",
+        title: uiT("ui:messages.m_55185d67bf51c3f1"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not move the routine.",
         tone: "error",
       });
@@ -564,7 +565,7 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Failed to update routine",
+        title: uiT("ui:messages.m_658553fd32ab2e2a"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not update the routine.",
         tone: "error",
       });
@@ -599,7 +600,7 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Routine run failed",
+        title: uiT("ui:messages.m_296c7ca6e9b82b39"),
         body: mutationError instanceof Error ? mutationError.message : "Paperclip could not start the routine run.",
         tone: "error",
       });
@@ -757,7 +758,7 @@ export function Routines() {
       pushToast({ title: "Routines moved", body: `${ids.length} routine${ids.length === 1 ? "" : "s"} filed.`, tone: "success" });
     } catch (moveError) {
       pushToast({
-        title: "Failed to move routines",
+        title: uiT("ui:messages.m_cd16aeca56e41a2b"),
         body: moveError instanceof Error ? moveError.message : "Paperclip could not move the selected routines.",
         tone: "error",
       });
@@ -771,7 +772,7 @@ export function Routines() {
   function handleToggleEnabled(routine: RoutineListItem, enabled: boolean) {
     if (!enabled && !routine.assigneeAgentId) {
       pushToast({
-        title: "Default agent required",
+        title: uiT("ui:messages.m_2761f376d7aad0e8"),
         body: "Set a default agent before enabling routine automation.",
         tone: "warn",
       });
@@ -807,15 +808,11 @@ export function Routines() {
       <div className="space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight">Routines</h1>
-            <p className="text-sm text-muted-foreground">
-              Recurring work definitions that materialize into auditable execution tasks.
-            </p>
+            <h1 className="text-2xl font-semibold tracking-tight">{uiT("ui:messages.m_61b7bb44e2b47b7c")}</h1>
+            <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_2b8bf160a00c3645")}</p>
           </div>
           <Button onClick={openCreateRoutine}>
-            <Plus className="mr-2 h-4 w-4" />
-            Create routine
-          </Button>
+            <Plus className="mr-2 h-4 w-4" />{uiT("ui:messages.m_f0fe070861695af8")}</Button>
         </div>
         <Tabs value={activeTab} onValueChange={handleLegacyTabChange}>
           <PageTabBar
@@ -823,8 +820,8 @@ export function Routines() {
             value={activeTab}
             onValueChange={handleLegacyTabChange}
             items={[
-              { value: "routines", label: "Routines" },
-              { value: "runs", label: "Recent Runs" },
+              { value: "routines", label: uiT("ui:messages.m_61b7bb44e2b47b7c") },
+              { value: "runs", label: uiT("ui:messages.m_53972e864229c7cc") },
             ]}
           />
         </Tabs>
@@ -863,8 +860,8 @@ export function Routines() {
             value={activeTab}
             onValueChange={handleLegacyTabChange}
             items={[
-              { value: "routines", label: "Routines" },
-              { value: "runs", label: "Recent Runs" },
+              { value: "routines", label: uiT("ui:messages.m_61b7bb44e2b47b7c") },
+              { value: "runs", label: uiT("ui:messages.m_53972e864229c7cc") },
             ]}
           />
         </Tabs>
@@ -897,10 +894,8 @@ export function Routines() {
         >
           <div className="shrink-0 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-3">
             <div>
-              <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">New routine</p>
-              <p className="text-sm text-muted-foreground">
-                Define the recurring work first. Default project and agent are optional for draft routines.
-              </p>
+              <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_d5e520f554b1000e")}</p>
+              <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_5e36131aa23b69d8")}</p>
             </div>
             <Button
               variant="ghost"
@@ -910,9 +905,7 @@ export function Routines() {
                 setAdvancedOpen(false);
               }}
               disabled={createRoutine.isPending}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto">
@@ -920,7 +913,7 @@ export function Routines() {
               <textarea
                 ref={titleInputRef}
                 className="w-full resize-none overflow-hidden bg-transparent text-xl font-semibold outline-none placeholder:text-muted-foreground/50"
-                placeholder="Routine title"
+                placeholder={uiT("ui:messages.m_26d0f82a0da1d5ef")}
                 rows={1}
                 value={draft.title}
                 onChange={(event) => {
@@ -953,16 +946,16 @@ export function Routines() {
             <div className="px-5 pb-3">
               <div className="overflow-x-auto overscroll-x-contain">
                 <div className="inline-flex min-w-full flex-wrap items-center gap-2 text-sm text-muted-foreground sm:min-w-max sm:flex-nowrap">
-                  <span>For</span>
+                  <span>{uiT("ui:messages.m_ca15ebc05a3c5c13")}</span>
                   <InlineEntitySelector
                     ref={assigneeSelectorRef}
                     value={draft.assigneeAgentId}
                     options={assigneeOptions}
                     recentOptionIds={recentAssigneeIds}
-                    placeholder="Responsible"
+                    placeholder={uiT("ui:messages.m_bc110a6d0722098a")}
                     noneLabel="No responsible"
-                    searchPlaceholder="Search responsible..."
-                    emptyMessage="No responsible found."
+                    searchPlaceholder={uiT("ui:messages.m_9cb8d79fc8b40d38")}
+                    emptyMessage={uiT("ui:messages.m_045a8ffe4067d6d2")}
                     onChange={(assigneeAgentId) => {
                       if (assigneeAgentId) trackRecentAssignee(assigneeAgentId);
                       setDraft((current) => ({ ...current, assigneeAgentId }));
@@ -985,7 +978,7 @@ export function Routines() {
                           <span className="truncate">{option.label}</span>
                         )
                       ) : (
-                        <span className="text-muted-foreground">Responsible</span>
+                        <span className="text-muted-foreground">{uiT("ui:messages.m_bc110a6d0722098a")}</span>
                       )
                     }
                     renderOption={(option) => {
@@ -999,16 +992,16 @@ export function Routines() {
                       );
                     }}
                   />
-                  <span>in</span>
+                  <span>{uiT("ui:messages.m_582967534d0f909d")}</span>
                   <InlineEntitySelector
                     ref={projectSelectorRef}
                     value={draft.projectId}
                     options={projectOptions}
                     recentOptionIds={recentProjectIds}
-                    placeholder="Project"
+                    placeholder={uiT("ui:messages.m_9859597853197476")}
                     noneLabel="No project"
-                    searchPlaceholder="Search projects..."
-                    emptyMessage="No projects found."
+                    searchPlaceholder={uiT("ui:messages.m_c59dd5a3c5a25588")}
+                    emptyMessage={uiT("ui:messages.m_26e92309ba5b0ca9")}
                     onChange={(projectId) => {
                       if (projectId) trackRecentProject(projectId);
                       setDraft((current) => ({ ...current, projectId }));
@@ -1024,7 +1017,7 @@ export function Routines() {
                           <span className="truncate">{option.label}</span>
                         </>
                       ) : (
-                        <span className="text-muted-foreground">Project</span>
+                        <span className="text-muted-foreground">{uiT("ui:messages.m_9859597853197476")}</span>
                       )
                     }
                     renderOption={(option) => {
@@ -1041,7 +1034,7 @@ export function Routines() {
                       );
                     }}
                   />
-                  <span>filed in</span>
+                  <span>{uiT("ui:messages.m_8effe18fb31887c5")}</span>
                   <Select
                     value={draft.folderId ?? "__unfiled"}
                     onValueChange={(value) => setDraft((current) => ({
@@ -1053,7 +1046,7 @@ export function Routines() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="__unfiled">Unfiled</SelectItem>
+                      <SelectItem value="__unfiled">{uiT("ui:messages.m_d64dc9ae400c2871")}</SelectItem>
                       {(routineFolders?.folders ?? []).map((folder) => (
                         <SelectItem key={folder.id} value={folder.id}>
                           {folder.name}
@@ -1070,7 +1063,7 @@ export function Routines() {
                 ref={descriptionEditorRef}
                 value={draft.description}
                 onChange={(description) => setDraft((current) => ({ ...current, description }))}
-                placeholder="Add instructions..."
+                placeholder={uiT("ui:messages.m_d49e19c5685d2f96")}
                 bordered={false}
                 contentClassName="min-h-(--sz-160px) text-sm text-muted-foreground"
                 mentions={mentionOptions}
@@ -1086,15 +1079,15 @@ export function Routines() {
               <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
                 <CollapsibleTrigger className="flex w-full items-center justify-between text-left">
                   <div>
-                    <p className="text-sm font-medium">Advanced delivery settings</p>
-                    <p className="text-sm text-muted-foreground">Keep policy controls secondary to the work definition.</p>
+                    <p className="text-sm font-medium">{uiT("ui:messages.m_6fbfb2fa312aaddb")}</p>
+                    <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_264481cebdc6ae50")}</p>
                   </div>
                   {advancedOpen ? <ChevronDown className="h-4 w-4 text-muted-foreground" /> : <ChevronRight className="h-4 w-4 text-muted-foreground" />}
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pt-3">
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">Concurrency</p>
+                      <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_8708492f3ef5c138")}</p>
                       <Select
                         value={draft.concurrencyPolicy}
                         onValueChange={(concurrencyPolicy) => setDraft((current) => ({ ...current, concurrencyPolicy }))}
@@ -1111,7 +1104,7 @@ export function Routines() {
                       <p className="text-xs text-muted-foreground">{concurrencyPolicyDescriptions[draft.concurrencyPolicy]}</p>
                     </div>
                     <div className="space-y-2">
-                      <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">Catch-up</p>
+                      <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_1c2d0f8e6b923cd0")}</p>
                       <Select
                         value={draft.catchUpPolicy}
                         onValueChange={(catchUpPolicy) => setDraft((current) => ({ ...current, catchUpPolicy }))}
@@ -1134,9 +1127,7 @@ export function Routines() {
           </div>
 
           <div className="shrink-0 flex flex-col gap-3 border-t border-border/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-sm text-muted-foreground">
-              After creation, Paperclip takes you straight to trigger setup. Draft routines stay paused until you add a default agent.
-            </div>
+            <div className="text-sm text-muted-foreground">{uiT("ui:messages.m_1ff03dde57cb6c51")}</div>
             <div className="flex flex-col gap-2 sm:items-end">
               <Button
                 onClick={() => createRoutine.mutate()}
@@ -1146,11 +1137,11 @@ export function Routines() {
                 }
               >
                 <Plus className="mr-2 h-4 w-4" />
-                {createRoutine.isPending ? "Creating..." : "Create routine"}
+                {createRoutine.isPending ? uiT("ui:messages.m_def70944c9bb9c3b") : uiT("ui:messages.m_f0fe070861695af8")}
               </Button>
               {createRoutine.isError ? (
                 <p className="text-sm text-destructive">
-                  {createRoutine.error instanceof Error ? createRoutine.error.message : "Failed to create routine"}
+                  {createRoutine.error instanceof Error ? createRoutine.error.message : uiT("ui:messages.m_7374cba284beb86a")}
                 </p>
               ) : null}
             </div>
@@ -1161,7 +1152,7 @@ export function Routines() {
       {error ? (
         <Card>
           <CardContent className="pt-6 text-sm text-destructive">
-            {error instanceof Error ? error.message : "Failed to load routines"}
+            {error instanceof Error ? error.message : uiT("ui:messages.m_8917291223f82f48")}
           </CardContent>
         </Card>
       ) : null}
@@ -1187,11 +1178,11 @@ export function Routines() {
           <div className="min-w-0 flex-1">
           {routineViewState.groupBy === "folder" && hasRoutineFolders ? (
             <div className="mb-3 flex flex-wrap items-center gap-2">
-              {folderSelection === "all" ? <FolderIconHeader label="All routines" count={sortedRoutines.length} /> : (
+              {folderSelection === "all" ? <FolderIconHeader label={uiT("ui:messages.m_4a8c7842a533faf3")} count={sortedRoutines.length} /> : (
                 <div className="flex min-w-0 items-center gap-2 text-sm">
                   <FolderSwatch color={activeFolder?.color} />
-                  <span className="truncate font-medium">{folderSelection === "unfiled" ? "Unfiled" : activeFolder?.name ?? "Folder"}</span>
-                  <span className="text-muted-foreground">{sortedRoutines.length} routine{sortedRoutines.length === 1 ? "" : "s"}</span>
+                  <span className="truncate font-medium">{folderSelection === "unfiled" ? uiT("ui:messages.m_d64dc9ae400c2871") : activeFolder?.name ?? uiT("ui:messages.m_74ccd43303847f26")}</span>
+                  <span className="text-muted-foreground">{sortedRoutines.length}{uiT("ui:messages.m_2fe51c04cef6ae9d")}{sortedRoutines.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}</span>
                 </div>
               )}
             </div>
@@ -1232,9 +1223,7 @@ export function Routines() {
               {folderSelection !== "all" ? (
                 <div className="mt-3 flex justify-center">
                   <Button size="sm" onClick={openCreateRoutine}>
-                    <Plus className="mr-2 h-3.5 w-3.5" />
-                    New routine in this folder
-                  </Button>
+                    <Plus className="mr-2 h-3.5 w-3.5" />{uiT("ui:messages.m_086c8aefb7d9222f")}</Button>
                 </div>
               ) : null}
             </div>
@@ -1293,13 +1282,13 @@ export function Routines() {
                                 const previousFolderId = routine.folderId ?? null;
                                 moveRoutineToFolder.mutate({ itemId: routine.id, folderId });
                                 pushToast({
-                                  title: "Routine moved",
+                                  title: uiT("ui:messages.m_0710300f56cc8c63"),
                                   body: folderId
                                     ? `Moved "${routine.title}" to ${routineFolders?.folders.find((folder) => folder.id === folderId)?.name ?? "folder"}.`
                                     : `Moved "${routine.title}" to Unfiled.`,
                                   tone: "success",
                                   action: {
-                                    label: "Undo",
+                                    label: uiT("ui:messages.m_a8283ade31856f71"),
                                     onClick: () => moveRoutineToFolder.mutate({ itemId: routine.id, folderId: previousFolderId }),
                                   },
                                 });
@@ -1379,7 +1368,7 @@ function FolderIconHeader({ label, count }: { label: string; count: number }) {
     <div className="flex min-w-0 items-center gap-2 text-sm">
       <Repeat className="h-3.5 w-3.5 text-muted-foreground" />
       <span className="truncate font-medium">{label}</span>
-      <span className="text-muted-foreground">{count} routine{count === 1 ? "" : "s"}</span>
+      <span className="text-muted-foreground">{count}{uiT("ui:messages.m_2fe51c04cef6ae9d")}{count === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}</span>
     </div>
   );
 }

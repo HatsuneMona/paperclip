@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -350,7 +351,7 @@ export function RoutineRunVariablesDialog({
           {routineName && (
             <p className="text-muted-foreground text-sm">{routineName}</p>
           )}
-          <DialogTitle>Run routine</DialogTitle>
+          <DialogTitle>{uiT("ui:messages.m_1f1580e15ddc9c90")}</DialogTitle>
           <DialogDescription>
             Choose the agent and optional project for this one run. Routine defaults are prefilled and won&apos;t be changed.
           </DialogDescription>
@@ -364,10 +365,10 @@ export function RoutineRunVariablesDialog({
                 value={selection.assigneeAgentId}
                 options={assigneeOptions}
                 recentOptionIds={recentAssigneeIds}
-                placeholder="Agent"
+                placeholder={uiT("ui:messages.m_11b39c93777e8f1f")}
                 noneLabel="Select an agent"
-                searchPlaceholder="Search agents..."
-                emptyMessage="No agents found."
+                searchPlaceholder={uiT("ui:messages.m_32f4468b0b6f9410")}
+                emptyMessage={uiT("ui:messages.m_61666542b1caa1e2")}
                 disablePortal
                 openOnFocus={false}
                 onChange={(assigneeAgentId) => {
@@ -385,7 +386,7 @@ export function RoutineRunVariablesDialog({
                       <span className="truncate">{option.label}</span>
                     )
                   ) : (
-                    <span className="text-muted-foreground">Select an agent</span>
+                    <span className="text-muted-foreground">{uiT("ui:messages.m_7d4cf06874635248")}</span>
                   )
                 }
                 renderOption={(option) => {
@@ -401,15 +402,15 @@ export function RoutineRunVariablesDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">Project</Label>
+              <Label className="text-xs">{uiT("ui:messages.m_9859597853197476")}</Label>
               <InlineEntitySelector
                 value={selection.projectId}
                 options={projectOptions}
                 recentOptionIds={recentProjectIds}
-                placeholder="Project"
+                placeholder={uiT("ui:messages.m_9859597853197476")}
                 noneLabel="No project"
-                searchPlaceholder="Search projects..."
-                emptyMessage="No projects found."
+                searchPlaceholder={uiT("ui:messages.m_c59dd5a3c5a25588")}
+                emptyMessage={uiT("ui:messages.m_26e92309ba5b0ca9")}
                 disablePortal
                 openOnFocus={false}
                 onChange={(projectId) => {
@@ -434,7 +435,7 @@ export function RoutineRunVariablesDialog({
                       <span className="truncate">{option.label}</span>
                     </>
                   ) : (
-                    <span className="text-muted-foreground">No project</span>
+                    <span className="text-muted-foreground">{uiT("ui:messages.m_f34c2be0d1c5f562")}</span>
                   )
                 }
                 renderOption={(option) => {
@@ -485,8 +486,8 @@ export function RoutineRunVariablesDialog({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__unset__">No value</SelectItem>
-                    <SelectItem value="true">True</SelectItem>
-                    <SelectItem value="false">False</SelectItem>
+                    <SelectItem value="true">{uiT("ui:messages.m_3cbc87c7681f34db")}</SelectItem>
+                    <SelectItem value="false">{uiT("ui:messages.m_60a33e6cf5151f2d")}</SelectItem>
                   </SelectContent>
                 </Select>
               ) : variable.type === "select" ? (
@@ -553,9 +554,7 @@ export function RoutineRunVariablesDialog({
           ) : (
             <span className="mr-auto" />
           )}
-          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={isPending}>
-            Cancel
-          </Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={isPending}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           <Button
             onClick={() => {
               const nextVariables: Record<string, string | number | boolean> = {};
@@ -589,7 +588,7 @@ export function RoutineRunVariablesDialog({
             }}
             disabled={isPending || !canSubmit}
           >
-            {isPending ? "Running..." : "Run routine"}
+            {isPending ? uiT("ui:messages.m_4977a7e5bb3675c4") : uiT("ui:messages.m_1f1580e15ddc9c90")}
           </Button>
         </DialogFooter>
       </DialogContent>

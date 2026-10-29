@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 /**
  * Work Timeline page (PAP-12424 / Phase C of PAP-12405).
  *
@@ -248,24 +249,16 @@ function TimelineLegend() {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-border px-3.5 py-2 text-xs text-muted-foreground">
       <span className="flex items-center gap-1.5">
-        <span className="h-2.5 w-4 rounded-sm" style={{ backgroundColor: TIMELINE_COLORS.delegated }} />
-        Delegated
-      </span>
+        <span className="h-2.5 w-4 rounded-sm" style={{ backgroundColor: TIMELINE_COLORS.delegated }} />{uiT("ui:messages.m_dd341e5d100e662a")}</span>
       <span className="flex items-center gap-1.5">
-        <span className="h-2.5 w-4 rounded-sm" style={{ backgroundColor: TIMELINE_COLORS.automation }} />
-        Automation
-      </span>
+        <span className="h-2.5 w-4 rounded-sm" style={{ backgroundColor: TIMELINE_COLORS.automation }} />{uiT("ui:messages.m_d909750b1bbb71a3")}</span>
       <span className="flex items-center gap-1.5">
         <span
           className="h-2.5 w-4 rounded-sm border border-dashed bg-transparent"
           style={{ borderColor: TIMELINE_COLORS.cancelled }}
-        />
-        Cancelled
-      </span>
+        />{uiT("ui:messages.m_d353a99eb4556847")}</span>
       <span className="flex items-center gap-1.5">
-        <span className="h-3.5 w-0.5" style={{ backgroundColor: TIMELINE_COLORS.now }} />
-        Now
-      </span>
+        <span className="h-3.5 w-0.5" style={{ backgroundColor: TIMELINE_COLORS.now }} />{uiT("ui:messages.m_fe18013d93d22f4f")}</span>
     </div>
   );
 }
@@ -276,11 +269,11 @@ function TimelineSummaryStats({
   summary: ReturnType<typeof timelineSummary>;
 }) {
   const stats: { label: string; value: string; icon: LucideIcon }[] = [
-    { label: "Runs", value: formatInteger(summary.runs), icon: GanttChartSquare },
-    { label: "Agents", value: formatInteger(summary.agents), icon: Bot },
-    { label: "Run time", value: formatDuration(0, summary.activeMs), icon: Clock3 },
+    { label: uiT("ui:messages.m_848f54e89660cea4"), value: formatInteger(summary.runs), icon: GanttChartSquare },
+    { label: uiT("ui:messages.m_279b44d2ab4b40c0"), value: formatInteger(summary.agents), icon: Bot },
+    { label: uiT("ui:messages.m_40349abbfc605159"), value: formatDuration(0, summary.activeMs), icon: Clock3 },
     {
-      label: "Tokens used",
+      label: uiT("ui:messages.m_d2252f5a23d70f43"),
       value: summary.totalTokens > 0 ? formatCompactInteger(summary.totalTokens) : "Not tracked",
       icon: Coins,
     },
@@ -322,7 +315,7 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
 
   useEffect(() => {
     if (!embedded) {
-      setBreadcrumbs([{ label: scopedProjectId ? "Project Timeline" : "Timeline" }]);
+      setBreadcrumbs([{ label: scopedProjectId ? uiT("ui:messages.m_da2fd084302a987e") : uiT("ui:messages.m_9dcff98e275f0cb9") }]);
     }
   }, [embedded, scopedProjectId, setBreadcrumbs]);
 
@@ -371,7 +364,7 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
     <div className="flex items-center gap-2">
       <GanttChartSquare className="h-6 w-6 text-muted-foreground" />
       <h1 className="text-3xl font-semibold tracking-tight">
-        {scopedProjectId ? "Project Timeline" : "Work Timeline"}
+        {scopedProjectId ? uiT("ui:messages.m_da2fd084302a987e") : uiT("ui:messages.m_38973f05292895bd")}
       </h1>
     </div>
   );
@@ -396,9 +389,7 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
   const summary = data ? timelineSummary(data, visibleWindow ?? dataWindow(data)) : null;
 
   const rangeControls = (
-    <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-muted-foreground">
-      Range
-      <Segmented
+    <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-muted-foreground">{uiT("ui:messages.m_5de74a81b192304c")}<Segmented
         value={rangePreset}
         onChange={(preset) => {
           if (preset === "custom") return;
@@ -406,9 +397,9 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           setDateRange(presetRange(preset));
         }}
         options={[
-          { value: "today", label: "Today" },
-          { value: "7d", label: "7 days" },
-          { value: "30d", label: "30 days" },
+          { value: "today", label: uiT("ui:messages.m_2b065c7c9ce466e5") },
+          { value: "7d", label: uiT("ui:messages.m_7f920bb639c93075") },
+          { value: "30d", label: uiT("ui:messages.m_ffd7280513ce285e") },
         ]}
       />
       <Input
@@ -419,9 +410,9 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           setDateRange((prev) => ({ ...prev, fromDate: event.target.value }));
         }}
         className="h-8 w-(--sz-150px) text-xs"
-        aria-label="Timeline start date"
+        aria-label={uiT("ui:messages.m_881e6415c6458c0a")}
       />
-      <span>to</span>
+      <span>{uiT("ui:messages.m_663ea1bfffe5038f")}</span>
       <Input
         type="date"
         value={dateRange.toDate}
@@ -430,7 +421,7 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           setDateRange((prev) => ({ ...prev, toDate: event.target.value }));
         }}
         className="h-8 w-(--sz-150px) text-xs"
-        aria-label="Timeline end date"
+        aria-label={uiT("ui:messages.m_0f612621007ec6cd")}
       />
     </label>
   );
@@ -438,14 +429,14 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
   const toolbar = (
     <div className="flex flex-wrap items-start gap-3">
       {summary && <TimelineSummaryStats summary={summary} />}
-      <div className="ml-auto flex items-center gap-1 pt-3" aria-label="Timeline zoom controls">
+      <div className="ml-auto flex items-center gap-1 pt-3" aria-label={uiT("ui:messages.m_4c7cc9e98c01f78b")}>
         <Button
           type="button"
           variant="outline"
           size="icon-xs"
           onClick={() => adjustZoom(0.8)}
-          aria-label="Zoom out"
-          title="Zoom out"
+          aria-label={uiT("ui:messages.m_bc7b631a689b45ca")}
+          title={uiT("ui:messages.m_bc7b631a689b45ca")}
         >
           <Minus className="h-3 w-3" />
         </Button>
@@ -454,8 +445,8 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           variant="outline"
           size="icon-xs"
           onClick={() => adjustZoom(1.25)}
-          aria-label="Zoom in"
-          title="Zoom in"
+          aria-label={uiT("ui:messages.m_0e47f09a748fa132")}
+          title={uiT("ui:messages.m_0e47f09a748fa132")}
         >
           <Plus className="h-3 w-3" />
         </Button>
@@ -464,8 +455,8 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           variant="outline"
           size="icon-xs"
           onClick={resetZoom}
-          aria-label="Reset zoom"
-          title="Reset zoom"
+          aria-label={uiT("ui:messages.m_91a661b24f1bc2bf")}
+          title={uiT("ui:messages.m_91a661b24f1bc2bf")}
         >
           <RotateCcw className="h-3 w-3" />
         </Button>
@@ -529,8 +520,8 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
             </Card>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-xs text-muted-foreground">
-                {data.spans.length} run{data.spans.length === 1 ? "" : "s"} ·{" "}
-                {new Date(data.window.from).toLocaleString()} to {new Date(data.window.to).toLocaleString()}
+                {data.spans.length}{uiT("ui:messages.m_5e9c88062df8df52")}{data.spans.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")} ·{" "}
+                {new Date(data.window.from).toLocaleString()}{uiT("ui:messages.m_87721689ee42f441")}{new Date(data.window.to).toLocaleString()}
                 {data.window.capped ? " · window capped" : ""}
               </p>
               {rangeControls}

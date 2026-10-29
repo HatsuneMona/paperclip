@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { fileKindForName } from "@/components/task-chat/task-chat-attachments";
 import type { LabArtifact } from "../../kit";
 
@@ -123,22 +124,22 @@ export function galleryActions(a: LabArtifact): ArtifactAction[] {
   if (a.kind === "link") return [{ label: "Open link in new tab", icon: "external", href: anchor(a) }];
   return [
     { label: "Open file in new tab", icon: "external", href: anchor(a) },
-    { label: "Download file", icon: "download", href: anchor(a) },
+    { label: uiT("ui:messages.m_9de4149fb9716cfc"), icon: "download", href: anchor(a) },
   ];
 }
 
 /** THREAD — the one thing to do with it (RichWorkProductCard.tsx:148-191). */
 export function primaryAction(a: LabArtifact): ArtifactAction {
-  if (isTaskDocument(a)) return { label: "Open document", icon: "open", href: anchor(a) };
+  if (isTaskDocument(a)) return { label: uiT("ui:messages.m_07e93c9ea2c61d95"), icon: "open", href: anchor(a) };
   if (a.kind === "image" || a.kind === "video") return { label: "Open gallery", icon: "gallery" };
   if (a.kind === "link") return { label: "Open preview", icon: "external", href: anchor(a) };
-  if (isTextLike(a)) return { label: "Open in tab", icon: "open", href: anchor(a) };
-  return { label: "Download", icon: "download", href: anchor(a) };
+  if (isTextLike(a)) return { label: uiT("ui:messages.m_0e5d95967de31cb2"), icon: "open", href: anchor(a) };
+  return { label: uiT("ui:messages.m_d6eafe8235910042"), icon: "download", href: anchor(a) };
 }
 
 /** THREAD — text-like files open in the side panel and keep Download as its own target. */
 export function secondaryAction(a: LabArtifact): ArtifactAction | null {
-  return isTextLike(a) ? { label: "Download", icon: "download", href: anchor(a) } : null;
+  return isTextLike(a) ? { label: uiT("ui:messages.m_d6eafe8235910042"), icon: "download", href: anchor(a) } : null;
 }
 
 /** PANEL — the wording of the pane's buttons (RichArtifactCards.tsx). */
@@ -146,10 +147,10 @@ export function panelActions(a: LabArtifact): ArtifactAction[] {
   if (a.kind === "document") return [{ label: "Read document", icon: "open", href: anchor(a) }];
   if (a.kind === "image") return [{ label: "View image", icon: "gallery" }];
   if (a.kind === "video") return [{ label: "Open video", icon: "gallery" }];
-  if (a.kind === "link") return [{ label: "Open link", icon: "external", href: anchor(a) }];
+  if (a.kind === "link") return [{ label: uiT("ui:messages.m_aab63f85c7f1cd14"), icon: "external", href: anchor(a) }];
   return [
     { label: "Open file", icon: "external", href: anchor(a) },
-    { label: "Download file", icon: "download", href: anchor(a) },
+    { label: uiT("ui:messages.m_9de4149fb9716cfc"), icon: "download", href: anchor(a) },
   ];
 }
 
@@ -159,9 +160,9 @@ export function panelActions(a: LabArtifact): ArtifactAction[] {
  */
 export function panelIconActions(a: LabArtifact): ArtifactAction[] {
   if (isTaskDocument(a) || !isTextLike(a)) return [];
-  const inTab: ArtifactAction = { label: "Open in tab", icon: "open", href: anchor(a) };
+  const inTab: ArtifactAction = { label: uiT("ui:messages.m_0e5d95967de31cb2"), icon: "open", href: anchor(a) };
   if (a.kind !== "document") return [inTab];
-  return [inTab, { label: "Open raw", icon: "external", href: anchor(a) }, { label: "Download", icon: "download", href: anchor(a) }];
+  return [inTab, { label: uiT("ui:messages.m_7f57bf8c34f6dda4"), icon: "external", href: anchor(a) }, { label: uiT("ui:messages.m_d6eafe8235910042"), icon: "download", href: anchor(a) }];
 }
 
 /**

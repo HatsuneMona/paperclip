@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Check,
@@ -176,9 +177,7 @@ function SelectOption({
         <span className="flex flex-wrap items-center gap-1.5 text-sm font-medium leading-5 text-foreground">
           <span>{label}</span>
           {recommended ? (
-            <span className="rounded-sm bg-background/70 px-1.5 py-0.5 text-(length:--text-micro) font-medium text-muted-foreground">
-              Recommended
-            </span>
+            <span className="rounded-sm bg-background/70 px-1.5 py-0.5 text-(length:--text-micro) font-medium text-muted-foreground">{uiT("ui:messages.m_d70604e843046137")}</span>
           ) : null}
         </span>
         {description ? (
@@ -474,26 +473,26 @@ function QuestionFormForRequest({
     questionSet.questions.length > 1 ? (
       <nav
         className="flex shrink-0 items-center gap-1"
-        aria-label="Question pagination"
+        aria-label={uiT("ui:messages.m_032747727a6c9f98")}
       >
         <Button
           type="button"
           size="icon-xs"
           variant="ghost"
-          aria-label="Previous question"
+          aria-label={uiT("ui:messages.m_d237e091b80cd2f0")}
           disabled={disabled || working != null || page === 0}
           onClick={() => setPage((current) => current - 1)}
         >
           <ChevronLeft aria-hidden />
         </Button>
         <span className="min-w-10 text-center tabular-nums">
-          {page + 1} of {questionSet.questions.length}
+          {page + 1}{uiT("ui:messages.m_a4282e4b2298b90b")}{questionSet.questions.length}
         </span>
         <Button
           type="button"
           size="icon-xs"
           variant="ghost"
-          aria-label="Next question"
+          aria-label={uiT("ui:messages.m_f7a9d7437e964638")}
           // The arrows browse; they do not validate. A send that finds an
           // earlier answer missing returns to that question (see submit).
           disabled={disabled || working != null || isLastPage}
@@ -545,7 +544,7 @@ function QuestionFormForRequest({
       {questionSet.description ? (
         <div
           role="region"
-          aria-label="Question context"
+          aria-label={uiT("ui:messages.m_2b0dfe494052c793")}
           tabIndex={0}
           className="mb-3 max-h-96 overflow-auto text-sm text-muted-foreground"
         >
@@ -598,7 +597,7 @@ function QuestionFormForRequest({
             value={answer.text ?? ""}
             disabled={disabled || working != null}
             onChange={(value) => updateAnswer({ text: value })}
-            placeholder="Write your answer"
+            placeholder={uiT("ui:messages.m_a2639bd01faffe13")}
             imageUploadHandler={imageUploadHandler}
             mentions={mentions}
             autoFocus
@@ -629,8 +628,8 @@ function QuestionFormForRequest({
                     [question.id]: event.target.value,
                   }))
                 }
-                placeholder="Filter choices"
-                aria-label={`Filter choices for ${question.prompt}`}
+                placeholder={uiT("ui:messages.m_386caed3a289cd7b")}
+                aria-label={uiT("ui:messages.m_0b683e1a78c39884", { v0: (question.prompt) })}
                 className="pl-8"
               />
             </label>
@@ -665,7 +664,7 @@ function QuestionFormForRequest({
                   testId="question-other-answer-composer"
                   value={answer.customText ?? ""}
                   placeholder={
-                    question.customAnswer?.placeholder ?? "Type your answer"
+                    question.customAnswer?.placeholder ?? uiT("ui:messages.m_d078bf7520a710d0")
                   }
                   disabled={disabled || working != null}
                   onChange={(value) =>
@@ -707,9 +706,7 @@ function QuestionFormForRequest({
             >
               {working === "cancel" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
-              ) : null}{" "}
-              Cancel
-            </Button>
+              ) : null}{" "}{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
           ) : null}
           {!question.required ? (
             <Button
@@ -731,7 +728,7 @@ function QuestionFormForRequest({
             {working === "submit" ? (
               <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
             ) : null}
-            {isLastPage ? (questionSet.submitLabel ?? "Submit answers") : "Next"}
+            {isLastPage ? (questionSet.submitLabel ?? uiT("ui:messages.m_6d23261523eb641c")) : uiT("ui:messages.m_1ff57a29d7c9d11b")}
           </Button>
         </div>
       </DecisionCardFooter>

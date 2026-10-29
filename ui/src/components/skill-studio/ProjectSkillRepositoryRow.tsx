@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ProjectSkillRepository } from '@paperclipai/shared';
 import { GithubIcon } from '@/components/icons/github-icon';
 import { Button } from '@/components/ui/button';
@@ -19,7 +20,7 @@ export function ProjectSkillRepositoryRow({ repository, pending, backgroundPendi
         <a href={repository.repositoryUrl} target="_blank" rel="noreferrer" className="block truncate text-sm font-medium hover:underline">
           {repository.repositoryUrl.replace('https://github.com/', '')}
         </a>
-        <p className="truncate text-xs text-muted-foreground">{repository.projectName} · {repository.trackingRef === 'HEAD' ? 'Default branch' : repository.trackingRef}{repository.projectVisibility === 'private' ? ' · Project access' : ''}</p>
+        <p className="truncate text-xs text-muted-foreground">{repository.projectName} · {repository.trackingRef === 'HEAD' ? uiT("ui:messages.m_411aa61aea55ac65") : repository.trackingRef}{repository.projectVisibility === 'private' ? ' · Project access' : ''}</p>
       </div>
       <Button size="sm" variant="outline" disabled={actionPending || disabled} onClick={onImport}>
         {importing && <LoaderCircle className="size-3.5 animate-spin motion-reduce:animate-none" />}

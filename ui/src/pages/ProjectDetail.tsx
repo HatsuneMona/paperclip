@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useShowAgentCreatedTasks } from "../hooks/useShowAgentCreatedTasks";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link, useParams, useNavigate, useLocation, Navigate } from "@/lib/router";
@@ -112,16 +113,16 @@ function ProjectTilePicker({
         <button
           type="button"
           className="shrink-0 rounded-lg cursor-pointer hover:ring-2 hover:ring-foreground/20 transition-(--tp-box-shadow)"
-          aria-label="Change project icon and color"
+          aria-label={uiT("ui:messages.m_c84c79faedf49229")}
         >
           <ProjectTile color={color} icon={icon} size="md" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-72 p-3" align="start">
         {/* Icon search + grid */}
-        <p className="text-xs font-medium text-muted-foreground mb-2">Icon</p>
+        <p className="text-xs font-medium text-muted-foreground mb-2">{uiT("ui:messages.m_a35abcd6dac9a2e5")}</p>
         <Input
-          placeholder="Search icons..."
+          placeholder={uiT("ui:messages.m_d47dbbe19a63e486")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="mb-2 h-8 text-sm"
@@ -143,13 +144,13 @@ function ProjectTilePicker({
             </button>
           ))}
           {filteredIcons.length === 0 && (
-            <p className="col-span-7 text-xs text-muted-foreground text-center py-2">No icons match</p>
+            <p className="col-span-7 text-xs text-muted-foreground text-center py-2">{uiT("ui:messages.m_838e82679d03ebe6")}</p>
           )}
         </div>
 
         {/* Color swatches */}
         <div className="mt-3 border-t border-border pt-3">
-          <p className="text-xs font-medium text-muted-foreground mb-2">Color</p>
+          <p className="text-xs font-medium text-muted-foreground mb-2">{uiT("ui:messages.m_6b73191a0a4b6742")}</p>
           <div className="grid grid-cols-5 gap-1.5">
             {/* Neutral / reset-to-gray option */}
             <button
@@ -160,8 +161,8 @@ function ProjectTilePicker({
                   ? "ring-2 ring-foreground ring-offset-1 ring-offset-background rounded-md"
                   : ""
               }`}
-              aria-label="Reset to neutral gray"
-              title="Neutral (default)"
+              aria-label={uiT("ui:messages.m_e84dcf574b66184a")}
+              title={uiT("ui:messages.m_be8c000445c13297")}
             >
               <ProjectTile color={null} size="sm" />
             </button>
@@ -176,7 +177,7 @@ function ProjectTilePicker({
                     : "hover:ring-2 hover:ring-foreground/30"
                 }`}
                 style={{ backgroundColor: swatch }}
-                aria-label={`Select color ${swatch}`}
+                aria-label={uiT("ui:messages.m_91e9bfd3f8dce7fa", { v0: (swatch) })}
               />
             ))}
           </div>
@@ -479,15 +480,15 @@ export function ProjectDetail() {
       invalidateProject();
       const name = updatedProject?.name ?? project?.name ?? "Project";
       if (archived) {
-        pushToast({ title: `"${name}" has been archived`, tone: "success" });
+        pushToast({ title: uiT("ui:messages.m_29fc674b3e29f1a3", { v0: (name) }), tone: "success" });
         navigate("/dashboard");
       } else {
-        pushToast({ title: `"${name}" has been unarchived`, tone: "success" });
+        pushToast({ title: uiT("ui:messages.m_9304c2e10dd6cc70", { v0: (name) }), tone: "success" });
       }
     },
     onError: (_, archived) => {
       pushToast({
-        title: archived ? "Failed to archive project" : "Failed to unarchive project",
+        title: archived ? uiT("ui:messages.m_e0fd3e202e750ad6") : uiT("ui:messages.m_63df5eb6607bfdb9"),
         tone: "error",
       });
     },
@@ -510,8 +511,8 @@ export function ProjectDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
-      { label: project?.name ?? routeProjectRef ?? "Project" },
+      { label: uiT("ui:messages.m_04e2a9728af75840"), href: "/projects" },
+      { label: project?.name ?? routeProjectRef ?? uiT("ui:messages.m_9859597853197476") },
     ]);
   }, [setBreadcrumbs, project, routeProjectRef]);
 
@@ -739,9 +740,7 @@ export function ProjectDetail() {
     <div className="space-y-6">
       {showLeftProjectNotice ? (
         <div className="flex items-center gap-3 border border-yellow-300/35 bg-yellow-300/10 px-3 py-2 text-sm text-yellow-900 dark:text-yellow-100">
-          <p className="min-w-0 flex-1">
-            You left this project. It no longer appears in your sidebar.
-          </p>
+          <p className="min-w-0 flex-1">{uiT("ui:messages.m_46edf33d056bcb79")}</p>
           <MembershipAction
             compact
             state="left"
@@ -764,7 +763,7 @@ export function ProjectDetail() {
           <button
             type="button"
             className="h-6 w-6 shrink-0 text-yellow-900/70 hover:text-yellow-900 dark:text-yellow-100/70 dark:hover:text-yellow-100"
-            aria-label="Dismiss project membership notice"
+            aria-label={uiT("ui:messages.m_8aa3b27e2396253e")}
             onClick={() => setDismissedLeftProjectIds((current) => new Set(current).add(project.id))}
           >
             ×
@@ -789,14 +788,11 @@ export function ProjectDetail() {
           />
           {project.pauseReason === "budget" ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-(length:--text-micro) font-medium uppercase tracking-(--tracking-caps) text-red-800 dark:text-red-200">
-              <span className="h-2 w-2 rounded-full bg-red-400" />
-              Paused by budget hard stop
-            </div>
+              <span className="h-2 w-2 rounded-full bg-red-400" />{uiT("ui:messages.m_bf49981db75b0a9b")}</div>
           ) : null}
           {project.managedByPlugin ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-(length:--text-micro) font-medium text-muted-foreground">
-              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: project.color ?? "var(--project-seed)" }} />
-              Managed by {project.managedByPlugin.pluginDisplayName}
+              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: project.color ?? "var(--project-seed)" }} />{uiT("ui:messages.m_54b2da24a98f9135")}{project.managedByPlugin.pluginDisplayName}
             </div>
           ) : null}
         </div>
@@ -820,8 +816,8 @@ export function ProjectDetail() {
         companyId={resolvedCompanyId}
         scopeKind="project"
         scopeId={project.id}
-        title="Project summary"
-        description="Summarizer keeps the latest project status, next step, and operator-needed items here."
+        title={uiT("ui:messages.m_34c863b318b5fff4")}
+        description={uiT("ui:messages.m_6420c7957e8e8396")}
       />
 
       <PluginSlotOutlet
@@ -860,10 +856,10 @@ export function ProjectDetail() {
           items={[
             { value: "list", label: "Tasks" },
 
-            ...(project.managedByPlugin ? [{ value: "plugin-operations", label: "Plugin operations" }] : []),
-            ...(showWorkspacesTab ? [{ value: "workspaces", label: "Workspaces" }] : []),
-            { value: "configuration", label: "Configuration" },
-            { value: "budget", label: "Budget" },
+            ...(project.managedByPlugin ? [{ value: "plugin-operations", label: uiT("ui:messages.m_5d078940e3010691") }] : []),
+            ...(showWorkspacesTab ? [{ value: "workspaces", label: uiT("ui:messages.m_1377264ba3b0a717") }] : []),
+            { value: "configuration", label: uiT("ui:messages.m_b332c3492d5eb10a") },
+            { value: "budget", label: uiT("ui:messages.m_1c6225ec7092ad2f") },
             ...pluginTabItems.map((item) => ({
               value: item.value,
               label: item.label,
@@ -907,7 +903,7 @@ export function ProjectDetail() {
             />
           )
         ) : (
-          <p className="text-sm text-muted-foreground">Loading workspaces...</p>
+          <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_3f9adb0f75f8f080")}</p>
         )
       ) : null}
 

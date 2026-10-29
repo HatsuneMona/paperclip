@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, Plug, Plus, Search, X } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -74,7 +75,7 @@ export function WizardToolsStep(props: WizardToolsStepProps) {
       .filter((entry) => entry.tools.length > 0);
   }, [appGroups, search, capabilityFilter]);
 
-  if (catalogLoading) return <LoadingState label="Loading tools…" />;
+  if (catalogLoading) return <LoadingState label={uiT("ui:messages.m_ff20973001c13ece")} />;
 
   // Cold state A (AP17): nothing connected at all.
   if (appGroups.length === 0) {
@@ -103,7 +104,7 @@ export function WizardToolsStep(props: WizardToolsStepProps) {
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search tools…"
+            placeholder={uiT("ui:messages.m_e4245bd3a7c406b2")}
             className="pl-8"
           />
         </div>
@@ -137,9 +138,7 @@ export function WizardToolsStep(props: WizardToolsStepProps) {
               setCapabilityFilter(null);
             }}
             className="text-sm font-medium text-primary hover:underline"
-          >
-            Clear search
-          </button>
+          >{uiT("ui:messages.m_3b7ea51793e9d906")}</button>
         </div>
       ) : (
         <div className="divide-y divide-border overflow-hidden rounded-lg border border-border">
@@ -190,7 +189,7 @@ function AppRow({
   return (
     <div>
       <div className="flex items-center gap-2.5 px-3 py-2">
-        <Checkbox checked={checked} onCheckedChange={onToggleApp} aria-label={`All ${group.name} tools`} />
+        <Checkbox checked={checked} onCheckedChange={onToggleApp} aria-label={uiT("ui:messages.m_ec7679578e2d3175", { v0: (group.name) })} />
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
@@ -259,13 +258,13 @@ function NewToolsRadio({
     {
       value: "deny",
       label: "Stay blocked until someone allows them",
-      hint: "New tools an app adds later won't be usable until you review them.",
+      hint: uiT("ui:messages.m_2751e3ac7df3e6fc"),
       recommended: true,
     },
     {
       value: "allow",
       label: "Allowed automatically",
-      hint: "Any tool an app adds later becomes usable right away.",
+      hint: uiT("ui:messages.m_3655ea7791f6ac19"),
     },
   ];
   return (
@@ -285,9 +284,7 @@ function NewToolsRadio({
               <span className="flex items-center gap-2 text-sm font-medium text-foreground">
                 {opt.label}
                 {opt.recommended ? (
-                  <Badge variant="outline" className="text-(length:--text-nano)">
-                    Recommended
-                  </Badge>
+                  <Badge variant="outline" className="text-(length:--text-nano)">{uiT("ui:messages.m_d70604e843046137")}</Badge>
                 ) : (
                   <span className="text-xs font-normal text-amber-600">(risky)</span>
                 )}
@@ -303,7 +300,7 @@ function NewToolsRadio({
 
 const RULE_KIND_OPTIONS: Array<{ value: AdvancedRuleKind; label: string }> = [
   { value: "tool_name", label: "Tool name pattern" },
-  { value: "risk_level", label: "Risk level" },
+  { value: "risk_level", label: uiT("ui:messages.m_d4419ea33b84fa50") },
   { value: "catalog_entry", label: "By tool ID" },
 ];
 
@@ -368,7 +365,7 @@ function AdvancedRules({
                 <span className="text-foreground">{ruleSummary(rule)}</span>
                 <button
                   type="button"
-                  aria-label="Remove rule"
+                  aria-label={uiT("ui:messages.m_3fab7379af907d88")}
                   onClick={() => onChange(rules.filter((r) => r.id !== rule.id))}
                   className="text-muted-foreground hover:text-destructive"
                 >
@@ -385,7 +382,7 @@ function AdvancedRules({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="include">Allow</SelectItem>
+              <SelectItem value="include">{uiT("ui:messages.m_e213c161d5cefa52")}</SelectItem>
               <SelectItem value="exclude">Block</SelectItem>
             </SelectContent>
           </Select>
@@ -407,7 +404,7 @@ function AdvancedRules({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="read">Read-only</SelectItem>
+                <SelectItem value="read">{uiT("ui:messages.m_72bb90897ab1eadc")}</SelectItem>
                 <SelectItem value="write">Makes changes</SelectItem>
                 <SelectItem value="destructive">Destructive</SelectItem>
               </SelectContent>
@@ -416,7 +413,7 @@ function AdvancedRules({
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder={kind === "tool_name" ? "e.g. gmail.send*" : "tool ID"}
+              placeholder={kind === "tool_name" ? uiT("ui:messages.m_497b3e836ebc3da8") : uiT("ui:messages.m_5e1e780f9aa72d38")}
               className="w-44"
             />
           )}

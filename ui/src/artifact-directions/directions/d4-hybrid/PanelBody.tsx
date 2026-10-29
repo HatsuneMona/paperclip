@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import type { LabArtifact } from "../../kit";
 import { PanelIndex } from "./PanelIndex";
@@ -27,7 +28,7 @@ export function PanelBody({ artifacts }: { artifacts: LabArtifact[] }) {
 
   if (artifacts.length === 0) {
     // The shipped empty state, word for word.
-    return <p className="px-1 py-6 text-sm text-(--hy-ink-2)">No artifacts yet. Work products, documents, and agent-produced files will appear here.</p>;
+    return <p className="px-1 py-6 text-sm text-(--hy-ink-2)">{uiT("ui:messages.m_b032412c097b00bd")}</p>;
   }
 
   return (

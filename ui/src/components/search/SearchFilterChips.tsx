@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buildFilterChips, type FilterChipLookups, type SearchFilters } from "@/lib/search-filters";
@@ -35,9 +36,7 @@ export function SearchFilterChips({
         type="button"
         className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
         onClick={onClearAll}
-      >
-        Clear all
-      </button>
+      >{uiT("ui:messages.m_29a390f9237e3c84")}</button>
     </div>
   );
 }

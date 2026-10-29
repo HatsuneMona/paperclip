@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type AiProvider, type AiAuthMethod, type AiConnectionLoginIntent } from "@paperclipai/shared";
@@ -78,7 +79,7 @@ function SubscriptionConnectionStep({ companyId, provider, initialMethod, fixedM
   const error = environmentError ?? [envs, caps, settings, experimental, general].find((query) => query.error)?.error?.message;
   const intent: AiConnectionLoginIntent = { provider: provider as AiConnectionLoginIntent["provider"], method: "subscription", name, ownership, agentIds, allAgents, connectionId };
   return <div className="mx-auto w-full min-w-0 max-w-xl space-y-6">
-    {!hideName && <label className="block space-y-2 text-sm">Connection name<Input value={name} onChange={(event) => setName(event.target.value)} disabled={Boolean(connectionId)} /></label>}
+    {!hideName && <label className="block space-y-2 text-sm">{uiT("ui:messages.m_686d4d5d8ecd1a79")}<Input value={name} onChange={(event) => setName(event.target.value)} disabled={Boolean(connectionId)} /></label>}
     {!suppliedEnvironmentId && !forced.forced && loginEnvironments.length > 1 && <Select value={environmentId ?? ""} onValueChange={setChosenEnvironment}>
       <SelectTrigger aria-label="Sign-in environment"><SelectValue placeholder="Sign-in environment" /></SelectTrigger>
       <SelectContent>{loginEnvironments.map((env) => <SelectItem key={env.id} value={env.id}>{env.name}</SelectItem>)}</SelectContent>
@@ -117,7 +118,7 @@ function ApiKeyConnectionStep({ companyId, provider, connectionId, name: initial
     onSettled: () => setApiKey(""),
   });
   return <div className="mx-auto w-full min-w-0 max-w-xl space-y-4">
-    {!hideName && <label className="block space-y-2 text-sm">Connection name<Input value={name} onChange={(event) => setName(event.target.value)} disabled={Boolean(connectionId)} /></label>}
+    {!hideName && <label className="block space-y-2 text-sm">{uiT("ui:messages.m_686d4d5d8ecd1a79")}<Input value={name} onChange={(event) => setName(event.target.value)} disabled={Boolean(connectionId)} /></label>}
     {save.error && <p role="alert" className="text-sm text-destructive">{save.error.message}</p>}
     {copilot && <p className="text-sm text-muted-foreground">Use a personal fine-grained token with Copilot Requests permission. <a className="underline" href="https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/authenticate-copilot-cli" target="_blank" rel="noreferrer">GitHub token instructions</a>. Verification discovers models in the selected environment and sends no model prompt. Repository access uses a separate connection.</p>}
     {copilot && !suppliedEnvironmentId && <Select value={environmentId ?? ""} onValueChange={setChosenEnvironment} disabled={preparing || save.isPending}>
@@ -126,7 +127,7 @@ function ApiKeyConnectionStep({ companyId, provider, connectionId, name: initial
     </Select>}
     {environmentError && <p role="alert" className="text-sm text-destructive">{environmentError}</p>}
     {defaults}
-    <ProviderApiKeyCard providerName={copilot ? "GitHub Copilot" : provider === "google" ? "Google" : "OpenRouter"} value={apiKey} onChange={setApiKey} onSubmit={() => { if (!preparing && !environmentError && name.trim() && apiKey.trim()) save.mutate(); }} disabled={disabled || save.isPending || preparing || Boolean(environmentError)} placeholder={copilot ? "github_pat_..." : "Enter API key here"} autoFocus />
-    <div className="flex justify-between gap-2"><Button variant="ghost" onClick={onCancel}>Cancel</Button><Button disabled={disabled || !name.trim() || !apiKey.trim() || save.isPending || preparing || Boolean(environmentError)} onClick={() => save.mutate()}>{save.isPending ? "Connecting…" : "Connect"}</Button></div>
+    <ProviderApiKeyCard providerName={copilot ? "GitHub Copilot" : provider === "google" ? "Google" : "OpenRouter"} value={apiKey} onChange={setApiKey} onSubmit={() => { if (!preparing && !environmentError && name.trim() && apiKey.trim()) save.mutate(); }} disabled={disabled || save.isPending || preparing || Boolean(environmentError)} placeholder={copilot ? "github_pat_..." : uiT("ui:messages.m_c80c3ac9799dc19b")} autoFocus />
+    <div className="flex justify-between gap-2"><Button variant="ghost" onClick={onCancel}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button><Button disabled={disabled || !name.trim() || !apiKey.trim() || save.isPending || preparing || Boolean(environmentError)} onClick={() => save.mutate()}>{save.isPending ? uiT("ui:messages.m_72021eb70e91b4d5") : uiT("ui:messages.m_1a2303ede07493ac")}</Button></div>
   </div>;
 }

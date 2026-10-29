@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect } from "react";
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
 import { useCompany } from "@/context/CompanyContext";
@@ -19,8 +20,8 @@ export function AppsReview() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
-      { label: "Review" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
+      { label: uiT("ui:messages.m_aff0766a5290e117") },
     ]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
@@ -32,7 +33,7 @@ export function AppsReview() {
   return (
     <div className="max-w-3xl space-y-6 pb-12">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">Review</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{uiT("ui:messages.m_aff0766a5290e117")}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Actions your agents want to run that need your OK first. Approve, always-allow, or decline.
         </p>

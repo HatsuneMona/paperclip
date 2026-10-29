@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, useId, useRef, useState, type ReactNode } from "react";
 import { Check, ChevronDown, Loader2, RotateCcw, TriangleAlert } from "lucide-react";
 import type { Agent, Issue, IssueCommentMetadata, IssueRecoveryAction } from "@paperclipai/shared";
@@ -129,7 +130,7 @@ export function DispositionRecoveryNotice({ snapshot, createdAt, defaultExpanded
             </Button>
           ) : null}
           <Button size="xs" variant="ghost" className="text-muted-foreground" aria-expanded={expanded} aria-controls={detailsId} onClick={() => setExpanded(current => !current)}>
-            {expanded ? "Hide details" : "View details"}
+            {expanded ? uiT("ui:messages.m_c9722a7a962a8435") : uiT("ui:messages.m_d1bf045bb524dae5")}
             <ChevronDown aria-hidden="true" className={cn("size-3", expanded && "rotate-180")} />
           </Button>
           {createdAt ? <time dateTime={createdAt} className="font-mono text-xs text-muted-foreground sm:ml-auto">{timeAgo(createdAt)}</time> : null}
@@ -138,8 +139,8 @@ export function DispositionRecoveryNotice({ snapshot, createdAt, defaultExpanded
           <div id={detailsId} className="flex flex-col gap-3 rounded-lg border border-border bg-muted/20 p-3">
             <dl className="flex flex-col gap-2 text-xs">
               <div className="flex flex-wrap justify-between gap-1"><dt className="text-muted-foreground">Assigned when recovery stopped</dt><dd>{agentName}</dd></div>
-              <div className="flex flex-wrap justify-between gap-1"><dt className="text-muted-foreground">Automatic attempts</dt><dd className="font-mono">{snapshot.attemptCount} of {snapshot.maxAttempts}</dd></div>
-              <div className="flex flex-wrap justify-between gap-1"><dt className="text-muted-foreground">Automatic retries for this recovery</dt><dd>Stopped</dd></div>
+              <div className="flex flex-wrap justify-between gap-1"><dt className="text-muted-foreground">Automatic attempts</dt><dd className="font-mono">{snapshot.attemptCount}{uiT("ui:messages.m_a4282e4b2298b90b")}{snapshot.maxAttempts}</dd></div>
+              <div className="flex flex-wrap justify-between gap-1"><dt className="text-muted-foreground">Automatic retries for this recovery</dt><dd>{uiT("ui:messages.m_1a4f630ac1b69fd0")}</dd></div>
             </dl>
             <p className="text-xs leading-relaxed text-muted-foreground">Recovery asked the assigned agent to record an outcome or a next step. Retrying keeps the same task and agent, and checks the task’s current controls before continuing.</p>
             <div className="flex flex-col gap-1"><span className="text-xs text-muted-foreground">Technical reason</span><code className="break-all font-mono text-xs">{snapshot.reason}</code></div>

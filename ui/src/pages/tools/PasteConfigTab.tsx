@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -137,7 +138,7 @@ export function PasteConfigTab({ companyId }: { companyId: string }) {
       navigateTopLevel(target.url);
     } catch (error) {
       setOAuthPhase("error");
-      setOAuthError(error instanceof Error ? error.message : "Paperclip couldn’t start secure sign-in. Try again.");
+      setOAuthError(error instanceof Error ? error.message : uiT("ui:messages.m_47928280e9721837"));
     }
   };
 
@@ -149,7 +150,7 @@ export function PasteConfigTab({ companyId }: { companyId: string }) {
       setOAuthError(
         error instanceof Error
           ? error.message
-          : "Paperclip couldn’t start secure sign-in. Try again.",
+          : uiT("ui:messages.m_47928280e9721837"),
       );
     },
   });
@@ -295,7 +296,7 @@ export function PasteConfigTab({ companyId }: { companyId: string }) {
           onClick={() => importMutation.mutate(draftText)}
           disabled={!canSubmit || Boolean(localParseError)}
         >
-          {importMutation.isPending ? "Checking…" : "Check config"}
+          {importMutation.isPending ? uiT("ui:messages.m_ec963ffc911b8401") : "Check config"}
         </Button>
         <span className="text-xs text-muted-foreground">
           We'll read it and show what we found before anything is saved.
@@ -313,7 +314,7 @@ export function PasteConfigTab({ companyId }: { companyId: string }) {
           <div className="space-y-3">
             <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              We found {drafts.length} {drafts.length === 1 ? "app" : "apps"} in that config
+              We found {drafts.length} {drafts.length === 1 ? uiT("ui:messages.m_a172cedcae47474b") : "apps"} in that config
             </h3>
             {drafts.map((draft, index) => {
               const url = draftConnectUrl(draft);
@@ -409,9 +410,7 @@ function DraftCard({
       </div>
 
       {onCheck ? (
-        <label className="mt-4 block max-w-sm space-y-1 text-xs font-medium text-foreground">
-          Connection name
-          <Input
+        <label className="mt-4 block max-w-sm space-y-1 text-xs font-medium text-foreground">{uiT("ui:messages.m_686d4d5d8ecd1a79")}<Input
             value={connectionName}
             onChange={(event) => onConnectionNameChange(event.target.value)}
             placeholder={draft.name}
@@ -498,11 +497,11 @@ function CatalogReview({
         </div>
         <Button size="sm" onClick={onFinish} disabled={finishing || enabledCount === 0 || Boolean(activatedName)}>
           {finishing ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-          Activate {enabledCount} of {total}
+          Activate {enabledCount}{uiT("ui:messages.m_a4282e4b2298b90b")}{total}
         </Button>
       </div>
       <ActionGroup
-        title="Read-only"
+        title={uiT("ui:messages.m_72bb90897ab1eadc")}
         actions={result.actions.readOnly}
         enabled={enabled}
         onToggle={onToggle}

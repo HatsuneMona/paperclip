@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { isCsvFile } from "@/lib/csv-preview";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -67,8 +68,8 @@ export function TaskWorkspaceFilePanel({
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Copy file contents"
-              title={copied ? "Copied" : "Copy file contents"}
+              aria-label={uiT("ui:messages.m_b3278e5f53cc34b0")}
+              title={copied ? uiT("ui:messages.m_8d525e5f158b9afe") : uiT("ui:messages.m_b3278e5f53cc34b0")}
               onClick={() => {
                 void copyTextToClipboard(contentQuery.data!.content.data).then(() => {
                   setCopied(true);
@@ -82,7 +83,7 @@ export function TaskWorkspaceFilePanel({
           {renderedPreview && contentQuery.data ? <FilePreviewModeToggle mode={previewMode} onChange={setPreviewMode} label="File preview mode" /> : null}
           {downloadUrl ? (
             <Button asChild variant="ghost" size="icon-sm">
-              <a href={downloadUrl} download={resource?.title} aria-label="Download file" title="Download file">
+              <a href={downloadUrl} download={resource?.title} aria-label={uiT("ui:messages.m_9de4149fb9716cfc")} title={uiT("ui:messages.m_9de4149fb9716cfc")}>
                 <Download aria-hidden />
               </a>
             </Button>

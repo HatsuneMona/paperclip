@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { ReviewQueueCard } from "../ReviewQueueCard";
 import { QuarantinedActionsReview } from "./SetupPanel";
 import type { AppDetailSectionProps } from "./types";
@@ -15,7 +16,7 @@ export function ReviewPanel({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-foreground">Review</h2>
+      <h2 className="text-lg font-semibold text-foreground">{uiT("ui:messages.m_aff0766a5290e117")}</h2>
       {showsQuarantinedActions ? (
         <QuarantinedActionsReview
           entries={quarantined}

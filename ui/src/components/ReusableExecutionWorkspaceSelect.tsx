@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import { SearchableSelect } from "@/components/SearchableSelect";
 import {
@@ -44,9 +45,9 @@ export function ReusableExecutionWorkspaceSelect<TWorkspace extends ReusableExec
       groups={groups}
       onValueChange={onValueChange}
       placeholder={placeholder}
-      searchPlaceholder="Search workspaces..."
-      emptyMessage={error ? "Workspaces failed to load." : "No matching workspaces."}
-      loadingMessage="Loading workspaces..."
+      searchPlaceholder={uiT("ui:messages.m_5c192a3e6f23b125")}
+      emptyMessage={error ? uiT("ui:messages.m_d6a5fb0cd6f2c1f3") : uiT("ui:messages.m_76be0ffe594be86e")}
+      loadingMessage={uiT("ui:messages.m_3f9adb0f75f8f080")}
       loading={loading}
       disabled={disabled}
       className={className}

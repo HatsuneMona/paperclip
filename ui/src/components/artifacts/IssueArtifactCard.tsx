@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -61,11 +62,9 @@ export function IssueArtifactFile(props: IssueArtifactFileProps) {
     <Button
       variant="outline"
       size="sm"
-      aria-label={`Open in tab: ${props.title}`}
+      aria-label={uiT("ui:messages.m_837748dd6f065274", { v0: (props.title) })}
       onClick={() => openTextAttachment(attachmentId, props.filename)}
-    >
-      Open in tab
-    </Button>
+    >{uiT("ui:messages.m_0e5d95967de31cb2")}</Button>
   ) : null;
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [csvRequested, setCsvRequested] = useState(false);
@@ -142,9 +141,7 @@ export function IssueArtifactFile(props: IssueArtifactFileProps) {
             {openTextAction}
             {downloadPath ? (
               <Button asChild size="sm" variant="outline">
-                <a href={downloadPath} download={props.filename}>
-                  Download file
-                </a>
+                <a href={downloadPath} download={props.filename}>{uiT("ui:messages.m_9de4149fb9716cfc")}</a>
               </Button>
             ) : null}
           </>
@@ -188,9 +185,7 @@ export function IssueArtifactFile(props: IssueArtifactFileProps) {
               variant="ghost"
               size="sm"
               onClick={() => void data.refetch()}
-            >
-              Retry preview
-            </Button>
+            >{uiT("ui:messages.m_ceba352728693758")}</Button>
           )}
         </div>
       )}
@@ -215,7 +210,7 @@ export function IssueWorkProductArtifactCard({
     updatedAt: formatDateTime(wp.updatedAt),
     statusBadge:
       wp.healthStatus === "unhealthy" ? (
-        <Badge variant="destructive">Unhealthy</Badge>
+        <Badge variant="destructive">{uiT("ui:messages.m_317b1fbc1e13beeb")}</Badge>
       ) : chip ? (
         <Badge variant="outline">{chip.label}</Badge>
       ) : undefined,

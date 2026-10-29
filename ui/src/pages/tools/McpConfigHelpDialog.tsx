@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { HelpCircle } from "lucide-react";
 import { AgentSetupPrompt } from "@/components/AgentSetupPrompt";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ export function McpConfigHelpDialog() {
           variant="ghost"
           size="icon"
           className="h-6 w-6 shrink-0 text-muted-foreground hover:text-foreground"
-          aria-label="Get help creating an MCP config"
+          aria-label={uiT("ui:messages.m_2b39abc0e46ce58c")}
         >
           <HelpCircle className="h-4 w-4" />
         </Button>

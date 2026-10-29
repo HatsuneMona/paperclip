@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import type {
   ToolRiskLevel,
@@ -12,7 +13,7 @@ import { ApiError } from "@/api/client";
 
 /** Risk classification badge for a catalog tool. */
 export function RiskBadge({ risk }: { risk: ToolRiskLevel | null | undefined }) {
-  if (!risk) return <Badge variant="outline">unknown</Badge>;
+  if (!risk) return <Badge variant="outline">{uiT("ui:messages.m_b23a6a8439c0dde5")}</Badge>;
   const variant =
     risk === "high" || risk === "critical"
       ? "destructive"
@@ -116,7 +117,7 @@ export function DecisionBadge({ decision }: { decision: ToolPolicyDecision | str
 
 /** Compact relative time, falling back to absolute. */
 export function RelativeTime({ value }: { value: Date | string | null | undefined }) {
-  if (!value) return <span className="text-muted-foreground">never</span>;
+  if (!value) return <span className="text-muted-foreground">{uiT("ui:messages.m_6497e4b3d7bed169")}</span>;
   const date = typeof value === "string" ? new Date(value) : value;
   if (Number.isNaN(date.getTime())) return <span className="text-muted-foreground">—</span>;
   const diffMs = Date.now() - date.getTime();
@@ -198,9 +199,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
             type="button"
             onClick={onRetry}
             className="self-start rounded-md border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent"
-          >
-            Retry
-          </button>
+          >{uiT("ui:messages.m_942087cc2d41e013")}</button>
         ) : null}
       </CardContent>
     </Card>

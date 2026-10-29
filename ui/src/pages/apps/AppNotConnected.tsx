@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { ToolConnection } from "@paperclipai/shared";
@@ -79,7 +80,7 @@ export function AppNotConnected() {
   useEffect(() => {
     if (!activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), href: "/apps" },
       { label: appName, href: appApplicationTabHref(applicationId, "permissions") },
       { label: appTabLabel(activeTab) },
     ]);
@@ -217,7 +218,7 @@ function ApplicationHeader({
         <div className="flex items-center gap-2">
           <h1 className="truncate text-2xl font-bold tracking-tight">{applicationName}</h1>
           <span className="inline-flex items-center rounded-full border border-border bg-background px-2 py-0.5 text-xs font-medium text-muted-foreground">
-            {connectedCount > 0 ? `${connectedCount} connected` : "Not connected"}
+            {connectedCount > 0 ? uiT("ui:messages.m_db4ed330c9ec2ce6", { v0: (connectedCount) }) : uiT("ui:messages.m_0303e18246708180")}
           </span>
         </div>
         {description && (
@@ -245,7 +246,7 @@ function ConnectionCallout({
     <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border px-4 py-3">
       <div>
         <h2 className="text-sm font-semibold text-foreground">
-          {previousConnection ? "Needs attention" : "Not connected"}
+          {previousConnection ? uiT("ui:messages.m_c1ebc7817870e5be") : uiT("ui:messages.m_0303e18246708180")}
         </h2>
         <p className="mt-0.5 text-sm text-muted-foreground">
           {previousConnection
@@ -259,7 +260,7 @@ function ConnectionCallout({
         ) : null}
       </div>
       {!previousConnection || canReconnect ? (
-        <Button onClick={onConnect}>{previousConnection ? "Reconnect" : "Connect"}</Button>
+        <Button onClick={onConnect}>{previousConnection ? uiT("ui:messages.m_bf8a9eab9e7e141b") : uiT("ui:messages.m_1a2303ede07493ac")}</Button>
       ) : null}
     </section>
   );

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, useRef, useEffect, useCallback, useId } from "react";
 import { cn } from "../lib/utils";
 import { MarkdownBody, type MarkdownExternalReferenceMap } from "./MarkdownBody";
@@ -462,7 +463,7 @@ function OwnedInlineEditor({
             )}
             role={autosaveState === "error" ? "alert" : "status"}
           >
-            {autosave.label ?? "Idle"}
+            {autosave.label ?? uiT("ui:messages.m_ab0171ca0494d441")}
           </span>
           {autosaveState === "stalled" ? <button type="button" className="ml-2 text-xs text-foreground underline" onClick={autosave.resendNow}>Retry saving</button> : null}
         </div>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type {
@@ -151,7 +152,7 @@ export function SlackSearchView({
             <p className="text-sm">
               In Slack app settings, add this redirect URL under OAuth &amp;
               Permissions. Add user scopes <code>search:read.public</code>,{" "}
-              <code>search:read.private</code> and{" "}
+              <code>search:read.private</code>{uiT("ui:messages.m_2e5f769687c77317")}{" "}
               <code>search:read.files</code>. Find Client ID and Client Secret
               under Basic Information.
             </p>
@@ -159,7 +160,7 @@ export function SlackSearchView({
               {status.redirectUri ?? "Configure a public HTTPS URL first."}
             </p>
             <div className="space-y-2">
-              <label htmlFor={`${id}-client`}>Client ID</label>
+              <label htmlFor={`${id}-client`}>{uiT("ui:messages.m_8726db013948f070")}</label>
               <Input
                 id={`${id}-client`}
                 value={clientId}

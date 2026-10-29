@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 export type MatchSourceChipKind = "title" | "identifier" | "comment" | "document";
@@ -14,7 +15,7 @@ const chipStyles: Record<MatchSourceChipKind, string> = {
 };
 
 const chipLabels: Record<MatchSourceChipKind, string> = {
-  title: "Title",
+  title: uiT("ui:messages.m_7e8cd2056da73a7f"),
   identifier: "Identifier",
   comment: "Comment",
   document: "Doc",

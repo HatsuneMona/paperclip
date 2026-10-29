@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import { ArrowUpDown, Check, Columns3, Filter, Layers } from "lucide-react";
 import type { CaseGroupBy, CaseSortField } from "@/api/cases";
@@ -20,7 +21,7 @@ export function CaseListControls({ filters, activeFilterCount, columns, onColumn
 }) {
   return <>
     <DropdownMenu>
-      <DropdownMenuTrigger asChild><Button variant="outline" size="icon" className="h-8 w-8 shrink-0" aria-label="Columns" title="Columns"><Columns3 aria-hidden className="h-3.5 w-3.5" /></Button></DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild><Button variant="outline" size="icon" className="h-8 w-8 shrink-0" aria-label={uiT("ui:messages.m_53aade77cd69a77b")} title={uiT("ui:messages.m_53aade77cd69a77b")}><Columns3 aria-hidden className="h-3.5 w-3.5" /></Button></DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuLabel>Visible fields</DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -28,22 +29,22 @@ export function CaseListControls({ filters, activeFilterCount, columns, onColumn
           onSelect={event => event.preventDefault()}
           onCheckedChange={checked => onColumnsChange(CASE_COLUMNS.map(([value]) => value).filter(value => value === key ? checked === true : columns.includes(value)))}>{label}</DropdownMenuCheckboxItem>)}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => onColumnsChange(DEFAULT_CASE_COLUMNS)}>Reset defaults</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => onColumnsChange(DEFAULT_CASE_COLUMNS)}>{uiT("ui:messages.m_4542d49a520543f9")}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
     <Popover>
       <PopoverTrigger asChild><Button variant="outline" size="icon" className={cn("relative h-8 w-8 shrink-0", activeFilterCount > 0 && "text-(--collection-filter-active)")}
-        aria-label={activeFilterCount ? `Filter cases (${activeFilterCount} active)` : "Filter cases"} title="Filter">
+        aria-label={activeFilterCount ? `Filter cases (${activeFilterCount} active)` : "Filter cases"} title={uiT("ui:messages.m_638e249f4a15ebb8")}>
         <Filter aria-hidden className="h-3.5 w-3.5" />
         {activeFilterCount > 0 && <span aria-hidden className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-(--collection-filter-badge) text-(length:--text-nano) font-bold text-(--collection-filter-badge-foreground)">{activeFilterCount}</span>}
       </Button></PopoverTrigger>
       <PopoverContent align="end" className="w-64 space-y-3" aria-label="Case filters">
-        <h2 className="text-sm font-medium">Filters</h2>
+        <h2 className="text-sm font-medium">{uiT("ui:messages.m_546ebb8eb993ea56")}</h2>
         {filters}
       </PopoverContent>
     </Popover>
     <Popover>
-      <PopoverTrigger asChild><Button variant="outline" size="icon" className="h-8 w-8 shrink-0" aria-label="Sort" title="Sort"><ArrowUpDown aria-hidden className="h-3.5 w-3.5" /></Button></PopoverTrigger>
+      <PopoverTrigger asChild><Button variant="outline" size="icon" className="h-8 w-8 shrink-0" aria-label={uiT("ui:messages.m_bec69036aa27e7fa")} title={uiT("ui:messages.m_bec69036aa27e7fa")}><ArrowUpDown aria-hidden className="h-3.5 w-3.5" /></Button></PopoverTrigger>
       <PopoverContent align="end" className="w-48 p-2" aria-label="Sort cases">
         {CASE_SORT_OPTIONS.map(([value, label]) => <button key={value} type="button" aria-pressed={sortField === value}
           className={cn("flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm", sortField === value ? "bg-accent/50 text-foreground" : "text-muted-foreground hover:bg-accent/50")}
@@ -53,7 +54,7 @@ export function CaseListControls({ filters, activeFilterCount, columns, onColumn
       </PopoverContent>
     </Popover>
     <Popover>
-      <PopoverTrigger asChild><Button variant="outline" size="icon" className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")} aria-label="Group" title="Group"><Layers aria-hidden className="h-3.5 w-3.5" /></Button></PopoverTrigger>
+      <PopoverTrigger asChild><Button variant="outline" size="icon" className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")} aria-label={uiT("ui:messages.m_34ca0e76608842ff")} title={uiT("ui:messages.m_34ca0e76608842ff")}><Layers aria-hidden className="h-3.5 w-3.5" /></Button></PopoverTrigger>
       <PopoverContent align="end" className="w-44 p-2" aria-label="Group cases">
         {CASE_GROUP_OPTIONS.map(([value, label]) => <button key={value} type="button" aria-pressed={groupBy === value}
           className={cn("flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm", groupBy === value ? "bg-accent/50 text-foreground" : "text-muted-foreground hover:bg-accent/50")}

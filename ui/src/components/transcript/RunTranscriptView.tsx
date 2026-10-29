@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TranscriptEntry } from "../../adapters";
 import type { ToolRunDecision } from "@paperclipai/shared";
@@ -917,7 +918,7 @@ function TranscriptMessageBlock({
       {!isAssistant && (
         <div className="mb-1.5 flex items-center gap-2 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
           <User className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} />
-          <span>User</span>
+          <span>{uiT("ui:messages.m_b512d97e7cbf97c2")}</span>
         </div>
       )}
       <MarkdownBody
@@ -1001,7 +1002,7 @@ function ToolDecisionDetails({ decision, compact }: { decision: ToolRunDecision 
       compact ? "text-(length:--text-micro)" : "text-xs",
     )}>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span className="font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Decision</span>
+        <span className="font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{uiT("ui:messages.m_640ae4baf96061fe")}</span>
         <ToolDecisionBadge decision={decision} />
         {decision.reasonCode && <span className="font-mono text-muted-foreground">{decision.reasonCode}</span>}
       </div>
@@ -1106,17 +1107,13 @@ function TranscriptToolCard({
           <div className={detailsClass}>
             <div className={cn("grid gap-3", compact ? "grid-cols-1" : "lg:grid-cols-2")}>
               <div>
-                <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
-                  Input
-                </div>
+                <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_36ecb4f8669133ce")}</div>
                 <pre className="overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) text-foreground/80">
                   {formatToolPayload(block.input) || "<empty>"}
                 </pre>
               </div>
               <div>
-                <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
-                  Result
-                </div>
+                <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_6e7d50e84f4731ef")}</div>
                 <pre className={cn(
                   "overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro)",
                   block.status === "error" ? "text-red-700 dark:text-red-300" : "text-foreground/80",
@@ -1222,9 +1219,7 @@ function TranscriptCommandGroup({
             </div>
           )}
           {!subtitle && latestItem?.status === "error" && open && (
-            <div className={cn("mt-1", compact ? "text-xs" : "text-sm", statusTone)}>
-              Command failed
-            </div>
+            <div className={cn("mt-1", compact ? "text-xs" : "text-sm", statusTone)}>{uiT("ui:messages.m_8c45c79c6d1192a3")}</div>
           )}
         </div>
         <button
@@ -1396,20 +1391,20 @@ function TranscriptToolGroup({
                   : item.status === "error" ? "text-red-700 dark:text-red-300"
                   : "text-emerald-700 dark:text-emerald-300"
                 )}>
-                  {item.status === "running" ? "Running" : item.status === "error" ? "Errored" : "Completed"}
+                  {item.status === "running" ? uiT("ui:messages.m_f4ccae29e1bb0c20") : item.status === "error" ? "Errored" : uiT("ui:messages.m_22a970d2e5b1cc23")}
                 </span>
                 <ToolDecisionBadge decision={findToolDecision(toolDecisionMaps, item)} />
               </div>
               <div className={cn("grid gap-2 pl-7", compact ? "grid-cols-1" : "lg:grid-cols-2")}>
                 <div>
-                  <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">Input</div>
+                  <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_36ecb4f8669133ce")}</div>
                   <pre className="overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) text-foreground/80">
                     {formatToolPayload(item.input) || "<empty>"}
                   </pre>
                 </div>
                 {item.result && (
                   <div>
-                    <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">Result</div>
+                    <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_6e7d50e84f4731ef")}</div>
                     <pre className={cn(
                       "overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro)",
                       item.status === "error" ? "text-red-700 dark:text-red-300" : "text-foreground/80",
@@ -1669,7 +1664,7 @@ function TranscriptSystemGroup({
       >
         <TerminalSquare className="h-3.5 w-3.5 shrink-0" />
         <span className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow)">
-          {block.lines.length} system {block.lines.length === 1 ? "message" : "messages"}
+          {block.lines.length} system {block.lines.length === 1 ? uiT("ui:messages.m_ab530a13e4591498") : "messages"}
         </span>
         {open ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
       </div>
@@ -1701,9 +1696,7 @@ function TranscriptStdoutRow({
   return (
     <div>
       <div className="flex items-center gap-2">
-        <span className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
-          stdout
-        </span>
+        <span className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_63d42d26156fcc76")}</span>
         <button
           type="button"
           className="inline-flex h-5 w-5 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"

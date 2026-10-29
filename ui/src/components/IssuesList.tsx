@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useIssueRowDetails } from "../hooks/useIssueRowDetails";
 import { IssueRowDetailsNotice } from "./IssueRowDetailsNotice";
 import { useShowAgentCreatedTasks } from "../hooks/useShowAgentCreatedTasks";
@@ -586,9 +587,9 @@ function IssueSearchInput({
             e.currentTarget.blur();
           }
         }}
-        placeholder="Search tasks..."
+        placeholder={uiT("ui:messages.m_c1af8370c5f68986")}
         className="pl-7 text-xs sm:text-sm"
-        aria-label="Search tasks"
+        aria-label={uiT("ui:messages.m_46c6f1dea7e92580")}
         data-page-search-target="true"
       />
     </div>
@@ -634,35 +635,26 @@ function SubIssueProgressSummaryStrip({
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-medium text-foreground">
-              {summary.doneCount}/{summary.totalCount} done
-            </span>
+              {summary.doneCount}/{summary.totalCount}{uiT("ui:messages.m_61ac69123baea172")}</span>
             <span className="text-muted-foreground">
-              {summary.inProgressCount} in progress
-            </span>
+              {summary.inProgressCount}{uiT("ui:messages.m_e7c361f180d7474d")}</span>
             <span className="text-muted-foreground">
-              {summary.blockedCount} blocked
-            </span>
+              {summary.blockedCount}{uiT("ui:messages.m_1b30e46cb30f0b9b")}</span>
             {showCostSummary && (
               <>
                 <span
                   className="text-muted-foreground tabular-nums"
-                  title={`${costSummary.runCount.toLocaleString()} run${
-                    costSummary.runCount === 1 ? "" : "s"
-                  } across ${costSummary.issueCount} sub-task${
-                    costSummary.issueCount === 1 ? "" : "s"
-                  }`}
+                  title={uiT("ui:messages.m_1650b276015ed0e2", { v0: (costSummary.runCount.toLocaleString()), v1: (costSummary.runCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")), v2: (costSummary.issueCount), v3: (costSummary.issueCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
                 >
-                  {formatTokens(totalTokens)} tokens
-                </span>
+                  {formatTokens(totalTokens)}{uiT("ui:messages.m_da61a22badf88871")}</span>
                 <span className="text-muted-foreground tabular-nums">
-                  {formatDurationMs(costSummary.runtimeMs)} runtime
-                </span>
+                  {formatDurationMs(costSummary.runtimeMs)}{uiT("ui:messages.m_f94ce2a7b798cfab")}</span>
               </>
             )}
           </div>
           <div
             role="progressbar"
-            aria-label="Sub-tasks completion progress"
+            aria-label={uiT("ui:messages.m_43b10c32144fc33a")}
             aria-valuemin={0}
             aria-valuenow={summary.doneCount}
             aria-valuemax={summary.totalCount}
@@ -673,7 +665,7 @@ function SubIssueProgressSummaryStrip({
                 key={status}
                 className={cn("h-full", progressSegmentClasses[status])}
                 style={{ width: `${(count / summary.totalCount) * 100}%` }}
-                title={`${issueStatusLabels[status]}: ${count}`}
+                title={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (issueStatusLabels[status]), v1: (count) })}
                 aria-hidden="true"
               />
             ))}
@@ -684,7 +676,7 @@ function SubIssueProgressSummaryStrip({
           {target && targetIssue ? (
             <>
               <div className="text-xs font-medium text-muted-foreground">
-                {target.kind === "next" ? "Next up" : "Waiting on blockers"}
+                {target.kind === "next" ? uiT("ui:messages.m_c5ae65235e0aa6ba") : uiT("ui:messages.m_65f8a4c52b9702c5")}
               </div>
               <Link
                 to={createIssueDetailPath(targetPathId)}
@@ -699,11 +691,11 @@ function SubIssueProgressSummaryStrip({
               </Link>
             </>
           ) : summary.totalCount === 0 ? (
-            <div className="text-sm font-medium text-foreground">No active sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{uiT("ui:messages.m_f699b33aa6398d06")}</div>
           ) : summary.doneCount === summary.totalCount ? (
-            <div className="text-sm font-medium text-foreground">All sub-tasks done</div>
+            <div className="text-sm font-medium text-foreground">{uiT("ui:messages.m_12117470c55b1508")}</div>
           ) : (
-            <div className="text-sm font-medium text-foreground">No actionable sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{uiT("ui:messages.m_0b9b040df28c5a19")}</div>
           )}
         </div>
       </div>
@@ -1070,7 +1062,7 @@ function StreamlinedIssuesList({
     if (currentUserId) {
       options.set(`user:${currentUserId}`, {
         id: `user:${currentUserId}`,
-        label: currentUserId === "local-board" ? "Board" : "Me",
+        label: currentUserId === "local-board" ? uiT("ui:messages.m_4816cbfd74aa8297") : uiT("ui:messages.m_d30af076b0dc85cc"),
         kind: "user",
         searchText: currentUserId === "local-board" ? "board me human local-board" : `me board human ${currentUserId}`,
       });
@@ -1346,7 +1338,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_workspace" ? "No Workspace" : (workspaceNameMap.get(key) ?? key.slice(0, 8)),
+          label: key === "__no_workspace" ? uiT("ui:messages.m_27dbe837e46c1c36") : (workspaceNameMap.get(key) ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1362,7 +1354,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_project" ? "No Project" : (projectById.get(key)?.name ?? key.slice(0, 8)),
+          label: key === "__no_project" ? uiT("ui:messages.m_ca4558db950fc896") : (projectById.get(key)?.name ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1377,7 +1369,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_parent" ? "No Parent" : (issueTitleMap.get(key) ?? key.slice(0, 8)),
+          label: key === "__no_parent" ? uiT("ui:messages.m_a52c86a2d7e743f3") : (issueTitleMap.get(key) ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1390,9 +1382,9 @@ function StreamlinedIssuesList({
       key,
       label:
         key === "__unassigned"
-          ? "Unassigned"
+          ? uiT("ui:messages.m_14d33bd014e6b4e7")
           : key.startsWith("__user:")
-            ? (formatAssigneeUserLabel(key.slice("__user:".length), currentUserId, companyUserLabelMap) ?? "User")
+            ? (formatAssigneeUserLabel(key.slice("__user:".length), currentUserId, companyUserLabelMap) ?? uiT("ui:messages.m_b512d97e7cbf97c2"))
             : (agentName(key) ?? key.slice(0, 8)),
       items: groups[key]!,
     }));
@@ -1832,12 +1824,12 @@ function StreamlinedIssuesList({
         controls={(
           <>
           {/* View mode toggle */}
-          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label="View mode">
+          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label={uiT("ui:messages.m_18997f2413b5dcc8")}>
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "list" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "list" })}
-              title="List view"
-              aria-label="List view"
+              title={uiT("ui:messages.m_5d8c3e1b635eed6f")}
+              aria-label={uiT("ui:messages.m_5d8c3e1b635eed6f")}
               aria-pressed={viewState.viewMode === "list"}
             >
               <List className="h-3.5 w-3.5" />
@@ -1845,8 +1837,8 @@ function StreamlinedIssuesList({
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "board" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "board" })}
-              title="Board view"
-              aria-label="Board view"
+              title={uiT("ui:messages.m_04b1c2e0045dcf47")}
+              aria-label={uiT("ui:messages.m_04b1c2e0045dcf47")}
               aria-pressed={viewState.viewMode === "board"}
             >
               <SquareKanban className="h-3.5 w-3.5" />
@@ -1860,7 +1852,7 @@ function StreamlinedIssuesList({
               size="icon"
               className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", viewState.nestingEnabled && "bg-accent")}
               onClick={() => updateView({ nestingEnabled: !viewState.nestingEnabled })}
-              title={viewState.nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+              title={viewState.nestingEnabled ? uiT("ui:messages.m_8c5a4b177b78f1f5") : uiT("ui:messages.m_18cf6dba7656852e")}
             >
               <ListTree className="h-3.5 w-3.5" />
             </Button>
@@ -1874,7 +1866,7 @@ function StreamlinedIssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCompactCards && "bg-accent")}
                 onClick={() => updateView({ boardCardDensity: boardCompactCards ? "comfortable" : "compact" })}
-                title={boardCompactCards ? "Use comfortable cards" : "Use compact cards"}
+                title={boardCompactCards ? uiT("ui:messages.m_0b8829c58f086ac8") : uiT("ui:messages.m_1e39fb16f1bfe107")}
               >
                 <ChevronsDownUp className="h-3.5 w-3.5" />
               </Button>
@@ -1884,7 +1876,7 @@ function StreamlinedIssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCollapsedStatuses.length > 0 && "bg-accent")}
                 onClick={() => updateView({ boardColdLaneMode: boardCollapsedStatuses.length > 0 ? "expanded" : "collapsed" })}
-                title={boardCollapsedStatuses.length > 0 ? "Expand cold lanes" : "Collapse cold lanes"}
+                title={boardCollapsedStatuses.length > 0 ? uiT("ui:messages.m_59f3f0fda28f7e64") : uiT("ui:messages.m_ffec84b96425c1d2")}
               >
                 <PanelTopClose className="h-3.5 w-3.5" />
               </Button>
@@ -1898,7 +1890,7 @@ function StreamlinedIssuesList({
                       "h-8 shrink-0 gap-1.5 px-2",
                       viewState.boardColumnPageSize !== KANBAN_COLUMN_DEFAULT_PAGE_SIZE && "bg-accent",
                     )}
-                    title="Cards per column"
+                    title={uiT("ui:messages.m_4300aad951a54499")}
                   >
                     <ListCollapse className="h-3.5 w-3.5" />
                     <span className="min-w-4 text-xs tabular-nums">{viewState.boardColumnPageSize}</span>
@@ -1918,7 +1910,7 @@ function StreamlinedIssuesList({
                         )}
                         onClick={() => updateView({ boardColumnPageSize: pageSize })}
                       >
-                        <span>{pageSize} per column</span>
+                        <span>{pageSize}{uiT("ui:messages.m_34f2fdb65dcf2efb")}</span>
                         {viewState.boardColumnPageSize === pageSize && <Check className="h-3.5 w-3.5" />}
                       </button>
                     ))}
@@ -1936,7 +1928,7 @@ function StreamlinedIssuesList({
                   boardColumnPageSize: KANBAN_COLUMN_DEFAULT_PAGE_SIZE,
                 })}
                 disabled={!boardDensityCustomized}
-                title="Reset board density"
+                title={uiT("ui:messages.m_78a955456b087edc")}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </Button>
@@ -1950,7 +1942,7 @@ function StreamlinedIssuesList({
             showDateGroupSeparators={viewState.showDateGroupSeparators}
             onToggleDateGroupSeparators={(enabled) => updateView({ showDateGroupSeparators: enabled })}
             onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-            title="Choose which task columns stay visible"
+            title={uiT("ui:messages.m_7576d1c4cfd5e7c9")}
             iconOnly
             rowPresentation={rowPresentation}
           />
@@ -1975,7 +1967,7 @@ function StreamlinedIssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Sort">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={uiT("ui:messages.m_bec69036aa27e7fa")}>
                   <ArrowUpDown className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -2022,7 +2014,7 @@ function StreamlinedIssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Group">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={uiT("ui:messages.m_34ca0e76608842ff")}>
                   <Layers className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -2069,14 +2061,10 @@ function StreamlinedIssuesList({
         </div>
       )}
       {!searchWithinLoadedIssues && normalizedIssueSearch.length > 0 && searchedIssues.length === ISSUE_SEARCH_RESULT_LIMIT && (
-        <p className="text-xs text-muted-foreground">
-          Showing up to {ISSUE_SEARCH_RESULT_LIMIT} matches. Refine the search to narrow further.
-        </p>
+        <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_e8540595e803eb78")}{ISSUE_SEARCH_RESULT_LIMIT}{uiT("ui:messages.m_7291f834db83201a")}</p>
       )}
       {boardColumnLimitReached && (
-        <p className="text-xs text-muted-foreground">
-          Some board columns are showing up to {ISSUE_BOARD_COLUMN_RESULT_LIMIT} tasks. Refine filters or search to reveal the rest.
-        </p>
+        <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_c85043e10e7537d4")}{ISSUE_BOARD_COLUMN_RESULT_LIMIT}{uiT("ui:messages.m_0c974da879e9f188")}</p>
       )}
       {hierarchy.error ? <p className="text-sm text-destructive">Failed to load task hierarchy: {hierarchy.error.message}</p> : null}
       {!collectionLoading && !externalObjectFilterError && visibleListRowCount === 0 && viewState.viewMode === "list" && (
@@ -2141,8 +2129,8 @@ function StreamlinedIssuesList({
                     variant="ghost"
                     size="icon-xs"
                     className="-mr-2 text-muted-foreground"
-                    title={`New task in ${group.label}`}
-                    aria-label={`New task in ${group.label}`}
+                    title={uiT("ui:messages.m_9af4503357c1654e", { v0: (group.label) })}
+                    aria-label={uiT("ui:messages.m_9af4503357c1654e", { v0: (group.label) })}
                     onClick={() => openCreateIssueDialog(group)}
                   >
                     <Plus className="h-3 w-3" />
@@ -2286,12 +2274,10 @@ function StreamlinedIssuesList({
                               issueBadge === "Paused" ? (
                                 <Badge variant="ghost"
                                   className={cn("ml-1.5 px-1.5 text-(length:--text-nano)", statusBadge.paused)}
-                                  aria-label="Paused"
-                                  title="Paused"
+                                  aria-label={uiT("ui:messages.m_e159b06187d369a0")}
+                                  title={uiT("ui:messages.m_e159b06187d369a0")}
                                 >
-                                  <CircleSlash2 className="h-3 w-3" />
-                                  Paused
-                                </Badge>
+                                  <CircleSlash2 className="h-3 w-3" />{uiT("ui:messages.m_e159b06187d369a0")}</Badge>
                               ) : (
                                 <Badge variant="outline" className="ml-1.5 border-amber-500/40 bg-amber-500/10 px-1.5 text-(length:--text-nano) text-amber-700 dark:text-amber-300">
                                   {issueBadge}
@@ -2301,12 +2287,10 @@ function StreamlinedIssuesList({
                             {isSuccessfulRunHandoffRequired(issue) ? (
                               <Badge variant="outline"
                                 className="ml-1.5 border-amber-400/45 bg-amber-50/60 px-1.5 text-(length:--text-nano) text-amber-700 dark:border-amber-300/35 dark:bg-amber-400/10 dark:text-amber-300"
-                                aria-label="Needs next step"
-                                title="This task needs a next step"
+                                aria-label={uiT("ui:messages.m_e45a2c0f61e00966")}
+                                title={uiT("ui:messages.m_aa4b55368cd2026a")}
                               >
-                                <CircleDot className="h-3 w-3" />
-                                Needs next step
-                              </Badge>
+                                <CircleDot className="h-3 w-3" />{uiT("ui:messages.m_e45a2c0f61e00966")}</Badge>
                             ) : null}
                           </>
                         )}
@@ -2317,7 +2301,7 @@ function StreamlinedIssuesList({
                               type="button"
                               data-slot="icon-button"
                               className="inline-flex h-4 w-4 shrink-0 items-center justify-center"
-                              aria-label={isExpanded ? "Collapse sub-tasks" : "Expand sub-tasks"}
+                              aria-label={isExpanded ? uiT("ui:messages.m_b533f9e83cfd41b7") : uiT("ui:messages.m_45dcdcbb82678e42")}
                               onClick={toggleCollapse}
                             >
                               <ChevronRight className={cn("h-3.5 w-3.5 transition-transform", isExpanded && "rotate-90")} />
@@ -2444,9 +2428,7 @@ function StreamlinedIssuesList({
                                         <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
                                           <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/35 bg-muted/30">
                                             <User className="h-3.5 w-3.5" />
-                                          </span>
-                                          Assignee
-                                        </span>
+                                          </span>{uiT("ui:messages.m_5e20d20e3978dcf8")}</span>
                                       )}
                                     </button>
                                   </PopoverTrigger>
@@ -2458,7 +2440,7 @@ function StreamlinedIssuesList({
                                   >
                                     <input
                                       className="mb-1 w-full border-b border-border bg-transparent px-2 py-1.5 text-xs outline-none placeholder:text-muted-foreground/50"
-                                      placeholder="Search responsible..."
+                                      placeholder={uiT("ui:messages.m_9cb8d79fc8b40d38")}
                                       value={assigneeSearch}
                                       onChange={(e) => setAssigneeSearch(e.target.value)}
                                       autoFocus
@@ -2474,9 +2456,7 @@ function StreamlinedIssuesList({
                                           e.stopPropagation();
                                           assignIssue(issue.id, null, null);
                                         }}
-                                      >
-                                        No responsible
-                                      </button>
+                                      >{uiT("ui:messages.m_15abdee5d453108e")}</button>
                                       {currentUserId && (
                                         <button
                                           className={cn(
@@ -2490,7 +2470,7 @@ function StreamlinedIssuesList({
                                           }}
                                         >
                                           <User className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                                          <span>Me</span>
+                                          <span>{uiT("ui:messages.m_d30af076b0dc85cc")}</span>
                                         </button>
                                       )}
                                       {(agents ?? [])
@@ -2584,10 +2564,10 @@ function StreamlinedIssuesList({
             <div className="py-2" data-testid="issues-load-more-sentinel">
               <p className="text-xs text-muted-foreground">
                 {isLoadingMoreIssues || (hierarchyEnabled && hierarchy.isFetching)
-                  ? "Loading more tasks..."
+                  ? uiT("ui:messages.m_45100abbe0d45c58")
                   : remainingIssueRowCount > 0
-                    ? `Rendering ${Math.min(renderedIssueRowLimit, visibleListRowCount)} of ${visibleListRowCount} tasks`
-                    : "Scroll to load more tasks"}
+                    ? uiT("ui:messages.m_a89fbd713b87516b", { v0: (Math.min(renderedIssueRowLimit, visibleListRowCount)), v1: (visibleListRowCount) })
+                    : uiT("ui:messages.m_df9865df4faceca9")}
               </p>
             </div>
           )}

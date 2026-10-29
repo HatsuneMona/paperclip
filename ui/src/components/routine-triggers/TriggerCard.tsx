@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, type ReactNode } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,13 +44,13 @@ export function RoutineTriggerCard({
             aria-controls={editorId}
             onClick={onEdit}
           >
-            {editLabel ?? (expanded ? "Close" : `Edit ${kind}`)}
+            {editLabel ?? (expanded ? uiT("ui:messages.m_7d9eb7acb13e2462") : uiT("ui:messages.m_f1be7e63b84c48df", { v0: (kind) }))}
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            aria-label={`Remove ${kind}`}
-            title={`Remove ${kind}`}
+            aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (kind) })}
+            title={uiT("ui:messages.m_86790c6d4f116494", { v0: (kind) })}
             onClick={onRemove}
           >
             <Trash2 className="h-3.5 w-3.5" />

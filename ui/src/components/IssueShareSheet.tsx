@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import { Identity } from "./Identity";
 import { renderAccessIdentity, type AccessSelectOption } from "./AccessSelectIdentity";
@@ -221,7 +222,7 @@ export function IssueShareSheet({
       queryClient.invalidateQueries({ queryKey: ["issues"] });
       setAddSelection("");
       setView("list");
-      pushToast({ title: "Access granted", tone: "success" });
+      pushToast({ title: uiT("ui:messages.m_3a6a2dbef5819d65"), tone: "success" });
     },
     onError: (error) => {
       pushToast({ title: "Couldn't add access", body: (error as Error).message, tone: "error" });
@@ -265,7 +266,7 @@ export function IssueShareSheet({
       }));
     const groups: SearchableSelectGroup<string, AccessSelectOption>[] = [];
     if (users.length > 0) groups.push({ id: "people", label: "People", options: users });
-    if (agents.length > 0) groups.push({ id: "agents", label: "Agents", options: agents });
+    if (agents.length > 0) groups.push({ id: "agents", label: uiT("ui:messages.m_279b44d2ab4b40c0"), options: agents });
     return groups;
   }, [directoryQuery.data, agentsQuery.data, grantedSubjectKeys]);
 
@@ -387,7 +388,7 @@ export function IssueShareSheet({
                             className="text-muted-foreground hover:text-destructive"
                             onClick={() => setRevokeTarget(grant)}
                           >
-                            {implicitPrincipal ? "Remove saved grant" : "Revoke"}
+                            {implicitPrincipal ? "Remove saved grant" : uiT("ui:messages.m_87e6d00bbf53ec5a")}
                           </Button>
                         ) : grant.source === "project" ? (
                           <span className="text-(length:--text-nano) text-muted-foreground">
@@ -455,11 +456,9 @@ export function IssueShareSheet({
                   setView("list");
                   setAddSelection("");
                 }}
-              >
-                Back
-              </Button>
+              >{uiT("ui:messages.m_76900f1bfd16c8d4")}</Button>
               <Button size="sm" onClick={submitAdd} disabled={!addSelection || addMutation.isPending}>
-                {addMutation.isPending ? "Adding…" : "Add"}
+                {addMutation.isPending ? "Adding…" : uiT("ui:messages.m_9fd728c66c9a256b")}
               </Button>
             </div>
           </div>
@@ -474,8 +473,7 @@ export function IssueShareSheet({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Remove {revokeTarget?.subjectDisplayName ?? "this subject"}'s saved grant?
+            <AlertDialogTitle>{uiT("ui:messages.m_5948954e3b49be94")}{revokeTarget?.subjectDisplayName ?? "this subject"}'s saved grant?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This removes this grant and the access it supplies to this task's descendants.
@@ -485,7 +483,7 @@ export function IssueShareSheet({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={(event) => {
@@ -494,7 +492,7 @@ export function IssueShareSheet({
               }}
               disabled={revokeMutation.isPending}
             >
-              {revokeMutation.isPending ? "Removing…" : "Remove grant"}
+              {revokeMutation.isPending ? uiT("ui:messages.m_d4b09919ec929f15") : "Remove grant"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

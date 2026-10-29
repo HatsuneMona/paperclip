@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState } from "react";
 import {
   Download,
@@ -132,8 +133,7 @@ export function SlackAvatarContent({
               </a>{" "}
               and choose <strong>{appName}</strong>.
             </li>
-            <li>
-              Choose <strong>Basic Information</strong>, then scroll to{" "}
+            <li>{uiT("ui:messages.m_86a9b212c3cf7b9f")}<strong>Basic Information</strong>, then scroll to{" "}
               <strong>Display Information</strong>.
             </li>
             <li>
@@ -158,8 +158,7 @@ export function SlackAvatarSettings(props: SlackAvatarProps) {
     <section className="space-y-4" aria-label="Slack avatar">
       <div className="space-y-1">
         <h2 className="text-lg font-semibold">Agent avatar</h2>
-        <p className="text-sm text-muted-foreground">
-          Use {props.agentName}’s avatar so your team recognizes the agent
+        <p className="text-sm text-muted-foreground">{uiT("ui:messages.m_bb33dbdb2f216aee")}{props.agentName}’s avatar so your team recognizes the agent
         </p>
       </div>
       <SlackAvatarContent {...props} compact />

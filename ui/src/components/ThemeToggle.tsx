@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,7 @@ const MENU_ACTION_DESCRIPTION = "Toggle the app appearance.";
 export function ThemeToggle({ className, variant = "icon", onAfterToggle }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
-  const label = isDark ? "Switch to light mode" : "Switch to dark mode";
+  const label = isDark ? uiT("ui:messages.m_bfa0cab91d75f7a4") : uiT("ui:messages.m_fc43ea9804c7f5da");
   const Icon = isDark ? Sun : Moon;
 
   function handleClick() {

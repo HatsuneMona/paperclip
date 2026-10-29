@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Component, Suspense, type ErrorInfo, type ReactNode } from "react";
 import { useLocation, useNavigate } from "@/lib/router";
 import { Button } from "@/components/ui/button";
@@ -79,9 +80,7 @@ class RouteErrorBoundaryInner extends Component<RouteErrorBoundaryInnerProps, Ro
           {error.message}
         </pre>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={this.props.onReset}>
-            Go back
-          </Button>
+          <Button variant="outline" size="sm" onClick={this.props.onReset}>{uiT("ui:messages.m_6aadac2f2b7a6b8e")}</Button>
           <Button size="sm" onClick={() => window.location.reload()}>
             Reload page
           </Button>

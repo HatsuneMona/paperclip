@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Mail, Paperclip } from "lucide-react";
@@ -57,14 +58,14 @@ export function EmailMessageCard({
   return (
     <article
       aria-label={
-        message.direction === "inbound" ? "Email received" : "Email sent"
+        message.direction === "inbound" ? "Email received" : uiT("ui:messages.m_a5e14a58d737e1e7")
       }
       className={contextNotice ? "task-context-notice space-y-3" : "space-y-4 rounded-xl border border-border bg-card p-5"}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="flex items-center gap-2 text-sm font-semibold">
           <Mail className="size-4" />
-          {message.direction === "inbound" ? "Email received" : "Email sent"}
+          {message.direction === "inbound" ? "Email received" : uiT("ui:messages.m_a5e14a58d737e1e7")}
         </span>
         <span className="text-xs text-muted-foreground">
           {new Date(message.timestamp).toLocaleString()}
@@ -74,9 +75,7 @@ export function EmailMessageCard({
         <p className="text-sm font-medium">
           {message.from}
           {message.direction === "inbound" && (
-            <span className="ml-2 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
-              External
-            </span>
+            <span className="ml-2 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">{uiT("ui:messages.m_68c114ea9c8c6604")}</span>
           )}
         </p>
         <p className="break-words text-xs text-muted-foreground">
@@ -126,13 +125,13 @@ export function EmailMessageCard({
       {publication && (
         <p className="border-t border-border pt-3 text-xs text-muted-foreground">
           {publication.outcome === "delivered"
-            ? "Delivered"
+            ? uiT("ui:messages.m_906115657390f367")
             : publication.outcome === "failed"
-              ? "Delivery failed"
+              ? uiT("ui:messages.m_b486522010d5f8a6")
               : publication.outcome === "uncertain"
                 ? "Delivery uncertain"
                 : publication.outcome === "queued"
-                  ? "Queued"
+                  ? uiT("ui:messages.m_661ff40a07e037bb")
                   : "Sent"}
           {publication.error ? ` · ${publication.error}` : ""}
         </p>

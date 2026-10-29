@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import type { IssueWorkMode } from "@paperclipai/shared";
 import { Check, ClipboardList, MessageCircleQuestion, Lock, Paperclip, Plus, Target, X, type LucideIcon } from "lucide-react";
@@ -70,7 +71,7 @@ export function ComposerAddMenu({
       onCloseAutoFocus={(event) => { if (goalFocusRef.current) { event.preventDefault(); goalFocusRef.current = false; } }}
       className="composer-mobile-dialog flex flex-col translate-y-0 gap-0 overflow-hidden p-0 md:translate-y-0">
       <div className="flex shrink-0 items-center gap-2 px-3 py-2">
-        <DialogTitle className="min-w-0 flex-1 text-sm font-medium">Add</DialogTitle>
+        <DialogTitle className="min-w-0 flex-1 text-sm font-medium">{uiT("ui:messages.m_9fd728c66c9a256b")}</DialogTitle>
         <DialogClose asChild><button type="button" aria-label="Close Add menu" className="grid size-11 place-items-center rounded-md text-muted-foreground hover:bg-accent"><X className="size-4" /></button></DialogClose>
       </div>
       <div className="min-h-0 overflow-y-auto overscroll-contain p-2 pt-0">{actions.map((action) => <button key={action.id} type="button" disabled={action.disabled} data-testid={action.id}
@@ -84,7 +85,7 @@ export function ComposerAddMenu({
     <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
     <DropdownMenuContent side="top" align="start" sideOffset={8} data-testid={menuTestId}
       className="w-(--sz-300px) rounded-xl p-1.5 shadow-sm">
-      <div className="px-2 py-1 text-xs text-muted-foreground">Add</div>
+      <div className="px-2 py-1 text-xs text-muted-foreground">{uiT("ui:messages.m_9fd728c66c9a256b")}</div>
       {actions.map((action) => <DropdownMenuItem key={action.id} onSelect={action.select} disabled={action.disabled} data-testid={action.id}>
         {content(action)}
       </DropdownMenuItem>)}
@@ -105,7 +106,7 @@ export function ComposerModeChip({ mode, onRemove, disabled, testId, mobile = fa
   const meta = workModeMetaFor(mode);
   const Icon = meta.icon;
   return <button type="button" onClick={onRemove} disabled={disabled || !onRemove}
-    aria-label={`Remove ${meta.label}`} data-pending-work-mode={mode} data-testid={testId}
+    aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (meta.label) })} data-pending-work-mode={mode} data-testid={testId}
     className={cn("inline-flex h-8 shrink-0 items-center rounded-full border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50", mobile ? "gap-1 px-2" : "gap-1 px-2 sm:gap-1.5 sm:px-2.5", meta.classes.chip)}>
     <Icon className="size-3.5" aria-hidden />
     <span className={mobile ? "sr-only" : "max-sm:sr-only"}>{meta.label}</span>
@@ -129,7 +130,7 @@ export function ComposerPrivacyChip({ inherited, onRemove, disabled }: { inherit
           disabled={disabled || Boolean(inherited)} data-testid="composer-private-chip"
           className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-border bg-muted px-2 text-xs font-medium text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
           <Lock className="size-3.5" aria-hidden />
-          <span className="max-sm:sr-only">Private</span>
+          <span className="max-sm:sr-only">{uiT("ui:messages.m_c63eb6720c6e8849")}</span>
           {!inherited ? <X className="size-3.5" aria-hidden /> : null}
         </button>
       </span>

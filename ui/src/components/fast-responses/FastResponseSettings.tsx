@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useId, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -121,7 +122,7 @@ export function FastResponseSettingsView({
           id: c.grantId,
           name: c.name,
           description:
-            c.status === "connected" ? "Connected" : "Needs attention",
+            c.status === "connected" ? uiT("ui:messages.m_22965568d22a14ee") : uiT("ui:messages.m_c1ebc7817870e5be"),
           icon: <AppLogo name={c.provider} brandKey={c.provider} size={24} />,
         }))}
         onSelect={(grantId) => {
@@ -146,13 +147,9 @@ export function FastResponseSettingsView({
       )}
       <div className="flex items-center gap-3">
         {onAdd && (
-          <Button variant="outline" size="sm" onClick={onAdd}>
-            Add connection
-          </Button>
+          <Button variant="outline" size="sm" onClick={onAdd}>{uiT("ui:messages.m_685f88ae3db24ee1")}</Button>
         )}
-        <Link to="/apps" className="text-sm underline underline-offset-4">
-          Manage connections
-        </Link>
+        <Link to="/apps" className="text-sm underline underline-offset-4">{uiT("ui:messages.m_cadfaac7241e3651")}</Link>
       </div>
       {draft.connectionId && (
         <fieldset disabled={saving || testing} className="space-y-4">
@@ -166,9 +163,7 @@ export function FastResponseSettingsView({
             <label
               htmlFor={`${modelListId}-input`}
               className="text-sm font-medium"
-            >
-              Model
-            </label>
+            >{uiT("ui:messages.m_5e2c614c23f02239")}</label>
             <Input
               id={`${modelListId}-input`}
               list={modelListId}
@@ -238,7 +233,7 @@ export function FastResponseSettingsView({
             onClick={onTest}
             disabled={dirty || !settings.enabled || saving || testing}
           >
-            {testing ? "Testing…" : "Test response"}
+            {testing ? uiT("ui:messages.m_407b7a04662f2aab") : "Test response"}
           </Button>
           <p className="text-xs text-muted-foreground">
             {dirty
@@ -256,7 +251,7 @@ export function FastResponseSettingsView({
             }
             onClick={() => onSave(draft)}
           >
-            {saving ? "Saving…" : "Save fast response"}
+            {saving ? uiT("ui:messages.m_23e39291d6135814") : "Save fast response"}
           </Button>
         )}
       </div>
@@ -319,9 +314,7 @@ export function FastResponseSettingsSection({
         <p className="text-sm text-destructive">
           Could not load fast response settings.
         </p>
-        <Button variant="outline" onClick={() => void query.refetch()}>
-          Try again
-        </Button>
+        <Button variant="outline" onClick={() => void query.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
       </div>
     );
   if (!query.data?.canManage || !query.data.settings) return null;

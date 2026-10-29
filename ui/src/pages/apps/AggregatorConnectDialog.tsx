@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { aggregatorManagementUrl } from "@paperclipai/shared/aggregator-apps";
 import { Label } from "@/components/ui/label";
@@ -39,7 +40,7 @@ export function AggregatorConnectDialog({ app, connections, initialProvider, onC
   return <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{provider ? `Connect ${app.name} through ${provider.name}` : `Connect ${app.name}`}</DialogTitle>
+        <DialogTitle>{provider ? `Connect ${app.name} through ${provider.name}` : uiT("ui:messages.m_2a49bf94ea24f16c", { v0: (app.name) })}</DialogTitle>
         <DialogDescription className={selected?.provider === "composio" ? "sr-only" : undefined}>{selected?.provider === "composio"
           ? `Choose a saved Composio account or connect a new one to use ${app.name}.`
           : provider
@@ -68,9 +69,9 @@ export function AggregatorConnectDialog({ app, connections, initialProvider, onC
 
       </div>}
       {selected?.provider !== "composio" ? <DialogFooter className="sm:items-center sm:justify-between">
-        <Button variant="ghost" onClick={selected && canChooseProvider ? () => setSelected(null) : onClose}>{selected && canChooseProvider ? "Back" : "Cancel"}</Button>
+        <Button variant="ghost" onClick={selected && canChooseProvider ? () => setSelected(null) : onClose}>{selected && canChooseProvider ? uiT("ui:messages.m_76900f1bfd16c8d4") : uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
         {selected ? <div className="flex flex-wrap items-center gap-3">
-          {managementUrl ? <Button asChild><a href={managementUrl} target="_blank" rel="noopener noreferrer" onClick={onClose}>Continue<ExternalLink className="size-4" /></a></Button> : null}
+          {managementUrl ? <Button asChild><a href={managementUrl} target="_blank" rel="noopener noreferrer" onClick={onClose}>{uiT("ui:messages.m_31fbef162594de01")}<ExternalLink className="size-4" /></a></Button> : null}
           <Button variant="link" size="sm" className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground" onClick={() => { onNavigate(`${aggregatorAppConnectHref(selected)}&new=1`); onClose(); }}>Connect a new account</Button>
         </div> : null}
       </DialogFooter> : null}

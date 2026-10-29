@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Archive, MoreHorizontal, Pencil, RefreshCw } from "lucide-react";
@@ -140,10 +141,10 @@ function RecentTasksList({
       if (storageKey) updateRecentTaskSnapshots(storageKey, companyId, [updated]);
       await refreshIssueQueries(renameEntry.id);
       setRenameEntry(null);
-      toastActions?.pushToast({ title: "Task renamed", tone: "success" });
+      toastActions?.pushToast({ title: uiT("ui:messages.m_136fd9d2741b880b"), tone: "success" });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task rename failed",
+        title: uiT("ui:messages.m_d5ce4a7f4b5cb2bc"),
         body: errorMessage(error, "Unable to rename this task."),
         tone: "error",
       });
@@ -160,10 +161,10 @@ function RecentTasksList({
       await queryClient.invalidateQueries({
         queryKey: queryKeys.sidebarBadges(companyId),
       });
-      toastActions?.pushToast({ title: "Task archived from inbox", tone: "success" });
+      toastActions?.pushToast({ title: uiT("ui:messages.m_ca9374d16da7e408"), tone: "success" });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task archive failed",
+        title: uiT("ui:messages.m_c44e1abcfdea6c25"),
         body: errorMessage(error, "Unable to archive this task from the inbox."),
         tone: "error",
       });
@@ -198,7 +199,7 @@ function RecentTasksList({
           }
         }
         setRestartWakeRetryPending(restartRetryStorageKey, entry.id, false);
-        toastActions?.pushToast({ title: "Task restarted", tone: "success" });
+        toastActions?.pushToast({ title: uiT("ui:messages.m_2769f7fb20007f69"), tone: "success" });
       } else if (state.activePauseHold) {
         throw new Error("This task is paused by a parent task. Restart it from the pause root.");
       } else if (readRestartWakeRetryIssueIds(restartRetryStorageKey).has(entry.id)) {
@@ -219,14 +220,14 @@ function RecentTasksList({
           }
         }
         setRestartWakeRetryPending(restartRetryStorageKey, entry.id, false);
-        toastActions?.pushToast({ title: "Task restarted", tone: "success" });
+        toastActions?.pushToast({ title: uiT("ui:messages.m_2769f7fb20007f69"), tone: "success" });
       } else {
         await issuesApi.createTreeHold(entry.id, {
           mode: "pause",
           reason: "Paused from Recent Tasks.",
           releasePolicy: { strategy: "manual" },
         });
-        toastActions?.pushToast({ title: "Task paused", tone: "success" });
+        toastActions?.pushToast({ title: uiT("ui:messages.m_d75247d087367f83"), tone: "success" });
       }
       await queryClient.invalidateQueries({
         queryKey: ["issues", "tree-control-state", entry.id],
@@ -234,7 +235,7 @@ function RecentTasksList({
       await queryClient.invalidateQueries({ queryKey: queryKeys.issues.summaries(companyId) });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task pause update failed",
+        title: uiT("ui:messages.m_9b384ff0ca06736b"),
         body: errorMessage(error, "Unable to pause or restart this task."),
         tone: "error",
       });
@@ -245,14 +246,14 @@ function RecentTasksList({
 
   return (
     <>
-      <SidebarSection label="Recent Tasks">
+      <SidebarSection label={uiT("ui:messages.m_49a027ddc61602c1")}>
         {entries.map((entry) => (
           <div key={entry.id} className="sidebar-action-row group/recent-task relative">
             <SidebarNavItem
               to={`/issues/${entry.id}`}
               label={entry.title}
               trailing={entry.status === "in_review" && entry.externalConversationState === "waiting"
-                ? <span className="text-xs text-muted-foreground">Idle</span> : undefined}
+                ? <span className="text-xs text-muted-foreground">{uiT("ui:messages.m_ab0171ca0494d441")}</span> : undefined}
               trailingLabel={entry.status === "in_review" && entry.externalConversationState === "waiting" ? "Idle" : undefined}
               className={rail ? undefined : "sidebar-action-link pointer-coarse:pr-8"}
               liveCount={liveIssueIds.has(entry.id) ? 1 : undefined}
@@ -264,7 +265,7 @@ function RecentTasksList({
                     type="button"
                     variant="ghost"
                     size="icon-xs"
-                    aria-label={`More actions for ${entry.title}`}
+                    aria-label={uiT("ui:messages.m_5057a73d4a150414", { v0: (entry.title) })}
                     className="sidebar-action-menu absolute right-2 top-(--pct-50) z-10 -translate-y-(--pct-50) text-muted-foreground pointer-events-none opacity-0 transition-opacity hover:bg-sidebar-accent dark:hover:bg-sidebar-accent hover:text-foreground focus-visible:pointer-events-auto focus-visible:opacity-100 pointer-coarse:pointer-events-auto pointer-coarse:opacity-100 pointer-coarse:before:hidden group-hover/recent-task:pointer-events-auto group-hover/recent-task:opacity-100 group-focus-within/recent-task:pointer-events-auto group-focus-within/recent-task:opacity-100 data-[state=open]:pointer-events-auto data-[state=open]:bg-sidebar-accent data-[state=open]:text-foreground data-[state=open]:opacity-100"
                   >
                     <MoreHorizontal aria-hidden="true" />
@@ -279,25 +280,19 @@ function RecentTasksList({
                     className={RECENT_TASK_MENU_ITEM_CLASS}
                     onSelect={() => beginRename(entry)}
                   >
-                    <Pencil aria-hidden="true" />
-                    Rename
-                  </DropdownMenuItem>
+                    <Pencil aria-hidden="true" />{uiT("ui:messages.m_3064d79a295cefe4")}</DropdownMenuItem>
                   <DropdownMenuItem
                     className={RECENT_TASK_MENU_ITEM_CLASS}
                     disabled={pendingAction !== null}
                     onSelect={() => void archiveTask(entry)}
                   >
-                    <Archive aria-hidden="true" />
-                    Archive
-                  </DropdownMenuItem>
+                    <Archive aria-hidden="true" />{uiT("ui:messages.m_66f4804ee23ddc09")}</DropdownMenuItem>
                   <DropdownMenuItem
                     className={RECENT_TASK_MENU_ITEM_CLASS}
                     disabled={pendingAction !== null}
                     onSelect={() => void toggleTaskPause(entry)}
                   >
-                    <RefreshCw aria-hidden="true" />
-                    Pause/Restart
-                  </DropdownMenuItem>
+                    <RefreshCw aria-hidden="true" />{uiT("ui:messages.m_7d81fbdd2e933baa")}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : null}
@@ -314,12 +309,12 @@ function RecentTasksList({
         <DialogContent className="sm:max-w-md">
           <form className="grid gap-4" onSubmit={(event) => void submitRename(event)}>
             <DialogHeader>
-              <DialogTitle>Rename task</DialogTitle>
-              <DialogDescription>Choose a short, clear name for this task.</DialogDescription>
+              <DialogTitle>{uiT("ui:messages.m_5b1f3e19f6cd421c")}</DialogTitle>
+              <DialogDescription>{uiT("ui:messages.m_e35c8b971c35dc05")}</DialogDescription>
             </DialogHeader>
             <Input
               autoFocus
-              aria-label="Task name"
+              aria-label={uiT("ui:messages.m_d5164108945c9ab5")}
               value={renameValue}
               disabled={pendingAction === "rename"}
               onChange={(event) => setRenameValue(event.target.value)}
@@ -330,14 +325,12 @@ function RecentTasksList({
                 variant="outline"
                 disabled={pendingAction === "rename"}
                 onClick={() => setRenameEntry(null)}
-              >
-                Cancel
-              </Button>
+              >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
               <Button
                 type="submit"
                 disabled={pendingAction === "rename" || !renameValue.trim()}
               >
-                {pendingAction === "rename" ? "Saving..." : "Save"}
+                {pendingAction === "rename" ? uiT("ui:messages.m_dc85af8f2b1d0d67") : uiT("ui:messages.m_1509f561f2416598")}
               </Button>
             </DialogFooter>
           </form>

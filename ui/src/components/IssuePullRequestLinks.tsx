@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { IssueWorkProduct } from "@paperclipai/shared";
 import { Badge } from "@/components/ui/badge";
 import { pullRequestHref, pullRequestIdentity, pullRequestLabel, pullRequestNeedsReview, pullRequestState } from "@/lib/issue-pull-requests";
@@ -34,7 +35,7 @@ export function IssuePullRequestLinks({ products, externalObjects = [] }: {
                 data-external-status={provider.statusCategory} data-external-liveness={provider.liveness}>
                 <ExternalObjectStatusIcon category={provider.statusCategory} liveness={provider.liveness}
                   statusIconKey={provider.statusIconKey} label={providerStatus} />
-                <span>{providerStatus}{!["fresh", "unknown"].includes(provider.liveness) ? ` (${externalObjectLivenessLabel(provider.liveness)})` : ""}</span>
+                <span>{providerStatus}{!["fresh", "unknown"].includes(provider.liveness) ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (externalObjectLivenessLabel(provider.liveness)) }) : ""}</span>
               </span>
             ) : null}
             {pullRequestNeedsReview(product) && !providerTerminal ? (

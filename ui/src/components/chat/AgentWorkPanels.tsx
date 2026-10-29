@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpDown, File, FileText, Image, Search, Video } from "lucide-react";
@@ -159,8 +160,8 @@ export function AgentTasksPanel({
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search tasks"
-            aria-label="Search tasks"
+            placeholder={uiT("ui:messages.m_46c6f1dea7e92580")}
+            aria-label={uiT("ui:messages.m_46c6f1dea7e92580")}
             className="h-8 pl-7 text-sm"
           />
         </div>
@@ -176,7 +177,7 @@ export function AgentTasksPanel({
         />
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Sort" aria-label="Sort tasks">
+            <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={uiT("ui:messages.m_bec69036aa27e7fa")} aria-label="Sort tasks">
               <ArrowUpDown className="h-3.5 w-3.5" />
             </Button>
           </PopoverTrigger>
@@ -271,7 +272,7 @@ export function AgentArtifactCard({ artifact }: { artifact: CompanyArtifact }) {
         </span>
       </div>
       <div className="flex items-center gap-1.5 pl-6 text-xs text-muted-foreground">
-        <span>Updated {formatDate(artifact.updatedAt)}</span>
+        <span>{uiT("ui:messages.m_a919c7c2d1a48683")}{formatDate(artifact.updatedAt)}</span>
         <span aria-hidden>·</span>
         <span className="font-mono">{artifact.issue.identifier}</span>
       </div>
@@ -304,7 +305,7 @@ export function AgentArtifactsPanel({ companyId, agentId }: { companyId: string;
 
   const artifactsView = useQueryView(artifactsQuery);
 
-  if (artifactsView.kind === "loading" || artifactsView.kind === "reconnecting") return <PanelMessage>Loading artifacts…</PanelMessage>;
+  if (artifactsView.kind === "loading" || artifactsView.kind === "reconnecting") return <PanelMessage>{uiT("ui:messages.m_11580619f554d270")}</PanelMessage>;
   if (artifactsView.kind === "error") {
     return (
       <div className="py-4">

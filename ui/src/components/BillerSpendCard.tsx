@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo } from "react";
 import type { CostByBiller, CostByProviderModel } from "@paperclipai/shared";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -63,13 +64,11 @@ export function BillerSpendCard({
               {providerDisplayName(row.biller)}
             </CardTitle>
             <CardDescription className="text-xs mt-0.5">
-              <span className="font-mono">{formatTokens(row.inputTokens + row.cachedInputTokens)}</span> in
+              <span className="font-mono">{formatTokens(row.inputTokens + row.cachedInputTokens)}</span>{uiT("ui:messages.m_8f6b9ac6b27608e8")}{" · "}
+              <span className="font-mono">{formatTokens(row.outputTokens)}</span>{uiT("ui:messages.m_34ae63eca1717499")}{" · "}
+              {row.providerCount} provider{row.providerCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
               {" · "}
-              <span className="font-mono">{formatTokens(row.outputTokens)}</span> out
-              {" · "}
-              {row.providerCount} provider{row.providerCount === 1 ? "" : "s"}
-              {" · "}
-              {row.modelCount} model{row.modelCount === 1 ? "" : "s"}
+              {row.modelCount} model{row.modelCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}
             </CardDescription>
           </div>
           <div className="text-xl shrink-0">
@@ -82,7 +81,7 @@ export function BillerSpendCard({
       <CardContent className="px-4 pb-4 pt-3 space-y-4">
         {showBudgetUtilization && budgetMonthlyCents > 0 && (
           <QuotaBar
-            label="Period spend"
+            label={uiT("ui:messages.m_9c4819e645eeec36")}
             percentUsed={budgetPct}
             leftLabel={formatCents(row.costCents)}
             rightLabel={`${Math.round(budgetPct)}% of company budget`}
@@ -132,8 +131,7 @@ export function BillerSpendCard({
                     <div className="text-right tabular-nums">
                       <div className="font-medium">{formatCents(entry.costCents)}</div>
                       <div className="text-muted-foreground">
-                        {formatTokens(entry.inputTokens + entry.outputTokens)} tok
-                      </div>
+                        {formatTokens(entry.inputTokens + entry.outputTokens)}{uiT("ui:messages.m_2298879d8c60a6bb")}</div>
                     </div>
                   </div>
                 ))}

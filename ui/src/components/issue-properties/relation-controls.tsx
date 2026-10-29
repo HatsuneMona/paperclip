@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState, type MouseEvent } from "react";
 import type { Issue, IssueLockedStub } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -39,7 +40,7 @@ export function RemovableIssueReferencePill({
   const confirmLabel = locked
     ? issue.identifier ?? "this private task"
     : issue.identifier
-      ? `${issue.identifier}: ${issue.title}`
+      ? uiT("ui:messages.m_4e0f4981482faaa7", { v0: (issue.identifier), v1: (issue.title) })
       : issue.title;
   const chipClassName = cn(
     "paperclip-mention-chip paperclip-mention-chip--issue",
@@ -80,7 +81,7 @@ export function RemovableIssueReferencePill({
                 data-mention-kind="issue"
                 className={chipClassName}
                 title={locked ? "Private task" : issue.title}
-                aria-label={`Actions for blocker ${issueLabel}`}
+                aria-label={uiT("ui:messages.m_522221c19ec88cfb", { v0: (issueLabel) })}
               >
                 {content}
               </button>
@@ -89,15 +90,11 @@ export function RemovableIssueReferencePill({
               {!locked && issue.identifier ? (
                 <DropdownMenuItem asChild>
                   <Link to={`/issues/${issue.identifier}`}>
-                    <ArrowUpRight className="h-4 w-4" />
-                    Visit task
-                  </Link>
+                    <ArrowUpRight className="h-4 w-4" />{uiT("ui:messages.m_ecacc67b009d5b68")}</Link>
                 </DropdownMenuItem>
               ) : null}
               <DropdownMenuItem variant="destructive" onSelect={openRemoveConfirmation}>
-                <X className="h-4 w-4" />
-                Remove blocker
-              </DropdownMenuItem>
+                <X className="h-4 w-4" />{uiT("ui:messages.m_76792aa60019fa0e")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
@@ -119,7 +116,7 @@ export function RemovableIssueReferencePill({
                 data-mention-kind="issue"
                 className={chipClassName}
                 title={issue.title}
-                aria-label={`Task ${issueLabel}: ${issue.title}`}
+                aria-label={uiT("ui:messages.m_e4eb199f7a70b94b", { v0: (issueLabel), v1: (issue.title) })}
               >
                 {content}
               </Link>
@@ -128,7 +125,7 @@ export function RemovableIssueReferencePill({
                 data-mention-kind="issue"
                 className={chipClassName}
                 title={issue.title}
-                aria-label={`Task: ${issue.title}`}
+                aria-label={uiT("ui:messages.m_4d9fe20eef4b42cd", { v0: (issue.title) })}
               >
                 {content}
               </span>
@@ -139,18 +136,14 @@ export function RemovableIssueReferencePill({
       <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Remove blocker?</DialogTitle>
-            <DialogDescription>
-              Remove {confirmLabel} as a blocker for this task.
-            </DialogDescription>
+            <DialogTitle>{uiT("ui:messages.m_b7d963b0caf9a632")}</DialogTitle>
+            <DialogDescription>{uiT("ui:messages.m_5948954e3b49be94")}{confirmLabel}{uiT("ui:messages.m_3b94139c92f09956")}</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             </DialogClose>
-            <Button type="button" variant="destructive" onClick={confirmRemove}>
-              Remove blocker
-            </Button>
+            <Button type="button" variant="destructive" onClick={confirmRemove}>{uiT("ui:messages.m_76792aa60019fa0e")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -173,9 +166,9 @@ export function ExpandRelationListButton({
       type="button"
       className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
       onClick={onClick}
-      aria-label={expanded ? "Show fewer items" : `Show ${hiddenCount} more items`}
+      aria-label={expanded ? uiT("ui:messages.m_b908f492c1d3015c") : uiT("ui:messages.m_21153fcbaa7805bf", { v0: (hiddenCount) })}
     >
-      {expanded ? "Show less" : `Show ${hiddenCount} more`}
+      {expanded ? uiT("ui:messages.m_94ea9b1d33a02975") : uiT("ui:messages.m_df1508f6fa103813", { v0: (hiddenCount) })}
     </button>
   );
 }

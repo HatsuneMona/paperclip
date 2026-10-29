@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
@@ -218,7 +219,7 @@ export function EnvironmentVariableRow({
           value={row.name}
           spellCheck={false}
           disabled={disabled}
-          aria-label="Variable name"
+          aria-label={uiT("ui:messages.m_0b64682bead3a63a")}
           aria-invalid={showNameIssue && nameIssue?.level === "error" ? true : undefined}
           aria-describedby={showNameIssue && nameIssue ? nameErrorId : undefined}
           onChange={(event) => onPatch({ name: event.target.value })}
@@ -288,7 +289,7 @@ export function EnvironmentVariableRow({
                     <span className="text-(length:--text-micro) text-muted-foreground">Resolve a stored organization secret at run start.</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="flex-col items-start gap-0.5" onSelect={() => switchSource("user_secret")}>
-                    <span className="text-sm">User secret</span>
+                    <span className="text-sm">{uiT("ui:messages.m_62c03b86e0b7355f")}</span>
                     <span className="text-(length:--text-micro) text-muted-foreground">
                       Resolve the responsible user&apos;s own value at run start.
                     </span>
@@ -301,12 +302,12 @@ export function EnvironmentVariableRow({
                   <input
                     ref={valueInputRef}
                     className={valueTextInputClass}
-                    placeholder="value"
+                    placeholder={uiT("ui:messages.m_cd42404d52ad55cc")}
                     value={row.textValue}
                     type={sensitive ? "password" : "text"}
                     spellCheck={false}
                     disabled={disabled}
-                    aria-label="Variable value"
+                    aria-label={uiT("ui:messages.m_f94d74f144948b42")}
                     onChange={(event) => onPatch({ textValue: event.target.value })}
                     onKeyDown={(event) => {
                       if (event.key === "Enter" && isLast) {
@@ -367,7 +368,7 @@ export function EnvironmentVariableRow({
                             event.stopPropagation();
                             setVersionOpen((prev) => !prev);
                           }}
-                          aria-label="Version"
+                          aria-label={uiT("ui:messages.m_dd167905de0defca")}
                           className={cn(
                             "absolute right-8 top-1/2 z-10 -translate-y-1/2 rounded px-1.5 py-0.5 text-(length:--text-nano) font-medium",
                             versionPinned
@@ -422,7 +423,7 @@ export function EnvironmentVariableRow({
                 <div className="grid min-w-0 flex-1 grid-cols-(--gtc-13)">
                   {userSecretsEnabled ? (
                     <select
-                      aria-label="User secret"
+                      aria-label={uiT("ui:messages.m_62c03b86e0b7355f")}
                       value={row.userSecretKey}
                       disabled={disabled}
                       onChange={(event) => {
@@ -442,7 +443,7 @@ export function EnvironmentVariableRow({
                       {(userSecretDefinitions ?? []).map((definition) => (
                         <option key={definition.id} value={definition.key}>
                           {definition.name}
-                          {definition.status !== "active" ? ` (${definition.status})` : ""}
+                          {definition.status !== "active" ? uiT("ui:messages.m_80d14c6b7ea466ed", { v0: (definition.status) }) : ""}
                         </option>
                       ))}
                     </select>
@@ -464,8 +465,8 @@ export function EnvironmentVariableRow({
                     onChange={(event) => onPatch({ required: event.target.value === "required" })}
                     className="border-l border-border bg-transparent px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none disabled:pointer-events-none"
                   >
-                    <option value="required">Required</option>
-                    <option value="optional">Optional</option>
+                    <option value="required">{uiT("ui:messages.m_4850b174b713d88c")}</option>
+                    <option value="optional">{uiT("ui:messages.m_59be71333c960fd0")}</option>
                   </select>
                 </div>
               )}
@@ -541,9 +542,7 @@ export function EnvironmentVariableRow({
                 onPatch({ source: "secret", secretId: undoPrev.secretId, version: undoPrev.version, textValue: "" });
                 setUndoPrev(null);
               }}
-            >
-              Undo
-            </button>
+            >{uiT("ui:messages.m_a8283ade31856f71")}</button>
           </p>
         ) : null}
       </div>
@@ -567,7 +566,7 @@ export function EnvironmentVariableRow({
             <DropdownMenuTrigger asChild disabled={disabled}>
               <button
                 type="button"
-                aria-label="More actions"
+                aria-label={uiT("ui:messages.m_f8d46c2570e70736")}
                 className="rounded p-1 text-muted-foreground opacity-100 hover:bg-accent hover:text-foreground @[40rem]/env:opacity-0 @[40rem]/env:group-hover/row:opacity-100 @[40rem]/env:group-focus-within/row:opacity-100"
               >
                 <MoreHorizontal className="size-4" />
@@ -595,7 +594,7 @@ export function EnvironmentVariableRow({
           type="button"
           onClick={onRemove}
           disabled={disabled}
-          aria-label={`Remove ${row.name.trim() || "variable"}`}
+          aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (row.name.trim() || "variable") })}
           className="rounded p-1 text-muted-foreground opacity-100 hover:bg-destructive/10 hover:text-destructive @[40rem]/env:opacity-0 @[40rem]/env:group-hover/row:opacity-100 @[40rem]/env:group-focus-within/row:opacity-100"
         >
           <X className="size-4" />

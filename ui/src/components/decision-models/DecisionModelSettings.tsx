@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DECISION_MODELS, type DecisionConnectionChoice, type DecisionModelSettings, type DecisionProvider, type DecisionResult, type UpdateDecisionModel } from "@paperclipai/shared";
@@ -56,7 +57,7 @@ export function DecisionModelSettingsView({ settings, choices, saving, testing, 
     {choices.length === 0 && <p className="text-sm text-muted-foreground">Add a shared OpenAI or OpenRouter API connection to get started.</p>}
     {draft.connectionId && !selected && <p role="status" className="text-sm text-muted-foreground">The saved connection is unavailable to you. Disable decisions or choose another connection.</p>}
     <div className="flex flex-wrap items-center gap-3">
-      <Button variant="outline" size="sm" onClick={onAdd} disabled={saving || testing}>Add connection</Button>
+      <Button variant="outline" size="sm" onClick={onAdd} disabled={saving || testing}>{uiT("ui:messages.m_685f88ae3db24ee1")}</Button>
       {selected && <Link to={`/apps/${selected.id}/permissions`} className="text-sm underline underline-offset-4">{selected.status === "connected" ? "Manage connection" : "Reconnect connection"}</Link>}
     </div>
     {draft.connectionId && <fieldset disabled={saving || testing} className="space-y-4">
@@ -81,7 +82,7 @@ export function DecisionModelSettingsView({ settings, choices, saving, testing, 
         <Button variant="outline" size="sm" disabled={!settings.enabled || dirty || saving || testing || selected?.status !== "connected"} onClick={onTest}>{testing ? "Running test…" : "Run test"}</Button>
         <p className="text-xs text-muted-foreground">{dirty ? "Save changes before testing." : "Runs a small sample with an API charge."}</p>
       </div>
-      {dirty && <Button onClick={() => onSave(draft)} disabled={saving || testing || (draft.enabled && selected?.status !== "connected")}>{saving ? "Saving…" : "Save decision model"}</Button>}
+      {dirty && <Button onClick={() => onSave(draft)} disabled={saving || testing || (draft.enabled && selected?.status !== "connected")}>{saving ? uiT("ui:messages.m_23e39291d6135814") : "Save decision model"}</Button>}
     </div>
   </section>;
 }
@@ -101,7 +102,7 @@ export function DecisionModelSettingsSection({ companyId }: { companyId: string 
     setNewlyConnectedId(null); test.reset(); client.setQueryData(key, { ...query.data, settings });
   } });
   if (query.isPending) return <p className="text-sm text-muted-foreground">Loading decision model…</p>;
-  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load decision settings.</p><Button variant="outline" onClick={() => void query.refetch()}>Try again</Button></div>;
+  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load decision settings.</p><Button variant="outline" onClick={() => void query.refetch()}>{uiT("ui:messages.m_d8b8392e2c542950")}</Button></div>;
   if (!query.data?.canManage || !query.data.settings) return null;
   return <>
     <DecisionModelSettingsView settings={query.data.settings} choices={query.data.choices} saving={save.isPending} testing={test.isPending}

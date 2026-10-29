@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Loader2 } from "lucide-react";
@@ -97,7 +98,7 @@ export function ChatIdentityConfirm() {
       </div>
       <dl className="divide-y divide-border border-y border-border">
         <div className="flex items-center justify-between gap-4 py-3">
-          <dt className="text-sm text-muted-foreground">Provider</dt>
+          <dt className="text-sm text-muted-foreground">{uiT("ui:messages.m_472590ae974d4c1f")}</dt>
           <dd className="text-sm font-medium">
             {providerNames[identity.provider]}
           </dd>
@@ -110,11 +111,11 @@ export function ChatIdentityConfirm() {
           </dd>
         </div>
         <div className="flex items-center justify-between gap-4 py-3">
-          <dt className="text-sm text-muted-foreground">Paperclip account</dt>
+          <dt className="text-sm text-muted-foreground">{uiT("ui:messages.m_deb2783e82b1167b")}</dt>
           <dd className="text-right text-sm font-medium">{paperclipAccount}</dd>
         </div>
         <div className="flex items-center justify-between gap-4 py-3">
-          <dt className="text-sm text-muted-foreground">Agent</dt>
+          <dt className="text-sm text-muted-foreground">{uiT("ui:messages.m_11b39c93777e8f1f")}</dt>
           <dd className="text-sm font-medium">
             {identity.botLabel ?? "Paperclip agent"}
           </dd>
@@ -134,7 +135,7 @@ export function ChatIdentityConfirm() {
         <div className="space-y-3">
           <p className="text-sm">You need membership in {identity.companyName} before linking this account.</p>
           {requestAccess.isSuccess ? <p role="status" className="text-sm">Access requested. An admin can approve it in Paperclip. After approval, return here to confirm; if this link expires, send the connect command in Slack again.</p>
-            : <Button disabled={requestAccess.isPending || !identity.selfService} onClick={() => requestAccess.mutate()}>Request access</Button>}
+            : <Button disabled={requestAccess.isPending || !identity.selfService} onClick={() => requestAccess.mutate()}>{uiT("ui:messages.m_b06f1662da4a1336")}</Button>}
           {requestAccess.isError && <p role="alert" className="text-sm text-destructive">Couldn&apos;t request access. The link may have expired. Send the connect command again and retry.</p>}
         </div>
       ) : <Button disabled={confirm.isPending} onClick={() => confirm.mutate()}>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState, type ReactNode } from "react";
 import {
   AlertTriangle,
@@ -271,18 +272,18 @@ export function DecisionCard({
             : "failed";
 
   const badgeLabel = open
-    ? "Pending"
+    ? uiT("ui:messages.m_331551b0de4157c9")
     : decision.status === "expired"
-      ? "Expired"
+      ? uiT("ui:messages.m_424a2551d356754c")
       : decision.status === "cancelled"
-        ? "Cancelled"
+        ? uiT("ui:messages.m_d353a99eb4556847")
         : dismissed
           ? "Dismissed"
           : decision.executionStatus === "succeeded"
             ? "Decided"
             : decision.executionStatus === "partial"
               ? "Partial"
-              : "Failed";
+              : uiT("ui:messages.m_031a8f0f659df890");
 
   const requiredUnmet = (decision.inputs ?? []).some(
     (field) => field.required && !(inputValues[field.id] ?? "").trim(),
@@ -344,7 +345,7 @@ export function DecisionCard({
 
       {/* Provenance */}
       <p className="mt-1 text-xs text-muted-foreground">
-        Proposed by <span className="font-medium text-foreground">{originAgentName ?? "an agent"}</span>
+        Proposed by <span className="font-medium text-foreground">{originAgentName ?? uiT("ui:messages.m_647936ec3e40783d")}</span>
         {originIssue && (
           <>
             {" "}while running{" "}
@@ -527,7 +528,7 @@ export function DecisionCard({
                       value={confirmText}
                       onChange={(event) => setConfirmText(event.target.value)}
                       placeholder={confirmToken}
-                      aria-label="Type the issue identifier to confirm"
+                      aria-label={uiT("ui:messages.m_f3deefa7ccf424aa")}
                       autoFocus
                       className="mt-1"
                     />
@@ -539,9 +540,7 @@ export function DecisionCard({
                           setConfirmOptionId(null);
                           setConfirmText("");
                         }}
-                      >
-                        Cancel
-                      </Button>
+                      >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                       <Button
                         variant="destructive"
                         size="sm"
@@ -549,7 +548,7 @@ export function DecisionCard({
                         onClick={() => onDecide?.(option.id, inputValues)}
                       >
                         {busy && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-                        {previewRows ? `Cancel ${pluralize(previewRows.length, "issue")}` : "Cancel tree"}
+                        {previewRows ? uiT("ui:messages.m_db3da0ce0ff66481", { v0: (pluralize(previewRows.length, "issue")) }) : "Cancel tree"}
                       </Button>
                     </div>
                   </div>

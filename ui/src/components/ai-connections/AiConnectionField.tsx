@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -194,9 +195,7 @@ export function AiConnectionField({
             <Button
               variant="ghost"
               onClick={() => setPendingAdoption(undefined)}
-            >
-              Cancel
-            </Button>
+            >{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button
               onClick={() => {
                 if (pendingAdoption) onChange(pendingAdoption);
@@ -211,7 +210,7 @@ export function AiConnectionField({
       <Dialog open={connecting} onOpenChange={(open) => { if (!selectDefault.isPending) setConnecting(open); }}>
         <DialogContent className="max-h-(--sz-85vh) overflow-y-auto sm:max-w-2xl" onCloseAutoFocus={restoreFocus}>
           <DialogHeader>
-            <DialogTitle>{reconnecting ? "Reconnect account" : "Connect account"}</DialogTitle>
+            <DialogTitle>{reconnecting ? "Reconnect account" : uiT("ui:messages.m_f7d845186faa7ab8")}</DialogTitle>
             <DialogDescription>
               {advancedSetup ? "Choose a provider connection for this agent." : reconnecting ? "Sign in again to repair your current default account. Its agent access stays the same." : "This account will become your default for this provider. Your tasks will use it; other users keep their own default."}
             </DialogDescription>

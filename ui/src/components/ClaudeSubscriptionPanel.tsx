@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { quotaUnavailableMessage } from "@/lib/quota-refresh";
 import type { QuotaWindow } from "@paperclipai/shared";
 import { cn, quotaSourceDisplayName } from "@/lib/utils";
@@ -121,8 +122,7 @@ export function ClaudeSubscriptionPanel({
                 </div>
                 {window.usedPercent != null ? (
                   <div className="shrink-0 text-sm font-semibold tabular-nums text-foreground">
-                    {window.usedPercent}% used
-                  </div>
+                    {window.usedPercent}{uiT("ui:messages.m_19e8fbbc0d7bbb59")}</div>
                 ) : null}
               </div>
 

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useWorkspaceBaseRefRecovery, useWorkspaceRetry } from "@/components/WorkspaceBaseRefRecovery";
 import { WorkspaceBaseRefRecoveryNotice } from "@/components/WorkspaceBaseRefRecoveryNotice";
 import { DispositionRecoveryNotice, useDispositionRecoverySnapshot } from "@/components/DispositionRecoveryNotice";
@@ -133,7 +134,7 @@ export function TaskChatSystemNotice({
             disabled={tryAgainNoLiveExecutionPathPending}
             data-testid="task-chat-no-live-path-try-again"
           >
-            {tryAgainNoLiveExecutionPathPending ? "Trying again..." : "Try again"}
+            {tryAgainNoLiveExecutionPathPending ? uiT("ui:messages.m_808041416fbdba1f") : uiT("ui:messages.m_d8b8392e2c542950")}
           </Button>
         ) : null}
       </div>
@@ -169,7 +170,7 @@ export function TaskChatSystemNotice({
                 disabled={tryAgainNoLiveExecutionPathPending}
                 data-testid="task-chat-no-live-path-try-again"
               >
-                {tryAgainNoLiveExecutionPathPending ? "Trying again..." : "Try again"}
+                {tryAgainNoLiveExecutionPathPending ? uiT("ui:messages.m_808041416fbdba1f") : uiT("ui:messages.m_d8b8392e2c542950")}
               </Button>
             </div>
           ) : null}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Agent } from "@paperclipai/shared";
 import { toolsApi } from "@/api/tools";
@@ -78,7 +79,7 @@ export function EmailConnectionAccess({
           className="sm:grid-cols-2"
           options={[
             { value: "selected", title: "Just agents I pick" },
-            { value: "all", title: "Any agent" },
+            { value: "all", title: uiT("ui:messages.m_ee3e7690173b4911") },
           ]}
           onValueChange={(value) =>
             save.mutate(

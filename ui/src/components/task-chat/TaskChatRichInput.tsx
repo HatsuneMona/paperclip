@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { ImagePlus, Loader2 } from "lucide-react";
 import {
@@ -134,9 +135,7 @@ export function TaskChatRichInput({
               <Loader2 aria-hidden className="h-3.5 w-3.5 animate-spin" />
             ) : (
               <ImagePlus aria-hidden className="h-3.5 w-3.5" />
-            )}
-            Attach image
-          </Button>
+            )}{uiT("ui:messages.m_2eacc5e02758c0b0")}</Button>
           <span>or drop/paste an image into the note</span>
         </div>
       ) : null}

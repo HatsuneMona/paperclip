@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   DndContext,
@@ -161,7 +162,7 @@ function SortableQueuedMessage({
           ) : (
             <CornerDownRight className="h-3.5 w-3.5" aria-hidden />
           )}
-          {queue.targetRunId ? "Interrupt" : "Send"}
+          {queue.targetRunId ? uiT("ui:messages.m_b62523141249e0f2") : uiT("ui:messages.m_f6f4688ff23d50c6")}
         </button>
       ) : (
         <button
@@ -215,9 +216,7 @@ function SortableQueuedMessage({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-44">
           <DropdownMenuItem disabled={!entry.canEdit} onSelect={onEdit}>
-            <Pencil className="h-4 w-4" aria-hidden />
-            Edit message
-          </DropdownMenuItem>
+            <Pencil className="h-4 w-4" aria-hidden />{uiT("ui:messages.m_9757ccd5ef123556")}</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

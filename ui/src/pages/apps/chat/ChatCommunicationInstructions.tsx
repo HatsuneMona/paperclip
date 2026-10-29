@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -49,10 +50,10 @@ export function ChatCommunicationInstructions({ value, onSave }: {
       {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
       <div className="flex items-center justify-between gap-3">
         <div>
-          {dirty ? <Button type="button" variant="ghost" disabled={pending} onClick={() => { setDraft(null); setError(null); setSaved(false); }}>Cancel</Button>
+          {dirty ? <Button type="button" variant="ghost" disabled={pending} onClick={() => { setDraft(null); setError(null); setSaved(false); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             : saved ? <span role="status" className="text-sm text-muted-foreground">Saved. Applies to new tasks.</span> : null}
         </div>
-        <Button type="submit" disabled={!dirty || pending}>{pending ? "Saving…" : "Save instructions"}</Button>
+        <Button type="submit" disabled={!dirty || pending}>{pending ? uiT("ui:messages.m_23e39291d6135814") : "Save instructions"}</Button>
       </div>
     </form>
   );

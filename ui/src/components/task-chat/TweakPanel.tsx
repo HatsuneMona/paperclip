@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useCopyAction } from "@/lib/use-copy-action";
@@ -146,7 +147,7 @@ export function TweakPanel() {
           </button>
           <button
             type="button"
-            title={minimized ? "Expand" : "Minimize"}
+            title={minimized ? uiT("ui:messages.m_07548c2c6511d4d1") : "Minimize"}
             onClick={() => setMinimized((m) => !m)}
             className="rounded p-0.5 hover:bg-accent"
           >
@@ -229,7 +230,7 @@ export function TweakPanel() {
               {/* Focusing the box copies it silently; say so, or the click looks inert. */}
               <p className="mt-1 text-(length:--text-nano) text-muted-foreground" aria-live="polite">
                 {exportCopy.copied
-                  ? "Copied to clipboard"
+                  ? uiT("ui:messages.m_d37078fe6a1faa15")
                   : exportCopy.failed
                     ? "Copy failed — select the text and copy it manually"
                     : "Click the box to copy"}

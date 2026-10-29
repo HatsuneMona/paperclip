@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentCharacter } from "../AgentCharacter";
 import { useState } from "react";
 import { MotionConfig } from "motion/react";
@@ -106,14 +107,14 @@ export function ConnectModelPreview({
         <div className="pt-6">
           <OnboardingHeading
             center
-            title="Connect a model"
+            title={uiT("ui:messages.m_87bdaaf8ac10de0f")}
             lede="Paperclip works with your existing subscription or API keys."
           />
         </div>
 
         <div className="space-y-2 pt-12">
           <ModelSourceTiles
-            label="Model source"
+            label={uiT("ui:messages.m_9fb88c74db9bfbbb")}
             sources={MODEL_SOURCES}
             mode={mode}
             selectedId={selectedId}

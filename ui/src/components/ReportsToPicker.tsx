@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useState } from "react";
 import type { Agent } from "@paperclipai/shared";
@@ -86,15 +87,12 @@ export function ReportsToPicker({
             onChange(null);
             setOpen(false);
           }}
-        >
-          No manager
-        </button>
+        >{uiT("ui:messages.m_6a4ee4d7c34ebada")}</button>
         {terminatedManager && (
           <div className="flex min-w-0 items-center gap-2 overflow-hidden px-2 py-1.5 text-xs text-muted-foreground border-b border-border mb-0.5">
             <AgentAvatar agent={current} size={16} className="shrink-0 h-3 w-3"/>
             <span className="min-w-0 truncate">
-              Current: {current.name} (terminated)
-            </span>
+              Current: {current.name}{uiT("ui:messages.m_0b8c5dbf99d57637")}</span>
           </div>
         )}
         {unknownManager && (

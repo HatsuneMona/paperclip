@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { TaskChatShimmerScope } from "@/components/task-chat/TaskChatShimmer";
 import { useRunnerSubmission } from "@/hooks/useRunnerSubmission";
 import {
@@ -1328,7 +1329,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
           surface: "resource",
           resourceKind: "document",
           title: documentDisplayTitle(document),
-          subtitle: `Document · rev ${document.latestRevisionNumber}`,
+          subtitle: uiT("ui:messages.m_7f9d0745c328aacb", { v0: (document.latestRevisionNumber) }),
           href: buildDocumentAnnotationHash({
             documentKey: document.key,
             threadId: null,
@@ -1379,7 +1380,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
           kind: "protocol",
           surface: "resource",
           resourceKind: "attachment",
-          title: attachment.originalFilename ?? "Agent attachment",
+          title: attachment.originalFilename ?? uiT("ui:messages.m_c3c46b916caeb25f"),
           subtitle: `${attachment.contentType} · ${formatResourceBytes(attachment.byteSize)}`,
           href: safeResourceHref(attachment.openPath ?? attachment.contentPath),
           timestamp: new Date(attachment.createdAt).toISOString(),
@@ -2811,7 +2812,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
           disabled={isInterrupting}
           onClick={() => void onInterruptQueued(runId)}
         >
-          {isInterrupting ? "Interrupting…" : "Interrupt"}
+          {isInterrupting ? uiT("ui:messages.m_3b4ddf08b8056b6a") : uiT("ui:messages.m_b62523141249e0f2")}
         </Button>
       );
     },
@@ -3117,11 +3118,9 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                   role="status"
                   className="absolute inset-x-0 top-0 z-20 mx-auto flex w-full max-w-(--tc-shell-max-w) items-center gap-2 border border-border bg-background px-4 py-2 text-sm text-muted-foreground"
                 >
-                  {historyError ? "Some task history could not be loaded." : "Some task history is still loading."}
+                  {historyError ? uiT("ui:messages.m_5ab49573544e53b2") : "Some task history is still loading."}
                   {historyError ? (
-                    <Button variant="ghost" size="sm" onClick={retryHistory}>
-                      Retry
-                    </Button>
+                    <Button variant="ghost" size="sm" onClick={retryHistory}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
                   ) : null}
                 </div>
               ) : null}
@@ -3130,7 +3129,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                   className="absolute inset-0 z-10 overflow-hidden bg-background"
                   data-testid="task-chat-history-loading"
                   role="status"
-                  aria-label="Loading conversation"
+                  aria-label={uiT("ui:messages.m_9deef600048b62e9")}
                 >
                   <div className="mx-auto flex w-full max-w-(--tc-shell-max-w) flex-col gap-4 px-4 py-3">
                     {threadHeader}
@@ -3269,15 +3268,15 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                                         items={tailItems}
                                         emptyMessage={
                                           tailStatus === "queued"
-                                            ? "Waiting to start..."
+                                            ? uiT("ui:messages.m_46efd2ea3843484a")
                                             : (liveRun && liveRun.id === tailRunId
                                                 ? liveRun.currentStatusMessage
                                                 : null) ||
                                               (tailStatus === "failed"
                                                 ? linkedRunMetaById.get(tailRunId ?? "")?.errorCode?.startsWith("workspace_git_scan_")
-                                                  ? "Workspace setup failed before the agent started."
-                                                  : "This run stopped before a response was available. Review the task’s connection or recovery action below."
-                                                : "Waiting for transcript...")
+                                                  ? uiT("ui:messages.m_619a14c668b1b133")
+                                                  : uiT("ui:messages.m_e432c4b12d83a83c")
+                                                : uiT("ui:messages.m_8f7d4ad6562d888c"))
                                         }
                                       />
                                     </TaskChatShimmerScope>
@@ -3412,7 +3411,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                             pendingReminderInputs.length > 0
                               ? {
                                   count: pendingReminderInputs.length,
-                                  label: `${pendingReminderInputs.length} pending input${pendingReminderInputs.length === 1 ? "" : "s"}`,
+                                  label: `${pendingReminderInputs.length} pending input${pendingReminderInputs.length === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")}`,
                                   onOpen: openPendingTakeover,
                                 }
                               : null

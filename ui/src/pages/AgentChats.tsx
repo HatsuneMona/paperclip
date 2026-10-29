@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { usePrimaryAgentPresentation } from "@/components/primary-agent/PrimaryAgentPresentation";
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
@@ -13,7 +14,7 @@ import { agentRouteRef } from "@/lib/utils";
 export function AgentChats() {
   const { setBreadcrumbs } = useBreadcrumbs();
   const { companyId, userId, enabled, loaded, agents, chats, session } = useAgentChatNavigation();
-  useEffect(() => setBreadcrumbs([{ label: "Chat" }]), [setBreadcrumbs]);
+  useEffect(() => setBreadcrumbs([{ label: uiT("ui:messages.m_460b3a7da007b7af") }]), [setBreadcrumbs]);
   return <AgentChatsContent key={`${companyId}:${userId}`} companyId={companyId} userId={userId}
     enabled={enabled} loaded={loaded} agents={agents} chats={chats} session={session} />;
 }
@@ -70,7 +71,7 @@ function AgentChatsContent({ companyId, userId, enabled, loaded, agents, chats, 
       <p className="text-sm leading-relaxed text-muted-foreground">Ask a question, think through an idea, or plan the next step with your team.</p>
     </div>
     {error ? <QueryErrorState error={error} action="load your chats" onRetry={() => { agentsView.retry(); chatsView.retry(); sessionView.retry(); }} />
-      : agents.isPending || session.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading agents…</p>
+      : agents.isPending || session.isPending ? <p role="status" className="text-sm text-muted-foreground">{uiT("ui:messages.m_ae0c1414f42139ce")}</p>
       : <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {(agents.data ?? []).slice(0, 6).map(agent => <button key={agent.id} type="button" disabled={openingId !== null}
           onClick={async () => {

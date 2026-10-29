@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { StrictMode, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MotionConfig, motion } from "motion/react";
@@ -75,7 +76,7 @@ const MODEL_SOURCES: ModelSource[] = [
     label: "Claude",
     icon: <img src="/brands/claude-color.svg" alt="" className="size-full" />,
   },
-  { id: "codex_local", label: "OpenAI", icon: <OpenAiBlossom className="size-full" /> },
+  { id: "codex_local", label: uiT("ui:messages.m_8b7d1a3187ab355d"), icon: <OpenAiBlossom className="size-full" /> },
 ];
 
 /**
@@ -281,14 +282,14 @@ function ConnectFlowPreview({
       : phase === "ready" && apiMode
         ? // A key is typed here rather than fetched elsewhere, so the button is
           // the submit and stays dead until there is something to submit.
-          { label: "Connect", icon: "arrow" as const, disabled: !apiKey.trim() }
+          { label: uiT("ui:messages.m_1a2303ede07493ac"), icon: "arrow" as const, disabled: !apiKey.trim() }
         : phase === "ready"
         ? { label: signInLabel, icon: "none" as const, disabled: false }
         : phase === "waiting"
-          ? { label: "Waiting for code", icon: "spinner" as const, disabled: true }
+          ? { label: uiT("ui:messages.m_f22b705c3b7ce68f"), icon: "spinner" as const, disabled: true }
           : phase === "connecting"
-            ? { label: "Connecting", icon: "spinner" as const, disabled: true }
-            : { label: "Next", icon: "arrow" as const, disabled: true };
+            ? { label: uiT("ui:messages.m_d403c686f6a10480"), icon: "spinner" as const, disabled: true }
+            : { label: uiT("ui:messages.m_1ff57a29d7c9d11b"), icon: "arrow" as const, disabled: true };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -308,7 +309,7 @@ function ConnectFlowPreview({
         <div className="pt-6">
           <OnboardingHeading
             center
-            title={done ? "Connected" : "Connect a model"}
+            title={done ? uiT("ui:messages.m_22965568d22a14ee") : uiT("ui:messages.m_87bdaaf8ac10de0f")}
             lede={
               done
                 ? "The step advances straight to Review — there is no success screen."
@@ -321,7 +322,7 @@ function ConnectFlowPreview({
           <>
             <div className="space-y-2 pt-12">
               <ModelSourceTiles
-                label="Model source"
+                label={uiT("ui:messages.m_9fb88c74db9bfbbb")}
                 sources={MODEL_SOURCES}
                 mode={mode}
                 selectedId={selectedId}
@@ -420,8 +421,8 @@ function ConnectFlowPreview({
                     {/* The one place the three paths differ. */}
                     {apiMode ? (
                       <OnboardingCardField
-                        label="API key"
-                        placeholder="Enter API key here"
+                        label={uiT("ui:messages.m_16f0ee47f993d627")}
+                        placeholder={uiT("ui:messages.m_c80c3ac9799dc19b")}
                         masked
                         value={apiKey}
                         onChange={setApiKey}

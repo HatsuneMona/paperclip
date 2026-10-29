@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "@/lib/router";
@@ -46,7 +47,7 @@ export function CloudAccessError({
       </div>
       <div>
         <Button variant="outline" onClick={onRetry} disabled={retrying}>
-          {retrying ? "Connecting…" : "Try again"}
+          {retrying ? uiT("ui:messages.m_72021eb70e91b4d5") : uiT("ui:messages.m_d8b8392e2c542950")}
         </Button>
       </div>
     </div>

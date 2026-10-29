@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, relativeTime } from "@/lib/utils";
@@ -41,13 +42,13 @@ export function OutputRow({ item, creatorName }: OutputRowProps) {
       </div>
       {meta ? (
         <div className="flex shrink-0 items-center gap-1">
-          <Button asChild variant="ghost" size="icon-sm" title="Open in new tab">
-            <a href={meta.openPath} target="_blank" rel="noreferrer" aria-label={`Open ${filename}`}>
+          <Button asChild variant="ghost" size="icon-sm" title={uiT("ui:messages.m_e0af5c0bc2457475")}>
+            <a href={meta.openPath} target="_blank" rel="noreferrer" aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (filename) })}>
               <ExternalLink className="h-4 w-4" />
             </a>
           </Button>
-          <Button asChild variant="ghost" size="icon-sm" title="Download">
-            <a href={meta.downloadPath} aria-label={`Download ${filename}`}>
+          <Button asChild variant="ghost" size="icon-sm" title={uiT("ui:messages.m_d6eafe8235910042")}>
+            <a href={meta.downloadPath} aria-label={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (filename) })}>
               <Download className="h-4 w-4" />
             </a>
           </Button>

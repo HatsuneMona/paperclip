@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import { Identity } from "./Identity";
 import { renderAccessIdentity, type AccessSelectOption } from "./AccessSelectIdentity";
@@ -55,7 +56,7 @@ export function ProjectAccessMembers({ project, canManage }: { project: Project;
       .map((agent) => ({ key: `agent:${agent.id}`, value: `agent:${agent.id}`, label: agent.name, identity: <><AgentAvatar agent={agent} size={24} /><span className="truncate">{agent.name}</span></> }));
     return [
       ...(people.length ? [{ id: "people", label: "People", options: people }] : []),
-      ...(agentOptions.length ? [{ id: "agents", label: "Agents", options: agentOptions }] : []),
+      ...(agentOptions.length ? [{ id: "agents", label: uiT("ui:messages.m_279b44d2ab4b40c0"), options: agentOptions }] : []),
     ];
   }, [activeKeys, agentsQuery.data, directoryQuery.data]);
   const selectedAgent = selection.startsWith("agent:")
@@ -90,7 +91,7 @@ export function ProjectAccessMembers({ project, canManage }: { project: Project;
   return (
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
-        <Lock className="h-3.5 w-3.5" aria-hidden="true" /> {canManage ? "Manage access" : "View access"}
+        <Lock className="h-3.5 w-3.5" aria-hidden="true" /> {canManage ? uiT("ui:messages.m_a90527b63530c612") : "View access"}
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
@@ -135,14 +136,14 @@ export function ProjectAccessMembers({ project, canManage }: { project: Project;
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-sm font-medium">{member.subjectDisplayName ?? "Unknown member"}</div>
                       <div className="text-xs text-muted-foreground">
-                        {isPersonalOwner ? "Owner" : member.subjectType === "agent" ? "Agent" : "Person"}
+                        {isPersonalOwner ? uiT("ui:messages.m_4b1b8aa3608a26da") : member.subjectType === "agent" ? uiT("ui:messages.m_11b39c93777e8f1f") : "Person"}
                       </div>
                     </div>
                     {!isPersonalOwner ? (
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        aria-label={`Remove ${member.subjectDisplayName ?? "member"}`}
+                        aria-label={uiT("ui:messages.m_86790c6d4f116494", { v0: (member.subjectDisplayName ?? "member") })}
                         disabled={!canManage || removeMember.isPending}
                         onClick={() => removeMember.mutate(member.id)}
                       >

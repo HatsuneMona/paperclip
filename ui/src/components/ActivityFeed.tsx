@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -113,10 +114,10 @@ type FilterValue = "all" | "in-progress" | "for-review" | "completed";
 type GroupMode = "flat" | "by-task";
 
 const FILTER_OPTIONS: Array<{ value: FilterValue; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "in-progress", label: "In Progress" },
-  { value: "for-review", label: "In Review" },
-  { value: "completed", label: "Done" },
+  { value: "all", label: uiT("ui:messages.m_a52ace420f2175d0") },
+  { value: "in-progress", label: uiT("ui:messages.m_b4cc4b07c300103a") },
+  { value: "for-review", label: uiT("ui:messages.m_2677214a9268a547") },
+  { value: "completed", label: uiT("ui:messages.m_11a6767d5674c7e4") },
 ];
 
 const FILTER_ACTIONS: Record<FilterValue, Set<string> | null> = {
@@ -287,7 +288,7 @@ function CollapsedFeedGroup({
         }
         <span className="flex-1 min-w-0 truncate">
           <span data-fc="actor" className="font-medium text-(--hex-959596) group-hover:text-white">{actorName}</span>
-          <span data-fc="verb" className="ml-1 text-(--hex-959596)">made {group.events.length} updates to</span>
+          <span data-fc="verb" className="ml-1 text-(--hex-959596)">{uiT("ui:messages.m_9f3940db230859ea")}{group.events.length}{uiT("ui:messages.m_c15fe50c67989e10")}</span>
           <span data-fc="title" className="ml-1 text-(--hex-959596) group-hover:text-white">{entityName ?? group.entityId}</span>
         </span>
         <span data-fc="time" className="text-muted-foreground shrink-0">
@@ -485,9 +486,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
         separator = (
           <div className="flex items-center gap-2 px-4 py-1.5" key={`sep-${index}`}>
             <div className="h-px flex-1 bg-border" />
-            <span className="text-(length:--text-nano) font-medium text-muted-foreground uppercase tracking-wider">
-              Earlier
-            </span>
+            <span className="text-(length:--text-nano) font-medium text-muted-foreground uppercase tracking-wider">{uiT("ui:messages.m_e10ae99074011888")}</span>
             <div className="h-px flex-1 bg-border" />
           </div>
         );
@@ -568,7 +567,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
       const issueName = entityNameMap.get(`issue:${groupKey}`);
       const issueTitle = entityTitleMap.get(`issue:${groupKey}`);
       const label = isOther
-        ? "Other activity"
+        ? uiT("ui:messages.m_a5af69edbe2fbac7")
         : `${issueName ?? groupKey}${issueTitle ? ` — ${issueTitle}` : ""}`;
 
       return (
@@ -621,10 +620,8 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
           aria-hidden
         />
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold">Agent Feed</h3>
-          <p className="text-xs text-muted-foreground">
-            Live activity from your agents
-          </p>
+          <h3 className="text-sm font-semibold">{uiT("ui:messages.m_24cf429412785b75")}</h3>
+          <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_3525e6b143fe5820")}</p>
         </div>
         <div className="flex items-center gap-1">
           {/* Group toggle */}
@@ -635,14 +632,14 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                 variant={groupMode === "by-task" ? "secondary" : "ghost"}
                 size="icon-sm"
                 className="shrink-0 text-muted-foreground"
-                aria-label="group by task"
+                aria-label={uiT("ui:messages.m_4bb285fa7daf879e")}
                 onClick={() => setGroupMode((m) => (m === "flat" ? "by-task" : "flat"))}
               >
                 <Layers className="h-3.5 w-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              {groupMode === "flat" ? "Group by task" : "Show flat"}
+              {groupMode === "flat" ? uiT("ui:messages.m_c9da37717b6ee29d") : uiT("ui:messages.m_de6f6c1a7a7675b9")}
             </TooltipContent>
           </Tooltip>
 
@@ -656,13 +653,13 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                     variant={filter !== "all" || showAllActivity ? "secondary" : "ghost"}
                     size="icon-sm"
                     className="shrink-0 text-muted-foreground"
-                    aria-label="filter by"
+                    aria-label={uiT("ui:messages.m_92a08271c792ab30")}
                   >
                     <ListFilter className="h-3.5 w-3.5" />
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent side="bottom">Filter by</TooltipContent>
+              <TooltipContent side="bottom">{uiT("ui:messages.m_d00f52454412f75a")}</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuRadioGroup
@@ -679,9 +676,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
               <DropdownMenuCheckboxItem
                 checked={showAllActivity}
                 onCheckedChange={(v) => setShowAllActivity(!!v)}
-              >
-                Show all activity
-              </DropdownMenuCheckboxItem>
+              >{uiT("ui:messages.m_376edbb277397010")}</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -703,7 +698,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                 </span>
               )}
               <p className="text-center text-sm text-muted-foreground">
-                {emptyMessage?.text ?? "Activity from your agents will appear here."}
+                {emptyMessage?.text ?? uiT("ui:messages.m_1e0c6807d975003c")}
               </p>
             </div>
           </div>

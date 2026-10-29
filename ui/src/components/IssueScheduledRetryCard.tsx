@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Clock, RotateCcw, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
 import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
@@ -35,9 +36,7 @@ export function IssueScheduledRetryCard({
 
   if (scheduledRetry.scheduledRetryReason === "workspace_busy") {
     return (
-      <InlineBanner tone="info" icon={Clock} title="Waiting for workspace" className="mb-3">
-        Another task is using this workspace. Work starts automatically when it is available.
-      </InlineBanner>
+      <InlineBanner tone="info" icon={Clock} title={uiT("ui:messages.m_e682cb09e669c477")} className="mb-3">{uiT("ui:messages.m_db345acc39877205")}</InlineBanner>
     );
   }
 
@@ -89,7 +88,7 @@ export function IssueScheduledRetryCard({
               {badgeLabel}
             </Badge>
             {attempt !== null ? (
-              <span className="text-muted-foreground">Attempt {attempt}</span>
+              <span className="text-muted-foreground">{uiT("ui:messages.m_51c78c7782f6379c")}{attempt}</span>
             ) : null}
             {reason ? (
               <span className="text-muted-foreground">{reason}</span>
@@ -101,8 +100,7 @@ export function IssueScheduledRetryCard({
               {absolute ? <span>{absolute}</span> : null}
               {absolute && scheduledRetry.retryOfRunId ? <span>{" · "}</span> : null}
               {scheduledRetry.retryOfRunId ? (
-                <span>
-                  Replaces run{" "}
+                <span>{uiT("ui:messages.m_28efd336f8ed5a75")}{" "}
                   <Link
                     to={`/agents/${scheduledRetry.agentId}/runs/${scheduledRetry.retryOfRunId}`}
                     className="font-mono text-foreground hover:underline"
@@ -114,8 +112,7 @@ export function IssueScheduledRetryCard({
             </div>
           ) : null}
           {scheduledRetry.error ? (
-            <div className="mt-1 text-xs text-muted-foreground">
-              Last attempt failed: {scheduledRetry.error}{/[.!?]$/.test(scheduledRetry.error.trim()) ? "" : "."} Paperclip will retry automatically.
+            <div className="mt-1 text-xs text-muted-foreground">{uiT("ui:messages.m_9556c4db82be4d1d")}{scheduledRetry.error}{/[.!?]$/.test(scheduledRetry.error.trim()) ? "" : "."} Paperclip will retry automatically.
             </div>
           ) : null}
           {isError ? (
@@ -140,28 +137,24 @@ export function IssueScheduledRetryCard({
           >
             {retryNow.isPending ? (
               <span className="inline-flex items-center gap-1.5">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
-                Retrying…
-              </span>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />{uiT("ui:messages.m_a16c8b1c95956fba")}</span>
             ) : isSuccessTransient ? (
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                {retryNow.data?.outcome === "already_promoted" ? "Already promoted" : "Promoted"}
+                {retryNow.data?.outcome === "already_promoted" ? uiT("ui:messages.m_8a7ece835bf32b77") : uiT("ui:messages.m_0cf04463c4276a62")}
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5">
-                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                Retry now
-              </span>
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />{uiT("ui:messages.m_5148c3e20576923b")}</span>
             )}
           </Button>
           <span className="text-right text-xs text-muted-foreground sm:max-w-(--sz-12rem)">
             {retryNow.isPending
-              ? "Promoting scheduled retry"
+              ? uiT("ui:messages.m_ff49385cbf514618")
               : isSuccessTransient
                 ? retryNow.data?.outcome === "already_promoted"
-                  ? "Already promoted — run starting"
-                  : "Promoted — run starting"
+                  ? uiT("ui:messages.m_53e3c8d4b5d4e437")
+                  : uiT("ui:messages.m_6c8f599a6dafe5d7")
                 : retryNow.data?.outcome === "waiting" && retryNow.data.scheduledRetry?.runId === scheduledRetry.runId
                   ? retryNow.data.message
                   : helperIdle}
@@ -191,16 +184,14 @@ export function RetryErrorBand({ error, onRetry, className }: RetryErrorBandProp
     >
       <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
       <div className="min-w-0 flex-1">
-        <div className="font-medium">Couldn't retry now</div>
+        <div className="font-medium">{uiT("ui:messages.m_7452a71d0f62b354")}</div>
         <div className="mt-0.5 text-muted-foreground">{error.message}</div>
       </div>
       <button
         type="button"
         onClick={onRetry}
         className="shrink-0 font-medium text-rose-700 hover:underline dark:text-rose-300"
-      >
-        Try again
-      </button>
+      >{uiT("ui:messages.m_d8b8392e2c542950")}</button>
     </div>
   );
 }

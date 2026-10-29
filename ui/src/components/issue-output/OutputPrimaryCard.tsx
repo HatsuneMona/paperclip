@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Download, ExternalLink, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,7 +45,7 @@ export function OutputPrimaryCard({ item, creatorName, onMediaClick }: OutputPri
           <button
             type="button"
             className="block aspect-video w-full overflow-hidden bg-black"
-            aria-label={`Browse ${filename} in gallery`}
+            aria-label={uiT("ui:messages.m_a38b45b309ee3b99", { v0: (filename) })}
             onClick={() => onMediaClick(item)}
           >
             <img src={meta.contentPath} alt={filename} className="h-full w-full object-contain" />
@@ -55,7 +56,7 @@ export function OutputPrimaryCard({ item, creatorName, onMediaClick }: OutputPri
             target="_blank"
             rel="noreferrer"
             className="block aspect-video w-full overflow-hidden bg-black"
-            aria-label={`Open ${filename}`}
+            aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (filename) })}
           >
             <img src={meta.contentPath} alt={filename} className="h-full w-full object-contain" />
           </a>
@@ -77,9 +78,7 @@ export function OutputPrimaryCard({ item, creatorName, onMediaClick }: OutputPri
           ) : (
             <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-(length:--text-micro) text-muted-foreground">
               {item.isPrimary && (
-                <Badge variant="secondary" className="px-1.5 py-0 text-(length:--text-nano)">
-                  Primary
-                </Badge>
+                <Badge variant="secondary" className="px-1.5 py-0 text-(length:--text-nano)">{uiT("ui:messages.m_efe10c80ec8a9f38")}</Badge>
               )}
               {meta && <span>{meta.contentType}</span>}
               {meta && <span aria-hidden="true">·</span>}
@@ -101,23 +100,17 @@ export function OutputPrimaryCard({ item, creatorName, onMediaClick }: OutputPri
                 className="max-md:flex-1"
                 onClick={() => onMediaClick(item)}
               >
-                <Maximize2 className="h-4 w-4" />
-                Browse
-              </Button>
+                <Maximize2 className="h-4 w-4" />{uiT("ui:messages.m_3227aa9666253f7a")}</Button>
             ) : null}
             {!isMedia || !onMediaClick || isVideo ? (
               <Button asChild variant="outline" size="sm" className="max-md:flex-1">
                 <a href={meta.openPath} target="_blank" rel="noreferrer">
-                  <ExternalLink className="h-4 w-4" />
-                  Open
-                </a>
+                  <ExternalLink className="h-4 w-4" />{uiT("ui:messages.m_ed077f3d8125d60d")}</a>
               </Button>
             ) : null}
             <Button asChild size="sm" className="max-md:flex-1">
-              <a href={meta.downloadPath} aria-label={`Download ${filename}`}>
-                <Download className="h-4 w-4" />
-                Download
-              </a>
+              <a href={meta.downloadPath} aria-label={uiT("ui:messages.m_ac3a0cac247d6d76", { v0: (filename) })}>
+                <Download className="h-4 w-4" />{uiT("ui:messages.m_d6eafe8235910042")}</a>
             </Button>
           </div>
         ) : null}

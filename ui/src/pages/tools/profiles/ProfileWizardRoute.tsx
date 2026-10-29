@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "@/lib/router";
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
@@ -28,10 +29,10 @@ export function ProfileWizardRoute({ mode }: { mode: "new" | "edit" }) {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Organization", href: "/dashboard" },
-      { label: "Apps", href: "/apps" },
-      { label: "Access profiles", href: advancedTabHref("profiles") },
-      { label: mode === "edit" ? "Resume draft" : "New profile" },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_d764d42592fc9687"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_89dd748442c19485"), href: "/apps" },
+      { label: uiT("ui:messages.m_2471292ff715cc6a"), href: advancedTabHref("profiles") },
+      { label: mode === "edit" ? "Resume draft" : uiT("ui:messages.m_fcf4f3f4d5f73ef8") },
     ]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs, selectedCompany?.name, mode]);

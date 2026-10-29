@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { type FormEvent, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ToolMcpGatewayWithTokens, ToolProfileWithDetails } from "@paperclipai/shared";
@@ -81,7 +82,7 @@ export function EditGatewayDialog({
         </DialogHeader>
         <form className="space-y-4" onSubmit={submit}>
           <label className="block space-y-1.5">
-            <span className="text-xs font-medium text-muted-foreground">Name</span>
+            <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</span>
             <Input value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
           </label>
           <label className="block space-y-1.5">
@@ -100,7 +101,7 @@ export function EditGatewayDialog({
             </select>
           </label>
           <label className="block space-y-1.5">
-            <span className="text-xs font-medium text-muted-foreground">Description (optional)</span>
+            <span className="text-xs font-medium text-muted-foreground">{uiT("ui:messages.m_f6cbe2f0c1f8a38b")}</span>
             <textarea
               className="min-h-16 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={description}
@@ -109,11 +110,9 @@ export function EditGatewayDialog({
             />
           </label>
           <DialogFooter>
-            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
             <Button type="submit" disabled={updateMutation.isPending || !name.trim() || !profileId}>
-              {updateMutation.isPending ? "Saving…" : "Save changes"}
+              {updateMutation.isPending ? uiT("ui:messages.m_23e39291d6135814") : uiT("ui:messages.m_dd0ae7a5cbcf2339")}
             </Button>
           </DialogFooter>
         </form>

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { TaskVoiceLauncher } from "@/components/voice/TaskVoiceLauncher";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -562,8 +563,7 @@ function ConnectedTaskComposer({
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           {binding.externalUrl && (
             <Button asChild size="sm" variant="outline">
-              <a href={binding.externalUrl} target="_blank" rel="noreferrer">
-                Open {providerNames[binding.provider]} <ExternalLink />
+              <a href={binding.externalUrl} target="_blank" rel="noreferrer">{uiT("ui:messages.m_b8039d1d54bf9e3b")}{providerNames[binding.provider]} <ExternalLink />
               </a>
             </Button>
           )}
@@ -575,9 +575,7 @@ function ConnectedTaskComposer({
             Send to channel
           </Button>
           <Button asChild size="sm" variant="ghost">
-            <Link to={`/apps/chat/${binding.endpointId}/conversations`}>
-              Connection
-            </Link>
+            <Link to={`/apps/chat/${binding.endpointId}/conversations`}>{uiT("ui:messages.m_639a40e82b9a96f0")}</Link>
           </Button>
         </div>
       </div>
@@ -633,7 +631,7 @@ function ConnectedTaskComposer({
               onClick={() => fileInput.current?.click()}
             >
               <Paperclip />
-              {uploading ? "Uploading…" : "Attach file"}
+              {uploading ? "Uploading…" : uiT("ui:messages.m_87fbe4fb79b1d700")}
             </Button>
             <p className="text-xs text-muted-foreground">
               Files stay on this task until you send them to the channel.
@@ -966,7 +964,7 @@ function ConnectedTaskComposer({
               }}
             >
               {publish.isPending
-                ? "Sending…"
+                ? uiT("ui:messages.m_b8ed5279e897be5d")
                 : resendWaiting
                   ? "Resend now"
                   : !rejection && (publish.isError || unconfirmedRequest)

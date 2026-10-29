@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { useEffect, useId, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -282,9 +283,7 @@ export function GitHubPolicyEditor({
         <h2
           id={`${id}-github-instructions-heading`}
           className="text-base font-semibold"
-        >
-          Instructions
-        </h2>
+        >{uiT("ui:messages.m_934652dce41d62d3")}</h2>
         <MarkdownEditor
           readOnly={readOnly}
           ariaLabel="Agent instructions"
@@ -452,7 +451,7 @@ export function GitHubPolicyEditor({
                   )}
                 </div>
               </GitHubSettingsDisclosure>
-              <GitHubSettingsDisclosure title="Labels">
+              <GitHubSettingsDisclosure title={uiT("ui:messages.m_934b8899c3d918d4")}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {filterField(
                     "requiredLabels",
@@ -536,9 +535,9 @@ export function GitHubPolicyEditor({
                   )
                 }
               >
-                <option value="info">Info</option>
-                <option value="warning">Warning</option>
-                <option value="error">Error</option>
+                <option value="info">{uiT("ui:messages.m_170322a32f3c35b2")}</option>
+                <option value="warning">{uiT("ui:messages.m_e981ddae45d8f4ca")}</option>
+                <option value="error">{uiT("ui:messages.m_54a0e8c17ebb21a1")}</option>
               </select>
               <p className="text-xs text-muted-foreground">
                 Hidden findings still count in the assessment.
@@ -718,7 +717,7 @@ export function GitHubAccessEditor({
                     {linked && (
                       <Check className="size-3.5 text-muted-foreground" />
                     )}
-                    {linked ? "Allowed" : "Unlinked"}
+                    {linked ? uiT("ui:messages.m_1bb201d188352e9b") : "Unlinked"}
                   </span>
                 ) : (
                   <ToggleSwitch
@@ -821,9 +820,7 @@ export function GitHubAccessEditor({
               <Link
                 className="underline underline-offset-4"
                 to={`/apps/chat/${endpointId}/settings`}
-              >
-                Settings
-              </Link>
+              >{uiT("ui:messages.m_74a883a037bc227f")}</Link>
               .
             </>
           ) : (
@@ -832,9 +829,7 @@ export function GitHubAccessEditor({
               <Link
                 className="underline underline-offset-4"
                 to={`/apps/chat/${endpointId}/settings`}
-              >
-                Settings
-              </Link>
+              >{uiT("ui:messages.m_74a883a037bc227f")}</Link>
               . Authorized @mentions still work.
             </>
           )}
@@ -945,9 +940,7 @@ export function GitHubAccessEditor({
               void members.refetch();
               void links.refetch();
             }}
-          >
-            Try again
-          </Button>
+          >{uiT("ui:messages.m_d8b8392e2c542950")}</Button>
         </div>
       )}
       <Dialog
@@ -986,7 +979,7 @@ export function GitHubAccessEditor({
                 }}
               >
                 <Copy className="size-4" />
-                {linkCopied ? "Copied" : "Copy invitation link"}
+                {linkCopied ? uiT("ui:messages.m_8d525e5f158b9afe") : "Copy invitation link"}
               </Button>
               <Link
                 ref={accountLink}
@@ -1077,9 +1070,7 @@ export function GitHubAccessEditor({
                 </p>
               )}
               <DialogFooter className="flex-row justify-between sm:justify-between">
-                <Button variant="ghost" onClick={() => setDialog(null)}>
-                  Cancel
-                </Button>
+                <Button variant="ghost" onClick={() => setDialog(null)}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
                 <Button
                   disabled={
                     !candidate ||

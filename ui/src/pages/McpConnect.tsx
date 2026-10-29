@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Globe, Paperclip } from "lucide-react";
@@ -41,7 +42,7 @@ export function McpDevicePage({ initialCode }: { initialCode?: string } = {}) {
     <form className="space-y-4" onSubmit={event => { event.preventDefault(); setSubmitted(code.trim()); }}>
       <label htmlFor="device-code" className="text-sm">Enter the code shown by your assistant</label>
       <Input id="device-code" autoComplete="off" value={code} onChange={event => setCode(event.target.value)} required maxLength={12} />
-      <div className="flex justify-end"><Button type="submit">Continue</Button></div>
+      <div className="flex justify-end"><Button type="submit">{uiT("ui:messages.m_31fbef162594de01")}</Button></div>
     </form></Card></div>;
 }
 
@@ -89,8 +90,8 @@ function McpConnectRequest({ id, device = false, agentPairingOnly = false, onEdi
   return <div className="mx-auto max-w-xl py-10">
     <Card className="block space-y-4 p-6">
       <div className="flex items-center gap-3">
-        <Paperclip className="size-8 shrink-0 text-foreground" role="img" aria-label="Paperclip" />
-        <h1 className="min-w-0 break-words text-xl font-semibold">Connect <bdi>{assistantName}</bdi> to Paperclip</h1>
+        <Paperclip className="size-8 shrink-0 text-foreground" role="img" aria-label={uiT("ui:messages.m_c34c3f7368649659")} />
+        <h1 className="min-w-0 break-words text-xl font-semibold">{uiT("ui:messages.m_3b887c9884f2c97a")}<bdi>{assistantName}</bdi> to Paperclip</h1>
       </div>
       {clientOrigin && <ClientOrigin key={clientOrigin} origin={clientOrigin} />}
       {!device && data?.redirectOrigin && data.redirectOrigin !== clientOrigin && <ClientOrigin key={data.redirectOrigin} origin={data.redirectOrigin} />}
@@ -102,28 +103,28 @@ function McpConnectRequest({ id, device = false, agentPairingOnly = false, onEdi
         <p className="text-sm">Enter the one-use code from Paperclip’s agent setup to review this connection’s access. Keep the code out of Bot chat. Access is granted only when you approve the named agent below.</p>
         <label htmlFor="dot-pairing-code" className="text-sm">Pairing code</label>
         <Input id="dot-pairing-code" type="password" autoComplete="off" value={pairingCode} onChange={event => { setPairingPreview(null); setPairingPreviewError(""); setPairingCode(event.target.value); }} required maxLength={32} />
-        {pairingPreview?.providerKind === "grok_bot" && <p className="text-sm font-medium">Allow this connection to work as {pairingPreview.agent.name} in {pairingPreview.company.name}.</p>}
+        {pairingPreview?.providerKind === "grok_bot" && <p className="text-sm font-medium">Allow this connection to work as {pairingPreview.agent.name}{uiT("ui:messages.m_2eb9d0d30d4ceaac")}{pairingPreview.company.name}.</p>}
         {pairingPreview && <dl className="space-y-2 rounded-md border border-border p-3 text-sm">
-          <div><dt className="text-muted-foreground">Company</dt><dd>{pairingPreview.company.name} <span className="text-xs text-muted-foreground">({pairingPreview.company.id})</span></dd></div>
-          <div><dt className="text-muted-foreground">Agent</dt><dd>{pairingPreview.agent.name} <span className="text-xs text-muted-foreground">({pairingPreview.agent.id})</span></dd></div>
-          <div><dt className="text-muted-foreground">Permissions</dt><dd>{pairingPreview.permissions}</dd></div>
+          <div><dt className="text-muted-foreground">{uiT("ui:messages.m_de4743c879734dc3")}</dt><dd>{pairingPreview.company.name} <span className="text-xs text-muted-foreground">({pairingPreview.company.id})</span></dd></div>
+          <div><dt className="text-muted-foreground">{uiT("ui:messages.m_11b39c93777e8f1f")}</dt><dd>{pairingPreview.agent.name} <span className="text-xs text-muted-foreground">({pairingPreview.agent.id})</span></dd></div>
+          <div><dt className="text-muted-foreground">{uiT("ui:messages.m_abccc78cc93c0793")}</dt><dd>{pairingPreview.permissions}</dd></div>
           {pairingPreview.authorizingPerson && <div><dt className="text-muted-foreground">Authorized by</dt><dd>{pairingPreview.authorizingPerson}</dd></div>}
           <div><dt className="text-muted-foreground">Access duration</dt><dd>{pairingPreview.accessDuration}</dd></div>
         </dl>}
         {pairingPreviewError && <p role="alert" className="text-sm text-destructive">{pairingPreviewError}</p>}
         {pairDot.error && <p role="alert" className="text-sm text-destructive">{pairDot.error.message}</p>}
-        <div className="flex justify-end"><Button type="submit" disabled={!pairingPreview || !/^[A-Za-z0-9_-]{32}$/.test(pairingCode.trim()) || pairDot.isPending}>{pairDot.isPending ? "Connecting…" : "Allow agent connection"}</Button></div>
+        <div className="flex justify-end"><Button type="submit" disabled={!pairingPreview || !/^[A-Za-z0-9_-]{32}$/.test(pairingCode.trim()) || pairDot.isPending}>{pairDot.isPending ? uiT("ui:messages.m_72021eb70e91b4d5") : "Allow agent connection"}</Button></div>
       </form>}
       {data && <>
-        {data.requiresSignIn ? <Button asChild><Link to={`/auth?next=${encodeURIComponent(returnPath)}`}>Sign in / Create account</Link></Button> : <>
+        {data.requiresSignIn ? <Button asChild><Link to={`/auth?next=${encodeURIComponent(returnPath)}`}>{uiT("ui:messages.m_5d4f5eb117173ca0")}</Link></Button> : <>
           {data.requestedCompanyId ? <div className="flex items-center gap-4 rounded-md border border-border p-4">
             {company && <CompanyPatternIcon companyName={company.name} logoUrl={company.logoUrl} className="size-14 shrink-0 rounded-lg text-xl" />}
             <div className="min-w-0 space-y-1">
-              <p className="text-xs text-muted-foreground">Organization</p>
+              <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_d764d42592fc9687")}</p>
               {company ? <p className="break-words text-lg font-semibold">{company.name}</p> : <p className="text-sm text-destructive">The selected organization is no longer available to this account. Cancel and reconnect from your assistant to choose an organization you can access.</p>}
             </div>
           </div> : <fieldset className="space-y-2" disabled={consent.isPending}>
-            <legend className="mb-2 text-sm font-medium">Organization</legend>
+            <legend className="mb-2 text-sm font-medium">{uiT("ui:messages.m_d764d42592fc9687")}</legend>
             {data.companies.map((item) => <label key={item.id} className="flex items-center gap-3 rounded-md border border-border p-3 text-sm">
               <input type="radio" name="company" aria-label={item.name} value={item.id} checked={selectedCompanyId === item.id} onChange={() => setCompanyId(item.id)} />
               <CompanyPatternIcon companyName={item.name} logoUrl={item.logoUrl} className="size-12 shrink-0 rounded-lg" />
@@ -141,8 +142,8 @@ function McpConnectRequest({ id, device = false, agentPairingOnly = false, onEdi
           {company && !company.canWrite && <p className="text-sm text-muted-foreground">Your role in this organization is read-only.</p>}
           {consent.error && <p className="text-sm text-destructive">{consent.error.message}</p>}
           <div className="flex items-center justify-between gap-3">
-            <Button variant="outline" disabled={consent.isPending} onClick={() => consent.mutate("deny")}>Cancel</Button>
-            <Button className="h-auto min-h-10 min-w-0 shrink whitespace-normal" disabled={!company || (data.agentConnection && !company.canWrite) || consent.isPending} onClick={() => consent.mutate("approve")}>{consent.isPending ? "Connecting…" : data.agentConnection ? "Connect Dot agent" : "Connect organization"}</Button>
+            <Button variant="outline" disabled={consent.isPending} onClick={() => consent.mutate("deny")}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button>
+            <Button className="h-auto min-h-10 min-w-0 shrink whitespace-normal" disabled={!company || (data.agentConnection && !company.canWrite) || consent.isPending} onClick={() => consent.mutate("approve")}>{consent.isPending ? uiT("ui:messages.m_72021eb70e91b4d5") : data.agentConnection ? "Connect Dot agent" : "Connect organization"}</Button>
           </div>
         </>}
       </>}
@@ -168,7 +169,7 @@ export function AssistantConnectionsPage() {
       <h2 className="font-medium"><Identity name={assistantConnectionDisplayName(connection)} avatarUrl={connection.user?.image} initials={deriveInitials(connection.user?.name ?? "You")} /></h2>
       <p className="text-sm text-muted-foreground">Organization: {connection.companyName}</p>
       {connection.agent && <p className="text-sm">Works as <Link className="underline" to={`/${connection.companyPrefix ?? connection.companyId}/agents/${connection.agent.id}/runtime`}>{connection.agent.name}</Link>{connection.user ? ` · Authorized by ${connection.user.name}` : ""}</p>}
-      <p className="text-sm">{connection.scopes.includes("paperclip:agent") ? "Agent connection" : connection.scopes.includes("paperclip:write") ? "Read and edit work" : "Read only"}</p>
+      <p className="text-sm">{connection.scopes.includes("paperclip:agent") ? "Agent connection" : connection.scopes.includes("paperclip:write") ? "Read and edit work" : uiT("ui:messages.m_8ac767353080eae7")}</p>
       {connection.scopes.includes("paperclip:configure") && <p className="text-sm">Configure agents, projects and skills</p>}
       <Button variant="outline" disabled={revoke.isPending} onClick={() => revoke.mutate(connection.id)}>Revoke connection</Button>
     </Card>)}

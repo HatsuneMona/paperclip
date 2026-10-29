@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { COPILOT_MODEL_DISCOVERY_QUERY_OPTIONS } from "@/lib/copilot-task-model-catalog";
 import type { AgentRunner, AgentRunnerChoice } from "@paperclipai/shared";
 import { needsClaudeSetupQualification, qualifyClaudeSetup } from "../lib/qualify-claude-setup";
@@ -1588,28 +1589,28 @@ function OnboardingWizardInner({
    */
   const connectSourceLabel = isCopilot ? "GitHub Copilot" : CONNECT_SOURCE_NAMES[adapterType] ?? adapterType;
   const connectCta: { label: string; icon: FooterPrimaryIcon; disabled: boolean } =
-    setupError ? { label: "Retry", icon: "arrow", disabled: false } : connectProgress
-      ? { label: adapterEnvLoading ? "Testing…" : connectProgress, icon: "spinner", disabled: true }
+    setupError ? { label: uiT("ui:messages.m_942087cc2d41e013"), icon: "arrow", disabled: false } : connectProgress
+      ? { label: adapterEnvLoading ? uiT("ui:messages.m_407b7a04662f2aab") : connectProgress, icon: "spinner", disabled: true }
       : connectPhase === "waiting"
-      ? { label: "Waiting for code", icon: "spinner", disabled: true }
+      ? { label: uiT("ui:messages.m_f22b705c3b7ce68f"), icon: "spinner", disabled: true }
       : connectPhase === "connecting"
-        ? { label: "Connecting", icon: "spinner", disabled: true }
+        ? { label: uiT("ui:messages.m_d403c686f6a10480"), icon: "spinner", disabled: true }
         : connectPhase === "ready"
           ? connectStepNeedsLogin
             ? {
-                label: `Sign in to ${connectSourceLabel}`,
+                label: uiT("ui:messages.m_640129b73b8435a6", { v0: (connectSourceLabel) }),
                 icon: "none",
                 disabled: !connectAuthUrl,
               }
             : {
-                label: "Connect",
+                label: uiT("ui:messages.m_1a2303ede07493ac"),
                 icon: "arrow",
                 disabled:
                   !connectStepReady || (!isCopilot && credentialMode === "api" && !apiKey.trim() && !selectedApiKey && !restoredApiCredential && !managedBindingForStep()),
               }
           : // Nothing is chosen on arrival, and the row is what chooses. Until
             // it has been answered the button has nothing to do.
-            { label: "Next", icon: "arrow", disabled: true };
+            { label: uiT("ui:messages.m_1ff57a29d7c9d11b"), icon: "arrow", disabled: true };
 
   /**
    * Back, on the connect step, unwinds the sign-in before it leaves the step.
@@ -1920,7 +1921,7 @@ function OnboardingWizardInner({
     if (companyIdNow === companyIdAtStart || companyIdNow === returnedCompanyId) {
       return true;
     }
-    setError("Organization created, but onboarding switched to another organization.");
+    setError(uiT("ui:messages.m_bf76cf2d78ea9d10"));
     return false;
   }
 
@@ -1996,7 +1997,7 @@ function OnboardingWizardInner({
       // dashboard) so they land on the conversation the agent will start in.
       navigate(prefix ? `/${prefix}/issues/${issueRef}` : `/issues/${issueRef}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to launch first task");
+      setError(err instanceof Error ? err.message : uiT("ui:messages.m_38057469b0d5892c"));
     } finally {
       setLoading(false);
     }
@@ -2039,8 +2040,8 @@ function OnboardingWizardInner({
     } catch (err) {
       setError(
         err instanceof Error
-          ? `Could not store the API key: ${err.message}`
-          : "Could not store the API key.",
+          ? uiT("ui:messages.m_c7ca6080385dcbe2", { v0: (err.message) })
+          : uiT("ui:messages.m_86c1670641033278"),
       );
       return false;
     }
@@ -2169,7 +2170,7 @@ function OnboardingWizardInner({
     if (!runnerDiscoveryReady) return null;
     if (!createdCompanyId) {
       setAdapterEnvError(
-        "Create or select an organization before testing adapter environment."
+        uiT("ui:messages.m_eda42ec9ef2b2af4")
       );
       return null;
     }
@@ -2203,7 +2204,7 @@ function OnboardingWizardInner({
       } catch {
         if (!testIsCurrent()) return null;
         setAdapterEnvError(
-          "Could not load environment settings to determine which environment to test in. Retry the test.",
+          uiT("ui:messages.m_24889282f923bb2d"),
         );
         return null;
       }
@@ -2298,7 +2299,7 @@ function OnboardingWizardInner({
       if (!testIsCurrent()) return null;
       adapterEnvErrorSelectionRef.current = selection || null;
       setAdapterEnvError(
-        err instanceof Error ? err.message : "Adapter environment test failed"
+        err instanceof Error ? err.message : uiT("ui:messages.m_7effce27ad293483")
       );
       return null;
     } finally {
@@ -2340,7 +2341,7 @@ function OnboardingWizardInner({
       setSelectedCompanyId(company.id);
       setStep(3);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create organization");
+      setError(err instanceof Error ? err.message : uiT("ui:messages.m_f2204373452ba70e"));
     } finally {
       creatingCompanyRef.current = false;
       setLoading(false);
@@ -2384,7 +2385,7 @@ function OnboardingWizardInner({
         const selectedModelId = model.trim();
         if (!isValidOpenCodeModelId(selectedModelId)) {
           setError(
-            "OpenCode requires an explicit model in provider/model format."
+            uiT("ui:messages.m_821bca377add8284")
           );
           return;
         }
@@ -2392,13 +2393,13 @@ function OnboardingWizardInner({
           setError(
             adapterModelsError instanceof Error
               ? adapterModelsError.message
-              : "Failed to load OpenCode models."
+              : uiT("ui:messages.m_c2dab824502ad48d")
           );
           return;
         }
         if (adapterModelsLoading || adapterModelsFetching) {
           setError(
-            "OpenCode models are still loading. Please wait and try again."
+            uiT("ui:messages.m_9ea513400c727839")
           );
           return;
         }
@@ -2406,8 +2407,8 @@ function OnboardingWizardInner({
         if (!discoveredModels.some((entry) => entry.id === selectedModelId)) {
           setError(
             discoveredModels.length === 0
-              ? "No OpenCode models discovered. Run `opencode models` and authenticate providers."
-              : `Configured OpenCode model is unavailable: ${selectedModelId}`
+              ? uiT("ui:messages.m_3d6f6f6c821cdf8c")
+              : uiT("ui:messages.m_845288a8167d01f5", { v0: (selectedModelId) })
           );
           return;
         }
@@ -2498,8 +2499,8 @@ function OnboardingWizardInner({
             nativeCodexError || (result.status === "fail"
               ? cloudInstance
                 ? "Paperclip couldn't finish connecting this agent. Try connecting again."
-                : "The environment test failed. Fix the reported checks before you hire this agent."
-              : "No working authentication was found. Fix the reported checks before you hire this agent."),
+                : uiT("ui:messages.m_c60bb1a6be21e838")
+              : uiT("ui:messages.m_2f542bc79bb3c14a")),
           );
           return;
         }
@@ -2587,7 +2588,7 @@ function OnboardingWizardInner({
       setStep(5);
     } catch (err) {
       if (!isCurrent()) return;
-      setError(err instanceof Error ? err.message : "Failed to create agent");
+      setError(err instanceof Error ? err.message : uiT("ui:messages.m_71b8459f6e0b7cc1"));
     } finally {
       if (hiringAgentRef.current === attempt) hiringAgentRef.current = null;
       if (activeClaudeQualification.current?.attempt === attempt) activeClaudeQualification.current = null;
@@ -2642,14 +2643,14 @@ function OnboardingWizardInner({
       const result = await runAdapterEnvironmentTest(configWithUnset);
       if (result?.status === "fail") {
         setError(
-          "Retried with ANTHROPIC_API_KEY unset in adapter config, but the environment test is still failing."
+          uiT("ui:messages.m_0be1a4e3dd2666a3")
         );
       }
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : "Failed to unset ANTHROPIC_API_KEY and retry."
+          : uiT("ui:messages.m_10e549fb84eaddd4")
       );
     } finally {
       setUnsetAnthropicLoading(false);
@@ -2908,12 +2909,12 @@ function OnboardingWizardInner({
                       title={
                         <motion.span key={step} {...titleSwapMotion} className="inline-block">
                           {step === 1
-                            ? "What is the name of your organization?"
+                            ? uiT("ui:messages.m_315be75f1b324889")
                             : step === 3
-                              ? "Create your first agent"
+                              ? uiT("ui:messages.m_88dcddea044f7871")
                               : step === 4
-                                ? "Connect a model"
-                                : "Let's get started..."}
+                                ? uiT("ui:messages.m_87bdaaf8ac10de0f")
+                                : uiT("ui:messages.m_6f8efe19d2eedb90")}
                         </motion.span>
                       }
                     />
@@ -2935,8 +2936,8 @@ function OnboardingWizardInner({
                       <p className="pt-2 text-base leading-relaxed text-muted-foreground">
                         <motion.span key={step} {...titleSwapMotion} className="inline-block">
                           {step === 4
-                            ? "Paperclip works with your subscription or API keys."
-                            : `${agentName.trim() || "Your first agent"} is ready to work!`}
+                            ? uiT("ui:messages.m_d71eb161c415018d")
+                            : uiT("ui:messages.m_5f5013c1cad1d0ff", { v0: (agentName.trim() || "Your first agent") })}
                         </motion.span>
                       </p>
                     </motion.div>
@@ -2962,11 +2963,11 @@ function OnboardingWizardInner({
               {step === 1 && (
                 <motion.div key="step-1" {...stepContentMotion} exit={stepHandoff ? stepContentMotion.exit : undefined} className="mx-auto flex w-full flex-col gap-9">
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="onboarding-company-name">Name</Label>
+                    <Label htmlFor="onboarding-company-name">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</Label>
                     <Input
                       id="onboarding-company-name"
                       className="h-(--sz-44px) rounded-lg border-transparent bg-muted shadow-none dark:bg-muted"
-                      placeholder="e.g. Northwind Labs"
+                      placeholder={uiT("ui:messages.m_b7c20a47425e7366")}
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                       onKeyDown={(e) => {
@@ -2990,7 +2991,7 @@ function OnboardingWizardInner({
               {step === 3 && (
                 <motion.div key="step-3" {...stepContentMotion} exit={stepHandoff ? stepContentMotion.exit : undefined} className="mx-auto flex w-full flex-col gap-9">
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="onboarding-agent-name">Agent name</Label>
+                    <Label htmlFor="onboarding-agent-name">{uiT("ui:messages.m_1cfb21871a035769")}</Label>
                     {/*
                       Filled, not outlined, and the column's full width — the
                       same field the naming step before the hand-off draws.
@@ -3003,7 +3004,7 @@ function OnboardingWizardInner({
                     <Input
                       id="onboarding-agent-name"
                       className="h-(--sz-44px) rounded-lg border-transparent bg-muted shadow-none dark:bg-muted"
-                      placeholder="e.g. Chief of staff"
+                      placeholder={uiT("ui:messages.m_8e339ee765a8d7be")}
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       onKeyDown={(e) => {
@@ -3031,7 +3032,7 @@ function OnboardingWizardInner({
                         Picking one starts the sign-in now. The row is the
                         question, and answering it is what opens the card. */}
                     <ModelSourceTiles
-                      label="Model source"
+                      label={uiT("ui:messages.m_9fb88c74db9bfbbb")}
                       sources={recommendedAdapters.map((opt) => ({
                         id: opt.type,
                         label: opt.type === "paperclip_runner" ? "GitHub Copilot" : CONNECT_SOURCE_NAMES[opt.type] ?? opt.label,
@@ -3085,8 +3086,8 @@ function OnboardingWizardInner({
                     >
                       <div className="-ml-3 mt-1">
                         <CredentialModeLink mode={credentialMode} onChange={setCredentialMode} />
-                        {savedKeys.options.length > 0 && <p className="px-3 text-sm text-muted-foreground">{savedKeys.options.length} saved API {savedKeys.options.length === 1 ? "key available" : "keys available"}.</p>}
-                        {credentialMode === "subscription" && authSignalStatus === "present" && <p className="px-3 text-sm text-muted-foreground">An existing provider connection is available.</p>}
+                        {savedKeys.options.length > 0 && <p className="px-3 text-sm text-muted-foreground">{savedKeys.options.length}{uiT("ui:messages.m_ef39b0316aafddd2")}{savedKeys.options.length === 1 ? uiT("ui:messages.m_39a65ba3f1ca1da6") : uiT("ui:messages.m_2f1061052827f739")}.</p>}
+                        {credentialMode === "subscription" && authSignalStatus === "present" && <p className="px-3 text-sm text-muted-foreground">{uiT("ui:messages.m_e34ff189bffb6e8f")}</p>}
                       </div>
                     </motion.div>
                   </div>
@@ -3147,7 +3148,7 @@ function OnboardingWizardInner({
                             if (JSON.stringify(copilotConnection) === JSON.stringify(parsed.data)) void refreshAdapterModels();
                           }} />
                           {copilotConnection && <label className="block space-y-2 text-sm">
-                            <span>Model</span>
+                            <span>{uiT("ui:messages.m_5e2c614c23f02239")}</span>
                             <select aria-label="Copilot model" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={model} disabled={adapterModelsFetching} onChange={(event) => setModel(event.target.value)}>
                               <option value="">{adapterModelsFetching ? "Loading models…" : "Select a model"}</option>
                               {model && !adapterModels?.some((entry) => entry.id === model) && <option value={model}>{model} (unavailable)</option>}
@@ -3155,7 +3156,7 @@ function OnboardingWizardInner({
                             </select>
                             {adapterModelsError && <p role="alert" className="text-destructive">{adapterModelsError instanceof Error ? adapterModelsError.message : "Could not discover Copilot models."}</p>}
                             {!adapterModelsFetching && !adapterModelsError && adapterModels?.length === 0 && <p role="alert" className="text-destructive">No available Copilot models were discovered. Check this account’s Copilot access.</p>}
-                            <Button type="button" variant="ghost" disabled={adapterModelsFetching} onClick={() => void refreshAdapterModels()}>Refresh models</Button>
+                            <Button type="button" variant="ghost" disabled={adapterModelsFetching} onClick={() => void refreshAdapterModels()}>{uiT("ui:messages.m_04903063b2fd6a42")}</Button>
                           </label>}
                         </>}
                       </OnboardingLoginCard>
@@ -3172,8 +3173,8 @@ function OnboardingWizardInner({
                           setApiKey("");
                         }} />}
                         {!selectedApiKey && !hasGatewaySelection && !connectionModels && <OnboardingCardField
-                          label="API key"
-                          placeholder="Enter API key here"
+                          label={uiT("ui:messages.m_16f0ee47f993d627")}
+                          placeholder={uiT("ui:messages.m_c80c3ac9799dc19b")}
                           masked
                           // The card is the answer to the tile just pressed, so
                           // the field is unambiguously the next thing. Carried
@@ -3310,12 +3311,12 @@ function OnboardingWizardInner({
                     ) : hasSavedSubscription || localLogin.status === "ready" ? null : connectStepHasNoSandbox ? (
                       canUseLocalLogin && managedProvider ? (
                         <LocalProviderLoginInstructions adapterType={adapterType} login={{ ...localLogin, retry: () => { autoConnectStartedRef.current = false; setError(null); localLogin.retry(); } }} />
-                      ) : <p className="text-xs text-muted-foreground">This environment does not support browser sign-in. Choose another sign-in environment or connect with an API key.</p>
+                      ) : <p className="text-xs text-muted-foreground">{uiT("ui:messages.m_bbff3a38768e7c6f")}</p>
                     ) : null}
                   </motion.div>
 
                   {sourceSelected && ["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-                    <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                    <summary className="cursor-pointer text-sm text-muted-foreground">{uiT("ui:messages.m_9f088dbebd6c3c70")}</summary>
                     <AgentRunnerSelect value={runner} disabled={loading || adapterEnvLoading}
                       pending={runnerDiscovery.isFetching} error={runnerDiscovery.error?.message} onRetry={() => { void runnerDiscovery.refetch(); }}
                       defaultRunner={runnerDiscovery.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -3367,7 +3368,7 @@ function OnboardingWizardInner({
                             style={{ "--sc": "var(--status-task-done)" } as CSSProperties}
                           >
                             <Check className="size-3.5 shrink-0" />
-                            <span className="font-medium">Passed</span>
+                            <span className="font-medium">{uiT("ui:messages.m_436fe71bb9561f05")}</span>
                           </div>
                           {/* Show the checks on a pass too, so the target and the
                               auth signals stay visible before the hire. */}
@@ -3379,12 +3380,8 @@ function OnboardingWizardInner({
 
                       {shouldSuggestUnsetAnthropicApiKey && (
                         <div className="rounded-md border border-amber-300/60 bg-amber-50/40 px-2.5 py-2 space-y-2">
-                          <p className="text-(length:--text-micro) text-amber-900/90 leading-relaxed">
-                            Claude failed while{" "}
-                            <span className="font-mono">ANTHROPIC_API_KEY</span>{" "}
-                            is set. You can clear it in this adapter config
-                            and retry the probe.
-                          </p>
+                          <p className="text-(length:--text-micro) text-amber-900/90 leading-relaxed">{uiT("ui:messages.m_ab641d5ae7a7c837")}{" "}
+                            <span className="font-mono">{uiT("ui:messages.m_8f2c257fa4427f3f")}</span>{" "}{uiT("ui:messages.m_30ec4c81c0ee3ced")}</p>
                           <Button
                             size="sm"
                             variant="outline"
@@ -3395,31 +3392,30 @@ function OnboardingWizardInner({
                             onClick={() => void handleUnsetAnthropicApiKey()}
                           >
                             {unsetAnthropicLoading
-                              ? "Retrying..."
-                              : "Unset ANTHROPIC_API_KEY"}
+                              ? uiT("ui:messages.m_84a657bcf3d968b4")
+                              : uiT("ui:messages.m_88e3ffad48cb37be")}
                           </Button>
                         </div>
                       )}
 
                       {adapterEnvResult && adapterEnvResult.status === "fail" && localLoginHealth.isSuccess && !cloudInstance && (
                         <div className="rounded-md border border-border/70 bg-muted/20 px-2.5 py-2 text-(length:--text-micro) space-y-1.5">
-                          <p className="font-medium">Manual debug</p>
+                          <p className="font-medium">{uiT("ui:messages.m_b21b558929c99267")}</p>
                           <p className="text-muted-foreground font-mono break-all">
                             {adapterType === "cursor"
-                              ? `${effectiveAdapterCommand} -p --mode ask --output-format json \"Respond with hello.\"`
+                              ? uiT("ui:messages.m_58487459dbdefc5c", { v0: (effectiveAdapterCommand) })
                               : adapterType === "codex_local"
-                              ? `${effectiveAdapterCommand} exec --json -`
+                              ? uiT("ui:messages.m_7fca73975bf29f95", { v0: (effectiveAdapterCommand) })
                               : adapterType === "gemini_local"
-                                ? `${effectiveAdapterCommand} --output-format json "Respond with hello."`
+                                ? uiT("ui:messages.m_811a3e280a732e5a", { v0: (effectiveAdapterCommand) })
                               : adapterType === "kimi_local"
-                                ? `${effectiveAdapterCommand} -p "Respond with hello." --output-format stream-json`
+                                ? uiT("ui:messages.m_07d2c190c04a972a", { v0: (effectiveAdapterCommand) })
                               : adapterType === "opencode_local"
-                                ? `${effectiveAdapterCommand} run --format json "Respond with hello."`
-                              : `${effectiveAdapterCommand} --print - --output-format stream-json --verbose`}
+                                ? uiT("ui:messages.m_9c2c9dc571bb0805", { v0: (effectiveAdapterCommand) })
+                              : uiT("ui:messages.m_850dc101df0e78f0", { v0: (effectiveAdapterCommand) })}
                           </p>
-                          <p className="text-muted-foreground">
-                            Prompt:{" "}
-                            <span className="font-mono">Respond with hello.</span>
+                          <p className="text-muted-foreground">{uiT("ui:messages.m_35261535449d29f8")}{" "}
+                            <span className="font-mono">{uiT("ui:messages.m_1ed91d47f9607337")}</span>
                           </p>
                           {adapterType === "claude_local" || adapterType === "codex_local" ? (
                             <p className="text-muted-foreground">
@@ -3429,26 +3425,24 @@ function OnboardingWizardInner({
                           adapterType === "gemini_local" ||
                           adapterType === "kimi_local" ||
                           adapterType === "opencode_local" ? (
-                            <p className="text-muted-foreground">
-                              If auth fails, set{" "}
+                            <p className="text-muted-foreground">{uiT("ui:messages.m_2768d5f599b835fb")}{" "}
                               <span className="font-mono">
                                 {adapterType === "cursor"
-                                  ? "CURSOR_API_KEY"
+                                  ? uiT("ui:messages.m_92c76211e7007ee3")
                                   : adapterType === "gemini_local"
-                                    ? "GEMINI_API_KEY"
+                                    ? uiT("ui:messages.m_005ffd75c2faf18a")
                                     : adapterType === "kimi_local"
-                                      ? "KIMI_MODEL_NAME + KIMI_MODEL_API_KEY"
-                                    : "OPENAI_API_KEY"}
-                              </span>{" "}
-                              in env or run{" "}
+                                      ? uiT("ui:messages.m_e96b57ec8ef8c29f")
+                                    : uiT("ui:messages.m_1bd0074c9fd82ff8")}
+                              </span>{" "}{uiT("ui:messages.m_e32cc5581db0aed8")}{" "}
                               <span className="font-mono">
                                 {adapterType === "cursor"
-                                  ? "agent login"
+                                  ? uiT("ui:messages.m_2bdf40621ea063d7")
                                   : adapterType === "gemini_local"
-                                      ? "gemini auth"
+                                      ? uiT("ui:messages.m_e48faab335636433")
                                       : adapterType === "kimi_local"
-                                        ? "kimi login"
-                                      : "opencode auth login"}
+                                        ? uiT("ui:messages.m_45ee4d97cd414393")
+                                      : uiT("ui:messages.m_d6e307d11e49a9fd")}
                               </span>
                               .
                             </p>
@@ -3465,14 +3459,14 @@ function OnboardingWizardInner({
                     <div>
                       <label className="text-xs text-muted-foreground mb-1 block">
                         {adapterType === "openclaw_gateway"
-                          ? "Gateway URL"
-                          : "Webhook URL"}
+                          ? uiT("ui:messages.m_3d06950825de7452")
+                          : uiT("ui:messages.m_84805a7574a82052")}
                       </label>
                       <input
                         className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm font-mono outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
                         placeholder={
                           adapterType === "openclaw_gateway"
-                            ? "ws://127.0.0.1:18789"
+                            ? uiT("ui:messages.m_0edbee82f0824a1e")
                             : "https://..."
                         }
                         value={url}
@@ -3614,8 +3608,7 @@ function AdapterEnvironmentResult({
               </span>
             )}
             {showHints && check.hint && (
-              <span className="block opacity-90 break-words">
-                Hint: {check.hint}
+              <span className="block opacity-90 break-words">{uiT("ui:messages.m_c26c62214d85822e")}{check.hint}
               </span>
             )}
           </div>

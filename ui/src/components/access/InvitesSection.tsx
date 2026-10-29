@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, Copy } from "lucide-react";
@@ -14,25 +15,25 @@ import { Badge } from "@/components/ui/badge";
 const inviteRoleOptions = [
   {
     value: "viewer",
-    label: "Viewer",
+    label: uiT("ui:messages.m_678bfa6af48b17cd"),
     description: "Can view organization work and follow along.",
     gets: "View-only organization membership.",
   },
   {
     value: "operator",
-    label: "Operator",
+    label: uiT("ui:messages.m_291101a07fe980e9"),
     description: "Can edit organization work and invite people.",
     gets: "Full editing and audit access. Cannot approve join requests or manage member permissions.",
   },
   {
     value: "admin",
-    label: "Admin",
+    label: uiT("ui:messages.m_c1c224b03cd9bc7b"),
     description: "Recommended for operators who need to invite people, create agents, and approve joins.",
     gets: "Can create agents, invite users, assign tasks, and approve join requests.",
   },
   {
     value: "owner",
-    label: "Owner",
+    label: uiT("ui:messages.m_4b1b8aa3608a26da"),
     description: "Full organization access, including membership management.",
     gets: "Everything in Admin, plus managing members.",
   },
@@ -205,9 +206,7 @@ export function InvitesSection() {
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="text-sm font-medium">{option.label}</span>
                       {option.value === "operator" ? (
-                        <Badge variant="outline" className="border-border text-muted-foreground">
-                          Default
-                        </Badge>
+                        <Badge variant="outline" className="border-border text-muted-foreground">{uiT("ui:messages.m_21b111cbfe6e8fca")}</Badge>
                       ) : null}
                     </span>
                     <span className="block max-w-2xl text-sm text-muted-foreground">{option.description}</span>
@@ -225,7 +224,7 @@ export function InvitesSection() {
 
         <div className="flex flex-wrap items-center gap-3">
           <Button onClick={() => createInviteMutation.mutate()} disabled={createInviteMutation.isPending}>
-            {createInviteMutation.isPending ? "Creating…" : "Create invite"}
+            {createInviteMutation.isPending ? uiT("ui:messages.m_c79ed9492e3c1719") : "Create invite"}
           </Button>
           <span className="text-sm text-muted-foreground">Invite history below keeps the audit trail.</span>
         </div>
@@ -237,9 +236,7 @@ export function InvitesSection() {
                 <div className="text-sm font-medium">Latest invite link</div>
                 {latestInviteCopied ? (
                   <div className="inline-flex items-center gap-1 text-xs font-medium text-foreground">
-                    <Check className="h-3.5 w-3.5" />
-                    Copied
-                  </div>
+                    <Check className="h-3.5 w-3.5" />{uiT("ui:messages.m_8d525e5f158b9afe")}</div>
                 ) : null}
               </div>
               <div className="text-sm text-muted-foreground">
@@ -247,7 +244,7 @@ export function InvitesSection() {
               </div>
             </div>
             <label className="block space-y-1">
-              <span className="sr-only">Latest invite URL</span>
+              <span className="sr-only">{uiT("ui:messages.m_35fbc9bc2efb0632")}</span>
               <input
                 ref={latestInviteInputRef}
                 readOnly
@@ -255,7 +252,7 @@ export function InvitesSection() {
                 onFocus={(event) => event.currentTarget.select()}
                 onClick={(event) => event.currentTarget.select()}
                 className="w-full rounded-md border border-border bg-muted/60 px-3 py-2 text-sm text-foreground outline-none transition-colors selection:bg-primary selection:text-primary-foreground focus:border-ring"
-                aria-label="Latest invite URL"
+                aria-label={uiT("ui:messages.m_35fbc9bc2efb0632")}
               />
             </label>
             <div className="flex flex-wrap gap-2">
@@ -268,9 +265,7 @@ export function InvitesSection() {
                   setLatestInviteCopied(copied);
                 }}
               >
-                <Copy className="h-4 w-4" />
-                Copy link
-              </Button>
+                <Copy className="h-4 w-4" />{uiT("ui:messages.m_dbf362d4f210c780")}</Button>
             </div>
           </div>
         ) : null}
@@ -299,12 +294,12 @@ export function InvitesSection() {
               <table className="min-w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="px-5 py-3 font-medium text-muted-foreground">State</th>
-                    <th className="px-5 py-3 font-medium text-muted-foreground">For</th>
-                    <th className="px-5 py-3 font-medium text-muted-foreground">Invited by</th>
-                    <th className="px-5 py-3 font-medium text-muted-foreground">Created</th>
-                    <th className="px-5 py-3 font-medium text-muted-foreground">Join request</th>
-                    <th className="px-5 py-3 text-right font-medium text-muted-foreground">Action</th>
+                    <th className="px-5 py-3 font-medium text-muted-foreground">{uiT("ui:messages.m_a3b50c476732c740")}</th>
+                    <th className="px-5 py-3 font-medium text-muted-foreground">{uiT("ui:messages.m_ca15ebc05a3c5c13")}</th>
+                    <th className="px-5 py-3 font-medium text-muted-foreground">{uiT("ui:messages.m_c7a6f15607da6325")}</th>
+                    <th className="px-5 py-3 font-medium text-muted-foreground">{uiT("ui:messages.m_d70b9e24bca26b40")}</th>
+                    <th className="px-5 py-3 font-medium text-muted-foreground">{uiT("ui:messages.m_d7d9cd19632538b7")}</th>
+                    <th className="px-5 py-3 text-right font-medium text-muted-foreground">{uiT("ui:messages.m_64cff1319d2fd2cb")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -327,9 +322,7 @@ export function InvitesSection() {
                       </td>
                       <td className="px-5 py-3 align-top">
                         {invite.relatedJoinRequestId ? (
-                          <Link to="/inbox/requests" className="underline underline-offset-4">
-                            Review request
-                          </Link>
+                          <Link to="/inbox/requests" className="underline underline-offset-4">{uiT("ui:messages.m_dcea8abbdff03524")}</Link>
                         ) : (
                           <span className="text-muted-foreground">—</span>
                         )}
@@ -341,9 +334,7 @@ export function InvitesSection() {
                             variant="outline"
                             onClick={() => revokeMutation.mutate(invite.id)}
                             disabled={revokeMutation.isPending}
-                          >
-                            Revoke
-                          </Button>
+                          >{uiT("ui:messages.m_87e6d00bbf53ec5a")}</Button>
                         ) : (
                           <span className="text-xs text-muted-foreground">Inactive</span>
                         )}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { createContext, useContext, type ReactNode } from "react";
 import { NavLink } from "@/lib/router";
 import { SIDEBAR_SCROLL_RESET_STATE } from "../lib/navigation-scroll";
@@ -191,7 +192,7 @@ export function SidebarNavItem({
                 <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-600 dark:bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600 dark:bg-blue-400" />
               </span>
-              <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">{liveCount} live</span>
+              <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">{liveCount}{uiT("ui:messages.m_846b33ce5fa6240d")}</span>
             </>
           )}
         </span>

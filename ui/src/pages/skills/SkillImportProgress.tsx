@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AlertCircle, Check, FileText, LoaderCircle } from 'lucide-react';
 import type { SkillSourceCandidate, SkillSourceScanProgress } from '@paperclipai/shared';
 import { formatBytes } from '@/lib/issue-output';
@@ -50,14 +51,14 @@ export function SkillImportProgress({ repository, progress, found = [], importin
     <div className="overflow-hidden rounded-lg border border-border bg-muted/20">
       <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-2 text-xs text-muted-foreground">
         <span>{importing ? 'Selected skills' : 'Recently checked'}</span>
-        {recent.length > 0 && <span className="tabular-nums">{importing ? `${count} selected` : `${progress?.checkedSkills ?? found.length} checked`}</span>}
+        {recent.length > 0 && <span className="tabular-nums">{importing ? uiT("ui:messages.m_b3edc3b37ecffe19", { v0: (count) }) : `${progress?.checkedSkills ?? found.length} checked`}</span>}
       </div>
       {recent.length > 0 ? <ul className="divide-y divide-border" aria-label={importing ? 'Skills being imported' : 'Skills checked so far'}>
         {recent.map(skill => <li key={skill.path} className="skill-import-enter flex min-w-0 items-center gap-2.5 px-3 py-2.5">
           {skill.error ? <AlertCircle className="size-4 shrink-0 text-destructive" aria-label="Validation issue" />
             : importing ? <FileText className="size-4 shrink-0 text-muted-foreground" aria-hidden /> : <Check className="size-4 shrink-0 text-muted-foreground" aria-hidden />}
           <div className="min-w-0 flex-1">
-            <div className="flex min-w-0 items-baseline gap-2"><span className="truncate text-sm font-medium">{skill.name}</span><span className="shrink-0 text-xs text-muted-foreground">{skill.fileCount} {skill.fileCount === 1 ? 'file' : 'files'}</span></div>
+            <div className="flex min-w-0 items-baseline gap-2"><span className="truncate text-sm font-medium">{skill.name}</span><span className="shrink-0 text-xs text-muted-foreground">{skill.fileCount} {skill.fileCount === 1 ? uiT("ui:messages.m_3b9c358f36f0a31b") : uiT("ui:messages.m_3d7db37d08f9140f")}</span></div>
             <p className={`truncate text-xs ${skill.error ? 'text-destructive' : 'text-muted-foreground'}`} title={skill.error ?? skill.path}>{skill.error ?? skill.path}</p>
           </div>
         </li>)}
@@ -67,7 +68,7 @@ export function SkillImportProgress({ repository, progress, found = [], importin
       <div className="flex min-w-0 items-center gap-2 border-t border-border px-3 py-2 text-xs text-muted-foreground">
         <LoaderCircle className="size-3 shrink-0 motion-safe:animate-spin" aria-hidden />
         <span className="min-w-0 flex-1 truncate" title={progress?.currentPath ?? undefined}>{importing ? 'Saving complete packages, including scripts and references' : progress?.currentPath ?? 'Waiting for repository contents…'}</span>
-        {checking && progress?.totalFiles != null && <span className="shrink-0 tabular-nums">{progress.checkedFiles}/{progress.totalFiles} files</span>}
+        {checking && progress?.totalFiles != null && <span className="shrink-0 tabular-nums">{progress.checkedFiles}/{progress.totalFiles}{uiT("ui:messages.m_b7a283ad3fd6888e")}</span>}
       </div>
     </div>
     <p className="text-xs text-muted-foreground">{importing ? 'This may take a moment for larger packages.' : 'You’ll choose what to import after every package has been checked.'}</p>

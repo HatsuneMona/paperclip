@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { ReactNode } from "react";
 import {
   Boxes,
@@ -39,23 +40,23 @@ interface NavEntry {
 }
 
 const TOP: NavEntry[] = [
-  { label: "New Task", icon: SquarePen },
-  { label: "Search", icon: Search },
-  { label: "Dashboard", icon: LayoutDashboard },
+  { label: uiT("ui:messages.m_718e58cc20d67514"), icon: SquarePen },
+  { label: uiT("ui:messages.m_49c266baaaa70981"), icon: Search },
+  { label: uiT("ui:messages.m_67b696468610b879"), icon: LayoutDashboard },
   { label: "Inbox", icon: Inbox },
 ];
 const WORK: NavEntry[] = [
   { label: "Tasks", icon: CircleCheck, nav: "tasks" },
-  { label: "Projects", icon: FolderOpen },
-  { label: "Routines", icon: Repeat },
-  { label: "Artifacts", icon: Package, nav: "artifacts" },
-  { label: "Workspaces", icon: GitBranch },
+  { label: uiT("ui:messages.m_04e2a9728af75840"), icon: FolderOpen },
+  { label: uiT("ui:messages.m_61b7bb44e2b47b7c"), icon: Repeat },
+  { label: uiT("ui:messages.m_314ae71b8c8dc9c9"), icon: Package, nav: "artifacts" },
+  { label: uiT("ui:messages.m_1377264ba3b0a717"), icon: GitBranch },
 ];
 const ORG: NavEntry[] = [
-  { label: "Agents", icon: Users },
-  { label: "Skills", icon: Boxes },
-  { label: "Connectors", icon: Unplug },
-  { label: "Audit", icon: History },
+  { label: uiT("ui:messages.m_279b44d2ab4b40c0"), icon: Users },
+  { label: uiT("ui:messages.m_66d0f523a379b2de"), icon: Boxes },
+  { label: uiT("ui:messages.m_c3d2e79ebdd046c6"), icon: Unplug },
+  { label: uiT("ui:messages.m_bb6aea28739637ea"), icon: History },
 ];
 const RECENT = [TASKS["ACM-1"], TASKS["ACM-3"], TASKS["ACM-2"]];
 
@@ -97,7 +98,7 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
 function Sidebar({ nav }: { nav: ShellNav }) {
   return (
     // SidebarShell.tsx:15 (240px), Sidebar.tsx:128 — no right border; the edge is the surface change.
-    <aside className="flex w-60 shrink-0 flex-col primary-sidebar-surface" aria-label="Primary">
+    <aside className="flex w-60 shrink-0 flex-col primary-sidebar-surface" aria-label={uiT("ui:messages.m_efe10c80ec8a9f38")}>
       {/* Sidebar.tsx:142 + SidebarCompanyMenu.tsx:268-291 */}
       <div className="flex h-(--sz-60px) shrink-0 items-center gap-1 px-3">
         <span className="flex h-9 min-w-0 flex-1 items-center justify-start gap-2 rounded-md px-4 text-left">
@@ -120,17 +121,17 @@ function Sidebar({ nav }: { nav: ShellNav }) {
             <NavItem key={entry.label} {...entry} />
           ))}
         </div>
-        <Section label="Work">
+        <Section label={uiT("ui:messages.m_104ab9213e28e4ff")}>
           {WORK.map((entry) => (
             <NavItem key={entry.label} {...entry} active={entry.nav === nav} />
           ))}
         </Section>
-        <Section label="Org">
+        <Section label={uiT("ui:messages.m_b1ee7e9705a211e0")}>
           {ORG.map((entry) => (
             <NavItem key={entry.label} {...entry} />
           ))}
         </Section>
-        <Section label="Recent Tasks">
+        <Section label={uiT("ui:messages.m_49a027ddc61602c1")}>
           {RECENT.map((title) => (
             <NavItem key={title} label={title} />
           ))}

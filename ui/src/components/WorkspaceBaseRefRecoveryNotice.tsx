@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useId, useRef, useState } from "react";
 import { isValidExistingBranchName } from "@paperclipai/shared";
 import { Check, ChevronDown, GitBranch, Loader2, TriangleAlert } from "lucide-react";
@@ -84,10 +85,10 @@ export function WorkspaceBaseRefRecoveryNotice({
               <form className="flex flex-col gap-3" onSubmit={event => { event.preventDefault(); void repair(branch); }}>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor={`${id}-branch`}>Starting branch</Label>
-                  <Input id={`${id}-branch`} autoFocus value={branch} disabled={pending || Boolean(unavailableReason)} onChange={event => setBranch(event.target.value)} placeholder="Branch name" className="font-mono" aria-describedby={error ? `${id}-error` : undefined} autoComplete="off" spellCheck={false} />
+                  <Input id={`${id}-branch`} autoFocus value={branch} disabled={pending || Boolean(unavailableReason)} onChange={event => setBranch(event.target.value)} placeholder={uiT("ui:messages.m_06f6bb7108ffdb5c")} className="font-mono" aria-describedby={error ? `${id}-error` : undefined} autoComplete="off" spellCheck={false} />
                 </div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  {defaultBranch ? <Button type="button" variant="ghost" size="sm" disabled={pending} onClick={() => { setEditing(false); setError(null); }}>Cancel</Button> : <span />}
+                  {defaultBranch ? <Button type="button" variant="ghost" size="sm" disabled={pending} onClick={() => { setEditing(false); setError(null); }}>{uiT("ui:messages.m_19766ed6ccb2f4a3")}</Button> : <span />}
                   <Button type="submit" size="sm" disabled={pending || !changed || Boolean(unavailableReason)} aria-describedby={unavailableReason ? `${id}-unavailable` : undefined}>
                     {pending && <Loader2 aria-hidden className="size-3.5 animate-spin motion-reduce:animate-none" />}{pending ? "Saving & requesting retry…" : "Save branch & retry"}
                   </Button>
@@ -105,7 +106,7 @@ export function WorkspaceBaseRefRecoveryNotice({
         )}
         <div>
           <Button type="button" variant="ghost" size="xs" className="text-muted-foreground" aria-expanded={details} aria-controls={`${id}-details`} onClick={() => setDetails(value => !value)}>
-            {details ? "Hide details" : "Why did this happen?"}<ChevronDown aria-hidden className={cn("size-3", details && "rotate-180")} />
+            {details ? uiT("ui:messages.m_c9722a7a962a8435") : "Why did this happen?"}<ChevronDown aria-hidden className={cn("size-3", details && "rotate-180")} />
           </Button>
           {details && <div id={`${id}-details`} className="mt-2 rounded-md border border-border bg-background">
             <SystemNoticeMetadataSections tone="neutral" sections={[{ rows: [

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { Repeat } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -17,7 +18,7 @@ export function RoutineOriginRow({ routineId }: { routineId: string }) {
   if (!title) return null;
 
   return (
-    <PropertyRow label="Routine">
+    <PropertyRow label={uiT("ui:messages.m_0b5baf309897ec7e")}>
       <Link
         to={`/routines/${routineId}`}
         className={cn(

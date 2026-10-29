@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect } from "react";
 import { useParams } from "@/lib/router";
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
@@ -13,9 +14,9 @@ export function ProfileDetailRoute() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Apps", href: "/apps" },
-      { label: "Access profiles", href: advancedTabHref("profiles") },
+      { label: selectedCompany?.name ?? uiT("ui:messages.m_de4743c879734dc3"), href: "/dashboard" },
+      { label: uiT("ui:messages.m_89dd748442c19485"), href: "/apps" },
+      { label: uiT("ui:messages.m_2471292ff715cc6a"), href: advancedTabHref("profiles") },
       { label: "Profile detail" },
     ]);
     return () => setBreadcrumbs([]);

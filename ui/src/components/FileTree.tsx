@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
 import { useMemo, useRef, useState } from "react";
 import { cn } from "../lib/utils";
@@ -216,12 +217,12 @@ export function parseFrontmatter(content: string): { data: FrontmatterData; body
 
 export const FRONTMATTER_FIELD_LABELS: Record<string, string> = {
   name: "Name",
-  title: "Title",
+  title: uiT("ui:messages.m_7e8cd2056da73a7f"),
   kind: "Kind",
   reportsTo: "Reports to",
   skills: "Skills",
   status: "Status",
-  description: "Description",
+  description: uiT("ui:messages.m_526e0087cc3f254d"),
   priority: "Priority",
   assignee: "Responsible",
   project: "Project",
@@ -382,15 +383,11 @@ export function FileTree({
                 "px-2.5",
                 statusBadge.error ?? statusBadgeDefault,
               )}
-            >
-              error
-            </Badge>
+            >{uiT("ui:messages.m_ca00fccfb408989e")}</Badge>
             <span className="min-w-0 text-destructive">{error.message}</span>
           </div>
           {error.retry && (
-            <Button type="button" size="xs" variant="outline" onClick={error.retry}>
-              Retry
-            </Button>
+            <Button type="button" size="xs" variant="outline" onClick={error.retry}>{uiT("ui:messages.m_942087cc2d41e013")}</Button>
           )}
         </div>
       </div>
@@ -465,7 +462,7 @@ export function FileTree({
             {layout === "explorer" && (node.kind === "dir" ? (
               <button type="button" disabled={disabled} className="flex size-4 shrink-0 items-center justify-center rounded-sm hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
                 onClick={event => { event.stopPropagation(); onToggleDir(node.path); }}
-                aria-label={expanded ? `Collapse ${node.name}` : `Expand ${node.name}`}>
+                aria-label={expanded ? uiT("ui:messages.m_f894262163d19cdd", { v0: (node.name) }) : uiT("ui:messages.m_614e2df2bcb3682c", { v0: (node.name) })}>
                 {expanded ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}
               </button>
             ) : <span className="size-4 shrink-0" aria-hidden="true" />)}
@@ -473,7 +470,7 @@ export function FileTree({
               <label className={cn("flex items-center", layout === "explorer" ? "size-4 shrink-0 justify-center" : "pl-2")} onClick={(event) => event.stopPropagation()}>
                 <input
                   type="checkbox"
-                  aria-label={checkboxLabel?.(node) ?? `Select ${node.path}`}
+                  aria-label={checkboxLabel?.(node) ?? uiT("ui:messages.m_58661820dfdc4c9f", { v0: (node.path) })}
                   disabled={disabled}
                   checked={allChecked}
                   ref={(element) => {
@@ -522,7 +519,7 @@ export function FileTree({
                   event.stopPropagation();
                   onToggleDir(node.path);
                 }}
-                aria-label={expanded ? `Collapse ${node.name}` : `Expand ${node.name}`}
+                aria-label={expanded ? uiT("ui:messages.m_f894262163d19cdd", { v0: (node.name) }) : uiT("ui:messages.m_614e2df2bcb3682c", { v0: (node.name) })}
               >
                 {expanded ? (
                   <ChevronDown className="h-3.5 w-3.5" />

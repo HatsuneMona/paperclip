@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Link } from "@/lib/router";
 import { Bot, User, Cog, ChevronDown, ListFilter } from "lucide-react";
@@ -121,14 +122,14 @@ export function CaseActivityFeed({ events }: { events: CaseEvent[] }) {
       : `${active.size} filters`;
 
   if (events.length === 0) {
-    return <p className="py-6 text-center text-sm text-muted-foreground">No activity yet.</p>;
+    return <p className="py-6 text-center text-sm text-muted-foreground">{uiT("ui:messages.m_a288d2d0a21eed3c")}</p>;
   }
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-2">
         <p className="text-xs text-muted-foreground">
-          {filtered.length} of {events.length} events
+          {filtered.length}{uiT("ui:messages.m_a4282e4b2298b90b")}{events.length} events
         </p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -140,9 +141,7 @@ export function CaseActivityFeed({ events }: { events: CaseEvent[] }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>Activity filter</DropdownMenuLabel>
-            <DropdownMenuItem onSelect={() => setActive(new Set())}>
-              All activity
-            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setActive(new Set())}>{uiT("ui:messages.m_29ebb2ef2da630f1")}</DropdownMenuItem>
             <DropdownMenuSeparator />
             {presentKinds.map((kind) => (
               <DropdownMenuCheckboxItem

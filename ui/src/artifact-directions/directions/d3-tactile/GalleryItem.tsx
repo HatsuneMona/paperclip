@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties } from "react";
 import { Download, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -92,7 +93,7 @@ export function GalleryItem({ artifact }: { artifact: LabArtifact }) {
           {actions.length > 0 ? (
             <span className="-mr-1 -mt-0.5 flex shrink-0 items-center">
               {actions.map((action) => (
-                <a key={action.label} href={action.href} aria-label={`${action.label}: ${artifact.title}`} title={action.label} className={ICON_ACTION}>
+                <a key={action.label} href={action.href} aria-label={uiT("ui:messages.m_4e0f4981482faaa7", { v0: (action.label), v1: (artifact.title) })} title={action.label} className={ICON_ACTION}>
                   {action.icon === "download" ? <Download className="size-3.5" aria-hidden /> : <ExternalLink className="size-3.5" aria-hidden />}
                 </a>
               ))}

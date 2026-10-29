@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { AlertTriangle, RotateCcw, TimerReset } from "lucide-react";
 import { healthApi, type DevServerHealthStatus } from "../api/health";
@@ -84,8 +85,7 @@ export function DevRestartBanner({ devServer }: { devServer?: DevServerHealthSta
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-amber-900/80 dark:text-amber-100/75">
             {sample.length > 0 ? (
-              <span>
-                Changed: {sample.join(", ")}
+              <span>{uiT("ui:messages.m_b9f02acce96b8df4")}{sample.join(", ")}
                 {devServer.changedPathCount > sample.length ? ` +${devServer.changedPathCount - sample.length} more` : ""}
               </span>
             ) : null}

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useLocation } from "@/lib/router";
 import { ChatDetailSidebar } from "./chat/ChatDetailSidebar";
 import { ChatSetupSidebar } from "./chat/ChatSetupNavigation";
@@ -33,15 +34,15 @@ export function AppsSidebar() {
   return (
     <aside className="w-full h-full min-h-0 border-r border-border bg-background flex flex-col">
       <nav
-        aria-label="Connectors"
+        aria-label={uiT("ui:messages.m_c3d2e79ebdd046c6")}
         data-slot="contextual-sidebar-nav"
         className={contextualSidebarStyles.nav}
       >
         <div data-slot="contextual-sidebar-group" className={contextualSidebarStyles.group}>
-          <SidebarNavItem to="/apps" label="Browse" icon={Store} end />
+          <SidebarNavItem to="/apps" label={uiT("ui:messages.m_3227aa9666253f7a")} icon={Store} end />
           <SidebarNavItem
             to="/apps/review"
-            label="Review"
+            label={uiT("ui:messages.m_aff0766a5290e117")}
             icon={ShieldQuestion}
             badge={reviewCount > 0 ? reviewCount : undefined}
             badgeTone="warning"

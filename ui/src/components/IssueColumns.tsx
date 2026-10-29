@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import type { AvatarAgent } from "./AgentAvatar";
 import type { ReactNode } from "react";
@@ -113,18 +114,16 @@ export function IssueColumnPicker({
           variant={iconOnly ? "outline" : "ghost"}
           size={iconOnly ? "icon" : "sm"}
           className={iconOnly ? "h-8 w-8 shrink-0" : "hidden h-8 shrink-0 px-2 text-xs sm:inline-flex"}
-          title="Columns"
+          title={uiT("ui:messages.m_53aade77cd69a77b")}
         >
           <Columns3 className={iconOnly ? "h-3.5 w-3.5" : "mr-1 h-3.5 w-3.5"} />
-          {!iconOnly && "Columns"}
+          {!iconOnly && uiT("ui:messages.m_53aade77cd69a77b")}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-(--sz-300px) rounded-xl border-border/70 p-1.5 shadow-xl shadow-black/10">
         <DropdownMenuLabel className="px-2 pb-1 pt-1.5">
           <div className="space-y-1">
-            <div className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
-              Desktop task rows
-            </div>
+            <div className="text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{uiT("ui:messages.m_9ead53dfc53b755c")}</div>
             <div className="text-sm font-medium text-foreground">
               {title}
             </div>
@@ -157,12 +156,8 @@ export function IssueColumnPicker({
             className="items-start rounded-lg px-3 py-2.5 pl-8"
           >
             <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium text-foreground">
-                Date group separators
-              </span>
-              <span className="text-xs leading-relaxed text-muted-foreground">
-                Show Today, Yesterday, and Earlier rules on newest-first task lists.
-              </span>
+              <span className="text-sm font-medium text-foreground">{uiT("ui:messages.m_738875ead75bf14a")}</span>
+              <span className="text-xs leading-relaxed text-muted-foreground">{uiT("ui:messages.m_2c8dbf56bfbf4a50")}</span>
             </span>
           </DropdownMenuCheckboxItem>
         ) : null}
@@ -170,9 +165,7 @@ export function IssueColumnPicker({
         <DropdownMenuItem
           onSelect={onResetColumns}
           className="rounded-lg px-3 py-2 text-sm"
-        >
-          Reset defaults
-          <span className="ml-auto text-xs text-muted-foreground">status, id, updated</span>
+        >{uiT("ui:messages.m_4542d49a520543f9")}<span className="ml-auto text-xs text-muted-foreground">{uiT("ui:messages.m_5fd9f7e236a0f8bd")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -236,9 +229,7 @@ export function InboxIssueMetaLeading({
               "hidden text-(length:--text-micro) font-medium sm:inline",
               "text-blue-600 dark:text-blue-400",
             )}
-          >
-            Live
-          </span>
+          >{uiT("ui:messages.m_b64ac05f17e64d03")}</span>
         </Badge>
       )}
       {showSubtreeLiveChip && !isLive && subtreeLiveCount > 0 && (
@@ -247,7 +238,7 @@ export function InboxIssueMetaLeading({
             "px-1.5 sm:gap-1.5 sm:px-2",
             "border-border bg-transparent",
           )}
-          title={`${subtreeLiveCount} sub-task${subtreeLiveCount === 1 ? "" : "s"} running below`}
+          title={uiT("ui:messages.m_2fa663c50c15881f", { v0: (subtreeLiveCount), v1: (subtreeLiveCount === 1 ? "" : uiT("ui:messages.m_043a718774c572bd")) })}
         >
           <span
             className={cn(
@@ -257,8 +248,7 @@ export function InboxIssueMetaLeading({
             aria-hidden="true"
           />
           <span className="hidden text-(length:--text-micro) font-medium text-muted-foreground sm:inline">
-            {subtreeLiveCount} live below
-          </span>
+            {subtreeLiveCount}{uiT("ui:messages.m_5618c53e03a04bfb")}</span>
         </Badge>
       )}
     </>
@@ -351,9 +341,7 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              Unassigned
-            </span>
+            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">{uiT("ui:messages.m_14d33bd014e6b4e7")}</span>
           );
         }
 
@@ -377,7 +365,7 @@ export function InboxIssueTrailingColumns({
           }
 
           if (originatingActor?.kind === "user") {
-            const tooltipText = viaAgentName ? `${creatorUserLabel} · via ${viaAgentName}` : creatorUserLabel;
+            const tooltipText = viaAgentName ? uiT("ui:messages.m_dcd1c3fd766a6309", { v0: (creatorUserLabel), v1: (viaAgentName) }) : creatorUserLabel;
             return (
               <Tooltip key={column}>
                 <TooltipTrigger asChild>
@@ -396,9 +384,7 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              Unknown
-            </span>
+            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">{uiT("ui:messages.m_b764cdc0eab71374")}</span>
           );
         }
 
@@ -422,9 +408,7 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              No project
-            </span>
+            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">{uiT("ui:messages.m_f34c2be0d1c5f562")}</span>
           );
         }
 
@@ -479,9 +463,7 @@ export function InboxIssueTrailingColumns({
                       {workspaceName}
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" sideOffset={6}>
-                    Filter by workspace
-                  </TooltipContent>
+                  <TooltipContent side="top" sideOffset={6}>{uiT("ui:messages.m_7e5aae00f559b341")}</TooltipContent>
                 </Tooltip>
               ) : (
                 workspaceName
@@ -500,7 +482,7 @@ export function InboxIssueTrailingColumns({
               {parentIdentifier ? (
                 <span className="font-mono">{parentIdentifier}</span>
               ) : (
-                <span className="italic">Sub-task</span>
+                <span className="italic">{uiT("ui:messages.m_17aa97a09b7fbc27")}</span>
               )}
             </span>
           );

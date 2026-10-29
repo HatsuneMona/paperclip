@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useState } from "react";
 import { Clock3, RefreshCw, Save, Trash2, Webhook, Zap } from "lucide-react";
 import type { RoutineTrigger } from "@paperclipai/shared";
@@ -70,7 +71,7 @@ export function RoutineTriggerCard({
 
   return (
     <form
-      aria-label={`Trigger: ${trigger.label ?? trigger.kind}`}
+      aria-label={uiT("ui:messages.m_559bb04e285e2df1", { v0: (trigger.label ?? trigger.kind) })}
       className="space-y-4 rounded-lg border border-border p-4"
       onSubmit={(event) => event.preventDefault()}
     >
@@ -96,7 +97,7 @@ export function RoutineTriggerCard({
             {trigger.kind === "schedule" && trigger.nextRunAt
               ? `Next: ${new Date(trigger.nextRunAt).toLocaleString()}`
               : trigger.kind === "webhook"
-                ? "Webhook"
+                ? uiT("ui:messages.m_4814f62c108d82de")
                 : "API"}
           </span>
         </div>
@@ -104,7 +105,7 @@ export function RoutineTriggerCard({
 
       {trigger.kind === "webhook" && trigger.webhookUrl && (
         <div className="space-y-1.5">
-          <Label htmlFor={`webhook-url-${trigger.id}`} className="text-xs">Webhook URL</Label>
+          <Label htmlFor={`webhook-url-${trigger.id}`} className="text-xs">{uiT("ui:messages.m_84805a7574a82052")}</Label>
           <Input id={`webhook-url-${trigger.id}`} value={trigger.webhookUrl} readOnly onFocus={(event) => event.target.select()} />
           <p className="text-xs text-muted-foreground">
             Send a POST request with Content-Type: application/json. Keep this URL private when signing is disabled.
@@ -114,7 +115,7 @@ export function RoutineTriggerCard({
 
       <div className="grid gap-3 md:grid-cols-2">
         <div className="space-y-1.5">
-          <Label className="text-xs">Label</Label>
+          <Label className="text-xs">{uiT("ui:messages.m_0e66373f45dcf3dd")}</Label>
           <Input
             value={draft.label}
             disabled={disabled}
@@ -123,7 +124,7 @@ export function RoutineTriggerCard({
         </div>
         {trigger.kind === "schedule" && (
           <div className="space-y-1.5 md:col-span-2">
-            <Label className="text-xs">Schedule</Label>
+            <Label className="text-xs">{uiT("ui:messages.m_f4830a1dae298044")}</Label>
             <ScheduleEditor
               value={draft.cronExpression}
               onChange={(cronExpression) =>
@@ -179,14 +180,10 @@ export function RoutineTriggerCard({
             className="mr-auto text-muted-foreground hover:text-destructive"
             onClick={() => onDelete(trigger.id)}
           >
-            <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-            Delete
-          </Button>
+            <Trash2 className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_e2d0a54968ead24e")}</Button>
           {trigger.kind === "webhook" && (
             <Button variant="outline" size="sm" onClick={() => onRotate(trigger.id)}>
-              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
-              Rotate secret
-            </Button>
+              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />{uiT("ui:messages.m_4405518d273bb7b5")}</Button>
           )}
           <Button
             variant="outline"

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useState } from "react";
 import { Apple, Monitor, Terminal } from "lucide-react";
 import {
@@ -134,9 +135,7 @@ export function ChoosePathButton({ className }: { className?: string }) {
           className,
         )}
         onClick={() => setOpen(true)}
-      >
-        Choose
-      </button>
+      >{uiT("ui:messages.m_c7f937836f5d82d5")}</button>
       <PathInstructionsModal open={open} onOpenChange={setOpen} />
     </>
   );

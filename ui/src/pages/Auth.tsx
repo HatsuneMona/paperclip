@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "@/lib/router";
@@ -73,7 +74,7 @@ export function AuthPage() {
       navigate(nextPath, { replace: true });
     },
     onError: (err) => {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ? err.message : uiT("ui:messages.m_93821eb7ce8c6592"));
     },
   });
 
@@ -92,7 +93,7 @@ export function AuthPage() {
 
   // A health/session failure must not be mistaken for a self-hosted instance.
   if (healthQuery.error || sessionError) {
-    return <p role="alert" className="p-6 text-sm text-destructive">Unable to check sign-in. Refresh and try again.</p>;
+    return <p role="alert" className="p-6 text-sm text-destructive">{uiT("ui:messages.m_152f7dacfc7f9672")}</p>;
   }
 
   if (healthQuery.data?.cloud) {
@@ -112,12 +113,12 @@ export function AuthPage() {
           </div>
 
           <h1 className="text-xl font-semibold">
-            {mode === "sign_in" ? "Sign in to Paperclip" : "Create your Paperclip account"}
+            {mode === "sign_in" ? uiT("ui:messages.m_315a9e5cee356aba") : uiT("ui:messages.m_f6c4b1d05291d47a")}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {mode === "sign_in"
-              ? "Use your email and password to access this instance."
-              : "Create an account for this instance. Email confirmation is not required in v1."}
+              ? uiT("ui:messages.m_7665f3a50e4d2ed0")
+              : uiT("ui:messages.m_fa7492f54fc52dc0")}
           </p>
 
           <form
@@ -128,7 +129,7 @@ export function AuthPage() {
               event.preventDefault();
               if (mutation.isPending) return;
               if (!canSubmit) {
-                setError("Please fill in all required fields.");
+                setError(uiT("ui:messages.m_d1641a4df419e4ac"));
                 return;
               }
               mutation.mutate();
@@ -136,7 +137,7 @@ export function AuthPage() {
           >
             {mode === "sign_up" && (
               <div>
-                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">Name</label>
+                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">{uiT("ui:messages.m_dcd1d5223f73b3a9")}</label>
                 <input
                   id="name"
                   name="name"
@@ -153,7 +154,7 @@ export function AuthPage() {
               </div>
             )}
             <div>
-              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">Email</label>
+              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">{uiT("ui:messages.m_969ccbd3cf6300ec")}</label>
               <input
                 id="email"
                 name="email"
@@ -170,7 +171,7 @@ export function AuthPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-xs text-muted-foreground mb-1 block">Password</label>
+              <label htmlFor="password" className="text-xs text-muted-foreground mb-1 block">{uiT("ui:messages.m_e7cf3ef4f17c3999")}</label>
               <input
                 id="password"
                 name="password"
@@ -197,15 +198,15 @@ export function AuthPage() {
               className={`w-full ${!canSubmit && !mutation.isPending ? "opacity-50" : ""}`}
             >
               {mutation.isPending
-                ? "Working…"
+                ? uiT("ui:messages.m_5474eef8d0f179c7")
                 : mode === "sign_in"
-                  ? "Sign In"
-                  : "Create Account"}
+                  ? uiT("ui:messages.m_bcc0bcc9140b0c97")
+                  : uiT("ui:messages.m_0dffe234b44793b6")}
             </Button>
           </form>
 
           <div className="mt-5 text-sm text-muted-foreground">
-            {mode === "sign_in" ? "Need an account?" : "Already have an account?"}{" "}
+            {mode === "sign_in" ? uiT("ui:messages.m_d24daaf3d934a54c") : uiT("ui:messages.m_e77fea936d3e0118")}{" "}
             <button
               type="button"
               className="font-medium text-foreground underline underline-offset-2"
@@ -214,7 +215,7 @@ export function AuthPage() {
                 setMode(mode === "sign_in" ? "sign_up" : "sign_in");
               }}
             >
-              {mode === "sign_in" ? "Create one" : "Sign in"}
+              {mode === "sign_in" ? uiT("ui:messages.m_b6ab95ea074921f6") : uiT("ui:messages.m_bfd402b2f6f38125")}
             </button>
           </div>
         </div>

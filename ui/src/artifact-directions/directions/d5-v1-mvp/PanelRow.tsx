@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import type { CSSProperties } from "react";
 import type { LabArtifact } from "../../kit";
 import { glyphOf, isAudio, labelOf, treatmentOf } from "./kinds";
@@ -87,7 +88,7 @@ export function ArtifactRow({ artifact, className, style }: { artifact: LabArtif
   return (
     <button
       type="button"
-      aria-label={`Open ${name}`}
+      aria-label={uiT("ui:messages.m_afaef5c34f443c02", { v0: (name) })}
       className={`flex w-full items-center gap-2 rounded-(--v1-row-radius) bg-(--v1-row) py-2 pl-2 pr-3 text-left outline-none transition-colors hover:bg-(--v1-row-hover) focus-visible:ring-2 focus-visible:ring-ring${className ? ` ${className}` : ""}`}
       style={style}
     >

@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { AgentPermissions, TrustPreset } from "@paperclipai/shared";
 import { Lock, ShieldAlert } from "lucide-react";
@@ -108,7 +109,7 @@ export function TrustPresetSection({
 
   return (
     <div>
-      <h3 className="mb-3 text-sm font-medium">Trust</h3>
+      <h3 className="mb-3 text-sm font-medium">{uiT("ui:messages.m_ade9248e0132b411")}</h3>
       <div className="rounded-lg border border-border p-4 space-y-3">
         <Field label="Trust preset" hint="Choose how broadly this agent can read and act on Paperclip work objects.">
           <select
@@ -160,7 +161,7 @@ export function TrustPresetSection({
                         onChange={(event) => setTargetType(event.target.value as LowTrustBoundaryTargetType)}
                         disabled={disabled}
                       >
-                        <option value="project">Project</option>
+                        <option value="project">{uiT("ui:messages.m_9859597853197476")}</option>
                         <option value="root_issue">Root issue</option>
                         {allowSingleIssue && <option value="issue">Issue</option>}
                       </select>
@@ -174,7 +175,7 @@ export function TrustPresetSection({
                       >
                         <option value="">
                           {candidatesLoading
-                            ? "Loading…"
+                            ? uiT("ui:messages.m_ba3bbbe10d8bef66")
                             : targetCandidates.length === 0
                               ? `No ${targetType === "project" ? "projects" : "issues"} available`
                               : "Select boundary"}
@@ -231,12 +232,12 @@ export function TrustPresetSection({
               >
                 <div className="divide-y divide-border/60 text-foreground">
                   <PolicyRow label="Preset" value="Low-trust review v1" />
-                  <PolicyRow label="Raw output" value="Quarantined from higher-trust agents" />
-                  <PolicyRow label="Projects" value={formatCount(boundary?.projectIds, "project", "projects")} />
+                  <PolicyRow label={uiT("ui:messages.m_f3dbf20a278c48df")} value="Quarantined from higher-trust agents" />
+                  <PolicyRow label={uiT("ui:messages.m_04e2a9728af75840")} value={formatCount(boundary?.projectIds, "project", "projects")} />
                   <PolicyRow label="Root issue" value={boundary?.rootIssueId ? boundary.rootIssueId.slice(0, 8) : "-"} />
                   <PolicyRow label="Explicit issues" value={formatCount(boundary?.issueIds, "issue", "issues")} />
                   <PolicyRow label="Allowed agents" value={formatCount(boundary?.allowedAgentIds, "agent", "agents")} />
-                  <PolicyRow label="Allowed tools" value={boundary?.allowedToolClasses?.join(" · ") || "-"} />
+                  <PolicyRow label={uiT("ui:messages.m_73f3619da32094de")} value={boundary?.allowedToolClasses?.join(" · ") || "-"} />
                   <PolicyRow label="Allowed secrets" value={formatCount(boundary?.allowedSecretBindingIds, "binding", "bindings")} />
                   <PolicyRow label="Promotion target" value={boundary?.outputPromotionTarget?.issueId?.slice(0, 8) ?? "-"} />
                   <PolicyRow

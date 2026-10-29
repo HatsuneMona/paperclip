@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import {
   RoutineListRow,
@@ -169,7 +170,7 @@ export function ManagedRoutinesList({
                       disabled={resettingRoutineKey === routine.key}
                       onClick={() => onReset(routine)}
                     >
-                      {resettingRoutineKey === routine.key ? "Resetting..." : "Reset"}
+                      {resettingRoutineKey === routine.key ? "Resetting..." : uiT("ui:messages.m_daee7606b339f3c3")}
                     </Button>
                   ) : null}
                 </span>

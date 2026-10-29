@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import {
   Activity,
@@ -44,10 +45,10 @@ const localIcons = {
 } satisfies Record<AgentLocalDetailView, typeof Sparkles>;
 
 const auditItems = [
-  { section: "activity", label: "Activity", icon: Activity },
-  { section: "runs", label: "Runs", icon: PlayCircle },
-  { section: "costs", label: "Costs", icon: ReceiptText },
-  { section: "budgets", label: "Budgets", icon: BadgeDollarSign },
+  { section: "activity", label: uiT("ui:messages.m_38da1505ca837328"), icon: Activity },
+  { section: "runs", label: uiT("ui:messages.m_848f54e89660cea4"), icon: PlayCircle },
+  { section: "costs", label: uiT("ui:messages.m_b88fc5fc4765148e"), icon: ReceiptText },
+  { section: "budgets", label: uiT("ui:messages.m_a1a06e046b0b9ad3"), icon: BadgeDollarSign },
 ] as const;
 
 export function AgentContextualSidebar({
@@ -115,7 +116,7 @@ export function AgentContextualSidebar({
         ))}
 
         {pluginTabs.length > 0 && <div data-slot="contextual-sidebar-section" className={contextualSidebarStyles.section}>
-          <p className={contextualSidebarStyles.sectionLabel}>Apps</p>
+          <p className={contextualSidebarStyles.sectionLabel}>{uiT("ui:messages.m_89dd748442c19485")}</p>
           <div className={contextualSidebarStyles.group}>
             {pluginTabs.map(slot => <SidebarNavItem key={`${slot.pluginKey}:${slot.id}`} to={`/agents/${encodeURIComponent(agentRef)}/${encodeURIComponent(`plugin:${slot.pluginKey}:${slot.id}`)}`} label={slot.displayName} icon={Wrench} />)}
           </div>
@@ -124,9 +125,7 @@ export function AgentContextualSidebar({
           <p
             data-slot="contextual-sidebar-section-label"
             className={contextualSidebarStyles.sectionLabel}
-          >
-            Audit
-          </p>
+          >{uiT("ui:messages.m_bb6aea28739637ea")}</p>
           <div data-slot="contextual-sidebar-group" className={contextualSidebarStyles.group}>
             {resolvedId ? auditItems.map((item) => (
               <SidebarNavItem

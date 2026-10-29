@@ -1,3 +1,4 @@
+import { t as uiT } from "@/i18n";
 import { useCallback, useEffect } from "react";
 import { History } from "lucide-react";
 import { useSearchParams } from "@/lib/router";
@@ -37,7 +38,7 @@ export function CompanyActivity() {
   ].includes(actionParam ?? "") ? actionParam! : "__all";
 
   useEffect(() => {
-    if (!streamlinedUiEnabled) setBreadcrumbs([{ label: "Activity" }]);
+    if (!streamlinedUiEnabled) setBreadcrumbs([{ label: uiT("ui:messages.m_38da1505ca837328") }]);
   }, [setBreadcrumbs, streamlinedUiEnabled]);
 
   const handleModeChange = useCallback(
